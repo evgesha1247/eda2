@@ -2,7 +2,7 @@ import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../home_widget/home_screen.dart';
+import '../../screens/screens_factory.dart/widget_factory.dart';
 import 'footer_screen_model.dart';
 
 class FooterScreen extends StatelessWidget {
@@ -25,10 +25,11 @@ class _FooterBodyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentIndexTab =
         context.select((FooterScreenModel e) => e.currentIndexTab);
+    final _homeScreen = ScreensFactory();
     return IndexedStack(
       index: currentIndexTab,
-      children: const [
-        HomeScreen(),
+      children: [
+        _homeScreen.makeHomeScreen(), // HomeScreen(),
         Text('4'),
         Text('4'),
         Text('4'),

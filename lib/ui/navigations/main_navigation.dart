@@ -10,7 +10,7 @@ class MainNavigation {
   final initialRoute = MainNavigationRouteName.main;
 
   Map<String, WidgetBuilder> get routes => <String, WidgetBuilder>{
-        MainNavigationRouteName.main: (_) => _widgetFactory.makeHomeWidget(),
+        MainNavigationRouteName.main: (_) => _widgetFactory.makeHomeApp(),
       };
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
