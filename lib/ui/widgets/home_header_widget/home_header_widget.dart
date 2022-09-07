@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../screens/home_screen/home_model.dart';
+import '../../theme/theme_app.dart';
 
 class HomeHederWidget extends StatefulWidget {
   const HomeHederWidget({Key? key}) : super(key: key);
@@ -13,14 +14,14 @@ class _HomeHederWidgetState extends State<HomeHederWidget> {
   Widget build(BuildContext context) {
     final togFilter = context.select((HomeModel e) => e.togFilter);
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(ThemeApp.kIndent),
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
               Expanded(child: _SearchWidget()),
-              SizedBox(width: 10),
+              SizedBox(width: ThemeApp.kIndent),
               _FilterButton(),
             ],
           ),
@@ -44,14 +45,14 @@ class _SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const InputBorder styleSerch = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      borderRadius: BorderRadius.all(Radius.circular(ThemeApp.kIndent)),
       borderSide: BorderSide(style: BorderStyle.none),
     );
     return const SizedBox(
-      height: 33,
+      height: ThemeApp.kHeight,
       child: TextField(
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+          contentPadding: EdgeInsets.symmetric(vertical: ThemeApp.kIndent),
           isDense: true,
           isCollapsed: true,
           filled: true,
@@ -75,15 +76,18 @@ class _FilterButton extends StatelessWidget {
       shadowColor: Colors.transparent,
       foregroundColor: Colors.transparent,
       backgroundColor: Colors.transparent,
-      side: const BorderSide(width: 2, color: Color(0xffF7C701)),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      side: const BorderSide(width: 2, color: ThemeApp.kAccent),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(ThemeApp.kIndent)),
     );
 
     final model = context.read<HomeModel>();
     return ElevatedButton(
       style: styleBut,
       onPressed: model.togFilterFun,
-      child: const Icon(Icons.tune, color: Color(0xffF7C701)),
+      child: const SizedBox(
+          height: ThemeApp.kHeight,
+          child: Icon(Icons.tune, color: ThemeApp.kAccent)),
     );
   }
 }
