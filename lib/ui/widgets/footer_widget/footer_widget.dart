@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../screens/screens_factory.dart/widget_factory.dart';
-import 'footer_screen_model.dart';
+import 'footer_widget_model.dart';
 
-class FooterScreen extends StatelessWidget {
-  const FooterScreen({Key? key}) : super(key: key);
+class FooterWidget extends StatelessWidget {
+  const FooterWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
