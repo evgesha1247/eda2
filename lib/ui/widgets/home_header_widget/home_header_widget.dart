@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../screens/home_screen/home_model.dart';
+import '../../screens/menu_home_screen/menu_home_model.dart';
 import '../../theme/theme_app.dart';
 
 class HomeHederWidget extends StatefulWidget {
@@ -12,7 +12,7 @@ class HomeHederWidget extends StatefulWidget {
 class _HomeHederWidgetState extends State<HomeHederWidget> {
   @override
   Widget build(BuildContext context) {
-    final togFilter = context.select((HomeModel e) => e.togFilter);
+    final togFilter = context.select((MenuHomeModel e) => e.togFilter);
     return Padding(
       padding: const EdgeInsets.all(ThemeApp.kIndent),
       child: Column(
@@ -81,7 +81,7 @@ class _FilterButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(ThemeApp.kIndent)),
     );
 
-    final model = context.read<HomeModel>();
+    final model = context.read<MenuHomeModel>();
     return ElevatedButton(
       style: styleBut,
       onPressed: model.togFilterFun,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/home_header_widget/home_header_widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class MenuHomeScreen extends StatelessWidget {
+  const MenuHomeScreen({super.key});
   @override
   Widget build(context) => MediaQuery.of(context).size.width > 300
       ? Column(children: const [

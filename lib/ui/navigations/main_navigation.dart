@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screens/screens_factory.dart/widget_factory.dart';
+import '../screens_factory.dart/widget_factory.dart';
 
 abstract class MainNavigationRouteName {
   static const main = '/';
@@ -10,7 +10,7 @@ class MainNavigation {
   final initialRoute = MainNavigationRouteName.main;
 
   Map<String, WidgetBuilder> get routes => <String, WidgetBuilder>{
-        MainNavigationRouteName.main: (_) => _widgetFactory.makeHomeApp(),
+        MainNavigationRouteName.main: (_) => _widgetFactory.makeGuiding(),
       };
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {

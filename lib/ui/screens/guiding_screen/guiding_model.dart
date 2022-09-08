@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FooterScreenModel extends ChangeNotifier {
+class GuidingScreenModel extends ChangeNotifier {
   var _currentIndexTab = 0;
   int get currentIndexTab => _currentIndexTab;
 

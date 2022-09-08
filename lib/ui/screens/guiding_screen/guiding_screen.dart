@@ -2,16 +2,15 @@ import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/theme/theme_app.dart';
+import '../../screens_factory.dart/widget_factory.dart';
+import 'guiding_model.dart';
 
-import '../../screens/screens_factory.dart/widget_factory.dart';
-import 'footer_widget_model.dart';
-
-class FooterWidget extends StatelessWidget {
-  const FooterWidget({Key? key}) : super(key: key);
+class GuidingScreen extends StatelessWidget {
+  const GuidingScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: _FooterBodyWidget(),
+      body: _GuidingBodyWidget(),
       floatingActionButton: _FooterFlotingButtom(),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       bottomNavigationBar: _FooterBottomBarWidget(),
@@ -20,19 +19,19 @@ class FooterWidget extends StatelessWidget {
   }
 }
 
-class _FooterBodyWidget extends StatelessWidget {
-  const _FooterBodyWidget({Key? key}) : super(key: key);
+class _GuidingBodyWidget extends StatelessWidget {
+  const _GuidingBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final currentIndexTab =
-        context.select((FooterScreenModel e) => e.currentIndexTab);
+        context.select((GuidingScreenModel e) => e.currentIndexTab);
     return IndexedStack(
       index: currentIndexTab,
       children: [
-        ScreensFactory().makeHomeScreen(), // HomeScreen(),
-        const Center(child: Text('1')),
-        const Center(child: Text('2')),
-        const Center(child: Text('3')),
+        ScreensFactory().makeMenuHome(),
+        Text('data'),
+        Text('data'),
+        Text('data'),
       ],
     );
   }
@@ -43,8 +42,8 @@ class _FooterBottomBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentIndexTab =
-        context.select((FooterScreenModel e) => e.currentIndexTab);
-    final model = context.read<FooterScreenModel>();
+        context.select((GuidingScreenModel e) => e.currentIndexTab);
+    final model = context.read<GuidingScreenModel>();
     return BubbleBottomBar(
       items: <BubbleBottomBarItem>[
         bubbItem('Home', 0xffFF6C0C, Icons.home),
