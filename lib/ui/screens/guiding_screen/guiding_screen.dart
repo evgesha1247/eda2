@@ -1,4 +1,4 @@
-import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
+import 'package:bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/theme/theme_app.dart';
@@ -10,13 +10,12 @@ class GuidingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: const _GuidingBodyWidget(),
       floatingActionButton:
-          (mediaQuery < 310) ? const _FooterFlotingButtom() : null,
+          (mediaQuery < 370) ? const _FooterFlotingButtom() : null,
       bottomNavigationBar:
-          (mediaQuery >= 310) ? const _FooterBottomBarWidget() : null,
+          (mediaQuery >= 370) ? const _FooterBottomBarWidget() : null,
       backgroundColor: ThemeApp.kBGColor,
     );
   }
@@ -47,20 +46,36 @@ class _FooterBottomBarWidget extends StatelessWidget {
     final currentIndexTab =
         context.select((GuidingScreenModel e) => e.currentIndexTab);
     final model = context.read<GuidingScreenModel>();
-    return BubbleBottomBar(
-      items: <BubbleBottomBarItem>[
-        bubbItem('Home', 0xffFF6C0C, Icons.home),
-        bubbItem('Menu', 0xffF7C701, Icons.restaurant_menu_rounded),
-        bubbItem('Favorite', 0xffFF3D00, Icons.favorite),
-        bubbItem('Profile', 0xffF7C701, Icons.settings),
+    return BottomNavBar(
+      showElevation: true,
+      itemCornerRadius: 20,
+      selectedIndex: currentIndexTab,
+      containerPadding: EdgeInsets.zero,
+      backgroundColor: ThemeApp.kBGColor,
+      onItemSelected: model.setCurrentIndexTab,
+      animationDuration: const Duration(milliseconds: 300),
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      items: <BottomNavBarItem>[
+        bubbItem('Home', Icons.home, currentIndexTab),
+        bubbItem('Menu', Icons.restaurant_menu_rounded, currentIndexTab),
+        bubbItem('Favorite', Icons.favorite, currentIndexTab),
+        bubbItem('Profile', Icons.settings, currentIndexTab),
       ],
-      backgroundColor: ThemeApp.kFrontColor,
-      opacity: .2,
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-      elevation: 0,
-      currentIndex: currentIndexTab,
-      onTap: model.setCurrentIndexTab,
     );
+    // BubbleBottomBar(
+    //   items: <BubbleBottomBarItem>[
+    // bubbItem('Home', 0xffFF6C0C, Icons.home),
+    // bubbItem('Menu', 0xffF7C701, Icons.restaurant_menu_rounded),
+    // bubbItem('Favorite', 0xffFF3D00, Icons.favorite),
+    // bubbItem('Profile', 0xffF7C701, Icons.settings),
+    //   ],
+    //   backgroundColor: ThemeApp.kFrontColor,
+    //   opacity: .2,
+    //   borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+    //   elevation: 0,
+    //   currentIndex: currentIndexTab,
+    //   onTap: model.setCurrentIndexTab,
+    // );
   }
 }
 
@@ -83,15 +98,25 @@ class _FooterFlotingButtom extends StatelessWidget {
   }
 }
 
-bubbItem(String text, int textColor, IconData icon) {
-  return BubbleBottomBarItem(
-// showBadge: true , badge: Text("5"), badgeColor: ...
-    backgroundColor: Color(textColor),
-    icon: Icon(icon, color: Color(textColor).withAlpha(112)),
-    activeIcon: const SizedBox(),
-    title: Padding(
-      padding: const EdgeInsets.only(right: 20),
-      child: Text(text),
-    ),
+// bubbItem(String text, int textColor, IconData icon) {
+//   return BubbleBottomBarItem(
+// // showBadge: true , badge: Text("5"), badgeColor: ...
+//     backgroundColor: Color(textColor),
+//     icon: Icon(icon, color: Color(textColor).withAlpha(112)),
+//     activeIcon: const SizedBox(),
+//     title: Padding(
+//       padding: const EdgeInsets.only(right: 20),
+//       child: Text(text),
+//     ),
+//   );
+// }
+bubbItem(String text, IconData icon, int index) {
+  final listIntActiveColor = [0xffFF6C0C, 0xffF7C701, 0xffFF3D00, 0xffF7C701];
+  return BottomNavBarItem(
+    title: text,
+    icon: Icon(icon),
+    inactiveColor: ThemeApp.kFrontColor,
+    activeColor: Color(listIntActiveColor[index]),
+    activeBackgroundColor: ThemeApp.kFrontColor,
   );
 }

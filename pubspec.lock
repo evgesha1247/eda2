@@ -29,13 +29,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
-  badges:
-    dependency: transitive
-    description:
-      name: badges
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.3"
   boolean_selector:
     dependency: transitive
     description:
@@ -43,13 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  bubble_bottom_bar:
+  bottom_nav_bar:
     dependency: "direct main"
     description:
-      name: bubble_bottom_bar
+      name: bottom_nav_bar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "1.0.3"
   build:
     dependency: transitive
     description:
@@ -487,4 +480,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.18.0-19.0.dev <3.0.0"
-  flutter: ">=1.16.0"
+  flutter: ">=1.17.0"
