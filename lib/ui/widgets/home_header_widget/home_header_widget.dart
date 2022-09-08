@@ -13,28 +13,33 @@ class _HomeHederWidgetState extends State<HomeHederWidget> {
   @override
   Widget build(BuildContext context) {
     final togFilter = context.select((MenuHomeModel e) => e.togFilter);
-    return Padding(
-      padding: const EdgeInsets.all(ThemeApp.kIndent),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Expanded(child: _SearchWidget()),
-              SizedBox(width: ThemeApp.kIndent),
-              _FilterButton(),
+    return FittedBox(
+      child: LimitedBox(
+        maxWidth: 400,
+        child: Padding(
+          padding: const EdgeInsets.all(ThemeApp.kIndent),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Expanded(child: _SearchWidget()),
+                  SizedBox(width: ThemeApp.kIndent),
+                  _FilterButton(),
+                ],
+              ),
+              AnimatedCrossFade(
+                duration: const Duration(milliseconds: 500),
+                firstChild: const _Filter(),
+                secondChild: const SizedBox.shrink(),
+                //2
+                crossFadeState: togFilter
+                    ? CrossFadeState.showSecond
+                    : CrossFadeState.showFirst,
+              ),
             ],
           ),
-          AnimatedCrossFade(
-            duration: const Duration(milliseconds: 500),
-            firstChild: const _Filter(),
-            secondChild: const SizedBox.shrink(),
-            //2
-            crossFadeState: togFilter
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -58,7 +63,7 @@ class _SearchWidget extends StatelessWidget {
           filled: true,
           fillColor: Color.fromARGB(255, 235, 235, 235),
           prefixIcon: Icon(Icons.search, color: Colors.grey),
-          label: Text('Search'),
+          hintText: 'Search',
           enabledBorder: styleSerch,
           focusedBorder: styleSerch,
         ),

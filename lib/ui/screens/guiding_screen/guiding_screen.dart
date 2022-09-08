@@ -9,11 +9,14 @@ class GuidingScreen extends StatelessWidget {
   const GuidingScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: _GuidingBodyWidget(),
-      floatingActionButton: _FooterFlotingButtom(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
-      bottomNavigationBar: _FooterBottomBarWidget(),
+    final mediaQuery = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      body: const _GuidingBodyWidget(),
+      floatingActionButton:
+          (mediaQuery < 310) ? const _FooterFlotingButtom() : null,
+      bottomNavigationBar:
+          (mediaQuery >= 310) ? const _FooterBottomBarWidget() : null,
       backgroundColor: ThemeApp.kBGColor,
     );
   }
@@ -29,9 +32,9 @@ class _GuidingBodyWidget extends StatelessWidget {
       index: currentIndexTab,
       children: [
         ScreensFactory().makeMenuHome(),
-        Text('data'),
-        Text('data'),
-        Text('data'),
+        const Text('data'),
+        const Text('data'),
+        const Text('data'),
       ],
     );
   }
@@ -52,11 +55,9 @@ class _FooterBottomBarWidget extends StatelessWidget {
         bubbItem('Profile', 0xffF7C701, Icons.settings),
       ],
       backgroundColor: ThemeApp.kFrontColor,
-
       opacity: .2,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       elevation: 0,
-      fabLocation: BubbleBottomBarFabLocation.end, //new
       currentIndex: currentIndexTab,
       onTap: model.setCurrentIndexTab,
     );
@@ -75,7 +76,7 @@ class _FooterFlotingButtom extends StatelessWidget {
           elevation: 0,
           onPressed: null,
           backgroundColor: ThemeApp.kAccent,
-          child: Icon(Icons.add),
+          child: Icon(Icons.menu_sharp),
         ),
       ),
     );

@@ -11,7 +11,7 @@ class ScreensFactory {
         child: const GuidingScreen(),
       );
 
-  /////// SCREENS ///////
+  /////// основные страницы  ///////
   Widget makeMenuHome() => ChangeNotifierProvider(
         create: (context) => MenuHomeModel(),
         child: const MenuHomeScreen(),
