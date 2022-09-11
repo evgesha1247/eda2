@@ -25,16 +25,22 @@ class _GuidingBodyWidget extends StatelessWidget {
   const _GuidingBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final currentIndexTab =
-        context.select((GuidingScreenModel e) => e.currentIndexTab);
-    return IndexedStack(
-      index: currentIndexTab,
-      children: [
-        ScreensFactory().makeMenuHome(),
-        const Text('data'),
-        const Text('data'),
-        const Text('data'),
-      ],
+    final currentIndexTab = context.select((GuidingScreenModel e) {
+      return e.currentIndexTab;
+    });
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: ThemeApp.kInterval),
+        child: IndexedStack(
+          index: currentIndexTab,
+          children: [
+            ScreensFactory().makeMenuHome(),
+            const Text('data'),
+            const Text('data'),
+            const Text('data'),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -47,9 +53,11 @@ class _FooterBottomBarWidget extends StatelessWidget {
         context.select((GuidingScreenModel e) => e.currentIndexTab);
     final model = context.read<GuidingScreenModel>();
     return BottomNavBar(
+      curve: Curves.ease,
       showElevation: true,
-      itemCornerRadius: 20,
+      itemCornerRadius: ThemeApp.kRadius,
       selectedIndex: currentIndexTab,
+      containerHeight: 50,
       containerPadding: EdgeInsets.zero,
       backgroundColor: ThemeApp.kBGColor,
       onItemSelected: model.setCurrentIndexTab,
@@ -62,20 +70,6 @@ class _FooterBottomBarWidget extends StatelessWidget {
         bubbItem('Profile', Icons.settings, currentIndexTab),
       ],
     );
-    // BubbleBottomBar(
-    //   items: <BubbleBottomBarItem>[
-    // bubbItem('Home', 0xffFF6C0C, Icons.home),
-    // bubbItem('Menu', 0xffF7C701, Icons.restaurant_menu_rounded),
-    // bubbItem('Favorite', 0xffFF3D00, Icons.favorite),
-    // bubbItem('Profile', 0xffF7C701, Icons.settings),
-    //   ],
-    //   backgroundColor: ThemeApp.kFrontColor,
-    //   opacity: .2,
-    //   borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
-    //   elevation: 0,
-    //   currentIndex: currentIndexTab,
-    //   onTap: model.setCurrentIndexTab,
-    // );
   }
 }
 
@@ -98,20 +92,8 @@ class _FooterFlotingButtom extends StatelessWidget {
   }
 }
 
-// bubbItem(String text, int textColor, IconData icon) {
-//   return BubbleBottomBarItem(
-// // showBadge: true , badge: Text("5"), badgeColor: ...
-//     backgroundColor: Color(textColor),
-//     icon: Icon(icon, color: Color(textColor).withAlpha(112)),
-//     activeIcon: const SizedBox(),
-//     title: Padding(
-//       padding: const EdgeInsets.only(right: 20),
-//       child: Text(text),
-//     ),
-//   );
-// }
 bubbItem(String text, IconData icon, int index) {
-  final listIntActiveColor = [0xffFF6C0C, 0xffF7C701, 0xffFF3D00, 0xffF7C701];
+  final listIntActiveColor = [0xffF7C701, 0xffff9a76, 0xfff52e63, 0xffd49a89];
   return BottomNavBarItem(
     title: text,
     icon: Icon(icon),

@@ -7,7 +7,6 @@ class MenuHomeScreen extends StatelessWidget {
   @override
   Widget build(context) {
     final mediaQuery = MediaQuery.of(context).size.width;
-
     return Column(
       children: mediaQuery < 310
           ? [
@@ -15,6 +14,7 @@ class MenuHomeScreen extends StatelessWidget {
             ]
           : [
               const HomeHederWidget(),
+              const SizedBox(height: ThemeApp.kInterval),
               const HomeBodyWidget(),
             ],
     );
@@ -29,28 +29,47 @@ class HomeBodyWidget extends StatelessWidget {
     return Expanded(
       child: GridView.builder(
           itemCount: 5,
-          padding: const EdgeInsets.symmetric(horizontal: ThemeApp.kIndent),
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 310.0,
-            crossAxisSpacing: 5.0,
-            mainAxisSpacing: 5.0,
+            maxCrossAxisExtent: 200.0,
+            crossAxisSpacing: 30,
+            mainAxisSpacing: 30,
           ),
-          itemBuilder: (context, i) => const _CartItem()),
+          itemBuilder: (context, i) => _CartItem(index: i)),
     );
   }
 }
 
 class _CartItem extends StatelessWidget {
-  const _CartItem({Key? key}) : super(key: key);
-
+  _CartItem({Key? key, required this.index}) : super(key: key);
+  final int index;
+  List im = [
+    'assets/imgs/food.png',
+    'assets/imgs/food2.png',
+  ];
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(ThemeApp.kIndent),
-      decoration: const BoxDecoration(
-        color: ThemeApp.kFrontColor,
-        borderRadius: BorderRadius.all(Radius.circular(ThemeApp.kIndent)),
-      ),
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            color: ThemeApp.kFrontColor,
+            borderRadius: BorderRadius.all(Radius.circular(ThemeApp.kRadius)),
+          ),
+        ),
+        Positioned(
+          top: -10,
+          left: -10,
+          child: index % 3 == 0
+              ? Image.asset(
+                  im[0],
+                  width: 120,
+                )
+              : Image.asset(
+                  im[1],
+                  width: 120,
+                ),
+        ),
+      ],
     );
   }
 }

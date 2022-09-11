@@ -16,29 +16,26 @@ class _HomeHederWidgetState extends State<HomeHederWidget> {
     return FittedBox(
       child: LimitedBox(
         maxWidth: 400,
-        child: Padding(
-          padding: const EdgeInsets.all(ThemeApp.kIndent),
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Expanded(child: _SearchWidget()),
-                  SizedBox(width: ThemeApp.kIndent),
-                  _FilterButton(),
-                ],
-              ),
-              AnimatedCrossFade(
-                duration: const Duration(milliseconds: 500),
-                firstChild: const _Filter(),
-                secondChild: const SizedBox.shrink(),
-                //2
-                crossFadeState: togFilter
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Expanded(child: _SearchWidget()),
+                SizedBox(width: ThemeApp.kInterval),
+                _FilterButton(),
+              ],
+            ),
+            AnimatedCrossFade(
+              duration: const Duration(milliseconds: 500),
+              firstChild: const _Filter(),
+              secondChild: const SizedBox.shrink(),
+              //2
+              crossFadeState: togFilter
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
+            ),
+          ],
         ),
       ),
     );
@@ -50,16 +47,15 @@ class _SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const InputBorder styleSerch = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(ThemeApp.kIndent)),
+      borderRadius: BorderRadius.all(Radius.circular(ThemeApp.kRadius)),
       borderSide: BorderSide(style: BorderStyle.none),
     );
     return const SizedBox(
       height: ThemeApp.kHeight,
       child: TextField(
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: ThemeApp.kIndent),
+          contentPadding: EdgeInsets.zero,
           isDense: true,
-          isCollapsed: true,
           filled: true,
           fillColor: Color.fromARGB(255, 235, 235, 235),
           prefixIcon: Icon(Icons.search, color: Colors.grey),
@@ -83,7 +79,7 @@ class _FilterButton extends StatelessWidget {
       backgroundColor: Colors.transparent,
       side: const BorderSide(width: 2, color: ThemeApp.kAccent),
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(ThemeApp.kIndent)),
+          borderRadius: BorderRadius.circular(ThemeApp.kRadius)),
     );
 
     final model = context.read<MenuHomeModel>();
