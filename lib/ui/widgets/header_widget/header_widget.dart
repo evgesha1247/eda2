@@ -1,39 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../screens/menu_home_screen/menu_home_model.dart';
+import '../../screens/guiding_screen/guiding_model.dart';
 import '../../theme/theme_app.dart';
 
-class HomeHederWidget extends StatefulWidget {
-  const HomeHederWidget({Key? key}) : super(key: key);
+class HederWidget extends StatefulWidget {
+  const HederWidget({Key? key}) : super(key: key);
   @override
-  State<HomeHederWidget> createState() => _HomeHederWidgetState();
+  State<HederWidget> createState() => _HederWidgetState();
 }
 
-class _HomeHederWidgetState extends State<HomeHederWidget> {
+class _HederWidgetState extends State<HederWidget> {
   @override
   Widget build(BuildContext context) {
-    final togFilter = context.select((MenuHomeModel e) => e.togFilter);
     return FittedBox(
       child: LimitedBox(
         maxWidth: 400,
         child: Column(
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
                 Expanded(child: _SearchWidget()),
                 SizedBox(width: ThemeApp.kInterval),
                 _FilterButton(),
               ],
-            ),
-            AnimatedCrossFade(
-              duration: const Duration(milliseconds: 500),
-              firstChild: const _Filter(),
-              secondChild: const SizedBox.shrink(),
-              //2
-              crossFadeState: togFilter
-                  ? CrossFadeState.showSecond
-                  : CrossFadeState.showFirst,
             ),
           ],
         ),
@@ -81,26 +71,28 @@ class _FilterButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(ThemeApp.kRadius)),
     );
+    final currentIndexTab = context.select((GuidingScreenModel e) {
+      return e.currentIndexTab;
+    });
+    switch (currentIndexTab) {
+      case 0:
+        return ElevatedButton(
+          style: styleBut,
+          onPressed: () {},
+          child: const SizedBox(
+              height: ThemeApp.kHeight,
+              child: Icon(Icons.tune, color: ThemeApp.kAccent)),
+        );
 
-    final model = context.read<MenuHomeModel>();
-    return ElevatedButton(
-      style: styleBut,
-      onPressed: model.togFilterFun,
-      child: const SizedBox(
-          height: ThemeApp.kHeight,
-          child: Icon(Icons.tune, color: ThemeApp.kAccent)),
-    );
-  }
-}
-
-class _Filter extends StatelessWidget {
-  const _Filter({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Switch(
-      value: true,
-      onChanged: (value) {},
-    );
+      case 1:
+        return ElevatedButton(
+          style: styleBut,
+          onPressed: () {},
+          child: const SizedBox(
+              height: ThemeApp.kHeight,
+              child: Icon(Icons.tune, color: Color.fromARGB(255, 30, 1, 247))),
+        );
+    }
+    return const SizedBox.shrink();
   }
 }

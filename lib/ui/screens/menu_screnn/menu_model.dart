@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MenuHomeModel extends ChangeNotifier {
+class MenuModel extends ChangeNotifier {
   bool _togFilter = true;
   get togFilter => _togFilter;
   togFilterFun() {

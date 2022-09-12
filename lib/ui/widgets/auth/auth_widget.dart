@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-
 import '../../theme/theme_app.dart';
 
 class AuthWidget extends StatelessWidget {
@@ -23,7 +21,7 @@ class AuthWidget extends StatelessWidget {
         body: SizedBox(
           width: double.infinity,
           child: Column(
-            children: [
+            children: const [
               // Lottie.network(
               //     'https://assets2.lottiefiles.com/private_files/lf30_3ghvm6sn.json'),
             ],

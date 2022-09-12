@@ -34,8 +34,8 @@ class _GuidingBodyWidget extends StatelessWidget {
         child: IndexedStack(
           index: currentIndexTab,
           children: [
-            ScreensFactory().makeMenuHome(),
-            const Text('data'),
+            ScreensFactory().makeHome(),
+            ScreensFactory().makeMenu(),
             const Text('data'),
             const Text('data'),
           ],
@@ -57,7 +57,7 @@ class _FooterBottomBarWidget extends StatelessWidget {
       showElevation: true,
       itemCornerRadius: ThemeApp.kRadius,
       selectedIndex: currentIndexTab,
-      containerHeight: 50,
+      containerHeight: 53,
       containerPadding: EdgeInsets.zero,
       backgroundColor: ThemeApp.kBGColor,
       onItemSelected: model.setCurrentIndexTab,

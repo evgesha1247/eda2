@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text/ui/screens/menu_screnn/menu_model.dart';
+import 'package:text/ui/screens/menu_screnn/menu_screen.dart';
 import 'package:text/ui/widgets/auth/auth_widget.dart';
 import '../screens/guiding_screen/guiding_model.dart';
 import '../screens/guiding_screen/guiding_screen.dart';
-import '../screens/menu_home_screen/menu_home_model.dart';
-import '../screens/menu_home_screen/menu_home_screen.dart';
+
+import '../screens/home_screen/home_model.dart';
+import '../screens/home_screen/home_screen.dart';
 import '../widgets/auth/auth_widget_model.dart';
 
 class ScreensFactory {
@@ -18,9 +21,15 @@ class ScreensFactory {
         create: (context) => AuthModel(),
         child: const AuthWidget(),
       );
+  //////////////////////////////////
   /////// основные страницы  ///////
-  Widget makeMenuHome() => ChangeNotifierProvider(
-        create: (context) => MenuHomeModel(),
-        child: const MenuHomeScreen(),
+  //////////////////////////////////
+  Widget makeHome() => ChangeNotifierProvider(
+        create: (context) => HomeModel(),
+        child: const HomeScreen(),
+      );
+  Widget makeMenu() => ChangeNotifierProvider(
+        create: (context) => MenuModel(),
+        child: const MenuScreen(),
       );
 }
