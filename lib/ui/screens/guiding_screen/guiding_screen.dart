@@ -36,8 +36,8 @@ class _GuidingBodyWidget extends StatelessWidget {
           children: [
             ScreensFactory().makeHome(),
             ScreensFactory().makeMenu(),
-            const Text('data'),
-            const Text('data'),
+            ScreensFactory().makeFavorit(),
+            const Text(''),
           ],
         ),
       ),

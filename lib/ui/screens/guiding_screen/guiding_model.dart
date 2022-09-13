@@ -8,6 +8,7 @@ class GuidingScreenModel extends ChangeNotifier {
     if (index != null) {
       _currentIndexTab = index;
       notifyListeners();
+      if (index == 1) {}
     }
   }
 }

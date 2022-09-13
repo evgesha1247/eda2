@@ -71,9 +71,8 @@ class _FilterButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(ThemeApp.kRadius)),
     );
-    final currentIndexTab = context.select((GuidingScreenModel e) {
-      return e.currentIndexTab;
-    });
+    final currentIndexTab =
+        context.select((GuidingScreenModel e) => e.currentIndexTab);
     switch (currentIndexTab) {
       case 0:
         return ElevatedButton(

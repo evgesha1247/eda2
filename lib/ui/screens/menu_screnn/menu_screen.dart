@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:text/object/dish_object.dart';
+import '../../../object/dish_adding.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/header_widget/header_widget.dart';
 
@@ -9,13 +12,8 @@ class MenuScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context).size.width;
     return Column(
       children: mediaQuery < 370
-          ? [
-              const MenuBody(),
-            ]
-          : [
-              const HederWidget(),
-              const MenuBody(),
-            ],
+          ? [const MenuBody()]
+          : [const HederWidget(), const MenuBody()],
     );
   }
 }
@@ -24,45 +22,38 @@ class MenuBody extends StatelessWidget {
   const MenuBody({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final dishData = Provider.of<DishDataPovider>(context);
     return Expanded(
       child: GridView.builder(
-        itemCount: 3,
+        itemCount: dishData.dishs.length,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 345.0,
         ),
-        itemBuilder: (context, index) => _CartItem(index: index),
+        itemBuilder: (context, index) => ChangeNotifierProvider.value(
+          value: dishData.dishs[index],
+          child: const _CartItem(),
+        ),
       ),
     );
   }
 }
 
 class _CartItem extends StatelessWidget {
-  const _CartItem({Key? key, required this.index}) : super(key: key);
-  final int index;
+  const _CartItem({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
     return (mediaQuery < 370)
-        ? CartItemContainer(index: index)
-        : Stack(
-            children: [
-              CartItemContainer(index: index),
-              CartItemImg(index: index),
-            ],
-          );
+        ? const CartItemContainer()
+        : Stack(children: const [CartItemContainer(), CartItemImg()]);
   }
 }
 
 class CartItemContainer extends StatelessWidget {
-  const CartItemContainer({Key? key, required this.index}) : super(key: key);
-  final int index;
+  const CartItemContainer({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    const List<String> im = [
-      'assets/imgs/food1.png',
-      'assets/imgs/food5.png',
-      'assets/imgs/food3.png',
-    ];
+    final dishData = Provider.of<Dish>(context, listen: false);
     return Container(
       decoration: BoxDecoration(
         color: ThemeApp.kFrontColor,
@@ -71,7 +62,7 @@ class CartItemContainer extends StatelessWidget {
         ),
         image: MediaQuery.of(context).size.width < 370
             ? DecorationImage(
-                image: AssetImage(im[index]),
+                image: AssetImage(dishData.imgUrl),
                 fit: BoxFit.contain,
                 alignment: Alignment.topCenter)
             : null,
@@ -90,41 +81,22 @@ class CartItemContainer extends StatelessWidget {
   }
 }
 
-class CartItemButtonFavorit extends StatelessWidget {
-  const CartItemButtonFavorit({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        InkWell(
-          child: const Icon(
-            Icons.favorite_border_sharp,
-            color: Colors.grey,
-          ),
-          onTap: () {},
-        )
-      ],
-    );
-  }
-}
-
 class CartItemText extends StatelessWidget {
   const CartItemText({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final dishData = Provider.of<Dish>(context, listen: false);
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,
-        children: const [
+        children: [
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Lorem ipsum dolor sit amet',
-              style: TextStyle(
+              dishData.name,
+              style: const TextStyle(
                 color: ThemeApp.kWhite,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
@@ -132,10 +104,10 @@ class CartItemText extends StatelessWidget {
               ),
             ),
           ),
-          Divider(color: Colors.grey, thickness: .3),
+          const Divider(color: Colors.grey, thickness: .3),
           Text(
-            '\$999',
-            style: TextStyle(
+            '\$ ${dishData.price}',
+            style: const TextStyle(
               color: ThemeApp.kWhite,
               fontSize: 18,
               fontWeight: FontWeight.normal,
@@ -149,21 +121,48 @@ class CartItemText extends StatelessWidget {
 }
 
 class CartItemImg extends StatelessWidget {
-  const CartItemImg({Key? key, required this.index}) : super(key: key);
-  final int index;
+  const CartItemImg({
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    const List<String> im = [
-      'assets/imgs/food1.png',
-      'assets/imgs/food5.png',
-      'assets/imgs/food3.png',
-    ];
+    final dishData = Provider.of<Dish>(context, listen: false);
     return Positioned(
       child: Image.asset(
-        im[index],
+        dishData.imgUrl,
         fit: BoxFit.cover,
         width: 110,
       ),
+    );
+  }
+}
+
+class CartItemButtonFavorit extends StatelessWidget {
+  const CartItemButtonFavorit({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final dishData = Provider.of<DishAddingDataPovider>(context, listen: false);
+    final dish = Provider.of<Dish>(context, listen: false);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          child: const Icon(
+            Icons.favorite_border_sharp,
+            color: Colors.grey,
+          ),
+          onTap: () {
+            Provider.of<DishAddingDataPovider>(context, listen: false).addItem(
+              dishId: dish.id,
+              price: dish.price,
+              title: dish.name,
+              imgUrl: dish.imgUrl,
+            );
+          },
+        )
+      ],
     );
   }
 }
