@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/header_widget/header_widget.dart';
@@ -22,13 +21,16 @@ class _MenuBodyWidget extends StatelessWidget {
   const _MenuBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final dishsLength = context.watch<MenuModel>().menuDishs.length;
     return Expanded(
       child: GridView.builder(
-        itemCount: 3,
+        itemCount: dishsLength,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 345.0,
         ),
-        itemBuilder: (context, index) => _CartItemWidget(index: index),
+        itemBuilder: (context, index) => (dishsLength != 0)
+            ? _CartItemWidget(index: index)
+            : const _ListIsEmpty(),
       ),
     );
   }
@@ -65,6 +67,7 @@ class _CartItemContainerWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    final itemImgUrl = context.watch<MenuModel>().menuDishs[index].imgUrl;
     return Container(
         decoration: BoxDecoration(
           color: ThemeApp.kFrontColor,
@@ -72,27 +75,28 @@ class _CartItemContainerWidget extends StatelessWidget {
             Radius.circular(ThemeApp.kRadius),
           ),
           image: MediaQuery.of(context).size.width < 370
-              ? const DecorationImage(
-                  image: AssetImage('assets/imgs/food1.png'),
+              ? DecorationImage(
+                  image: AssetImage(itemImgUrl),
                   fit: BoxFit.contain,
                   alignment: Alignment.topCenter)
               : null,
         ),
         margin: const EdgeInsets.only(top: 30, left: 10, right: 10),
-        child: const _CartItemContainerContentWidget());
+        child: _CartItemContainerContentWidget(index: index));
   }
 }
 
 class _CartItemContainerContentWidget extends StatelessWidget {
-  const _CartItemContainerContentWidget({Key? key}) : super(key: key);
+  const _CartItemContainerContentWidget({required this.index});
+  final int index;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
-        children: const [
-          _CartItemButtonFavoritWidget(),
-          _CartItemContainerTextWidget(),
+        children: [
+          const _CartItemButtonFavoritWidget(),
+          _CartItemContainerTextWidget(index: index),
         ],
       ),
     );
@@ -103,6 +107,7 @@ class _CartItemButtonFavoritWidget extends StatelessWidget {
   const _CartItemButtonFavoritWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final model = context.read<MenuModel>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +117,7 @@ class _CartItemButtonFavoritWidget extends StatelessWidget {
             Icons.favorite_border_sharp,
             color: Colors.grey,
           ),
-          onTap: () {},
+          onTap: () => model.addToBox(),
         )
       ],
     );
@@ -120,20 +125,22 @@ class _CartItemButtonFavoritWidget extends StatelessWidget {
 }
 
 class _CartItemContainerTextWidget extends StatelessWidget {
-  const _CartItemContainerTextWidget({Key? key}) : super(key: key);
+  const _CartItemContainerTextWidget({required this.index});
+  final int index;
   @override
   Widget build(BuildContext context) {
+    final item = context.read<MenuModel>().menuDishs[index];
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,
-        children: const [
+        children: [
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'data',
-              style: TextStyle(
+              item.name,
+              style: const TextStyle(
                 color: ThemeApp.kWhite,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
@@ -141,10 +148,10 @@ class _CartItemContainerTextWidget extends StatelessWidget {
               ),
             ),
           ),
-          Divider(color: Colors.grey, thickness: .3),
+          const Divider(color: Colors.grey, thickness: .3),
           Text(
-            '\$ 999',
-            style: TextStyle(
+            '\$ ${item.price}',
+            style: const TextStyle(
               color: ThemeApp.kWhite,
               fontSize: 18,
               fontWeight: FontWeight.normal,
@@ -162,12 +169,24 @@ class _CartItemImgWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    final itemImgUrl = context.watch<MenuModel>().menuDishs[index].imgUrl;
     return Positioned(
       child: Image.asset(
-        'assets/imgs/food1.png',
+        itemImgUrl,
         fit: BoxFit.cover,
         width: 110,
       ),
+    );
+  }
+}
+
+class _ListIsEmpty extends StatelessWidget {
+  const _ListIsEmpty({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('нет товаров '),
     );
   }
 }

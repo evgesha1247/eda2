@@ -1,6 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:text/ui/widgets/header_widget/header_model.dart';
 import '../../screens/guiding_screen/guiding_model.dart';
 import '../../theme/theme_app.dart';
 
