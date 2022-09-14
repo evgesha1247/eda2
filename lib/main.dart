@@ -7,5 +7,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(DishAdapter());
+  await Hive.openBox<Dish>('dish_box');
   runApp(const MyAppWidget());
 }

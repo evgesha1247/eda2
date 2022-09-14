@@ -28,15 +28,16 @@ class _GuidingBodyWidget extends StatelessWidget {
     final currentIndexTab = context.select((GuidingScreenModel e) {
       return e.currentIndexTab;
     });
+    final factor = ScreensFactory();
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: ThemeApp.kInterval),
         child: IndexedStack(
           index: currentIndexTab,
           children: [
-            ScreensFactory().makeHome(),
-            ScreensFactory().makeMenu(),
-            ScreensFactory().makeFavorit(),
+            factor.makeHome(),
+            factor.makeMenu(),
+            factor.makeFavorit(),
             const Text(''),
           ],
         ),
@@ -64,13 +65,24 @@ class _FooterBottomBarWidget extends StatelessWidget {
       animationDuration: const Duration(milliseconds: 300),
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       items: <BottomNavBarItem>[
-        bubbItem('Home', Icons.home, currentIndexTab),
-        bubbItem('Menu', Icons.restaurant_menu_rounded, currentIndexTab),
-        bubbItem('Favorite', Icons.favorite, currentIndexTab),
-        bubbItem('Profile', Icons.settings, currentIndexTab),
+        bottomItem('Home', Icons.home, currentIndexTab),
+        bottomItem('Menu', Icons.restaurant_menu_rounded, currentIndexTab),
+        bottomItem('Favorite', Icons.favorite, currentIndexTab),
+        bottomItem('Profile', Icons.settings, currentIndexTab),
       ],
     );
   }
+}
+
+bottomItem(String text, IconData icon, int index) {
+  final listIntActiveColor = [0xffF7C701, 0xffff9a76, 0xfff52e63, 0xffd49a89];
+  return BottomNavBarItem(
+    title: text,
+    icon: Icon(icon),
+    inactiveColor: ThemeApp.kFrontColor,
+    activeColor: Color(listIntActiveColor[index]),
+    activeBackgroundColor: ThemeApp.kFrontColor,
+  );
 }
 
 class _FooterFlotingButtom extends StatelessWidget {
@@ -90,15 +102,4 @@ class _FooterFlotingButtom extends StatelessWidget {
       ),
     );
   }
-}
-
-bubbItem(String text, IconData icon, int index) {
-  final listIntActiveColor = [0xffF7C701, 0xffff9a76, 0xfff52e63, 0xffd49a89];
-  return BottomNavBarItem(
-    title: text,
-    icon: Icon(icon),
-    inactiveColor: ThemeApp.kFrontColor,
-    activeColor: Color(listIntActiveColor[index]),
-    activeBackgroundColor: ThemeApp.kFrontColor,
-  );
 }

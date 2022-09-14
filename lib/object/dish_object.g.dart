@@ -19,29 +19,26 @@ class DishAdapter extends TypeAdapter<Dish> {
     return Dish(
       name: fields[0] as String,
       price: fields[4] as double,
-      id: fields[3] as String,
-      imgUrl: fields[1] as String,
+      imgUrl: fields[5] as String,
       isHot: fields[2] as bool,
-      description: fields[5] as String,
+      description: fields[1] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Dish obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
+      ..write(obj.description)
+      ..writeByte(5)
       ..write(obj.imgUrl)
-      ..writeByte(2)
-      ..write(obj.isHot)
-      ..writeByte(3)
-      ..write(obj.id)
       ..writeByte(4)
       ..write(obj.price)
-      ..writeByte(5)
-      ..write(obj.description);
+      ..writeByte(2)
+      ..write(obj.isHot);
   }
 
   @override

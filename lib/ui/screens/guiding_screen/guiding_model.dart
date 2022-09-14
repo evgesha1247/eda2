@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+
+import '../../../object/dish_object.dart';
 
 class GuidingScreenModel extends ChangeNotifier {
   var _currentIndexTab = 0;
@@ -8,7 +11,11 @@ class GuidingScreenModel extends ChangeNotifier {
     if (index != null) {
       _currentIndexTab = index;
       notifyListeners();
-      if (index == 1) {}
+      if (index == 1) {
+        if (!Hive.isAdapterRegistered(0)) {
+          Hive.registerAdapter(DishAdapter());
+        }
+      }
     }
   }
 }

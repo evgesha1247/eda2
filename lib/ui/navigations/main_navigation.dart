@@ -12,21 +12,15 @@ class MainNavigation {
 
   Map<String, WidgetBuilder> get routes => <String, WidgetBuilder>{
         MainNavigationRouteName.guiding: (_) => _widgetFactory.makeGuiding(),
-        MainNavigationRouteName.auth: (contest) => _widgetFactory.makeAuth(),
+        MainNavigationRouteName.auth: (_) => _widgetFactory.makeAuth(),
       };
 
   ////// при ошибке навигации //////
   Route? onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      default:
-        MaterialPageRoute(
-          builder: (context) => const Scaffold(
-            body: Center(
-              child: Text('ошибка навигации !'),
-            ),
-          ),
-        );
-    }
-    return null;
+    return MaterialPageRoute(
+      builder: (context) => Scaffold(
+        body: Center(child: Text('ошибка навигации ! , ${settings.name}')),
+      ),
+    );
   }
 }

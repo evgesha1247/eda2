@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text/ui/widgets/header_widget/header_model.dart';
 import '../../screens/guiding_screen/guiding_model.dart';
 import '../../theme/theme_app.dart';
 
@@ -22,7 +23,7 @@ class _HederWidgetState extends State<HederWidget> {
               children: const [
                 Expanded(child: _SearchWidget()),
                 SizedBox(width: ThemeApp.kInterval),
-                _FilterButton(),
+                _FilterButtonWidget(),
               ],
             ),
           ],
@@ -40,26 +41,25 @@ class _SearchWidget extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(ThemeApp.kRadius)),
       borderSide: BorderSide(style: BorderStyle.none),
     );
+    const inputDecor = InputDecoration(
+      contentPadding: EdgeInsets.zero,
+      isDense: true,
+      filled: true,
+      fillColor: Color.fromARGB(255, 235, 235, 235),
+      prefixIcon: Icon(Icons.search, color: Colors.grey),
+      hintText: 'Search',
+      enabledBorder: styleSerch,
+      focusedBorder: styleSerch,
+    );
     return const SizedBox(
       height: ThemeApp.kHeight,
-      child: TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
-          isDense: true,
-          filled: true,
-          fillColor: Color.fromARGB(255, 235, 235, 235),
-          prefixIcon: Icon(Icons.search, color: Colors.grey),
-          hintText: 'Search',
-          enabledBorder: styleSerch,
-          focusedBorder: styleSerch,
-        ),
-      ),
+      child: TextField(decoration: inputDecor),
     );
   }
 }
 
-class _FilterButton extends StatelessWidget {
-  const _FilterButton({Key? key}) : super(key: key);
+class _FilterButtonWidget extends StatelessWidget {
+  const _FilterButtonWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final styleBut = ElevatedButton.styleFrom(
@@ -71,27 +71,30 @@ class _FilterButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(ThemeApp.kRadius)),
     );
-    final currentIndexTab =
-        context.select((GuidingScreenModel e) => e.currentIndexTab);
-    switch (currentIndexTab) {
-      case 0:
-        return ElevatedButton(
-          style: styleBut,
-          onPressed: () {},
-          child: const SizedBox(
-              height: ThemeApp.kHeight,
-              child: Icon(Icons.tune, color: ThemeApp.kAccent)),
-        );
-
-      case 1:
-        return ElevatedButton(
-          style: styleBut,
-          onPressed: () {},
-          child: const SizedBox(
-              height: ThemeApp.kHeight,
-              child: Icon(Icons.tune, color: Color.fromARGB(255, 30, 1, 247))),
-        );
+    final currentIndexTab = context.select(
+      (GuidingScreenModel e) => e.currentIndexTab,
+    );
+    button(Function() colBak) {
+      return ElevatedButton(
+        style: styleBut,
+        onPressed: colBak,
+        child: const SizedBox(
+          height: ThemeApp.kHeight,
+          child: Icon(Icons.tune, color: ThemeApp.kAccent),
+        ),
+      );
     }
-    return const SizedBox.shrink();
+
+    Widget getColBak(indexTab) {
+      switch (indexTab) {
+        case 0:
+          return button(() => print('1'));
+        case 1:
+          return button(() => print('2'));
+      }
+      return const Text('data');
+    }
+
+    return getColBak(currentIndexTab);
   }
 }
