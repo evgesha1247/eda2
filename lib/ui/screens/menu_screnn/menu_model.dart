@@ -1,35 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:text/object/dish_model.dart';
 
-import 'package:hive_flutter/hive_flutter.dart';
-import '../../../object/dish_object.dart';
+class MenuModel extends DishModel {
+  bool isFovarit = false;
 
-class MenuModel extends ChangeNotifier {
-  MenuModel() {
-    _setup();
-  }
-  var _menuDishs = <Dish>[];
-  List<Dish> get menuDishs => _menuDishs.toList();
-  void _readBoxDishsFromHive(Box<Dish> box) {
-    _menuDishs = box.values.toList();
+  void toggIsFov() {
+    isFovarit = !isFovarit;
     notifyListeners();
   }
 
-  void _setup() async {
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(DishAdapter());
-    }
-    final box = await Hive.openBox<Dish>('dish_box');
-    _readBoxDishsFromHive(box);
-    box.listenable().addListener(() {
-      _readBoxDishsFromHive(box);
-    });
-  }
-
-  void addToBox() async {
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(DishAdapter());
-    }
-    final box = await Hive.openBox<Dish>('dish_box');
-    box.close();
+  void addFavorit(int index) {
+    toggIsFov();
   }
 }

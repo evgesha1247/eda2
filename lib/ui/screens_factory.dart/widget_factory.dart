@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text/object/dish_model.dart';
 import 'package:text/ui/screens/menu_screnn/menu_model.dart';
 import 'package:text/ui/screens/menu_screnn/menu_screen.dart';
 import 'package:text/ui/widgets/auth/auth_widget.dart';
@@ -23,12 +24,18 @@ class ScreensFactory {
       );
   //////////////////////////////////////
   ////// основные страницы меню  //////
-  Widget makeHome() => ChangeNotifierProvider(
-        create: (context) => HomeModel(),
+  Widget makeHome() => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => HomeModel()),
+          ChangeNotifierProvider(create: (context) => DishModel()),
+        ],
         child: const HomeScreen(),
       );
-  Widget makeMenu() => ChangeNotifierProvider(
-        create: (context) => MenuModel(),
+  Widget makeMenu() => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => MenuModel()),
+          ChangeNotifierProvider(create: (context) => DishModel()),
+        ],
         child: const MenuScreen(),
       );
   Widget makeFavorit() => ChangeNotifierProvider(

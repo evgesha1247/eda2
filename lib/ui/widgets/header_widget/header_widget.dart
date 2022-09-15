@@ -38,7 +38,7 @@ class _SearchWidget extends StatelessWidget {
   const _SearchWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    const InputBorder styleSerch = OutlineInputBorder(
+    const InputBorder styleSearch = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(ThemeApp.kRadius)),
       borderSide: BorderSide(style: BorderStyle.none),
     );
@@ -49,8 +49,8 @@ class _SearchWidget extends StatelessWidget {
       fillColor: Color.fromARGB(255, 235, 235, 235),
       prefixIcon: Icon(Icons.search, color: Colors.grey),
       hintText: 'Search',
-      enabledBorder: styleSerch,
-      focusedBorder: styleSerch,
+      enabledBorder: styleSearch,
+      focusedBorder: styleSearch,
     );
     return const SizedBox(
       height: ThemeApp.kHeight,
