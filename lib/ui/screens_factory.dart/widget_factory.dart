@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/dish_model.dart';
+import 'package:text/ui/screens/dish_detailed/dish_detailed_model.dart';
+import 'package:text/ui/screens/dish_detailed/dish_detailed_screen.dart';
 import 'package:text/ui/screens/menu_screnn/menu_model.dart';
 import 'package:text/ui/screens/menu_screnn/menu_screen.dart';
 import 'package:text/ui/widgets/auth/auth_widget.dart';
@@ -40,7 +42,11 @@ class ScreensFactory {
       );
   Widget makeFavorit() => ChangeNotifierProvider(
         create: (context) => FavoriteModel(),
-        child: const FavoriteScrenn(),
+        child: const FavoriteScreen(),
+      );
+  Widget makeDetailed() => ChangeNotifierProvider(
+        create: (context) => DishDetailedModel(),
+        child: const DishDetailedScreen(),
       );
   //////////////////////////////////////
   /////////////////////////////////////

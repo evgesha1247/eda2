@@ -43,9 +43,13 @@ class _CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
-    return (mediaQuery > 370)
-        ? _CartItemContainerFullWidget(index: index)
-        : _CartItemContainerWidget(index: index);
+    final modelMenu = context.watch<MenuModel>();
+    return GestureDetector(
+      onTap: () => modelMenu.showDetail(context, index),
+      child: (mediaQuery > 370)
+          ? _CartItemContainerFullWidget(index: index)
+          : _CartItemContainerWidget(index: index),
+    );
   }
 }
 
@@ -109,8 +113,8 @@ class _CartItemButtonFavoritWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<MenuModel>();
-    final isFovarit = model.isFovarit;
+    final isFovarit = context.watch<DishModel>().items[index].isFovarit;
+    final modelMenu = context.watch<MenuModel>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +124,7 @@ class _CartItemButtonFavoritWidget extends StatelessWidget {
             Icons.favorite_border_sharp,
             color: isFovarit ? Colors.red : Colors.grey,
           ),
-          onTap: () => model.addFavorit(index),
+          onTap: () => {},
         )
       ],
     );

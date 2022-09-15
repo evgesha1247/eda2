@@ -4,15 +4,19 @@ import '../screens_factory.dart/widget_factory.dart';
 abstract class MainNavigationRouteName {
   static const guiding = '/guiding';
   static const auth = '/auth';
+  static const details = '/guiding/details';
 }
 
 class MainNavigation {
   final _widgetFactory = ScreensFactory();
   final initialRoute = MainNavigationRouteName.guiding;
-
+  final guiding = MainNavigationRouteName.guiding;
+  final auth = MainNavigationRouteName.auth;
+  final details = MainNavigationRouteName.details;
   Map<String, WidgetBuilder> get routes => <String, WidgetBuilder>{
-        MainNavigationRouteName.guiding: (_) => _widgetFactory.makeGuiding(),
-        MainNavigationRouteName.auth: (_) => _widgetFactory.makeAuth(),
+        guiding: (_) => _widgetFactory.makeGuiding(),
+        auth: (_) => _widgetFactory.makeAuth(),
+        details: (_) => _widgetFactory.makeDetailed(),
       };
 
   ////// при ошибке навигации //////

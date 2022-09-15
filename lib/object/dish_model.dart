@@ -18,6 +18,7 @@ class DishModel extends ChangeNotifier {
       Hive.registerAdapter(DishAdapter());
     }
     final box = await Hive.openBox<Dish>('dish_box');
+
     _readBoxDishsFromHive(box);
     box.listenable().addListener(() {
       _readBoxDishsFromHive(box);
