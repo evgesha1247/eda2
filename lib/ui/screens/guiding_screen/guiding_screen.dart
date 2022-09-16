@@ -16,7 +16,6 @@ class GuidingScreen extends StatelessWidget {
           (mediaQuery < 370) ? const _FooterFlotingButtom() : null,
       bottomNavigationBar:
           (mediaQuery >= 370) ? const _FooterBottomBarWidget() : null,
-      backgroundColor: ThemeApp.kBGColor,
     );
   }
 }

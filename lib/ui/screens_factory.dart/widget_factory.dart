@@ -44,10 +44,7 @@ class ScreensFactory {
         create: (context) => FavoriteModel(),
         child: const FavoriteScreen(),
       );
-  Widget makeDetailed() => ChangeNotifierProvider(
-        create: (context) => DishDetailedModel(),
-        child: const DishDetailedScreen(),
-      );
+  Widget makeDetailed() => const DishDetailedScreen();
   //////////////////////////////////////
   /////////////////////////////////////
 }

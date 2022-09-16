@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'dish_detailed_model.dart';
 
 class DishDetailedScreen extends StatefulWidget {
@@ -9,17 +9,33 @@ class DishDetailedScreen extends StatefulWidget {
 }
 
 class _DishDetailedScreenState extends State<DishDetailedScreen> {
-  DishDetailedModel? model;
+  DishDetailedModel? _model;
   @override
   void didChangeDependencies() {
-    if (model == null) {
-      final key = ModalRoute.of(context)!.settings.arguments as int;
-      model = DishDetailedModel(key: key);
+    if (_model == null) {
+      final dishKey = ModalRoute.of(context)!.settings.arguments as int;
+      _model = DishDetailedModel(dishKey: dishKey);
     }
-
     super.didChangeDependencies();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    final model = _model;
+    if (model != null) {
+      return ChangeNotifierProvider(
+        create: (context) => model,
+        child: DishDetaild(model: model),
+      );
+    } else {
+      return const Center(child: CircularProgressIndicator());
+    }
+  }
+}
+
+class DishDetaild extends StatelessWidget {
+  const DishDetaild({Key? key, this.model}) : super(key: key);
+  final model;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

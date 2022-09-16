@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:text/object/dish_model.dart';
 
 import '../../../object/dish_object.dart';
+import '../../navigations/main_navigation.dart';
 
 class MenuModel extends DishModel {
   void showDetail(BuildContext context, int index) async {
@@ -10,7 +11,8 @@ class MenuModel extends DishModel {
       Hive.registerAdapter(DishAdapter());
     }
     final box = await Hive.openBox<Dish>('dish_box');
-    final key = box.keyAt(index);
-    await Navigator.of(context).pushNamed('/guiding/details', arguments: key);
+    final dishKey = box.keyAt(index);
+    await Navigator.of(context)
+        .pushNamed(MainNavigationRouteName.details, arguments: dishKey);
   }
 }
