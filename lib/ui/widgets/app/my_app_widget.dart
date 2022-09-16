@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:text/ui/navigations/main_navigation.dart';
+import 'package:text/ui/theme/theme_app.dart';
 
 class MyAppWidget extends StatelessWidget {
   const MyAppWidget({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class MyAppWidget extends StatelessWidget {
     final mainNavigation = MainNavigation();
     return MaterialApp(
       title: 'flutter app',
-      theme: ThemeData(),
+      theme: ThemeData(scaffoldBackgroundColor: ThemeApp.kBGColor),
       routes: mainNavigation.routes,
       initialRoute: mainNavigation.initialRoute,
       onGenerateRoute: mainNavigation.onGenerateRoute,

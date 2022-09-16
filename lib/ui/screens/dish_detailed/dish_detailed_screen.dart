@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text/ui/theme/theme_app.dart';
 import 'dish_detailed_model.dart';
 
 class DishDetailedScreen extends StatefulWidget {
@@ -39,7 +40,59 @@ class DishDetaild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(ThemeApp.kInterval),
+            child: Stack(
+              children: [
+                //////////картинка///////////////
+
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  width: double.infinity,
+                  child: Image.asset(
+                    'assets/imgs/food5.png',
+                    fit: BoxFit.contain,
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
+
+                //////////кнопка назад ///////////////
+
+                GestureDetector(
+                  onTap: () => model.showMenu(context),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: ThemeApp.kFrontColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(ThemeApp.kRadius),
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(ThemeApp.kInterval),
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: ThemeApp.kAccent,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: ThemeApp.kFrontColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(ThemeApp.kRadius),
+                ),
+              ),
+              child: Text('qweqwe'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
