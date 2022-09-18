@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/dish_model.dart';
-import 'package:text/ui/screens/dish_detailed/dish_detailed_model.dart';
 import 'package:text/ui/screens/dish_detailed/dish_detailed_screen.dart';
 import 'package:text/ui/screens/menu_screnn/menu_model.dart';
 import 'package:text/ui/screens/menu_screnn/menu_screen.dart';

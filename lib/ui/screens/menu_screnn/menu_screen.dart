@@ -31,6 +31,7 @@ class _MenuBodyWidget extends StatelessWidget {
           maxCrossAxisExtent: 346.0,
           // childAspectRatio: .8,
           mainAxisExtent: 250,
+          mainAxisSpacing: 10,
         ),
         itemBuilder: (context, index) => (dishs.isNotEmpty)
             ? _CartItemWidget(index: index)

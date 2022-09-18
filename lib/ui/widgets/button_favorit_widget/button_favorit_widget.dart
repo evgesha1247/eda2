@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../object/dish_model.dart';
-import '../../screens/menu_screnn/menu_model.dart';
 
 class ButtonFavoritWidget extends StatelessWidget {
   const ButtonFavoritWidget({super.key, required this.index});
@@ -10,7 +9,7 @@ class ButtonFavoritWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isFovarit = context.watch<DishModel>().items[index].isFovarit;
-    final modelMenu = context.watch<MenuModel>();
+    //  final modelMenu = context.watch<MenuModel>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
