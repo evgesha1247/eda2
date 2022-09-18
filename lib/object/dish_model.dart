@@ -9,6 +9,13 @@ class DishModel extends ChangeNotifier {
   var _items = <Dish>[];
   List<Dish> get items => _items.toList();
   void _readBoxDishsFromHive(Box<Dish> box) {
+    // final a = Dish(
+    //     name: 'qweqwe',
+    //     price: 89.4,
+    //     imgUrl: 'assets/imgs/food3.png',
+    //     description:
+    //         'orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu');
+    // box.add(a);
     _items = box.values.toList();
     notifyListeners();
   }
@@ -18,8 +25,8 @@ class DishModel extends ChangeNotifier {
       Hive.registerAdapter(DishAdapter());
     }
     final box = await Hive.openBox<Dish>('dish_box');
-
     _readBoxDishsFromHive(box);
+
     box.listenable().addListener(() {
       _readBoxDishsFromHive(box);
     });

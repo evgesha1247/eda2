@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:text/ui/screens/menu_screnn/menu_model.dart';
 import '../../../object/dish_model.dart';
 import '../../theme/theme_app.dart';
+import '../../widgets/button_favorit_widget/button_favorit_widget.dart';
 import '../../widgets/header_widget/header_widget.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -27,7 +28,9 @@ class _MenuBodyWidget extends StatelessWidget {
       child: GridView.builder(
         itemCount: dishs.length,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 345.0,
+          maxCrossAxisExtent: 346.0,
+          // childAspectRatio: .8,
+          mainAxisExtent: 250,
         ),
         itemBuilder: (context, index) => (dishs.isNotEmpty)
             ? _CartItemWidget(index: index)
@@ -79,7 +82,7 @@ class _CartItemContainerWidget extends StatelessWidget {
           borderRadius: const BorderRadius.all(
             Radius.circular(ThemeApp.kRadius),
           ),
-          image: MediaQuery.of(context).size.width < 370
+          image: MediaQuery.of(context).size.width <= 370
               ? DecorationImage(
                   image: AssetImage(itemImgUrl),
                   fit: BoxFit.contain,
@@ -97,36 +100,13 @@ class _CartItemContainerContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(ThemeApp.kInterval),
       child: Column(
         children: [
-          _CartItemButtonFavoritWidget(index: index),
+          ButtonFavoritWidget(index: index),
           _CartItemContainerTextWidget(index: index),
         ],
       ),
-    );
-  }
-}
-
-class _CartItemButtonFavoritWidget extends StatelessWidget {
-  const _CartItemButtonFavoritWidget({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    final isFovarit = context.watch<DishModel>().items[index].isFovarit;
-    final modelMenu = context.watch<MenuModel>();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
-          child: Icon(
-            Icons.favorite_border_sharp,
-            color: isFovarit ? Colors.red : Colors.grey,
-          ),
-          onTap: () => {},
-        )
-      ],
     );
   }
 }
@@ -137,36 +117,77 @@ class _CartItemContainerTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = context.read<DishModel>().items[index];
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              item.name,
-              style: const TextStyle(
-                color: ThemeApp.kWhite,
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                letterSpacing: 2,
-              ),
-            ),
-          ),
-          const Divider(color: Colors.grey, thickness: .3),
-          Text(
-            '\$ ${item.price}',
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 30.0),
+          child: Text(
+            item.name,
             style: const TextStyle(
               color: ThemeApp.kWhite,
               fontSize: 18,
-              fontWeight: FontWeight.normal,
-              letterSpacing: 2,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 3,
             ),
           ),
-        ],
-      ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Text(
+                item.description,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: ThemeApp.kWhite,
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  letterSpacing: 2,
+                ),
+              ),
+            ),
+            Text(
+              'more',
+              style: TextStyle(
+                color: ThemeApp.kAccent,
+                fontSize: (item.description.length > 30) ? 14 : 0,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 1,
+              ),
+            ),
+          ],
+        ),
+        const Divider(color: Colors.grey, thickness: .3),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const FittedBox(
+              child: Text(
+                'цена : ',
+                style: TextStyle(
+                  color: ThemeApp.kWhite,
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                  letterSpacing: 1,
+                ),
+              ),
+            ),
+            Text(
+              '\$ ${item.price}',
+              style: const TextStyle(
+                color: ThemeApp.kWhite,
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+                letterSpacing: 1,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -180,8 +201,9 @@ class _CartItemImgWidget extends StatelessWidget {
     return Positioned(
       child: Image.asset(
         itemImgUrl,
-        fit: BoxFit.cover,
-        width: 110,
+        fit: BoxFit.contain,
+        width: 130,
+        height: 100,
       ),
     );
   }

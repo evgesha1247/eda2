@@ -22,11 +22,11 @@ class _DishDetailedScreenState extends State<DishDetailedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = _model;
+    DishDetailedModel? model = _model;
     if (model != null) {
       return ChangeNotifierProvider(
         create: (context) => model,
-        child: DishDetaild(model: model),
+        child: const DishDetaild(),
       );
     } else {
       return const Center(child: CircularProgressIndicator());
@@ -35,63 +35,129 @@ class _DishDetailedScreenState extends State<DishDetailedScreen> {
 }
 
 class DishDetaild extends StatelessWidget {
-  const DishDetaild({Key? key, this.model}) : super(key: key);
-  final model;
+  const DishDetaild({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(ThemeApp.kInterval),
-            child: Stack(
-              children: [
-                //////////картинка///////////////
-
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: double.infinity,
-                  child: Image.asset(
-                    'assets/imgs/food5.png',
-                    fit: BoxFit.contain,
-                    alignment: Alignment.topCenter,
-                  ),
-                ),
-
-                //////////кнопка назад ///////////////
-
-                GestureDetector(
-                  onTap: () => model.showMenu(context),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: ThemeApp.kFrontColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(ThemeApp.kRadius),
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(ThemeApp.kInterval),
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: ThemeApp.kAccent,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: ThemeApp.kFrontColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(ThemeApp.kRadius),
-                ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(ThemeApp.kInterval),
+          child: Column(
+            children: [
+              Stack(
+                children: const [
+                  _DishDetailedContainer(),
+                  _DishDetailedImg(),
+                  _DishDetailedButtonBack(),
+                ],
               ),
-              child: Text('qweqwe'),
-            ),
+              //   _DishDetailedDescriptions(),
+            ],
           ),
-        ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DishDetailedImg extends StatelessWidget {
+  const _DishDetailedImg({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final model = context.watch<DishDetailedModel>();
+    final imgUrl = model.dish?.imgUrl ?? 'assets/imgs/food2.png';
+    return Center(
+      child: Image.asset(
+        imgUrl,
+        height: 200,
+        width: MediaQuery.of(context).size.width * 0.6,
+        fit: BoxFit.contain,
+        alignment: Alignment.topCenter,
+      ),
+    );
+  }
+}
+
+class _DishDetailedContainer extends StatelessWidget {
+  const _DishDetailedContainer({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: ThemeApp.kFrontColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(ThemeApp.kRadius),
+        ),
+      ),
+      margin: const EdgeInsets.only(top: 60),
+      padding: const EdgeInsets.all(ThemeApp.kInterval),
+      child: const _DishDetailedText(),
+    );
+  }
+}
+
+class _DishDetailedText extends StatelessWidget {
+  const _DishDetailedText({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        Align(
+          alignment: Alignment.topRight,
+          child: Icon(Icons.bookmark_border, color: ThemeApp.kWhite),
+        ),
+        SizedBox(height: 60),
+        Text(
+          'Описание',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: ThemeApp.kWhite,
+            letterSpacing: 3,
+            fontSize: 24,
+          ),
+        ),
+        SizedBox(height: ThemeApp.kInterval),
+        Text(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing  Lorem ipsum dolor sit amet, consectetur adipiscing s',
+          style: TextStyle(
+            color: ThemeApp.kWhite,
+            fontSize: 18,
+            fontWeight: FontWeight.normal,
+            letterSpacing: 3,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DishDetailedButtonBack extends StatelessWidget {
+  const _DishDetailedButtonBack({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final model = context.read<DishDetailedModel>();
+    return GestureDetector(
+      onTap: () => model.showMenu(context),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: ThemeApp.kFrontColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(ThemeApp.kRadius),
+          ),
+        ),
+        padding: const EdgeInsets.only(
+          top: ThemeApp.kInterval,
+          bottom: ThemeApp.kInterval,
+          left: ThemeApp.kInterval + 10,
+          right: ThemeApp.kInterval,
+        ),
+        child: const Icon(
+          Icons.arrow_back_ios,
+          color: ThemeApp.kAccent,
+        ),
       ),
     );
   }
