@@ -119,7 +119,7 @@ class _DishDetailedContainerText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<DishDetailedModel>();
-    final title = model.dish?.name ?? 'qqqqqqq';
+    final title = model.dish?.name ?? '## название отсудствует ##';
     final price = model.dish?.price ?? 00;
 
     return Column(
@@ -131,7 +131,9 @@ class _DishDetailedContainerText extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(title, style: _style(size: 22, fW: FontWeight.w500)),
+            Expanded(
+                child:
+                    Text(title, style: _style(size: 22, fW: FontWeight.w500))),
             Container(
               decoration: _decoration(colors: ThemeApp.kAccent),
               child: Padding(

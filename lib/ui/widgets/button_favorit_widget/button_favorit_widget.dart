@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../object/cart_object.dart';
 import '../../../object/dish_object.dart';
 
 class ButtonFavoritWidget extends StatelessWidget {
@@ -8,7 +9,9 @@ class ButtonFavoritWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isFovarit = context.watch<DishModel>().items[index].isFovarit;
+    final dishItem = context.watch<DishModel>().items[index];
     //  final modelMenu = context.watch<MenuModel>();
+    final cart = context.read<CartModel>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,7 +21,14 @@ class ButtonFavoritWidget extends StatelessWidget {
             Icons.favorite_border_sharp,
             color: isFovarit ? Colors.red : Colors.grey,
           ),
-          onTap: () => {},
+          onTap: () {
+            cart.addItem(
+              dishId: dishItem.id,
+              price: dishItem.price,
+              name: dishItem.name,
+              imgUrl: dishItem.imgUrl,
+            );
+          },
         )
       ],
     );

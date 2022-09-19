@@ -126,6 +126,8 @@ class _CartItemContainerTextWidget extends StatelessWidget {
           padding: const EdgeInsets.only(top: 30.0),
           child: Text(
             item.name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: ThemeApp.kWhite,
               fontSize: 18,
