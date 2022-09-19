@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens/menu_screnn/menu_model.dart';
-import '../../../object/dish_model.dart';
+import '../../../object/dish_object.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/button_favorit_widget/button_favorit_widget.dart';
 import '../../widgets/header_widget/header_widget.dart';

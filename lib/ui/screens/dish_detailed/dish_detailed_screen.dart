@@ -120,6 +120,8 @@ class _DishDetailedContainerText extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.watch<DishDetailedModel>();
     final title = model.dish?.name ?? 'qqqqqqq';
+    final price = model.dish?.price ?? 00;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,7 +137,7 @@ class _DishDetailedContainerText extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(ThemeApp.kInterval),
                 child: Text(
-                  '200\$',
+                  '$price\$',
                   style: _style(
                     size: 18,
                     fW: FontWeight.normal,

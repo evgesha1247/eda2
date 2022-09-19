@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:text/ui/widgets/app/my_app_widget.dart';
+import 'ui/screens_factory.dart/widget_factory.dart';
 
 void main() async {
+  final factor = ScreensFactory();
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  runApp(const MyAppWidget());
+  runApp(factor.makeMainApp());
 }

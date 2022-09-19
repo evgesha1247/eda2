@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../object/dish_model.dart';
+import '../../../object/dish_object.dart';
 
 class ButtonFavoritWidget extends StatelessWidget {
   const ButtonFavoritWidget({super.key, required this.index});

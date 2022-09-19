@@ -45,15 +45,7 @@ class _PromoTextWidget extends StatelessWidget {
   const _PromoTextWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Hot Promo',
-      style: TextStyle(
-        color: ThemeApp.kWhite,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 3,
-      ),
-    );
+    return Text('Hot Promo', style: style(fS: 20, fW: FontWeight.bold));
   }
 }
 
@@ -99,26 +91,17 @@ class _ContainerPromoTextWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: const [
-        Text('seafood noodles',
-            style: TextStyle(
-                color: ThemeApp.kWhite,
-                fontSize: 18,
-                fontWeight: FontWeight.normal,
-                letterSpacing: 2)),
+      children: [
+        Text('seafood noodles', style: style(fS: 18)),
         Text('Lorem ipsum dolor sit amet, consectetur adipiscing ',
-            style: TextStyle(
-                color: ThemeApp.kWhite,
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 2)),
-        Text('\$ 9.99',
-            style: TextStyle(
-                color: ThemeApp.kWhite,
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 2))
+            style: style(fS: 14, fW: FontWeight.w400)),
+        Text('\$ 9.99', style: style(fS: 20, fW: FontWeight.w400)),
       ],
     );
   }
+}
+
+style({double fS = 18, FontWeight fW = FontWeight.normal}) {
+  return TextStyle(
+      color: ThemeApp.kWhite, fontSize: fS, fontWeight: fW, letterSpacing: 2);
 }
