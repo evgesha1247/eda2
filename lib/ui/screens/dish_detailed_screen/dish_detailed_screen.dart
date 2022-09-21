@@ -162,7 +162,6 @@ class _ButtBookmark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
       child: const Align(
         alignment: Alignment.topRight,
         child: Icon(
