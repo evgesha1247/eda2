@@ -7,6 +7,7 @@ abstract class MainNavigationRouteName {
   static const guiding = '/guiding';
   static const auth = '/auth';
   static const details = '/guiding/details';
+  static const cart = '/guiding/cart';
 }
 
 class MainNavigation {
@@ -15,10 +16,12 @@ class MainNavigation {
   final guiding = MainNavigationRouteName.guiding;
   final auth = MainNavigationRouteName.auth;
   final details = MainNavigationRouteName.details;
+  final cart = MainNavigationRouteName.cart;
   Map<String, WidgetBuilder> get routes => <String, WidgetBuilder>{
         guiding: (_) => _widgetFactory.makeGuiding(),
         auth: (_) => _widgetFactory.makeAuth(),
         details: (_) => _widgetFactory.makeDetailed(),
+        cart: (_) => _widgetFactory.makeCart(),
       };
 
   ////// при ошибке навигации //////

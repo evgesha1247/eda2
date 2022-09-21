@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text/ui/widgets/header_widget/header_model.dart';
 import '../../screens/guiding_screen/guiding_model.dart';
+import '../../screens_factory.dart/widget_factory.dart';
 import '../../theme/theme_app.dart';
 
 class HederWidget extends StatefulWidget {
@@ -72,30 +74,14 @@ class _FilterButtonWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(ThemeApp.kRadius)),
     );
-    final currentIndexTab = context.select(
-      (GuidingScreenModel e) => e.currentIndexTab,
+    final model = context.read<HeaderModel>();
+    return ElevatedButton(
+      style: styleBut,
+      onPressed: () => model.showCart(context),
+      child: const SizedBox(
+        height: ThemeApp.kHeight,
+        child: Icon(Icons.tune, color: ThemeApp.kAccent),
+      ),
     );
-    button(Function() colBak) {
-      return ElevatedButton(
-        style: styleBut,
-        onPressed: colBak,
-        child: const SizedBox(
-          height: ThemeApp.kHeight,
-          child: Icon(Icons.tune, color: ThemeApp.kAccent),
-        ),
-      );
-    }
-
-    Widget getColBak(indexTab) {
-      switch (indexTab) {
-        case 0:
-          return button(() => print('1'));
-        case 1:
-          return button(() => print('2'));
-      }
-      return const Text('data');
-    }
-
-    return getColBak(currentIndexTab);
   }
 }

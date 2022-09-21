@@ -23,9 +23,19 @@ class CartModel extends ChangeNotifier {
   UnmodifiableMapView<String, Cart> get cartItem =>
       UnmodifiableMapView(_cartItem);
   final _delivery = 5.0;
-
   double get delivery => _delivery;
+  namber(int dishKey) {
+    return _cartItem.length > dishKey
+        ? _cartItem.values.elementAt(dishKey).number
+        : 0;
+  }
 
+  subTotalOneDish(int dishKey) {
+    return _cartItem.values.elementAt(dishKey).number *
+        _cartItem.values.elementAt(dishKey).price;
+  }
+
+  var toggAdd = false;
   double get subTotal {
     var subTotal = 0.0;
     _cartItem.forEach(
@@ -36,6 +46,9 @@ class CartModel extends ChangeNotifier {
     return subTotal;
   }
 
+  void togg() {
+    toggAdd = !toggAdd;
+  }
   //get total => (_delivery + _subTotal).toStringAsFixed(2);
 
   void addItem({dishId, price, name, imgUrl}) {
@@ -106,5 +119,9 @@ class CartModel extends ChangeNotifier {
   void clear() {
     _cartItem = {};
     notifyListeners();
+  }
+
+  void showMenu(context) {
+    Navigator.of(context).pop();
   }
 }

@@ -9,21 +9,30 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: cart.cartItem.length,
-                itemBuilder: (context, index) {
-                  return _CartRows(index: index);
-                },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Cart'),
+        centerTitle: true,
+        leading: const _CartButtonBack(),
+        backgroundColor: ThemeApp.kBGColor,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: cart.cartItem.length,
+                  itemBuilder: (context, index) {
+                    return _CartRows(index: index);
+                  },
+                ),
               ),
-            ),
-            const _BottnCart(),
-          ],
+              const _BottnCart(),
+            ],
+          ),
         ),
       ),
     );
@@ -166,6 +175,30 @@ class _BottnCart extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _CartButtonBack extends StatelessWidget {
+  const _CartButtonBack({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final model = context.read<CartModel>();
+    return GestureDetector(
+      onTap: () => model.showMenu(context),
+      child: Container(
+        decoration: ThemeApp.decoration(),
+        padding: const EdgeInsets.only(
+          top: ThemeApp.kInterval,
+          bottom: ThemeApp.kInterval,
+          left: ThemeApp.kInterval + 10,
+          right: ThemeApp.kInterval,
+        ),
+        child: const Icon(
+          Icons.arrow_back_ios,
+          color: ThemeApp.kAccent,
+        ),
       ),
     );
   }

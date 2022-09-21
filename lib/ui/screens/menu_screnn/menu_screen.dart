@@ -3,19 +3,19 @@ import 'package:provider/provider.dart';
 import 'package:text/ui/screens/menu_screnn/menu_model.dart';
 import '../../../object/cart_object.dart';
 import '../../../object/dish_object.dart';
+import '../../screens_factory.dart/widget_factory.dart';
 import '../../theme/theme_app.dart';
-
-import '../../widgets/header_widget/header_widget.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
+    final factor = ScreensFactory();
     return Column(
       children: mediaQuery < 370
           ? [const _MenuBodyWidget()]
-          : [const HederWidget(), const _MenuBodyWidget()],
+          : [factor.makeHeder(), const _MenuBodyWidget()],
     );
   }
 }

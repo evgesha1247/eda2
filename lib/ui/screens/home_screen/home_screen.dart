@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import '../../theme/theme_app.dart';
-import '../../widgets/header_widget/header_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   @override
   Widget build(context) {
     final mediaQuery = MediaQuery.of(context).size.width;
+    final factor = ScreensFactory();
     return mediaQuery < 310
         ? const _BodyWidget()
-        : Column(children: const [HederWidget(), _BodyWidget()]);
+        : Column(children: [factor.makeHeder(), const _BodyWidget()]);
   }
 }
 

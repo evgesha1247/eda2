@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/theme/theme_app.dart';
+import '../../../object/cart_object.dart';
+import '../../../object/dish_object.dart';
 import 'dish_detailed_model.dart';
 
 class DishDetailedScreen extends StatefulWidget {
@@ -202,6 +204,9 @@ class _DishDetailedButtonBar extends StatelessWidget {
   const _DishDetailedButtonBar({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final dishModel = context.watch<DishDetailedModel>();
+    final cartModel = context.watch<CartModel>();
+    final number = cartModel.namber(dishModel.dishKey);
     return Container(
       width: double.infinity,
       decoration: ThemeApp.decoration(),
@@ -221,18 +226,29 @@ class _DishDetailedButtonBar extends StatelessWidget {
                       color: ThemeApp.kWhite,
                     ),
                     const SizedBox(width: ThemeApp.kInterval),
-                    Text('1', style: ThemeApp.style()),
+                    Text('$number', style: ThemeApp.style()),
                     const SizedBox(width: ThemeApp.kInterval),
                     const Icon(Icons.remove_circle_outline,
                         size: 22, color: ThemeApp.kWhite)
                   ],
                 ),
-                Row(children: [Text('total : 200\$ ', style: ThemeApp.style())])
+                Row(children: [
+                  Text(
+                      'total :${cartModel.subTotalOneDish(dishModel.dishKey).toStringAsFixed(2)}\$ ',
+                      style: ThemeApp.style())
+                ])
               ],
             ),
             const SizedBox(height: ThemeApp.kInterval),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                cartModel.addItem(
+                  dishId: dishModel.dish?.id,
+                  price: dishModel.dish?.price,
+                  name: dishModel.dish?.name,
+                  imgUrl: dishModel.dish?.imgUrl,
+                );
+              },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 width: double.infinity,
