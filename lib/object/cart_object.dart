@@ -22,16 +22,21 @@ class CartModel extends ChangeNotifier {
   Map<String, Cart> _cartItem = {};
   UnmodifiableMapView<String, Cart> get cartItem =>
       UnmodifiableMapView(_cartItem);
+  final _delivery = 5.0;
 
-  double get total {
-    var total = 0.0;
+  double get delivery => _delivery;
+
+  double get subTotal {
+    var subTotal = 0.0;
     _cartItem.forEach(
       (key, item) {
-        total += item.price + item.number;
+        subTotal += item.price * item.number;
       },
     );
-    return total;
+    return subTotal;
   }
+
+  //get total => (_delivery + _subTotal).toStringAsFixed(2);
 
   void addItem({dishId, price, name, imgUrl}) {
     if (_cartItem.containsKey(dishId)) {

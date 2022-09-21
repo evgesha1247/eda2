@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens/menu_screnn/menu_model.dart';
+import '../../../object/cart_object.dart';
 import '../../../object/dish_object.dart';
 import '../../theme/theme_app.dart';
-import '../../widgets/button_favorit_widget/button_favorit_widget.dart';
+
 import '../../widgets/header_widget/header_widget.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -104,10 +105,40 @@ class _CartItemContainerContentWidget extends StatelessWidget {
       padding: const EdgeInsets.all(ThemeApp.kInterval),
       child: Column(
         children: [
-          ButtonFavoritWidget(index: index),
+          _ButtonFavoritWidget(index: index),
           _CartItemContainerTextWidget(index: index),
         ],
       ),
+    );
+  }
+}
+
+class _ButtonFavoritWidget extends StatelessWidget {
+  const _ButtonFavoritWidget({required this.index});
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    final dishItem = context.watch<DishModel>().items[index];
+    final cart = context.read<CartModel>();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          child: Icon(
+            Icons.favorite_border_sharp,
+            color: dishItem.isFovarit ? Colors.red : Colors.grey,
+          ),
+          onTap: () {
+            cart.addItem(
+              dishId: dishItem.id,
+              price: dishItem.price,
+              name: dishItem.name,
+              imgUrl: dishItem.imgUrl,
+            );
+          },
+        )
+      ],
     );
   }
 }

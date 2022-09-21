@@ -10,4 +10,27 @@ abstract class ThemeApp {
   static const kRadius = 12.0;
   static const kInterval = 12.0;
   static const kHeight = 33.0;
+
+  static decoration({Color colors = kFrontColor}) {
+    return BoxDecoration(
+      color: colors,
+      borderRadius: const BorderRadius.all(
+        Radius.circular(ThemeApp.kRadius),
+      ),
+    );
+  }
+
+  static style({
+    double size = 16,
+    FontWeight fW = FontWeight.normal,
+    Color colors = kWhite,
+  }) {
+    return TextStyle(
+      color: colors,
+      fontSize: size,
+      fontWeight: fW,
+      letterSpacing: 1.5,
+      wordSpacing: 3.5,
+    );
+  }
 }

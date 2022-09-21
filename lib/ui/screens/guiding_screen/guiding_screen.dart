@@ -36,7 +36,7 @@ class _GuidingBodyWidget extends StatelessWidget {
           children: [
             factor.makeHome(),
             factor.makeMenu(),
-            factor.makeFavorit(),
+            factor.makeCart(),
             const Text(''),
           ],
         ),
@@ -66,7 +66,7 @@ class _FooterBottomBarWidget extends StatelessWidget {
       items: <BottomNavBarItem>[
         bottomItem('Home', Icons.home, currentIndexTab),
         bottomItem('Menu', Icons.restaurant_menu_rounded, currentIndexTab),
-        bottomItem('Favorite', Icons.favorite, currentIndexTab),
+        bottomItem('Cart', Icons.shopping_cart, currentIndexTab),
         bottomItem('Profile', Icons.settings, currentIndexTab),
       ],
     );
@@ -74,7 +74,7 @@ class _FooterBottomBarWidget extends StatelessWidget {
 }
 
 bottomItem(String text, IconData icon, int index) {
-  final listIntActiveColor = [0xffF7C701, 0xffff9a76, 0xfff52e63, 0xffd49a89];
+  final listIntActiveColor = [0xffF7C701, 0xffff9a76, 0xfff2d6b4, 0xffd49a89];
   return BottomNavBarItem(
     title: text,
     icon: Icon(icon),
