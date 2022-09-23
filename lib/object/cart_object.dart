@@ -24,23 +24,34 @@ class CartModel extends ChangeNotifier {
       UnmodifiableMapView(_cartItem);
   final _delivery = 5.0;
   double get delivery => _delivery;
-  namber(int dishKey) {
-    return _cartItem.length > dishKey
-        ? _cartItem.values.elementAt(dishKey).number
-        : 0;
-  }
-
-  subTotalOneDish(int dishKey) {
-    return _cartItem.values.elementAt(dishKey).number *
-        _cartItem.values.elementAt(dishKey).price;
+  int namber(String dishKey) {
+    var numberD = 0;
+    _cartItem.forEach(
+      (key, item) {
+        if (key == dishKey) numberD = item.number;
+      },
+    );
+    return numberD;
   }
 
   var toggAdd = false;
-  double get subTotal {
+  double get total {
+    var total = 0.0;
+    _cartItem.forEach(
+      (key, item) {
+        total += item.price * item.number;
+      },
+    );
+    return total;
+  }
+
+  double subTotal(String dishKey) {
     var subTotal = 0.0;
     _cartItem.forEach(
       (key, item) {
-        subTotal += item.price * item.number;
+        if (key == dishKey) {
+          subTotal += item.price * item.number;
+        }
       },
     );
     return subTotal;

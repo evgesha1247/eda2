@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/cart_object.dart';
 import 'package:text/ui/theme/theme_app.dart';
-import '../menu_screnn/menu_model.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -10,29 +9,32 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cart'),
-        centerTitle: true,
-        leading: const _CartButtonBack(),
-        backgroundColor: ThemeApp.kBGColor,
-        elevation: 0,
-      ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: cart.cartItem.length,
-                  itemBuilder: (context, index) {
-                    return _CartRows(index: index);
-                  },
+        child: Column(
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(ThemeApp.kInterval),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: _CartButtonBack(),
+                  ),
                 ),
+                Text('Cart', style: ThemeApp.style(size: 20)),
+              ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: cart.cartItem.length,
+                itemBuilder: (context, index) {
+                  return _CartRows(index: index);
+                },
               ),
-              const _BottnCart(),
-            ],
-          ),
+            ),
+            const _BottnCart(),
+          ],
         ),
       ),
     );
@@ -114,7 +116,7 @@ class _BottnCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
-    final total = (cart.subTotal + cart.delivery).toStringAsFixed(2);
+    final total = (cart.total + cart.delivery).toStringAsFixed(2);
     return Container(
       decoration: ThemeApp.decoration(),
       padding: const EdgeInsets.symmetric(
@@ -128,12 +130,12 @@ class _BottnCart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('sub-total  ', style: ThemeApp.style()),
-              Text(cart.subTotal.toStringAsFixed(2), style: ThemeApp.style()),
+              Text(cart.total.toStringAsFixed(2), style: ThemeApp.style()),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: cart.subTotal == 0
+            children: cart.total == 0
                 ? []
                 : [
                     Text('delivery ', style: ThemeApp.style()),
@@ -151,9 +153,7 @@ class _BottnCart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('all total ', style: ThemeApp.style()),
-              cart.subTotal == 0
-                  ? Text('0', style: ThemeApp.style())
-                  : Text(total, style: ThemeApp.style()),
+              Text(total, style: ThemeApp.style()),
             ],
           ),
           const SizedBox(height: ThemeApp.kInterval),

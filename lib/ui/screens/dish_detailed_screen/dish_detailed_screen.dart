@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/theme/theme_app.dart';
 import '../../../object/cart_object.dart';
-import '../../../object/dish_object.dart';
 import 'dish_detailed_model.dart';
 
 class DishDetailedScreen extends StatefulWidget {
@@ -205,7 +204,9 @@ class _DishDetailedButtonBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final dishModel = context.watch<DishDetailedModel>();
     final cartModel = context.watch<CartModel>();
-    final number = cartModel.namber(dishModel.dishKey);
+    final dishkey = dishModel.dish?.id ?? '';
+    final number = cartModel.namber(dishkey);
+    final subTotal = cartModel.subTotal(dishkey).toStringAsFixed(2);
     return Container(
       width: double.infinity,
       decoration: ThemeApp.decoration(),
@@ -219,22 +220,35 @@ class _DishDetailedButtonBar extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(
-                      Icons.add_circle_outline,
-                      size: 22,
-                      color: ThemeApp.kWhite,
+                    GestureDetector(
+                      onTap: () {
+                        cartModel.addItem(
+                          dishId: dishModel.dish?.id,
+                          price: dishModel.dish?.price,
+                          name: dishModel.dish?.name,
+                          imgUrl: dishModel.dish?.imgUrl,
+                        );
+                      },
+                      child: const Icon(
+                        Icons.add_circle_outline,
+                        size: 22,
+                        color: ThemeApp.kWhite,
+                      ),
                     ),
                     const SizedBox(width: ThemeApp.kInterval),
                     Text('$number', style: ThemeApp.style()),
                     const SizedBox(width: ThemeApp.kInterval),
-                    const Icon(Icons.remove_circle_outline,
-                        size: 22, color: ThemeApp.kWhite)
+                    GestureDetector(
+                      onTap: () {
+                        cartModel.updataSubOne(dishkey);
+                      },
+                      child: const Icon(Icons.remove_circle_outline,
+                          size: 22, color: ThemeApp.kWhite),
+                    )
                   ],
                 ),
                 Row(children: [
-                  Text(
-                      'total :${cartModel.subTotalOneDish(dishModel.dishKey).toStringAsFixed(2)}\$ ',
-                      style: ThemeApp.style())
+                  Text('total : $subTotal\$ ', style: ThemeApp.style())
                 ])
               ],
             ),
