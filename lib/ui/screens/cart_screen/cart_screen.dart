@@ -52,11 +52,8 @@ class _CartRows extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartModel = context.watch<CartModel>();
     final dishkey = cartModel.cartItem.entries.toList()[index].key;
-    //   final dishModel = context.watch<DishModel>();
-    //  final dishkey = cartModel.cartItem.values.toList()[index].id;
+
     void doNothing(BuildContext context) {
-      print(dishkey);
-      print(cartModel.cartItem.keys);
       cartModel.delete(dishkey);
     }
 
@@ -66,9 +63,7 @@ class _CartRows extends StatelessWidget {
         key: const ValueKey(0),
         endActionPane: ActionPane(
           motion: const DrawerMotion(),
-          dismissible: DismissiblePane(onDismissed: () {
-            //  cartModel.delete(dishkey);
-          }),
+          dismissible: DismissiblePane(onDismissed: () {}),
           children: [
             SlidableAction(
               spacing: 0,
@@ -76,7 +71,9 @@ class _CartRows extends StatelessWidget {
               foregroundColor: Colors.white,
               icon: Icons.delete_outline_rounded,
               label: 'Delete',
-              onPressed: doNothing,
+              onPressed: (BuildContext context) {
+                cartModel.delete(dishkey);
+              },
             ),
           ],
         ),
@@ -149,7 +146,7 @@ class _BottnCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
-    final total = (cart.total + cart.delivery).toStringAsFixed(2);
+    final promotions = cart.promotions();
     return Container(
       decoration: ThemeApp.decoration(),
       padding: const EdgeInsets.symmetric(
@@ -166,15 +163,14 @@ class _BottnCart extends StatelessWidget {
               Text(cart.total.toStringAsFixed(2), style: ThemeApp.style()),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: cart.total == 0
-                ? []
-                : [
-                    Text('delivery ', style: ThemeApp.style()),
-                    Text(cart.delivery.toString(), style: ThemeApp.style()),
-                  ],
-          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            cart.total > 3000
+                ? Text('save -15%', style: ThemeApp.style())
+                : cart.total > 1000
+                    ? Text('delivery ', style: ThemeApp.style())
+                    : Text('delivery ', style: ThemeApp.style()),
+            Text(promotions.toStringAsFixed(2), style: ThemeApp.style())
+          ]),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
             child: Divider(
@@ -186,7 +182,8 @@ class _BottnCart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('all total ', style: ThemeApp.style()),
-              Text(total, style: ThemeApp.style()),
+              Text((cart.total + promotions).toString(),
+                  style: ThemeApp.style()),
             ],
           ),
           const SizedBox(height: ThemeApp.kInterval),

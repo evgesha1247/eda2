@@ -23,7 +23,18 @@ class CartModel extends ChangeNotifier {
   UnmodifiableMapView<String, Cart> get cartItem =>
       UnmodifiableMapView(_cartItem);
   final _delivery = 5.0;
+
   double get delivery => _delivery;
+  promotions() {
+    if (total > 3000) {
+      return 0 - total / 100 * 15;
+    } else if (total > 1000) {
+      return 0;
+    } else if (total > 0) {
+      return delivery;
+    }
+    return 0;
+  }
 
   int namber(String dishKey) {
     var numberD = 0;
