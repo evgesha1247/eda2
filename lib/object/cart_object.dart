@@ -24,6 +24,7 @@ class CartModel extends ChangeNotifier {
       UnmodifiableMapView(_cartItem);
   final _delivery = 5.0;
   double get delivery => _delivery;
+
   int namber(String dishKey) {
     var numberD = 0;
     _cartItem.forEach(

@@ -88,12 +88,4 @@ class DishModel extends ChangeNotifier {
       _readBoxDishsFromHive(box);
     });
   }
-
-  void addToBox() async {
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(DishAdapter());
-    }
-    final box = await Hive.openBox<Dish>('dish_box');
-    box.close();
-  }
 }

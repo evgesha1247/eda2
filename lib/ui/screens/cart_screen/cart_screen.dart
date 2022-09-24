@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/cart_object.dart';
 import 'package:text/ui/theme/theme_app.dart';
+
+import '../../../object/dish_object.dart';
+import '../dish_detailed_screen/dish_detailed_model.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -46,16 +50,45 @@ class _CartRows extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    final cartModel = context.watch<CartModel>();
+    final dishkey = cartModel.cartItem.entries.toList()[index].key;
+    //   final dishModel = context.watch<DishModel>();
+    //  final dishkey = cartModel.cartItem.values.toList()[index].id;
+    void doNothing(BuildContext context) {
+      print(dishkey);
+      print(cartModel.cartItem.keys);
+      cartModel.delete(dishkey);
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: ThemeApp.kInterval),
-      child: Container(
-        decoration: ThemeApp.decoration(),
-        clipBehavior: Clip.hardEdge,
-        child: Row(
+      child: Slidable(
+        key: const ValueKey(0),
+        endActionPane: ActionPane(
+          motion: const DrawerMotion(),
+          dismissible: DismissiblePane(onDismissed: () {
+            //  cartModel.delete(dishkey);
+          }),
           children: [
-            _CartImg(index: index),
-            _CartContent(index: index),
+            SlidableAction(
+              spacing: 0,
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.white,
+              icon: Icons.delete_outline_rounded,
+              label: 'Delete',
+              onPressed: doNothing,
+            ),
           ],
+        ),
+        child: Container(
+          decoration: ThemeApp.decoration(),
+          clipBehavior: Clip.hardEdge,
+          child: Row(
+            children: [
+              _CartImg(index: index),
+              _CartContent(index: index),
+            ],
+          ),
         ),
       ),
     );
