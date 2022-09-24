@@ -115,10 +115,7 @@ class _CartContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartModel>();
-    // final modelMenu = context.watch<MenuModel>();
-    final name = cart.cartItem.values.elementAt(index).name;
-    final price = cart.cartItem.values.elementAt(index).price.toString();
-    final number = cart.cartItem.values.elementAt(index).number.toString();
+    final cartItems = cart.cartItem.values.elementAt(index);
     return Expanded(
       flex: 2,
       child: Padding(
@@ -126,12 +123,13 @@ class _CartContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(name, style: ThemeApp.style(size: 22)),
+            Text(cartItems.name, style: ThemeApp.style(size: 22)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(price.toString(), style: ThemeApp.style(size: 22)),
-                Text('ₓ$number', style: ThemeApp.style(size: 22)),
+                Text(cartItems.price.toString(),
+                    style: ThemeApp.style(size: 22)),
+                Text('ₓ${cartItems.number}', style: ThemeApp.style(size: 22)),
               ],
             ),
           ],
@@ -188,7 +186,7 @@ class _BottnCart extends StatelessWidget {
           ),
           const SizedBox(height: ThemeApp.kInterval),
           GestureDetector(
-            onTap: () {},
+            onTap: () => cart.clear(),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
               width: double.infinity,

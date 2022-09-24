@@ -121,7 +121,7 @@ class CartModel extends ChangeNotifier {
   }
 
   void updataSubOne(dishId) {
-    if (_cartItem[dishId]!.number < 2) {
+    if ((_cartItem[dishId]?.number ?? 0) < 2) {
       delete(dishId);
     } else {
       _cartItem.update(

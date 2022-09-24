@@ -118,24 +118,23 @@ class _ButtonFavoritWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final dishItem = context.watch<DishModel>().items[index];
-    final cart = context.read<CartModel>();
+    final dishItem = context.watch<DishModel>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          child: Icon(
-            Icons.favorite_border_sharp,
-            color: dishItem.isFovarit ? Colors.red : Colors.grey,
-          ),
+          child: dishItem.items[index].isFovarit
+              ? const Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                )
+              : const Icon(
+                  Icons.favorite_border,
+                  color: Colors.grey,
+                ),
           onTap: () {
-            cart.addItem(
-              dishId: dishItem.id,
-              price: dishItem.price,
-              name: dishItem.name,
-              imgUrl: dishItem.imgUrl,
-            );
+            dishItem.toggFovarit(index);
           },
         )
       ],

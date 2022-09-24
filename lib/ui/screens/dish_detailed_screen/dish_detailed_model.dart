@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:text/ui/navigations/main_navigation.dart';
+import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 
 import '../../../object/dish_object.dart';
 
@@ -15,6 +18,16 @@ class DishDetailedModel extends ChangeNotifier {
 
   void showMenu(context) {
     Navigator.of(context).pop();
+  }
+
+  void showCart(context) {
+    Navigator.of(context).pushNamed(MainNavigation().cart);
+  }
+
+  void toggFovarit() {
+    _dish!.isFovarit = !_dish!.isFovarit;
+    _dish!.save();
+    notifyListeners();
   }
 
   void _load() async {

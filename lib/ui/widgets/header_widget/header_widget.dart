@@ -78,7 +78,7 @@ class _FilterButtonWidget extends StatelessWidget {
       onPressed: () => model.showCart(context),
       child: const SizedBox(
         height: ThemeApp.kHeight,
-        child: Icon(Icons.tune, color: ThemeApp.kAccent),
+        child: Icon(Icons.shopping_cart, color: ThemeApp.kAccent),
       ),
     );
   }

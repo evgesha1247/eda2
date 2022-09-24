@@ -160,13 +160,18 @@ class _ButtBookmark extends StatelessWidget {
   const _ButtBookmark({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<DishDetailedModel>();
+    final isFovarit = model.dish?.isFovarit ?? false;
     return GestureDetector(
-      child: const Align(
+      onTap: () {
+        model.toggFovarit();
+        //print(model.dish?.isFovarit);
+      },
+      child: Align(
         alignment: Alignment.topRight,
-        child: Icon(
-          Icons.bookmark_border,
-          color: ThemeApp.kWhite,
-        ),
+        child: isFovarit
+            ? const Icon(Icons.favorite, color: Colors.red)
+            : const Icon(Icons.favorite_border, color: ThemeApp.kWhite),
       ),
     );
   }
@@ -207,6 +212,7 @@ class _DishDetailedButtonBar extends StatelessWidget {
     final dishkey = dishModel.dish?.id ?? '';
     final number = cartModel.namber(dishkey);
     final subTotal = cartModel.subTotal(dishkey).toStringAsFixed(2);
+
     return Container(
       width: double.infinity,
       decoration: ThemeApp.decoration(),
@@ -254,21 +260,14 @@ class _DishDetailedButtonBar extends StatelessWidget {
             ),
             const SizedBox(height: ThemeApp.kInterval),
             GestureDetector(
-              onTap: () {
-                cartModel.addItem(
-                  dishId: dishModel.dish?.id,
-                  price: dishModel.dish?.price,
-                  name: dishModel.dish?.name,
-                  imgUrl: dishModel.dish?.imgUrl,
-                );
-              },
+              onTap: () => dishModel.showCart(context),
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 width: double.infinity,
                 decoration: ThemeApp.decoration(colors: ThemeApp.kAccent),
                 child: Center(
                   child: Text(
-                    'add to cart',
+                    'show cart',
                     style: ThemeApp.style(
                       colors: ThemeApp.kFrontColor,
                       fW: FontWeight.bold,
@@ -288,7 +287,7 @@ class _DishDetailedButtonBack extends StatelessWidget {
   const _DishDetailedButtonBack({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<DishDetailedModel>();
+    final model = context.read<DishDetailedModel>();
     return GestureDetector(
       onTap: () => model.showMenu(context),
       child: Container(
