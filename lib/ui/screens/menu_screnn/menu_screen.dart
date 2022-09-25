@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens/menu_screnn/menu_model.dart';
-import '../../../object/cart_object.dart';
 import '../../../object/dish_object.dart';
 import '../../screens_factory.dart/widget_factory.dart';
 import '../../theme/theme_app.dart';

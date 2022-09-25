@@ -36,7 +36,10 @@ class DishModel extends ChangeNotifier {
     _setup();
   }
   var _items = <Dish>[];
+  var _itemsFovarit = <Dish>[];
   List<Dish> get items => _items.toList();
+  List<Dish> get itemsFovarit => _itemsFovarit.toList();
+
   void _readBoxDishsFromHive(Box<Dish> box) {
     // final a1 = Dish(
     //     id: 'q2',
@@ -46,17 +49,15 @@ class DishModel extends ChangeNotifier {
     //     description:
     //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu');
     _items = box.values.toList();
-    notifyListeners();
-  }
-
-  void toggFovarit(index) async {
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(DishAdapter());
-    }
-    final box = await Hive.openBox<Dish>('dish_box');
-    box.values.toList()[index].isFovarit =
-        !box.values.toList()[index].isFovarit;
-    box.values.toList()[index].save();
+    box.values.forEach((element) {
+      if (element.isFovarit == true) {
+        if (_itemsFovarit.contains(element)) return;
+        _itemsFovarit.add(element);
+      }
+      if (element.isFovarit == false) {
+        _itemsFovarit.remove(element);
+      }
+    });
     notifyListeners();
   }
 
@@ -70,5 +71,16 @@ class DishModel extends ChangeNotifier {
     box.listenable().addListener(() {
       _readBoxDishsFromHive(box);
     });
+  }
+
+  void toggFovarit(index) async {
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(DishAdapter());
+    }
+    final box = await Hive.openBox<Dish>('dish_box');
+    box.values.toList()[index].isFovarit =
+        !box.values.toList()[index].isFovarit;
+    box.values.toList()[index].save();
+    notifyListeners();
   }
 }
