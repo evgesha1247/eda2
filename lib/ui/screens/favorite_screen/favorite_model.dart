@@ -1,9 +1,3 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-import '../../../object/dish_object.dart';
-
-class FavoriteModel extends DishModel {
-  FavoriteModel(context) {
-    print('object');
-  }
-}
+class FavoriteModel extends ChangeNotifier {}

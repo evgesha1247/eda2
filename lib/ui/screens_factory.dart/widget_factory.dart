@@ -48,6 +48,5 @@ class ScreensFactory {
   Widget makeCart() => const CartScreen();
   Widget makeDetailed() => const DishDetailedScreen();
   Widget makeFavorite() => ChangeNotifierProvider(
-      create: (context) => FavoriteModel(context),
-      child: const FavoriteScreen());
+      create: (context) => FavoriteModel(), child: const FavoriteScreen());
 }

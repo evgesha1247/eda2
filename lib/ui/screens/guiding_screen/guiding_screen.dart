@@ -29,17 +29,14 @@ class _GuidingBodyWidget extends StatelessWidget {
     });
     final factor = ScreensFactory();
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: ThemeApp.kInterval),
-        child: IndexedStack(
-          index: currentIndexTab,
-          children: [
-            factor.makeHome(),
-            factor.makeMenu(),
-            factor.makeFavorite(),
-            const Text(''),
-          ],
-        ),
+      child: IndexedStack(
+        index: currentIndexTab,
+        children: [
+          factor.makeHome(),
+          factor.makeMenu(),
+          factor.makeFavorite(),
+          const Text(''),
+        ],
       ),
     );
   }
