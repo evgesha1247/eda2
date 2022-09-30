@@ -36,7 +36,7 @@ class DishModel extends ChangeNotifier {
     _setup();
   }
   var _items = <Dish>[];
-  var _itemsFovarit = <Dish>[];
+  final _itemsFovarit = <Dish>[];
   List<Dish> get items => _items.toList();
   List<Dish> get itemsFovarit => _itemsFovarit.toList();
 
@@ -49,15 +49,15 @@ class DishModel extends ChangeNotifier {
     //     description:
     //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu');
     _items = box.values.toList();
-    box.values.forEach((element) {
+    for (var element in box.values) {
       if (element.isFovarit == true) {
-        if (_itemsFovarit.contains(element)) return;
+        if (_itemsFovarit.contains(element)) continue;
         _itemsFovarit.add(element);
       }
       if (element.isFovarit == false) {
         _itemsFovarit.remove(element);
       }
-    });
+    }
     notifyListeners();
   }
 

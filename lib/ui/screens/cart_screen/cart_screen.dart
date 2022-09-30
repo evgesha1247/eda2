@@ -4,9 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:text/object/cart_object.dart';
 import 'package:text/ui/theme/theme_app.dart';
 
-import '../../../object/dish_object.dart';
-import '../dish_detailed_screen/dish_detailed_model.dart';
-
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
   @override
@@ -14,31 +11,33 @@ class CartScreen extends StatelessWidget {
     final cart = context.watch<CartModel>();
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(ThemeApp.kInterval),
-                  child: Align(
+        child: Padding(
+          padding: const EdgeInsets.all(ThemeApp.kInterval),
+          child: Column(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: _CartButtonBack(),
                   ),
-                ),
-                Text('Cart', style: ThemeApp.style(size: 20)),
-              ],
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: cart.cartItem.length,
-                itemBuilder: (context, index) {
-                  return _CartRows(index: index);
-                },
+                  Text('Cart', style: ThemeApp.style(size: 20)),
+                ],
               ),
-            ),
-            const _BottnCart(),
-          ],
+              const SizedBox(height: ThemeApp.kInterval),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: cart.cartItem.length,
+                  itemBuilder: (context, index) {
+                    return _CartRows(index: index);
+                  },
+                ),
+              ),
+              const SizedBox(height: ThemeApp.kInterval),
+              const _BottnCart(),
+            ],
+          ),
         ),
       ),
     );
@@ -52,11 +51,6 @@ class _CartRows extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartModel = context.watch<CartModel>();
     final dishkey = cartModel.cartItem.entries.toList()[index].key;
-
-    void doNothing(BuildContext context) {
-      cartModel.delete(dishkey);
-    }
-
     return Padding(
       padding: const EdgeInsets.only(bottom: ThemeApp.kInterval),
       child: Slidable(
@@ -78,7 +72,10 @@ class _CartRows extends StatelessWidget {
           ],
         ),
         child: Container(
-          decoration: ThemeApp.decoration(),
+          decoration: BoxDecoration(
+            borderRadius: ThemeApp.decoration(),
+            color: ThemeApp.kFrontColor,
+          ),
           clipBehavior: Clip.hardEdge,
           child: Row(
             children: [
@@ -146,7 +143,10 @@ class _BottnCart extends StatelessWidget {
     final cart = context.watch<CartModel>();
     final promotions = cart.promotions();
     return Container(
-      decoration: ThemeApp.decoration(),
+      decoration: BoxDecoration(
+        color: ThemeApp.kFrontColor,
+        borderRadius: ThemeApp.decoration(),
+      ),
       padding: const EdgeInsets.symmetric(
         vertical: 15,
         horizontal: ThemeApp.kInterval,
@@ -190,7 +190,10 @@ class _BottnCart extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
               width: double.infinity,
-              decoration: ThemeApp.decoration(colors: ThemeApp.kAccent),
+              decoration: BoxDecoration(
+                color: ThemeApp.kAccent,
+                borderRadius: ThemeApp.decoration(),
+              ),
               child: Center(
                 child: Text(
                   'add to cart',
@@ -216,7 +219,10 @@ class _CartButtonBack extends StatelessWidget {
     return GestureDetector(
       onTap: () => model.showMenu(context),
       child: Container(
-        decoration: ThemeApp.decoration(),
+        decoration: BoxDecoration(
+          borderRadius: ThemeApp.decoration(),
+          color: ThemeApp.kFrontColor,
+        ),
         padding: const EdgeInsets.only(
           top: ThemeApp.kInterval,
           bottom: ThemeApp.kInterval,

@@ -14,20 +14,23 @@ class HederWidget extends StatefulWidget {
 class _HederWidgetState extends State<HederWidget> {
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      child: LimitedBox(
-        maxWidth: 400,
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                Expanded(child: _SearchWidget()),
-                SizedBox(width: ThemeApp.kInterval),
-                _FilterButtonWidget(),
-              ],
-            ),
-          ],
+    return Padding(
+      padding: const EdgeInsets.all(ThemeApp.kInterval),
+      child: FittedBox(
+        child: LimitedBox(
+          maxWidth: 400,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Expanded(child: _SearchWidget()),
+                  SizedBox(width: ThemeApp.kInterval),
+                  _FilterButtonWidget(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -70,7 +73,8 @@ class _FilterButtonWidget extends StatelessWidget {
       backgroundColor: Colors.transparent,
       side: const BorderSide(width: 2, color: ThemeApp.kAccent),
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(ThemeApp.kRadius)),
+        borderRadius: ThemeApp.decoration(),
+      ),
     );
     final model = context.read<HeaderModel>();
     return ElevatedButton(

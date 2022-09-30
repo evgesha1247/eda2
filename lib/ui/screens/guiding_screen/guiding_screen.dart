@@ -50,12 +50,12 @@ class _FooterBottomBarWidget extends StatelessWidget {
         context.select((GuidingScreenModel e) => e.currentIndexTab);
     final model = context.read<GuidingScreenModel>();
     return BottomNavBar(
-      curve: Curves.ease,
-      showElevation: true,
+      curve: Curves.easeInOutCubicEmphasized,
+      showElevation: false,
       itemCornerRadius: ThemeApp.kRadius,
       selectedIndex: currentIndexTab,
-      containerHeight: 53,
-      containerPadding: EdgeInsets.zero,
+      containerHeight: 60,
+      containerPadding: const EdgeInsets.only(top: 8),
       backgroundColor: ThemeApp.kBGColor,
       onItemSelected: model.setCurrentIndexTab,
       animationDuration: const Duration(milliseconds: 300),

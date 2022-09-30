@@ -1,9 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:text/ui/navigations/main_navigation.dart';
-import 'package:text/ui/screens_factory.dart/widget_factory.dart';
-
 import '../../../object/dish_object.dart';
 
 class DishDetailedModel extends ChangeNotifier {

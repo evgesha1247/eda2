@@ -11,10 +11,14 @@ class MenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
     final factor = ScreensFactory();
-    return Column(
-      children: mediaQuery < 370
-          ? [const _MenuBodyWidget()]
-          : [factor.makeHeder(), const _MenuBodyWidget()],
+    return Scaffold(
+      body: CustomScrollView(
+        child: Column(
+          children: mediaQuery < 370
+              ? [const _MenuBodyWidget()]
+              : [factor.makeHeder(), const _MenuBodyWidget()],
+        ),
+      ),
     );
   }
 }
@@ -80,9 +84,7 @@ class _CartItemContainerWidget extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           color: ThemeApp.kFrontColor,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(ThemeApp.kRadius),
-          ),
+          borderRadius: ThemeApp.decoration(),
           image: MediaQuery.of(context).size.width <= 370
               ? DecorationImage(
                   image: AssetImage(itemImgUrl),
@@ -132,9 +134,7 @@ class _ButtonFavoritWidget extends StatelessWidget {
                   Icons.favorite_border,
                   color: Colors.grey,
                 ),
-          onTap: () {
-            dishItem.toggFovarit(index);
-          },
+          onTap: () => dishItem.toggFovarit(index),
         )
       ],
     );
@@ -157,12 +157,7 @@ class _CartItemContainerTextWidget extends StatelessWidget {
             item.name,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: ThemeApp.kWhite,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 3,
-            ),
+            style: ThemeApp.style(size: 18, fW: FontWeight.w500),
           ),
         ),
         Row(
@@ -174,21 +169,15 @@ class _CartItemContainerTextWidget extends StatelessWidget {
                 item.description,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: ThemeApp.kWhite,
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  letterSpacing: 2,
-                ),
+                style: ThemeApp.style(size: 14, fW: FontWeight.w500),
               ),
             ),
             Text(
               'more',
-              style: TextStyle(
-                color: ThemeApp.kAccent,
-                fontSize: (item.description.length > 30) ? 14 : 0,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 1,
+              style: ThemeApp.style(
+                colors: ThemeApp.kAccent,
+                size: (item.description.length > 30) ? 14 : 0,
+                fW: FontWeight.w500,
               ),
             ),
           ],
@@ -197,26 +186,8 @@ class _CartItemContainerTextWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const FittedBox(
-              child: Text(
-                'цена : ',
-                style: TextStyle(
-                  color: ThemeApp.kWhite,
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  letterSpacing: 1,
-                ),
-              ),
-            ),
-            Text(
-              '\$ ${item.price}',
-              style: const TextStyle(
-                color: ThemeApp.kWhite,
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-                letterSpacing: 1,
-              ),
-            ),
+            Text('цена : ', style: ThemeApp.style(size: 16)),
+            Text('\$ ${item.price}', style: ThemeApp.style(size: 16)),
           ],
         ),
       ],
@@ -245,18 +216,11 @@ class _ListIsEmpty extends StatelessWidget {
   const _ListIsEmpty({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('нет товаров '),
+    return Center(
+      child: Text(
+        'нет товаров',
+        style: ThemeApp.style(),
+      ),
     );
   }
 }
-
-//  AnimatedCrossFade(
-//               duration: const Duration(milliseconds: 500),
-//               firstChild: const _Filter(),
-//               secondChild: const SizedBox.shrink(),
-//               //2
-//               crossFadeState: togFilter
-//                   ? CrossFadeState.showSecond
-//                   : CrossFadeState.showFirst,
-//             ),

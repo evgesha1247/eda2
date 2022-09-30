@@ -10,7 +10,11 @@ class HomeScreen extends StatelessWidget {
     final factor = ScreensFactory();
     return mediaQuery < 310
         ? const _BodyWidget()
-        : Column(children: [factor.makeHeder(), const _BodyWidget()]);
+        : Column(children: [
+            factor.makeHeder(),
+            const SizedBox(height: ThemeApp.kInterval),
+            const _BodyWidget()
+          ]);
   }
 }
 
@@ -46,7 +50,8 @@ class _PromoTextWidget extends StatelessWidget {
   const _PromoTextWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Text('Hot Promo', style: style(fS: 20, fW: FontWeight.bold));
+    return Text('Hot Promo',
+        style: ThemeApp.style(size: 20, fW: FontWeight.bold));
   }
 }
 
@@ -58,7 +63,7 @@ class _ContentPromoWidget extends StatelessWidget {
       alignment: AlignmentDirectional.centerStart,
       children: const [
         _ContainerPromoWidget(),
-        CircleAvatar(backgroundColor: Colors.orange, radius: 60),
+        CircleAvatar(backgroundColor: ThemeApp.kAccent, radius: 60),
       ],
     );
   }
@@ -93,16 +98,11 @@ class _ContainerPromoTextWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Text('seafood noodles', style: style(fS: 18)),
+        Text('seafood noodles', style: ThemeApp.style(size: 18)),
         Text('Lorem ipsum dolor sit amet, consectetur adipiscing ',
-            style: style(fS: 14, fW: FontWeight.w400)),
-        Text('\$ 9.99', style: style(fS: 20, fW: FontWeight.w400)),
+            style: ThemeApp.style(size: 14, fW: FontWeight.w400)),
+        Text('\$ 9.99', style: ThemeApp.style(size: 20, fW: FontWeight.w400)),
       ],
     );
   }
-}
-
-style({double fS = 18, FontWeight fW = FontWeight.normal}) {
-  return TextStyle(
-      color: ThemeApp.kWhite, fontSize: fS, fontWeight: fW, letterSpacing: 2);
 }

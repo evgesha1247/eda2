@@ -64,7 +64,10 @@ class _MarcetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: ThemeApp.decoration(colors: Colors.white),
+      decoration: BoxDecoration(
+        borderRadius: ThemeApp.decoration(),
+        color: Colors.white,
+      ),
       height: 3.5,
       width: 30,
     );
@@ -107,7 +110,10 @@ class _DishDetailedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: ThemeApp.decoration(),
+      decoration: BoxDecoration(
+        borderRadius: ThemeApp.decoration(),
+        color: ThemeApp.kFrontColor,
+      ),
       margin: const EdgeInsets.only(top: 60),
       padding: const EdgeInsets.all(ThemeApp.kInterval),
       child: const _DishDetailedContainerText(),
@@ -122,7 +128,6 @@ class _DishDetailedContainerText extends StatelessWidget {
     final model = context.watch<DishDetailedModel>();
     final title = model.dish?.name ?? '## название отсудствует ##';
     final price = model.dish?.price ?? 00;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,7 +141,10 @@ class _DishDetailedContainerText extends StatelessWidget {
                 child: Text(title,
                     style: ThemeApp.style(size: 22, fW: FontWeight.w500))),
             Container(
-              decoration: ThemeApp.decoration(colors: ThemeApp.kAccent),
+              decoration: BoxDecoration(
+                borderRadius: ThemeApp.decoration(),
+                color: ThemeApp.kAccent,
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(ThemeApp.kInterval),
                 child: Text(
@@ -163,10 +171,7 @@ class _ButtBookmark extends StatelessWidget {
     final model = context.watch<DishDetailedModel>();
     final isFovarit = model.dish?.isFovarit ?? false;
     return GestureDetector(
-      onTap: () {
-        model.toggFovarit();
-        //print(model.dish?.isFovarit);
-      },
+      onTap: () => model.toggFovarit(),
       child: Align(
         alignment: Alignment.topRight,
         child: isFovarit
@@ -191,8 +196,13 @@ class _DishDetailedDescription extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('description',
-                  style: ThemeApp.style(size: 22, fW: FontWeight.w500)),
+              Text(
+                'description',
+                style: ThemeApp.style(
+                  size: 22,
+                  fW: FontWeight.w500,
+                ),
+              ),
               const SizedBox(height: ThemeApp.kInterval),
               Text(description, style: ThemeApp.style()),
             ],
@@ -212,10 +222,12 @@ class _DishDetailedButtonBar extends StatelessWidget {
     final dishkey = dishModel.dish?.id ?? '';
     final number = cartModel.namber(dishkey);
     final subTotal = cartModel.subTotal(dishkey).toStringAsFixed(2);
-
     return Container(
       width: double.infinity,
-      decoration: ThemeApp.decoration(),
+      decoration: BoxDecoration(
+        borderRadius: ThemeApp.decoration(),
+        color: ThemeApp.kFrontColor,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(ThemeApp.kInterval),
         child: Column(
@@ -264,7 +276,10 @@ class _DishDetailedButtonBar extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 width: double.infinity,
-                decoration: ThemeApp.decoration(colors: ThemeApp.kAccent),
+                decoration: BoxDecoration(
+                  borderRadius: ThemeApp.decoration(),
+                  color: ThemeApp.kAccent,
+                ),
                 child: Center(
                   child: Text(
                     'show cart',
@@ -291,7 +306,10 @@ class _DishDetailedButtonBack extends StatelessWidget {
     return GestureDetector(
       onTap: () => model.showMenu(context),
       child: Container(
-        decoration: ThemeApp.decoration(),
+        decoration: BoxDecoration(
+          borderRadius: ThemeApp.decoration(),
+          color: ThemeApp.kFrontColor,
+        ),
         padding: const EdgeInsets.only(
           top: ThemeApp.kInterval,
           bottom: ThemeApp.kInterval,
