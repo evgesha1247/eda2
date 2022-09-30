@@ -1,45 +1,65 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens/menu_screnn/menu_model.dart';
+import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import '../../../object/dish_object.dart';
-import '../../screens_factory.dart/widget_factory.dart';
+
 import '../../theme/theme_app.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final dishs = context.watch<DishModel>().items;
     final mediaQuery = MediaQuery.of(context).size.width;
     final factor = ScreensFactory();
     return Scaffold(
       body: CustomScrollView(
-        child: Column(
-          children: mediaQuery < 370
-              ? [const _MenuBodyWidget()]
-              : [factor.makeHeder(), const _MenuBodyWidget()],
-        ),
+        slivers: mediaQuery > 370
+            ? [
+                SliverAppBar(
+                  leading: const SizedBox.shrink(),
+                  collapsedHeight: 80,
+                  floating: true,
+                  pinned: false,
+                  snap: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    collapseMode: CollapseMode.pin,
+                    title: factor.makeHeder(),
+                  ),
+                  backgroundColor: ThemeApp.kBGColor,
+                ),
+                const _MenuBodyWidget()
+              ]
+            : [const _MenuBodyWidget()],
       ),
     );
   }
 }
+//  Column(
+//         children: mediaQuery < 370
+//             ? [const _MenuBodyWidget()]
+//             : [factor.makeHeder(), const _MenuBodyWidget()],
+//       ),
 
 class _MenuBodyWidget extends StatelessWidget {
   const _MenuBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final dishs = context.watch<DishModel>().items;
-    return Expanded(
-      child: GridView.builder(
-        itemCount: dishs.length,
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 346.0,
-          // childAspectRatio: .8,
-          mainAxisExtent: 250,
-          mainAxisSpacing: 10,
-        ),
-        itemBuilder: (context, index) => (dishs.isNotEmpty)
-            ? _CartItemWidget(index: index)
-            : const _ListIsEmpty(),
+    return SliverGrid(
+      delegate: SliverChildBuilderDelegate(
+        (_, int index) => _CartItemWidget(index: index),
+        childCount: dishs.length,
+      ),
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 346.0,
+        // childAspectRatio: .8,
+        mainAxisExtent: 250,
+        mainAxisSpacing: 10,
       ),
     );
   }

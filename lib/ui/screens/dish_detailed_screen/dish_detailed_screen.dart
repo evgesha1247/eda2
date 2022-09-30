@@ -250,7 +250,7 @@ class _DishDetailedButtonBar extends StatelessWidget {
                       child: const Icon(
                         Icons.add_circle_outline,
                         size: 22,
-                        color: ThemeApp.kWhite,
+                        color: ThemeApp.kBlack,
                       ),
                     ),
                     const SizedBox(width: ThemeApp.kInterval),
@@ -261,7 +261,7 @@ class _DishDetailedButtonBar extends StatelessWidget {
                         cartModel.updataSubOne(dishkey);
                       },
                       child: const Icon(Icons.remove_circle_outline,
-                          size: 22, color: ThemeApp.kWhite),
+                          size: 22, color: ThemeApp.kBlack),
                     )
                   ],
                 ),
