@@ -1,3 +1,3 @@
-import 'package:flutter/material.dart';
+import '../../../object/dish_object.dart';
 
-class HomeModel extends ChangeNotifier {}
+class HomeModel extends DishModel {}

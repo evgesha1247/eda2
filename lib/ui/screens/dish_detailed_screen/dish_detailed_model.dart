@@ -10,7 +10,7 @@ class DishDetailedModel extends ChangeNotifier {
   Dish? get dish => _dish;
 
   DishDetailedModel({required this.dishKey}) {
-    _setup();
+    _setupDetailed();
   }
 
   void showMenu(context) {
@@ -27,17 +27,17 @@ class DishDetailedModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _load() async {
+  void _loadDetailed() async {
     final box = await _dishBox;
     _dish = box.get(dishKey);
     notifyListeners();
   }
 
-  void _setup() async {
+  void _setupDetailed() async {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(DishAdapter());
     }
     _dishBox = Hive.openBox<Dish>('dish_box');
-    _load();
+    _loadDetailed();
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens/menu_screnn/menu_model.dart';
@@ -12,7 +10,6 @@ class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final dishs = context.watch<DishModel>().items;
     final mediaQuery = MediaQuery.of(context).size.width;
     final factor = ScreensFactory();
     return Scaffold(
@@ -52,9 +49,10 @@ class _MenuBodyWidget extends StatelessWidget {
     final dishs = context.watch<DishModel>().items;
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
-        (_, int index) => _CartItemWidget(index: index),
-        childCount: dishs.length,
-      ),
+          childCount: dishs.length,
+          (_, int index) => dishs.isEmpty
+              ? const _ListIsEmpty()
+              : _CartItemWidget(index: index)),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 346.0,
         // childAspectRatio: .8,

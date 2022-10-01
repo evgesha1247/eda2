@@ -1,5 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
+import '../../../object/dish_object.dart';
 import '../../theme/theme_app.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,13 +12,12 @@ class HomeScreen extends StatelessWidget {
   Widget build(context) {
     final mediaQuery = MediaQuery.of(context).size.width;
     final factor = ScreensFactory();
-    return mediaQuery < 310
-        ? const _BodyWidget()
-        : Column(children: [
-            factor.makeHeder(),
-            const SizedBox(height: ThemeApp.kInterval),
-            const _BodyWidget()
-          ]);
+    return Scaffold(
+        body: Column(
+      children: mediaQuery < 370
+          ? [const _BodyWidget()]
+          : [factor.makeHeder(), const _BodyWidget()],
+    ));
   }
 }
 
@@ -22,87 +25,99 @@ class _BodyWidget extends StatelessWidget {
   const _BodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        _PromoDishesWidget(),
-      ],
+    final length = context.watch<DishModel>().itemsHotDish.length;
+    return Padding(
+      padding: const EdgeInsets.only(left: ThemeApp.kInterval),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Hot Promo',
+            style: ThemeApp.style(fW: FontWeight.w500, size: 20),
+          ),
+          SizedBox(
+            height: 125,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: length,
+              itemBuilder: (context, index) => _PromoItemWidget(index: index),
+              separatorBuilder: (context, index) =>
+                  const SizedBox(width: ThemeApp.kInterval),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _PromoDishesWidget extends StatelessWidget {
-  const _PromoDishesWidget({Key? key}) : super(key: key);
+class _PromoItemWidget extends StatelessWidget {
+  const _PromoItemWidget({required this.index});
+  final int index;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        SizedBox(height: ThemeApp.kInterval),
-        _PromoTextWidget(),
-        SizedBox(height: ThemeApp.kInterval),
-        _ContentPromoWidget()
-      ],
-    );
-  }
-}
-
-class _PromoTextWidget extends StatelessWidget {
-  const _PromoTextWidget({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Text('Hot Promo',
-        style: ThemeApp.style(size: 20, fW: FontWeight.bold));
-  }
-}
-
-class _ContentPromoWidget extends StatelessWidget {
-  const _ContentPromoWidget({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
+    final imgUrl = context.read<DishModel>().itemsHotDish[index].imgUrl;
     return Stack(
-      alignment: AlignmentDirectional.centerStart,
-      children: const [
-        _ContainerPromoWidget(),
-        CircleAvatar(backgroundColor: ThemeApp.kAccent, radius: 60),
+      children: [
+        _ContainerPromoWidget(index: index),
+        Center(child: Image.asset(imgUrl, width: 125)),
       ],
     );
   }
 }
 
 class _ContainerPromoWidget extends StatelessWidget {
-  const _ContainerPromoWidget({Key? key}) : super(key: key);
+  const _ContainerPromoWidget({required this.index});
+  final int index;
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints:
-          const BoxConstraints(minHeight: 100, minWidth: double.infinity),
-      child: Container(
-        padding: const EdgeInsets.only(left: 130),
-        decoration: const BoxDecoration(
-          color: ThemeApp.kFrontColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(ThemeApp.kRadius),
-          ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minWidth: 200,
+          maxWidth: 400,
         ),
-        child: const _ContainerPromoTextWidget(),
+        child: Container(
+          padding: const EdgeInsets.only(left: 130),
+          decoration: BoxDecoration(
+            color: ThemeApp.kFrontColor,
+            borderRadius: ThemeApp.decoration(),
+          ),
+          child: _ContainerPromoTextWidget(index: index),
+        ),
       ),
     );
   }
 }
 
 class _ContainerPromoTextWidget extends StatelessWidget {
-  const _ContainerPromoTextWidget({Key? key}) : super(key: key);
+  const _ContainerPromoTextWidget({required this.index});
+  final int index;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Text('seafood noodles', style: ThemeApp.style(size: 18)),
-        Text('Lorem ipsum dolor sit amet, consectetur adipiscing ',
-            style: ThemeApp.style(size: 14, fW: FontWeight.w400)),
-        Text('\$ 9.99', style: ThemeApp.style(size: 20, fW: FontWeight.w400)),
-      ],
+    final dish = context.read<DishModel>().itemsHotDish[index];
+    return Padding(
+      padding: const EdgeInsets.all(ThemeApp.kInterval),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Text(dish.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: ThemeApp.style(size: 22)),
+          ),
+          Text(dish.description,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: ThemeApp.style(size: 16, fW: FontWeight.w400)),
+          const SizedBox(height: ThemeApp.kInterval),
+          Text('\$ ${dish.price}',
+              style: ThemeApp.style(size: 18, fW: FontWeight.w400)),
+        ],
+      ),
     );
   }
 }

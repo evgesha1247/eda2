@@ -37,25 +37,48 @@ class DishModel extends ChangeNotifier {
   }
   var _items = <Dish>[];
   final _itemsFovarit = <Dish>[];
+  final _itemsHotDish = <Dish>[];
+
   List<Dish> get items => _items.toList();
+  List<Dish> get itemsHotDish => _itemsHotDish.toList();
   List<Dish> get itemsFovarit => _itemsFovarit.toList();
 
   void _readBoxDishsFromHive(Box<Dish> box) {
     // final a1 = Dish(
-    //     id: 'q2',
-    //     name: 'имя',
-    //     price: 89.4,
-    //     imgUrl: 'assets/imgs/food2.png',
+    //     id: 'q4',
+    //     name: 'очень длинное название блюда 4',
+    //     price: 150.0,
+    //     isHot: true,
+    //     imgUrl: 'assets/imgs/food5.png',
     //     description:
-    //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu');
+    //         'Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor');
+    // box.add(a1);
+    // print(box.keys);
     _items = box.values.toList();
+    _loadDataFavoritAndHotPromo(box);
+    notifyListeners();
+  }
+
+  void _loadDataFavoritAndHotPromo(Box<Dish> box) {
+    // to Fovarit
     for (var element in box.values) {
-      if (element.isFovarit == true) {
+      if (element.isFovarit) {
         if (_itemsFovarit.contains(element)) continue;
         _itemsFovarit.add(element);
       }
-      if (element.isFovarit == false) {
+      if (!element.isFovarit) {
         _itemsFovarit.remove(element);
+      }
+    }
+
+    ///to hot
+    for (var element in items) {
+      if (element.isHot) {
+        if (_itemsHotDish.contains(element)) continue;
+        _itemsHotDish.add(element);
+      }
+      if (!element.isHot) {
+        _itemsHotDish.remove(element);
       }
     }
     notifyListeners();
