@@ -1,3 +1,3 @@
-import '../../../object/dish_object.dart';
+import 'package:flutter/cupertino.dart';
 
-class HomeModel extends DishModel {}
+class HomeModel extends ChangeNotifier {}

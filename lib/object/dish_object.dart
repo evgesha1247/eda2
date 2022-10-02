@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import '../ui/navigations/main_navigation.dart';
 part 'dish_object.g.dart';
 
 @HiveType(typeId: 0)
@@ -42,18 +44,28 @@ class DishModel extends ChangeNotifier {
   List<Dish> get items => _items.toList();
   List<Dish> get itemsHotDish => _itemsHotDish.toList();
   List<Dish> get itemsFovarit => _itemsFovarit.toList();
+  void showDetail(BuildContext context, int index) async {
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(DishAdapter());
+    }
+    final box = await Hive.openBox<Dish>('dish_box');
+    final dishKey = box.keyAt(index);
+    // ignore: use_build_context_synchronously
+    await Navigator.of(context)
+        .pushNamed(MainNavigationRouteName.details, arguments: dishKey);
+  }
 
   void _readBoxDishsFromHive(Box<Dish> box) {
     // final a1 = Dish(
-    //     id: 'q4',
-    //     name: 'очень длинное название блюда 4',
-    //     price: 150.0,
-    //     isHot: true,
+    //     id: 'q5',
+    //     name: ' Lorem ipsum dolor  ipsum 5',
+    //     price: 340.0,
+    //     isHot: false,
     //     imgUrl: 'assets/imgs/food5.png',
     //     description:
-    //         'Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor');
+    //         'Lorem ipsum dolor ipsum dolor ipsum dolor ipsum dolor ipsum ');
     // box.add(a1);
-    // print(box.keys);
+    //box.clear();
     _items = box.values.toList();
     _loadDataFavoritAndHotPromo(box);
     notifyListeners();

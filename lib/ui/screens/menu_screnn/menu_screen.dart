@@ -1,63 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:text/ui/screens/menu_screnn/menu_model.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import '../../../object/dish_object.dart';
-
 import '../../theme/theme_app.dart';
+import '../../widgets/isEmplty/is_emplty_widget.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final length = context.watch<DishModel>().items.length;
     final mediaQuery = MediaQuery.of(context).size.width;
     final factor = ScreensFactory();
     return Scaffold(
-      body: CustomScrollView(
-        slivers: mediaQuery > 370
-            ? [
-                SliverAppBar(
-                  leading: const SizedBox.shrink(),
-                  collapsedHeight: 80,
-                  floating: true,
-                  pinned: false,
-                  snap: true,
-                  flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: true,
-                    collapseMode: CollapseMode.pin,
-                    title: factor.makeHeder(),
-                  ),
-                  backgroundColor: ThemeApp.kBGColor,
-                ),
-                const _MenuBodyWidget()
-              ]
-            : [const _MenuBodyWidget()],
-      ),
-    );
+        body: length != 0
+            ? CustomScrollView(
+                slivers: mediaQuery >= 370
+                    ? [
+                        SliverAppBar(
+                          leading: const SizedBox.shrink(),
+                          collapsedHeight: 80,
+                          floating: true,
+                          pinned: false,
+                          snap: true,
+                          flexibleSpace: FlexibleSpaceBar(
+                            centerTitle: true,
+                            collapseMode: CollapseMode.pin,
+                            title: factor.makeHeder(),
+                          ),
+                          backgroundColor: ThemeApp.kBGColor,
+                        ),
+                        const _MenuBodyWidget()
+                      ]
+                    : [const _MenuBodyWidget()],
+              )
+            : const IsEmpltyWidget());
   }
 }
-//  Column(
-//         children: mediaQuery < 370
-//             ? [const _MenuBodyWidget()]
-//             : [factor.makeHeder(), const _MenuBodyWidget()],
-//       ),
 
 class _MenuBodyWidget extends StatelessWidget {
   const _MenuBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final dishs = context.watch<DishModel>().items;
+    final length = context.watch<DishModel>().items.length;
     return SliverGrid(
-      delegate: SliverChildBuilderDelegate(
-          childCount: dishs.length,
-          (_, int index) => dishs.isEmpty
-              ? const _ListIsEmpty()
-              : _CartItemWidget(index: index)),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 346.0,
-        // childAspectRatio: .8,
         mainAxisExtent: 250,
         mainAxisSpacing: 10,
+      ),
+      delegate: SliverChildBuilderDelegate(
+        childCount: length,
+        (_, int index) => _CartItemWidget(index: index),
       ),
     );
   }
@@ -69,27 +63,18 @@ class _CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
-    final modelMenu = context.watch<MenuModel>();
+    final modelMenu = context.read<DishModel>();
+    final itemImgUrl = modelMenu.items[index].imgUrl;
     return GestureDetector(
-      onTap: () => modelMenu.showDetail(context, index),
-      child: (mediaQuery > 370)
-          ? _CartItemContainerFullWidget(index: index)
-          : _CartItemContainerWidget(index: index),
-    );
-  }
-}
-
-class _CartItemContainerFullWidget extends StatelessWidget {
-  const _CartItemContainerFullWidget({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        _CartItemContainerWidget(index: index),
-        _CartItemImgWidget(index: index),
-      ],
-    );
+        onTap: () => modelMenu.showDetail(context, index),
+        child: Stack(
+          children: (mediaQuery >= 370)
+              ? [
+                  _CartItemContainerWidget(index: index),
+                  Image.asset(itemImgUrl, width: 130, height: 100),
+                ]
+              : [_CartItemContainerWidget(index: index)],
+        ));
   }
 }
 
@@ -100,17 +85,17 @@ class _CartItemContainerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final itemImgUrl = context.read<DishModel>().items[index].imgUrl;
     return Container(
+        margin: const EdgeInsets.only(top: 30, left: 10, right: 10),
         decoration: BoxDecoration(
           color: ThemeApp.kFrontColor,
           borderRadius: ThemeApp.decoration(),
-          image: MediaQuery.of(context).size.width <= 370
+          image: MediaQuery.of(context).size.width < 370
               ? DecorationImage(
                   image: AssetImage(itemImgUrl),
                   fit: BoxFit.contain,
                   alignment: Alignment.topCenter)
               : null,
         ),
-        margin: const EdgeInsets.only(top: 30, left: 10, right: 10),
         child: _CartItemContainerContentWidget(index: index));
   }
 }
@@ -144,14 +129,8 @@ class _ButtonFavoritWidget extends StatelessWidget {
       children: [
         GestureDetector(
           child: dishItem.items[index].isFovarit
-              ? const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                )
-              : const Icon(
-                  Icons.favorite_border,
-                  color: Colors.grey,
-                ),
+              ? const Icon(Icons.favorite, color: Colors.red)
+              : const Icon(Icons.favorite_border, color: Colors.grey),
           onTap: () => dishItem.toggFovarit(index),
         )
       ],
@@ -209,36 +188,6 @@ class _CartItemContainerTextWidget extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-class _CartItemImgWidget extends StatelessWidget {
-  const _CartItemImgWidget({Key? key, required this.index}) : super(key: key);
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    final itemImgUrl = context.read<DishModel>().items[index].imgUrl;
-    return Positioned(
-      child: Image.asset(
-        itemImgUrl,
-        fit: BoxFit.contain,
-        width: 130,
-        height: 100,
-      ),
-    );
-  }
-}
-
-class _ListIsEmpty extends StatelessWidget {
-  const _ListIsEmpty({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'нет товаров',
-        style: ThemeApp.style(),
-      ),
     );
   }
 }

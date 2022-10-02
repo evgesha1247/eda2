@@ -1,23 +1,40 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import '../../../object/dish_object.dart';
 import '../../theme/theme_app.dart';
+import '../../widgets/isEmplty/is_emplty_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   @override
   Widget build(context) {
+    final length = context.watch<DishModel>().items.length;
     final mediaQuery = MediaQuery.of(context).size.width;
     final factor = ScreensFactory();
     return Scaffold(
-        body: Column(
-      children: mediaQuery < 370
-          ? [const _BodyWidget()]
-          : [factor.makeHeder(), const _BodyWidget()],
-    ));
+      body: length != 0
+          ? CustomScrollView(
+              slivers: mediaQuery >= 370
+                  ? [
+                      SliverAppBar(
+                        leading: const SizedBox.shrink(),
+                        collapsedHeight: 80,
+                        floating: true,
+                        pinned: false,
+                        snap: true,
+                        flexibleSpace: FlexibleSpaceBar(
+                          centerTitle: true,
+                          collapseMode: CollapseMode.pin,
+                          title: factor.makeHeder(),
+                        ),
+                        backgroundColor: ThemeApp.kBGColor,
+                      ),
+                      const _BodyWidget(),
+                    ]
+                  : [const _BodyWidget()])
+          : const IsEmpltyWidget(),
+    );
   }
 }
 
@@ -25,28 +42,43 @@ class _BodyWidget extends StatelessWidget {
   const _BodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final length = context.watch<DishModel>().itemsHotDish.length;
-    return Padding(
-      padding: const EdgeInsets.only(left: ThemeApp.kInterval),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Hot Promo',
-            style: ThemeApp.style(fW: FontWeight.w500, size: 20),
-          ),
-          SizedBox(
-            height: 125,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: length,
-              itemBuilder: (context, index) => _PromoItemWidget(index: index),
-              separatorBuilder: (context, index) =>
-                  const SizedBox(width: ThemeApp.kInterval),
-            ),
-          ),
-        ],
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.only(left: ThemeApp.kInterval),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [_PromoWidget()],
+        ),
       ),
+    );
+  }
+}
+
+class _PromoWidget extends StatelessWidget {
+  const _PromoWidget({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final length = context.watch<DishModel>().itemsHotDish.length;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: length != 0
+          ? [
+              Text(
+                'Hot Promo',
+                style: ThemeApp.style(fW: FontWeight.w500, size: 20),
+              ),
+              SizedBox(
+                height: 125,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: ((_, index) => _PromoItemWidget(index: index)),
+                  separatorBuilder: (_, index) =>
+                      const SizedBox(width: ThemeApp.kInterval),
+                  itemCount: length,
+                ),
+              ),
+            ]
+          : [],
     );
   }
 }
@@ -59,40 +91,28 @@ class _PromoItemWidget extends StatelessWidget {
     final imgUrl = context.read<DishModel>().itemsHotDish[index].imgUrl;
     return Stack(
       children: [
-        _ContainerPromoWidget(index: index),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
+          child: LimitedBox(
+            maxWidth: 360,
+            child: Container(
+              padding: const EdgeInsets.only(left: 130),
+              decoration: BoxDecoration(
+                color: ThemeApp.kFrontColor,
+                borderRadius: ThemeApp.decoration(),
+              ),
+              child: _PromoItemTextWidget(index: index),
+            ),
+          ),
+        ),
         Center(child: Image.asset(imgUrl, width: 125)),
       ],
     );
   }
 }
 
-class _ContainerPromoWidget extends StatelessWidget {
-  const _ContainerPromoWidget({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minWidth: 200,
-          maxWidth: 400,
-        ),
-        child: Container(
-          padding: const EdgeInsets.only(left: 130),
-          decoration: BoxDecoration(
-            color: ThemeApp.kFrontColor,
-            borderRadius: ThemeApp.decoration(),
-          ),
-          child: _ContainerPromoTextWidget(index: index),
-        ),
-      ),
-    );
-  }
-}
-
-class _ContainerPromoTextWidget extends StatelessWidget {
-  const _ContainerPromoTextWidget({required this.index});
+class _PromoItemTextWidget extends StatelessWidget {
+  const _PromoItemTextWidget({required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
