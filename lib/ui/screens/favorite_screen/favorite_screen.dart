@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/theme/theme_app.dart';
+import 'package:text/ui/widgets/big_text.dart';
 
 import '../../../object/dish_object.dart';
 
@@ -31,10 +32,7 @@ class _HeaderFavoritWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'Favorites',
-            style: ThemeApp.style(colors: ThemeApp.kAccent, size: 20),
-          ),
+          BigText(text: 'Favorites'),
           const Icon(Icons.favorite_border_outlined,
               color: ThemeApp.kAccent, size: 20)
         ],
@@ -120,15 +118,7 @@ class _ItemFovaritContainerImgWidget extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(ThemeApp.kInterval),
-          child: Text(
-            itemsFovarit[index].name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: ThemeApp.style(
-              colors: ThemeApp.kAccent,
-              fW: FontWeight.w500,
-            ),
-          ),
+          child: BigText(text: itemsFovarit[index].name),
         ),
       ],
     );

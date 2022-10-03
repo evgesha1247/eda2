@@ -57,15 +57,15 @@ class DishModel extends ChangeNotifier {
 
   void _readBoxDishsFromHive(Box<Dish> box) {
     // final a1 = Dish(
-    //     id: 'q5',
+    //     id: 'q1.2',
     //     name: ' Lorem ipsum dolor  ipsum 5',
-    //     price: 340.0,
-    //     isHot: false,
-    //     imgUrl: 'assets/imgs/food5.png',
+    //     price: 100.0,
+    //     isHot: true,
+    //     imgUrl: 'assets/imgs/food2.png',
     //     description:
     //         'Lorem ipsum dolor ipsum dolor ipsum dolor ipsum dolor ipsum ');
     // box.add(a1);
-    //box.clear();
+
     _items = box.values.toList();
     _loadDataFavoritAndHotPromo(box);
     notifyListeners();

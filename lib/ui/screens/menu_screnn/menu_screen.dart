@@ -1,40 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
+import 'package:text/ui/widgets/big_text.dart';
 import '../../../object/dish_object.dart';
 import '../../theme/theme_app.dart';
-import '../../widgets/isEmplty/is_emplty_widget.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final length = context.watch<DishModel>().items.length;
     final mediaQuery = MediaQuery.of(context).size.width;
     final factor = ScreensFactory();
     return Scaffold(
-        body: length != 0
-            ? CustomScrollView(
-                slivers: mediaQuery >= 370
-                    ? [
-                        SliverAppBar(
-                          leading: const SizedBox.shrink(),
-                          collapsedHeight: 80,
-                          floating: true,
-                          pinned: false,
-                          snap: true,
-                          flexibleSpace: FlexibleSpaceBar(
-                            centerTitle: true,
-                            collapseMode: CollapseMode.pin,
-                            title: factor.makeHeder(),
-                          ),
-                          backgroundColor: ThemeApp.kBGColor,
-                        ),
-                        const _MenuBodyWidget()
-                      ]
-                    : [const _MenuBodyWidget()],
-              )
-            : const IsEmpltyWidget());
+        body: CustomScrollView(
+      slivers: mediaQuery >= 370
+          ? [
+              SliverAppBar(
+                leading: const SizedBox.shrink(),
+                collapsedHeight: 80,
+                floating: true,
+                pinned: false,
+                snap: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  collapseMode: CollapseMode.pin,
+                  title: factor.makeHeder(),
+                ),
+                backgroundColor: ThemeApp.kBGColor,
+              ),
+              const _MenuBodyWidget()
+            ]
+          : [const _MenuBodyWidget()],
+    ));
   }
 }
 
@@ -150,41 +147,24 @@ class _CartItemContainerTextWidget extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 30.0),
-          child: Text(
-            item.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: ThemeApp.style(size: 18, fW: FontWeight.w500),
-          ),
+          child: BigText(text: item.name),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
-              child: Text(
-                item.description,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-                style: ThemeApp.style(size: 14, fW: FontWeight.w500),
-              ),
+              child: BigText(text: item.description),
             ),
-            Text(
-              'more',
-              style: ThemeApp.style(
-                colors: ThemeApp.kAccent,
-                size: (item.description.length > 30) ? 14 : 0,
-                fW: FontWeight.w500,
-              ),
-            ),
+            BigText(text: 'more'),
           ],
         ),
         const Divider(color: Colors.grey, thickness: .3),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('цена : ', style: ThemeApp.style(size: 16)),
-            Text('\$ ${item.price}', style: ThemeApp.style(size: 16)),
+            BigText(text: 'цена : '),
+            BigText(text: '\$ ${item.price}'),
           ],
         ),
       ],

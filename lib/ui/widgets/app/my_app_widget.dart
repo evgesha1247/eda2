@@ -9,7 +9,10 @@ class MyAppWidget extends StatelessWidget {
     final mainNavigation = MainNavigation();
     return MaterialApp(
       title: 'flutter app',
-      theme: ThemeData(scaffoldBackgroundColor: ThemeApp.kBGColor),
+      theme: ThemeData(
+        fontFamily: 'Plankiss',
+        scaffoldBackgroundColor: ThemeApp.kBGColor,
+      ),
       routes: mainNavigation.routes,
       initialRoute: mainNavigation.initialRoute,
       onGenerateRoute: mainNavigation.onGenerateRoute,

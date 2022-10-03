@@ -1,40 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
+import 'package:text/ui/widgets/big_text.dart';
 import '../../../object/dish_object.dart';
 import '../../theme/theme_app.dart';
-import '../../widgets/isEmplty/is_emplty_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   @override
   Widget build(context) {
-    final length = context.watch<DishModel>().items.length;
     final mediaQuery = MediaQuery.of(context).size.width;
     final factor = ScreensFactory();
     return Scaffold(
-      body: length != 0
-          ? CustomScrollView(
-              slivers: mediaQuery >= 370
-                  ? [
-                      SliverAppBar(
-                        leading: const SizedBox.shrink(),
-                        collapsedHeight: 80,
-                        floating: true,
-                        pinned: false,
-                        snap: true,
-                        flexibleSpace: FlexibleSpaceBar(
-                          centerTitle: true,
-                          collapseMode: CollapseMode.pin,
-                          title: factor.makeHeder(),
-                        ),
-                        backgroundColor: ThemeApp.kBGColor,
+        body: CustomScrollView(
+            slivers: mediaQuery >= 370
+                ? [
+                    SliverAppBar(
+                      leading: const SizedBox.shrink(),
+                      collapsedHeight: 80,
+                      floating: true,
+                      pinned: false,
+                      snap: true,
+                      flexibleSpace: FlexibleSpaceBar(
+                        centerTitle: true,
+                        collapseMode: CollapseMode.pin,
+                        title: factor.makeHeder(),
                       ),
-                      const _BodyWidget(),
-                    ]
-                  : [const _BodyWidget()])
-          : const IsEmpltyWidget(),
-    );
+                      backgroundColor: ThemeApp.kBGColor,
+                    ),
+                    const _BodyWidget(),
+                  ]
+                : [const _BodyWidget()]));
   }
 }
 
@@ -63,10 +59,7 @@ class _PromoWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: length != 0
           ? [
-              Text(
-                'Hot Promo',
-                style: ThemeApp.style(fW: FontWeight.w500, size: 20),
-              ),
+              BigText(text: 'Hot Promo'),
               SizedBox(
                 height: 125,
                 child: ListView.separated(
@@ -124,18 +117,11 @@ class _PromoItemTextWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-            child: Text(dish.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: ThemeApp.style(size: 22)),
+            child: BigText(text: dish.name),
           ),
-          Text(dish.description,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: ThemeApp.style(size: 16, fW: FontWeight.w400)),
+          BigText(text: dish.description),
           const SizedBox(height: ThemeApp.kInterval),
-          Text('\$ ${dish.price}',
-              style: ThemeApp.style(size: 18, fW: FontWeight.w400)),
+          BigText(text: '\$ ${dish.price}'),
         ],
       ),
     );

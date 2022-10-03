@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/theme/theme_app.dart';
+import 'package:text/ui/widgets/big_text.dart';
 import '../../../object/cart_object.dart';
 import 'dish_detailed_model.dart';
 
@@ -137,9 +138,7 @@ class _DishDetailedContainerText extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-                child: Text(title,
-                    style: ThemeApp.style(size: 22, fW: FontWeight.w500))),
+            Expanded(child: BigText(text: title)),
             Container(
               decoration: BoxDecoration(
                 borderRadius: ThemeApp.decoration(),
@@ -147,14 +146,7 @@ class _DishDetailedContainerText extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(ThemeApp.kInterval),
-                child: Text(
-                  '$price\$',
-                  style: ThemeApp.style(
-                    size: 18,
-                    fW: FontWeight.normal,
-                    colors: ThemeApp.kBGColor,
-                  ),
-                ),
+                child: BigText(text: '$price\$'),
               ),
             ),
           ],
@@ -196,15 +188,9 @@ class _DishDetailedDescription extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'description',
-                style: ThemeApp.style(
-                  size: 22,
-                  fW: FontWeight.w500,
-                ),
-              ),
+              BigText(text: 'description'),
               const SizedBox(height: ThemeApp.kInterval),
-              Text(description, style: ThemeApp.style()),
+              BigText(text: description),
             ],
           ),
         ),
@@ -254,7 +240,7 @@ class _DishDetailedButtonBar extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: ThemeApp.kInterval),
-                    Text('$number', style: ThemeApp.style()),
+                    BigText(text: '$number'),
                     const SizedBox(width: ThemeApp.kInterval),
                     GestureDetector(
                       onTap: () {
@@ -265,9 +251,7 @@ class _DishDetailedButtonBar extends StatelessWidget {
                     )
                   ],
                 ),
-                Row(children: [
-                  Text('total : $subTotal\$ ', style: ThemeApp.style())
-                ])
+                Row(children: [BigText(text: 'total : $subTotal\$ ')])
               ],
             ),
             const SizedBox(height: ThemeApp.kInterval),
@@ -281,13 +265,7 @@ class _DishDetailedButtonBar extends StatelessWidget {
                   color: ThemeApp.kAccent,
                 ),
                 child: Center(
-                  child: Text(
-                    'show cart',
-                    style: ThemeApp.style(
-                      colors: ThemeApp.kFrontColor,
-                      fW: FontWeight.bold,
-                    ),
-                  ),
+                  child: BigText(text: 'show cart'),
                 ),
               ),
             ),

@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/cart_object.dart';
 import 'package:text/ui/theme/theme_app.dart';
+import 'package:text/ui/widgets/big_text.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class CartScreen extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: _CartButtonBack(),
                   ),
-                  Text('Cart', style: ThemeApp.style(size: 20)),
+                  BigText(text: 'Cart')
                 ],
               ),
               const SizedBox(height: ThemeApp.kInterval),
@@ -120,13 +121,12 @@ class _CartContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(cartItems.name, style: ThemeApp.style(size: 22)),
+            BigText(text: cartItems.name),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(cartItems.price.toString(),
-                    style: ThemeApp.style(size: 22)),
-                Text('ₓ${cartItems.number}', style: ThemeApp.style(size: 22)),
+                BigText(text: cartItems.price.toString()),
+                BigText(text: 'ₓ${cartItems.number}'),
               ],
             ),
           ],
@@ -157,17 +157,17 @@ class _BottnCart extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('sub-total  ', style: ThemeApp.style()),
-              Text(cart.total.toStringAsFixed(2), style: ThemeApp.style()),
+              BigText(text: 'sub-total'),
+              BigText(text: cart.total.toStringAsFixed(2)),
             ],
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             cart.total > 3000
-                ? Text('save -15%', style: ThemeApp.style())
+                ? BigText(text: 'save -15%')
                 : cart.total > 1000
-                    ? Text('delivery ', style: ThemeApp.style())
-                    : Text('delivery ', style: ThemeApp.style()),
-            Text(promotions.toStringAsFixed(2), style: ThemeApp.style())
+                    ? BigText(text: 'delivery')
+                    : BigText(text: 'delivery'),
+            BigText(text: promotions.toStringAsFixed(2))
           ]),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
@@ -179,9 +179,8 @@ class _BottnCart extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('all total ', style: ThemeApp.style()),
-              Text((cart.total + promotions).toString(),
-                  style: ThemeApp.style()),
+              BigText(text: 'all total'),
+              BigText(text: (cart.total + promotions).toString()),
             ],
           ),
           const SizedBox(height: ThemeApp.kInterval),
@@ -195,13 +194,7 @@ class _BottnCart extends StatelessWidget {
                 borderRadius: ThemeApp.decoration(),
               ),
               child: Center(
-                child: Text(
-                  'add to cart',
-                  style: ThemeApp.style(
-                    colors: ThemeApp.kFrontColor,
-                    fW: FontWeight.bold,
-                  ),
-                ),
+                child: BigText(text: 'add to cart'),
               ),
             ),
           ),
