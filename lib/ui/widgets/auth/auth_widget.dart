@@ -9,8 +9,8 @@ class AuthWidget extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            ThemeApp.kFrontColor,
-            ThemeApp.kBGColor,
+            ThemeAppColor.kFrontColor,
+            ThemeAppColor.kBGColor,
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

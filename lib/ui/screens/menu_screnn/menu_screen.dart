@@ -14,22 +14,7 @@ class MenuScreen extends StatelessWidget {
     return Scaffold(
         body: CustomScrollView(
       slivers: mediaQuery >= 370
-          ? [
-              SliverAppBar(
-                leading: const SizedBox.shrink(),
-                collapsedHeight: 80,
-                floating: true,
-                pinned: false,
-                snap: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  collapseMode: CollapseMode.pin,
-                  title: factor.makeHeder(),
-                ),
-                backgroundColor: ThemeApp.kBGColor,
-              ),
-              const _MenuBodyWidget()
-            ]
+          ? [factor.makeHeder(), const _MenuBodyWidget()]
           : [const _MenuBodyWidget()],
     ));
   }
@@ -84,8 +69,8 @@ class _CartItemContainerWidget extends StatelessWidget {
     return Container(
         margin: const EdgeInsets.only(top: 30, left: 10, right: 10),
         decoration: BoxDecoration(
-          color: ThemeApp.kFrontColor,
-          borderRadius: ThemeApp.decoration(),
+          color: ThemeAppColor.kFrontColor,
+          borderRadius: ThemeAppFun.decoration(),
           image: MediaQuery.of(context).size.width < 370
               ? DecorationImage(
                   image: AssetImage(itemImgUrl),
@@ -103,7 +88,7 @@ class _CartItemContainerContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(ThemeApp.kInterval),
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: Column(
         children: [
           _ButtonFavoritWidget(index: index),

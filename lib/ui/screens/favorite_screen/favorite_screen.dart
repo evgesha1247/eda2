@@ -11,7 +11,7 @@ class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ThemeApp.kFrontColor,
+      backgroundColor: ThemeAppColor.kFrontColor,
       body: Column(
         children: const [
           _HeaderFavoritWidget(),
@@ -34,7 +34,7 @@ class _HeaderFavoritWidget extends StatelessWidget {
         children: [
           BigText(text: 'Favorites'),
           const Icon(Icons.favorite_border_outlined,
-              color: ThemeApp.kAccent, size: 20)
+              color: ThemeAppColor.kAccent, size: 20)
         ],
       ),
     );
@@ -49,13 +49,13 @@ class _GridViewWidget extends StatelessWidget {
     return Expanded(
       child: Container(
         decoration: const BoxDecoration(
-          color: ThemeApp.kBGColor,
+          color: ThemeAppColor.kBGColor,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(20),
           ),
         ),
         child: GridView.custom(
-          padding: const EdgeInsets.all(ThemeApp.kInterval),
+          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           gridDelegate: SliverWovenGridDelegate.count(
             crossAxisCount: 2,
             crossAxisSpacing: 10,
@@ -81,7 +81,8 @@ class _ItemFovaritContainerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: ThemeApp.decoration(), color: ThemeApp.kFrontColor),
+          borderRadius: ThemeAppFun.decoration(),
+          color: ThemeAppColor.kFrontColor),
       child: _ItemFovaritContainerImgWidget(index: index),
     );
   }
@@ -100,8 +101,8 @@ class _ItemFovaritContainerImgWidget extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             width: double.infinity,
             decoration: BoxDecoration(
-                color: ThemeApp.kAccent2,
-                borderRadius: ThemeApp.decoration(),
+                color: ThemeAppColor.kAccent2,
+                borderRadius: ThemeAppFun.decoration(),
                 boxShadow: const [
                   BoxShadow(
                     color: Color.fromARGB(255, 33, 36, 54),
@@ -117,7 +118,7 @@ class _ItemFovaritContainerImgWidget extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(ThemeApp.kInterval),
+          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: BigText(text: itemsFovarit[index].name),
         ),
       ],

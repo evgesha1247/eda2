@@ -43,15 +43,15 @@ class DishDetaild extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(ThemeApp.kInterval),
+          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: Column(
-            children: const [
-              _StackImgAndContent(),
-              SizedBox(height: ThemeApp.kInterval),
-              _DishDetailedDescription(),
-              _MarcetWidget(),
-              SizedBox(height: ThemeApp.kInterval),
-              _DishDetailedButtonBar(),
+            children: [
+              const _StackImgAndContent(),
+              SizedBox(height: ThemeAppSize.kInterval12),
+              const _DishDetailedDescription(),
+              const _MarcetWidget(),
+              SizedBox(height: ThemeAppSize.kInterval12),
+              const _DishDetailedButtonBar(),
             ],
           ),
         ),
@@ -66,7 +66,7 @@ class _MarcetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: ThemeApp.decoration(),
+        borderRadius: ThemeAppFun.decoration(),
         color: Colors.white,
       ),
       height: 3.5,
@@ -112,11 +112,11 @@ class _DishDetailedContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: ThemeApp.decoration(),
-        color: ThemeApp.kFrontColor,
+        borderRadius: ThemeAppFun.decoration(),
+        color: ThemeAppColor.kFrontColor,
       ),
       margin: const EdgeInsets.only(top: 60),
-      padding: const EdgeInsets.all(ThemeApp.kInterval),
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: const _DishDetailedContainerText(),
     );
   }
@@ -141,11 +141,11 @@ class _DishDetailedContainerText extends StatelessWidget {
             Expanded(child: BigText(text: title)),
             Container(
               decoration: BoxDecoration(
-                borderRadius: ThemeApp.decoration(),
-                color: ThemeApp.kAccent,
+                borderRadius: ThemeAppFun.decoration(),
+                color: ThemeAppColor.kAccent,
               ),
               child: Padding(
-                padding: const EdgeInsets.all(ThemeApp.kInterval),
+                padding: EdgeInsets.all(ThemeAppSize.kInterval12),
                 child: BigText(text: '$price\$'),
               ),
             ),
@@ -168,7 +168,7 @@ class _ButtBookmark extends StatelessWidget {
         alignment: Alignment.topRight,
         child: isFovarit
             ? const Icon(Icons.favorite, color: Colors.red)
-            : const Icon(Icons.favorite_border, color: ThemeApp.kWhite),
+            : const Icon(Icons.favorite_border, color: ThemeAppColor.kWhite),
       ),
     );
   }
@@ -183,13 +183,13 @@ class _DishDetailedDescription extends StatelessWidget {
     return Expanded(
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(ThemeApp.kInterval),
+        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BigText(text: 'description'),
-              const SizedBox(height: ThemeApp.kInterval),
+              SizedBox(height: ThemeAppSize.kInterval12),
               BigText(text: description),
             ],
           ),
@@ -211,11 +211,11 @@ class _DishDetailedButtonBar extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: ThemeApp.decoration(),
-        color: ThemeApp.kFrontColor,
+        borderRadius: ThemeAppFun.decoration(),
+        color: ThemeAppColor.kFrontColor,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(ThemeApp.kInterval),
+        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         child: Column(
           children: [
             Row(
@@ -236,33 +236,33 @@ class _DishDetailedButtonBar extends StatelessWidget {
                       child: const Icon(
                         Icons.add_circle_outline,
                         size: 22,
-                        color: ThemeApp.kBlack,
+                        color: ThemeAppColor.kBlack,
                       ),
                     ),
-                    const SizedBox(width: ThemeApp.kInterval),
+                    SizedBox(width: ThemeAppSize.kInterval12),
                     BigText(text: '$number'),
-                    const SizedBox(width: ThemeApp.kInterval),
+                    SizedBox(width: ThemeAppSize.kInterval12),
                     GestureDetector(
                       onTap: () {
                         cartModel.updataSubOne(dishkey);
                       },
                       child: const Icon(Icons.remove_circle_outline,
-                          size: 22, color: ThemeApp.kBlack),
+                          size: 22, color: ThemeAppColor.kBlack),
                     )
                   ],
                 ),
                 Row(children: [BigText(text: 'total : $subTotal\$ ')])
               ],
             ),
-            const SizedBox(height: ThemeApp.kInterval),
+            SizedBox(height: ThemeAppSize.kInterval12),
             GestureDetector(
               onTap: () => dishModel.showCart(context),
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  borderRadius: ThemeApp.decoration(),
-                  color: ThemeApp.kAccent,
+                  borderRadius: ThemeAppFun.decoration(),
+                  color: ThemeAppColor.kAccent,
                 ),
                 child: Center(
                   child: BigText(text: 'show cart'),
@@ -285,18 +285,18 @@ class _DishDetailedButtonBack extends StatelessWidget {
       onTap: () => model.showMenu(context),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: ThemeApp.decoration(),
-          color: ThemeApp.kFrontColor,
+          borderRadius: ThemeAppFun.decoration(),
+          color: ThemeAppColor.kFrontColor,
         ),
-        padding: const EdgeInsets.only(
-          top: ThemeApp.kInterval,
-          bottom: ThemeApp.kInterval,
-          left: ThemeApp.kInterval + 10,
-          right: ThemeApp.kInterval,
+        padding: EdgeInsets.only(
+          top: ThemeAppSize.kInterval12,
+          bottom: ThemeAppSize.kInterval12,
+          left: ThemeAppSize.kInterval12 + 10,
+          right: ThemeAppSize.kInterval12,
         ),
         child: const Icon(
           Icons.arrow_back_ios,
-          color: ThemeApp.kAccent,
+          color: ThemeAppColor.kAccent,
         ),
       ),
     );

@@ -52,11 +52,11 @@ class _FooterBottomBarWidget extends StatelessWidget {
     return BottomNavBar(
       curve: Curves.easeInOutCubicEmphasized,
       showElevation: false,
-      itemCornerRadius: ThemeApp.kRadius,
+      itemCornerRadius: ThemeAppSize.kRadius,
       selectedIndex: currentIndexTab,
       containerHeight: 60,
       containerPadding: const EdgeInsets.only(top: 8),
-      backgroundColor: ThemeApp.kBGColor,
+      backgroundColor: ThemeAppColor.kBGColor,
       onItemSelected: model.setCurrentIndexTab,
       animationDuration: const Duration(milliseconds: 300),
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,9 +75,9 @@ bottomItem(String text, IconData icon, int index) {
   return BottomNavBarItem(
     title: text,
     icon: Icon(icon),
-    inactiveColor: ThemeApp.kFrontColor,
+    inactiveColor: ThemeAppColor.kFrontColor,
     activeColor: Color(listIntActiveColor[index]),
-    activeBackgroundColor: ThemeApp.kFrontColor,
+    activeBackgroundColor: ThemeAppColor.kFrontColor,
   );
 }
 
@@ -87,12 +87,12 @@ class _FooterFlotingButtom extends StatelessWidget {
   Widget build(BuildContext context) {
     return const CircleAvatar(
       radius: 33,
-      backgroundColor: ThemeApp.kFrontColor,
+      backgroundColor: ThemeAppColor.kFrontColor,
       child: Center(
         child: FloatingActionButton(
           elevation: 0,
           onPressed: null,
-          backgroundColor: ThemeApp.kAccent,
+          backgroundColor: ThemeAppColor.kAccent,
           child: Icon(Icons.menu_sharp),
         ),
       ),

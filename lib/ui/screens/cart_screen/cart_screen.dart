@@ -13,7 +13,7 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(ThemeApp.kInterval),
+          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: Column(
             children: [
               Stack(
@@ -26,7 +26,7 @@ class CartScreen extends StatelessWidget {
                   BigText(text: 'Cart')
                 ],
               ),
-              const SizedBox(height: ThemeApp.kInterval),
+              SizedBox(height: ThemeAppSize.kInterval12),
               Expanded(
                 child: ListView.builder(
                   itemCount: cart.cartItem.length,
@@ -35,7 +35,7 @@ class CartScreen extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(height: ThemeApp.kInterval),
+              SizedBox(height: ThemeAppSize.kInterval12),
               const _BottnCart(),
             ],
           ),
@@ -53,7 +53,7 @@ class _CartRows extends StatelessWidget {
     final cartModel = context.watch<CartModel>();
     final dishkey = cartModel.cartItem.entries.toList()[index].key;
     return Padding(
-      padding: const EdgeInsets.only(bottom: ThemeApp.kInterval),
+      padding: EdgeInsets.only(bottom: ThemeAppSize.kInterval12),
       child: Slidable(
         key: const ValueKey(0),
         endActionPane: ActionPane(
@@ -74,8 +74,8 @@ class _CartRows extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: ThemeApp.decoration(),
-            color: ThemeApp.kFrontColor,
+            borderRadius: ThemeAppFun.decoration(),
+            color: ThemeAppColor.kFrontColor,
           ),
           clipBehavior: Clip.hardEdge,
           child: Row(
@@ -117,7 +117,7 @@ class _CartContent extends StatelessWidget {
     return Expanded(
       flex: 2,
       child: Padding(
-        padding: const EdgeInsets.all(ThemeApp.kInterval),
+        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -144,12 +144,12 @@ class _BottnCart extends StatelessWidget {
     final promotions = cart.promotions();
     return Container(
       decoration: BoxDecoration(
-        color: ThemeApp.kFrontColor,
-        borderRadius: ThemeApp.decoration(),
+        color: ThemeAppColor.kFrontColor,
+        borderRadius: ThemeAppFun.decoration(),
       ),
-      padding: const EdgeInsets.symmetric(
+      padding: EdgeInsets.symmetric(
         vertical: 15,
-        horizontal: ThemeApp.kInterval,
+        horizontal: ThemeAppSize.kInterval12,
       ),
       width: double.infinity,
       child: Column(
@@ -169,10 +169,10 @@ class _BottnCart extends StatelessWidget {
                     : BigText(text: 'delivery'),
             BigText(text: promotions.toStringAsFixed(2))
           ]),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
-            child: Divider(
-              color: ThemeApp.kWhite,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
+            child: const Divider(
+              color: ThemeAppColor.kWhite,
               thickness: .3,
             ),
           ),
@@ -183,15 +183,15 @@ class _BottnCart extends StatelessWidget {
               BigText(text: (cart.total + promotions).toString()),
             ],
           ),
-          const SizedBox(height: ThemeApp.kInterval),
+          SizedBox(height: ThemeAppSize.kInterval12),
           GestureDetector(
             onTap: () => cart.clear(),
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: ThemeApp.kInterval),
+              padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
               width: double.infinity,
               decoration: BoxDecoration(
-                color: ThemeApp.kAccent,
-                borderRadius: ThemeApp.decoration(),
+                color: ThemeAppColor.kAccent,
+                borderRadius: ThemeAppFun.decoration(),
               ),
               child: Center(
                 child: BigText(text: 'add to cart'),
@@ -213,18 +213,18 @@ class _CartButtonBack extends StatelessWidget {
       onTap: () => model.showMenu(context),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: ThemeApp.decoration(),
-          color: ThemeApp.kFrontColor,
+          borderRadius: ThemeAppFun.decoration(),
+          color: ThemeAppColor.kFrontColor,
         ),
-        padding: const EdgeInsets.only(
-          top: ThemeApp.kInterval,
-          bottom: ThemeApp.kInterval,
-          left: ThemeApp.kInterval + 10,
-          right: ThemeApp.kInterval,
+        padding: EdgeInsets.only(
+          top: ThemeAppSize.kInterval12,
+          bottom: ThemeAppSize.kInterval12,
+          left: ThemeAppSize.kInterval12 + 10,
+          right: ThemeAppSize.kInterval12,
         ),
         child: const Icon(
           Icons.arrow_back_ios,
-          color: ThemeApp.kAccent,
+          color: ThemeAppColor.kAccent,
         ),
       ),
     );
