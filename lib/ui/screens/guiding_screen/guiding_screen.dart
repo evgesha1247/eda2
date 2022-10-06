@@ -71,12 +71,11 @@ class _FooterBottomBarWidget extends StatelessWidget {
 }
 
 bottomItem(String text, IconData icon, int index) {
-  final listIntActiveColor = [0xffF7C701, 0xffff9a76, 0xfff96070, 0xffd49a89];
   return BottomNavBarItem(
     title: text,
     icon: Icon(icon),
     inactiveColor: ThemeAppColor.kFrontColor,
-    activeColor: Color(listIntActiveColor[index]),
+    activeColor: ThemeAppColor.kBGColor,
     activeBackgroundColor: ThemeAppColor.kFrontColor,
   );
 }

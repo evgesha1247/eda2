@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:text/const/const_app_img.dart';
 
 import '../ui/navigations/main_navigation.dart';
 part 'dish_object.g.dart';
@@ -56,17 +58,18 @@ class DishModel extends ChangeNotifier {
   }
 
   void _readBoxDishsFromHive(Box<Dish> box) {
-    // final a1 = Dish(
-    //     id: 'q1.2',
-    //     name: ' Lorem ipsum dolor  ipsum 5',
-    //     price: 100.0,
-    //     isHot: true,
-    //     imgUrl: 'assets/imgs/food2.png',
-    //     description:
-    //         'Lorem ipsum dolor ipsum dolor ipsum dolor ipsum dolor ipsum ');
-    // box.add(a1);
-
+    // final q1 = Dish(
+    //   id: '${DateTime.now()}',
+    //   name: 'Lorem ipsum dolor  ipsum 5',
+    //   price: 37.0,
+    //   isHot: false,
+    //   imgUrl: ConstAppImgURL.imgURL2,
+    //   description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
+    // );
+    // box.add(q1);
+    // box.clear();
     _items = box.values.toList();
+    //_items = [];
     _loadDataFavoritAndHotPromo(box);
     notifyListeners();
   }
@@ -84,10 +87,15 @@ class DishModel extends ChangeNotifier {
     }
 
     ///to hot
+
     for (var element in items) {
-      if (element.isHot) {
-        if (_itemsHotDish.contains(element)) continue;
-        _itemsHotDish.add(element);
+      if (element.isHot && !_itemsHotDish.contains(element)) {
+        if (_itemsHotDish.length >= 3) {
+          _itemsHotDish.remove(_itemsHotDish.first);
+          _itemsHotDish.add(element);
+        } else {
+          _itemsHotDish.add(element);
+        }
       }
       if (!element.isHot) {
         _itemsHotDish.remove(element);

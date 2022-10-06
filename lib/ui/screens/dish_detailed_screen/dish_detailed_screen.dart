@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/theme/theme_app.dart';
 import 'package:text/ui/widgets/big_text.dart';
+import 'package:text/ui/widgets/small_text.dart';
 import '../../../object/cart_object.dart';
 import 'dish_detailed_model.dart';
 
@@ -46,10 +47,9 @@ class DishDetaild extends StatelessWidget {
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: Column(
             children: [
-              const _StackImgAndContent(),
+              const _DishDetailedHederWidget(),
               SizedBox(height: ThemeAppSize.kInterval12),
               const _DishDetailedDescription(),
-              const _MarcetWidget(),
               SizedBox(height: ThemeAppSize.kInterval12),
               const _DishDetailedButtonBar(),
             ],
@@ -60,23 +60,8 @@ class DishDetaild extends StatelessWidget {
   }
 }
 
-class _MarcetWidget extends StatelessWidget {
-  const _MarcetWidget({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: ThemeAppFun.decoration(),
-        color: Colors.white,
-      ),
-      height: 3.5,
-      width: 30,
-    );
-  }
-}
-
-class _StackImgAndContent extends StatelessWidget {
-  const _StackImgAndContent({Key? key}) : super(key: key);
+class _DishDetailedHederWidget extends StatelessWidget {
+  const _DishDetailedHederWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -85,22 +70,6 @@ class _StackImgAndContent extends StatelessWidget {
         _DishDetailedImg(),
         _DishDetailedButtonBack(),
       ],
-    );
-  }
-}
-
-class _DishDetailedImg extends StatelessWidget {
-  const _DishDetailedImg({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    final model = context.watch<DishDetailedModel>();
-    final imgUrl = model.dish?.imgUrl ?? 'assets/imgs/food2.png';
-    return Align(
-      child: Image.asset(imgUrl,
-          height: 200,
-          width: MediaQuery.of(context).size.width * 0.6,
-          fit: BoxFit.contain,
-          alignment: Alignment.topCenter),
     );
   }
 }
@@ -118,6 +87,23 @@ class _DishDetailedContainer extends StatelessWidget {
       margin: const EdgeInsets.only(top: 60),
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: const _DishDetailedContainerText(),
+    );
+  }
+}
+
+class _DishDetailedImg extends StatelessWidget {
+  const _DishDetailedImg({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final model = context.watch<DishDetailedModel>();
+    final imgUrl = model.dish?.imgUrl ?? 'assets/imgs/food2.png';
+    return Center(
+      child: Container(
+        decoration:
+            BoxDecoration(borderRadius: ThemeAppFun.decoration(radius: 50)),
+        clipBehavior: Clip.hardEdge,
+        child: Image.asset(imgUrl, height: 150, fit: BoxFit.contain),
+      ),
     );
   }
 }
@@ -142,11 +128,14 @@ class _DishDetailedContainerText extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: ThemeAppFun.decoration(),
-                color: ThemeAppColor.kAccent,
+                color: ThemeAppColor.kBGColor,
               ),
               child: Padding(
                 padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-                child: BigText(text: '$price\$'),
+                child: BigText(
+                  text: '$price\$',
+                  color: ThemeAppColor.kBlack,
+                ),
               ),
             ),
           ],
@@ -167,8 +156,8 @@ class _ButtBookmark extends StatelessWidget {
       child: Align(
         alignment: Alignment.topRight,
         child: isFovarit
-            ? const Icon(Icons.favorite, color: Colors.red)
-            : const Icon(Icons.favorite_border, color: ThemeAppColor.kWhite),
+            ? const Icon(Icons.favorite, color: ThemeAppColor.kBGColor)
+            : const Icon(Icons.favorite_border, color: Colors.grey),
       ),
     );
   }
@@ -181,19 +170,31 @@ class _DishDetailedDescription extends StatelessWidget {
     final model = context.watch<DishDetailedModel>();
     final description = model.dish?.description ?? '';
     return Expanded(
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BigText(text: 'description'),
-              SizedBox(height: ThemeAppSize.kInterval12),
-              BigText(text: description),
-            ],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const BigText(
+                    text: 'description',
+                    color: ThemeAppColor.kFrontColor,
+                  ),
+                  SizedBox(height: ThemeAppSize.kInterval12),
+                  SmallText(
+                    text: description,
+                    color: ThemeAppColor.kFrontColor,
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
+          const _MarcetWidget(),
+        ],
       ),
     );
   }
@@ -236,7 +237,7 @@ class _DishDetailedButtonBar extends StatelessWidget {
                       child: const Icon(
                         Icons.add_circle_outline,
                         size: 22,
-                        color: ThemeAppColor.kBlack,
+                        color: ThemeAppColor.kBGColor,
                       ),
                     ),
                     SizedBox(width: ThemeAppSize.kInterval12),
@@ -246,8 +247,11 @@ class _DishDetailedButtonBar extends StatelessWidget {
                       onTap: () {
                         cartModel.updataSubOne(dishkey);
                       },
-                      child: const Icon(Icons.remove_circle_outline,
-                          size: 22, color: ThemeAppColor.kBlack),
+                      child: const Icon(
+                        Icons.remove_circle_outline,
+                        size: 22,
+                        color: ThemeAppColor.kBGColor,
+                      ),
                     )
                   ],
                 ),
@@ -262,10 +266,13 @@ class _DishDetailedButtonBar extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: ThemeAppFun.decoration(),
-                  color: ThemeAppColor.kAccent,
+                  color: ThemeAppColor.kBGColor,
                 ),
-                child: Center(
-                  child: BigText(text: 'show cart'),
+                child: const Center(
+                  child: BigText(
+                    text: 'show cart',
+                    color: ThemeAppColor.kFrontColor,
+                  ),
                 ),
               ),
             ),
@@ -296,9 +303,24 @@ class _DishDetailedButtonBack extends StatelessWidget {
         ),
         child: const Icon(
           Icons.arrow_back_ios,
-          color: ThemeAppColor.kAccent,
+          color: ThemeAppColor.kBGColor,
         ),
       ),
+    );
+  }
+}
+
+class _MarcetWidget extends StatelessWidget {
+  const _MarcetWidget({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: ThemeAppFun.decoration(),
+        color: ThemeAppColor.kFrontColor,
+      ),
+      height: 3.5,
+      width: 30,
     );
   }
 }

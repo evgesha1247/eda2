@@ -11,7 +11,7 @@ class MyAppWidget extends StatelessWidget {
     return GetMaterialApp(
       title: 'flutter app',
       theme: ThemeData(
-        fontFamily: 'FiraCode',
+        fontFamily: 'Insaniburger',
         scaffoldBackgroundColor: ThemeAppColor.kBGColor,
       ),
       routes: mainNavigation.routes,

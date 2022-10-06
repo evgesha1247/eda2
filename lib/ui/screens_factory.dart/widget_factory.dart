@@ -8,6 +8,7 @@ import 'package:text/ui/widgets/auth/auth_widget.dart';
 import 'package:text/ui/widgets/header_widget/header_model.dart';
 import 'package:text/ui/widgets/header_widget/header_widget.dart';
 import '../../object/dish_object.dart';
+import '../../splesh_screen.dart';
 import '../screens/cart_screen/cart_screen.dart';
 import '../screens/favorite_screen/favorite_model.dart';
 import '../screens/favorite_screen/favorite_screen.dart';
@@ -47,6 +48,9 @@ class ScreensFactory {
       create: (context) => MenuModel(), child: const MenuScreen());
   Widget makeCart() => const CartScreen();
   Widget makeDetailed() => const DishDetailedScreen();
+  Widget makeSplash() => const Splash();
   Widget makeFavorite() => ChangeNotifierProvider(
-      create: (context) => FavoriteModel(), child: const FavoriteScreen());
+        create: (context) => FavoriteModel(),
+        child: const FavoriteScreen(),
+      );
 }

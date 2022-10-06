@@ -31,9 +31,9 @@ class _HeaderFavoritWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           BigText(text: 'Favorites'),
-          const Icon(Icons.favorite_border_outlined,
+          Icon(Icons.favorite_border_outlined,
               color: ThemeAppColor.kAccent, size: 20)
         ],
       ),

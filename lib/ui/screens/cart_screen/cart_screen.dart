@@ -18,12 +18,15 @@ class CartScreen extends StatelessWidget {
             children: [
               Stack(
                 alignment: Alignment.center,
-                children: [
-                  const Align(
+                children: const [
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: _CartButtonBack(),
                   ),
-                  BigText(text: 'Cart')
+                  BigText(
+                    text: 'Cart',
+                    color: ThemeAppColor.kFrontColor,
+                  )
                 ],
               ),
               SizedBox(height: ThemeAppSize.kInterval12),
@@ -63,7 +66,7 @@ class _CartRows extends StatelessWidget {
             SlidableAction(
               spacing: 0,
               backgroundColor: Colors.transparent,
-              foregroundColor: Colors.white,
+              foregroundColor: ThemeAppColor.kFrontColor,
               icon: Icons.delete_outline_rounded,
               label: 'Delete',
               onPressed: (BuildContext context) {
@@ -157,16 +160,16 @@ class _BottnCart extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              BigText(text: 'sub-total'),
+              const BigText(text: 'sub-total'),
               BigText(text: cart.total.toStringAsFixed(2)),
             ],
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             cart.total > 3000
-                ? BigText(text: 'save -15%')
+                ? const BigText(text: 'save -15%')
                 : cart.total > 1000
-                    ? BigText(text: 'delivery')
-                    : BigText(text: 'delivery'),
+                    ? const BigText(text: 'delivery')
+                    : const BigText(text: 'delivery'),
             BigText(text: promotions.toStringAsFixed(2))
           ]),
           Padding(
@@ -179,8 +182,16 @@ class _BottnCart extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              BigText(text: 'all total'),
-              BigText(text: (cart.total + promotions).toString()),
+              BigText(
+                text: 'all total',
+                size: ThemeAppSize.kFontSize25,
+                color: ThemeAppColor.kBGColor,
+              ),
+              BigText(
+                text: (cart.total + promotions).toString(),
+                size: ThemeAppSize.kFontSize25,
+                color: ThemeAppColor.kBGColor,
+              ),
             ],
           ),
           SizedBox(height: ThemeAppSize.kInterval12),
@@ -190,11 +201,14 @@ class _BottnCart extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
               width: double.infinity,
               decoration: BoxDecoration(
-                color: ThemeAppColor.kAccent,
+                color: ThemeAppColor.kBGColor,
                 borderRadius: ThemeAppFun.decoration(),
               ),
-              child: Center(
-                child: BigText(text: 'add to cart'),
+              child: const Center(
+                child: BigText(
+                  text: 'add to cart',
+                  color: ThemeAppColor.kFrontColor,
+                ),
               ),
             ),
           ),
@@ -224,7 +238,7 @@ class _CartButtonBack extends StatelessWidget {
         ),
         child: const Icon(
           Icons.arrow_back_ios,
-          color: ThemeAppColor.kAccent,
+          color: ThemeAppColor.kBGColor,
         ),
       ),
     );

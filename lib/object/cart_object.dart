@@ -46,7 +46,6 @@ class CartModel extends ChangeNotifier {
     return numberD;
   }
 
-  var toggAdd = false;
   double get total {
     var total = 0.0;
     _cartItem.forEach(
@@ -68,11 +67,6 @@ class CartModel extends ChangeNotifier {
     );
     return subTotal;
   }
-
-  void togg() {
-    toggAdd = !toggAdd;
-  }
-  //get total => (_delivery + _subTotal).toStringAsFixed(2);
 
   void addItem({dishId, price, name, imgUrl}) {
     if (_cartItem.containsKey(dishId)) {

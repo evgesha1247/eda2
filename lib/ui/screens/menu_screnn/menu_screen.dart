@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/widgets/big_text.dart';
+import 'package:text/ui/widgets/small_text.dart';
 import '../../../object/dish_object.dart';
 import '../../theme/theme_app.dart';
 
@@ -53,7 +54,18 @@ class _CartItemWidget extends StatelessWidget {
           children: (mediaQuery >= 370)
               ? [
                   _CartItemContainerWidget(index: index),
-                  Image.asset(itemImgUrl, width: 130, height: 100),
+                  Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(80)),
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                    child: Image.asset(
+                      width: 90,
+                      height: 90,
+                      itemImgUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ]
               : [_CartItemContainerWidget(index: index)],
         ));
@@ -111,7 +123,7 @@ class _ButtonFavoritWidget extends StatelessWidget {
       children: [
         GestureDetector(
           child: dishItem.items[index].isFovarit
-              ? const Icon(Icons.favorite, color: Colors.red)
+              ? const Icon(Icons.favorite, color: ThemeAppColor.kBGColor)
               : const Icon(Icons.favorite_border, color: Colors.grey),
           onTap: () => dishItem.toggFovarit(index),
         )
@@ -139,16 +151,20 @@ class _CartItemContainerTextWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
-              child: BigText(text: item.description),
+              child: SmallText(text: item.description),
             ),
-            BigText(text: 'more'),
+            BigText(
+              text: 'more',
+              size: ThemeAppSize.kFontSize18,
+              color: ThemeAppColor.kAccent,
+            ),
           ],
         ),
         const Divider(color: Colors.grey, thickness: .3),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BigText(text: 'цена : '),
+            const BigText(text: 'price : '),
             BigText(text: '\$ ${item.price}'),
           ],
         ),

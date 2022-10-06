@@ -29,9 +29,7 @@ class _BodyWidget extends StatelessWidget {
         padding: EdgeInsets.only(left: ThemeAppSize.kInterval12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            _PromoWidget(),
-          ],
+          children: const [_PromoWidget()],
         ),
       ),
     );
@@ -47,7 +45,7 @@ class _PromoWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: isNotEmpty
           ? [
-              BigText(text: 'Hot Promo'),
+              const BigText(text: 'Hot Promo'),
               SizedBox(height: ThemeAppSize.kInterval12),
               const ItemsPromoWidget(),
             ]
@@ -185,23 +183,23 @@ class _ItemPromoInfoBlok extends StatelessWidget {
           bottom: ThemeAppSize.kInterval12,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: ThemeAppColor.kFrontColor,
           borderRadius: ThemeAppFun.decoration(),
           boxShadow: const [
             BoxShadow(
-              blurRadius: 3.0,
-              color: Colors.black45,
+              blurRadius: 5.0,
+              color: ThemeAppColor.kFrontColor,
               offset: Offset(0, 4),
             ),
             BoxShadow(
-              blurRadius: 3.0,
-              color: Colors.white38,
+              blurRadius: 4.0,
+              color: ThemeAppColor.kBGColor,
               offset: Offset(4, 0),
             ),
             BoxShadow(
               blurRadius: 4.0,
-              color: Colors.white38,
-              offset: Offset(-4, 0),
+              color: ThemeAppColor.kBGColor,
+              offset: Offset(-5, 0),
             ),
           ],
         ),
@@ -214,7 +212,7 @@ class _ItemPromoInfoBlok extends StatelessWidget {
               SizedBox(height: ThemeAppSize.kInterval5),
               SmallText(text: dish.description),
               SizedBox(height: ThemeAppSize.kInterval12),
-              SmallText(text: '(мб будут кнопки добавление)'),
+              const SmallText(text: '(мб будут кнопки добавление)'),
             ],
           ),
         ),

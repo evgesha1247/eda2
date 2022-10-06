@@ -4,15 +4,15 @@ import '../theme/theme_app.dart';
 
 class SmallText extends StatelessWidget {
   final String text;
-  double size;
-  double height;
-  int maxLines;
-  Color? color;
-  TextOverflow overflow;
-  SmallText({
+  final double size;
+  final double height;
+  final int maxLines;
+  final Color? color;
+  final TextOverflow overflow;
+  const SmallText({
     Key? key,
     required this.text,
-    this.color = const Color(0xFF6c625f),
+    this.color = const Color.fromARGB(255, 195, 195, 195),
     this.overflow = TextOverflow.ellipsis,
     this.height = 1.2,
     this.size = 0,
@@ -25,10 +25,10 @@ class SmallText extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow,
       style: TextStyle(
-        fontSize: size == 0 ? ThemeAppSize.kFontSize14 : size,
+        fontSize: size == 0 ? ThemeAppSize.kFontSize18 : size,
         color: color,
         height: height,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w300,
       ),
     );
   }

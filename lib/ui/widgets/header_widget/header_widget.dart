@@ -21,6 +21,7 @@ class HederWidget extends StatelessWidget {
       floating: true,
       pinned: false,
       snap: true,
+      backgroundColor: ThemeAppColor.kFrontColor,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         collapseMode: CollapseMode.pin,
@@ -38,15 +39,16 @@ class HederWidget extends StatelessWidget {
                         child: SizedBox(
                           height: _height,
                           child: TextField(
-                            cursorColor: ThemeAppColor.kAccent,
+                            cursorColor: ThemeAppColor.kFrontColor,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
                               isDense: true,
                               filled: true,
-                              fillColor:
-                                  const Color.fromARGB(255, 235, 235, 235),
-                              prefixIcon: const Icon(Icons.search,
-                                  color: ThemeAppColor.kAccent),
+                              fillColor: ThemeAppColor.kBGColor,
+                              prefixIcon: const Icon(
+                                Icons.search,
+                                color: ThemeAppColor.kFrontColor,
+                              ),
                               hintText: 'Search',
                               enabledBorder: styleSearch,
                               focusedBorder: styleSearch,
@@ -64,7 +66,6 @@ class HederWidget extends StatelessWidget {
           ),
         ),
       ),
-      backgroundColor: ThemeAppColor.kBGColor,
     );
   }
 }
@@ -78,7 +79,10 @@ class _FilterButtonWidget extends StatelessWidget {
       shadowColor: Colors.transparent,
       foregroundColor: Colors.transparent,
       backgroundColor: Colors.transparent,
-      side: const BorderSide(width: 2, color: ThemeAppColor.kAccent),
+      side: const BorderSide(
+        width: 2,
+        color: ThemeAppColor.kBGColor,
+      ),
       shape: RoundedRectangleBorder(
         borderRadius: ThemeAppFun.decoration(),
       ),
@@ -89,7 +93,10 @@ class _FilterButtonWidget extends StatelessWidget {
       onPressed: () => model.showCart(context),
       child: const SizedBox(
         height: _height,
-        child: Icon(Icons.shopping_cart, color: ThemeAppColor.kAccent),
+        child: Icon(
+          Icons.shopping_cart,
+          color: ThemeAppColor.kBGColor,
+        ),
       ),
     );
   }
