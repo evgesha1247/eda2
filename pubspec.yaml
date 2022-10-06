@@ -52,9 +52,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:Pacifico-Regular.ttf
   fonts:
-    - family: FiraCode
+    - family: Scripto
       fonts:
-        - asset: assets/fonts/FiraCode-Medium.ttf
+        - asset: assets/fonts/Scripto.ttf
     - family: OleoScript
       fonts:
         - asset: assets/fonts/OleoScript-Regular.ttf
@@ -63,6 +63,11 @@ flutter:
       fonts:
         - asset: assets/fonts/Insaniburger.ttf
         - asset: assets/fonts/InsaniburgerWithCheese-47Dp.ttf
+    - family: Mariupol
+      fonts:
+        - asset: assets/fonts/Mariupol-Bold.ttf
+        - asset: assets/fonts/Mariupol-Medium.ttf
+        - asset: assets/fonts/Mariupol-Regular.ttf
 
 
 

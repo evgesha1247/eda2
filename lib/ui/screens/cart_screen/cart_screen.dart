@@ -3,7 +3,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/cart_object.dart';
 import 'package:text/ui/theme/theme_app.dart';
-import 'package:text/ui/widgets/big_text.dart';
+import 'package:text/ui/widgets/text/big_text.dart';
+import 'package:text/ui/widgets/text/small_text.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class CartScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: cart.cartItem.length,
                   itemBuilder: (context, index) {
-                    return _CartRows(index: index);
+                    return _cartRows(index: index, cartModel: cart);
                   },
                 ),
               ),
@@ -46,14 +47,9 @@ class CartScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class _CartRows extends StatelessWidget {
-  const _CartRows({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    final cartModel = context.watch<CartModel>();
+  Widget _cartRows({required cartModel, required int index}) {
+    final img = cartModel.cartItem.values.elementAt(index).imgUrl;
     final dishkey = cartModel.cartItem.entries.toList()[index].key;
     return Padding(
       padding: EdgeInsets.only(bottom: ThemeAppSize.kInterval12),
@@ -83,28 +79,14 @@ class _CartRows extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: Row(
             children: [
-              _CartImg(index: index),
+              Image(
+                image: AssetImage(img),
+                height: 100,
+              ),
               _CartContent(index: index),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _CartImg extends StatelessWidget {
-  const _CartImg({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    final cart = context.watch<CartModel>();
-    final img = cart.cartItem.values.elementAt(index).imgUrl;
-    return Expanded(
-      flex: 1,
-      child: Image(
-        image: AssetImage(img),
-        height: 100,
       ),
     );
   }
@@ -118,7 +100,6 @@ class _CartContent extends StatelessWidget {
     final cart = context.watch<CartModel>();
     final cartItems = cart.cartItem.values.elementAt(index);
     return Expanded(
-      flex: 2,
       child: Padding(
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         child: Column(
@@ -128,8 +109,13 @@ class _CartContent extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                BigText(text: cartItems.price.toString()),
-                BigText(text: 'ₓ${cartItems.number}'),
+                Row(
+                  children: [
+                    const SmallText(text: 'price '),
+                    SmallText(text: cartItems.price.toString()),
+                  ],
+                ),
+                SmallText(text: 'ₓ${cartItems.number}'),
               ],
             ),
           ],
@@ -160,17 +146,17 @@ class _BottnCart extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const BigText(text: 'sub-total'),
-              BigText(text: cart.total.toStringAsFixed(2)),
+              const SmallText(text: 'sub-total'),
+              SmallText(text: cart.total.toStringAsFixed(2)),
             ],
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             cart.total > 3000
-                ? const BigText(text: 'save -15%')
+                ? const SmallText(text: 'save -15%')
                 : cart.total > 1000
-                    ? const BigText(text: 'delivery')
-                    : const BigText(text: 'delivery'),
-            BigText(text: promotions.toStringAsFixed(2))
+                    ? const SmallText(text: 'delivery')
+                    : const SmallText(text: 'delivery'),
+            SmallText(text: promotions.toStringAsFixed(2))
           ]),
           Padding(
             padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),

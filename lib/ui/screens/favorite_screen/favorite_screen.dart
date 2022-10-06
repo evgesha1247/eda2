@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/theme/theme_app.dart';
-import 'package:text/ui/widgets/big_text.dart';
+import 'package:text/ui/widgets/text/big_text.dart';
+import 'package:text/ui/widgets/text/small_text.dart';
 
 import '../../../object/dish_object.dart';
 
@@ -27,14 +28,20 @@ class _HeaderFavoritWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          BigText(text: 'Favorites'),
-          Icon(Icons.favorite_border_outlined,
-              color: ThemeAppColor.kAccent, size: 20)
+        children: [
+          const BigText(
+            text: 'Favorites',
+            color: ThemeAppColor.kBGColor,
+          ),
+          Icon(
+            Icons.favorite_border_outlined,
+            color: ThemeAppColor.kBGColor,
+            size: ThemeAppSize.kFontSize22,
+          )
         ],
       ),
     );
@@ -66,24 +73,34 @@ class _GridViewWidget extends StatelessWidget {
           ),
           childrenDelegate: SliverChildBuilderDelegate(
             childCount: itemsFovarit.length,
-            (context, index) => _ItemFovaritContainerWidget(index: index),
+            (context, index) => _itemFovaritContainerWidget(
+              index: index,
+              name: itemsFovarit[index].name,
+            ),
           ),
         ),
       ),
     );
   }
-}
 
-class _ItemFovaritContainerWidget extends StatelessWidget {
-  const _ItemFovaritContainerWidget({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
+  Widget _itemFovaritContainerWidget({
+    required int index,
+    required String name,
+  }) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: ThemeAppFun.decoration(),
           color: ThemeAppColor.kFrontColor),
-      child: _ItemFovaritContainerImgWidget(index: index),
+      clipBehavior: Clip.hardEdge,
+      child: Column(
+        children: [
+          Expanded(child: _ItemFovaritContainerImgWidget(index: index)),
+          Padding(
+            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+            child: SmallText(text: name, maxLines: 2),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -94,34 +111,10 @@ class _ItemFovaritContainerImgWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final itemsFovarit = context.watch<DishModel>().itemsFovarit;
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: ThemeAppColor.kAccent2,
-                borderRadius: ThemeAppFun.decoration(),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color.fromARGB(255, 33, 36, 54),
-                    offset: Offset(1, 3),
-                    spreadRadius: .1,
-                    blurRadius: 5,
-                  )
-                ]),
-            child: Image(
-                image: AssetImage(itemsFovarit[index].imgUrl),
-                fit: BoxFit.contain,
-                alignment: Alignment.center),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          child: BigText(text: itemsFovarit[index].name),
-        ),
-      ],
+    return Image(
+      image: AssetImage(itemsFovarit[index].imgUrl),
+      fit: BoxFit.cover,
+      alignment: Alignment.center,
     );
   }
 }

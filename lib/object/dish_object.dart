@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:text/const/const_app_img.dart';
-
 import '../ui/navigations/main_navigation.dart';
+
 part 'dish_object.g.dart';
 
 @HiveType(typeId: 0)
@@ -38,6 +36,7 @@ class Dish extends HiveObject {
 class DishModel extends ChangeNotifier {
   DishModel() {
     _setup();
+    print('object');
   }
   var _items = <Dish>[];
   final _itemsFovarit = <Dish>[];

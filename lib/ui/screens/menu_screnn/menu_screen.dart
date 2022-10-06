@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
-import 'package:text/ui/widgets/big_text.dart';
-import 'package:text/ui/widgets/small_text.dart';
+import 'package:text/ui/widgets/text/big_text.dart';
+import 'package:text/ui/widgets/text/small_text.dart';
 import '../../../object/dish_object.dart';
 import '../../theme/theme_app.dart';
 
@@ -138,37 +138,37 @@ class _CartItemContainerTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = context.read<DishModel>().items[index];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 30.0),
-          child: BigText(text: item.name),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: SmallText(text: item.description),
-            ),
-            BigText(
-              text: 'more',
-              size: ThemeAppSize.kFontSize18,
-              color: ThemeAppColor.kAccent,
-            ),
-          ],
-        ),
-        const Divider(color: Colors.grey, thickness: .3),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const BigText(text: 'price : '),
-            BigText(text: '\$ ${item.price}'),
-          ],
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 30.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          BigText(text: item.name),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: SmallText(text: item.description),
+              ),
+              BigText(
+                text: 'more',
+                size: ThemeAppSize.kFontSize18,
+                color: ThemeAppColor.kAccent,
+              ),
+            ],
+          ),
+          const Divider(color: Colors.grey, thickness: .3),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const BigText(text: 'price : '),
+              BigText(text: '\$ ${item.price}'),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

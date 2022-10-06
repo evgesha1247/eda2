@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:text/ui/theme/theme_app.dart';
 
-import '../theme/theme_app.dart';
-
-class SmallText extends StatelessWidget {
+class BigText extends StatelessWidget {
   final String text;
   final double size;
-  final double height;
   final int maxLines;
   final Color? color;
   final TextOverflow overflow;
-  const SmallText({
+  const BigText({
     Key? key,
     required this.text,
-    this.color = const Color.fromARGB(255, 195, 195, 195),
+    this.color = const Color.fromARGB(255, 224, 224, 224),
     this.overflow = TextOverflow.ellipsis,
-    this.height = 1.2,
     this.size = 0,
-    this.maxLines = 2,
+    this.maxLines = 1,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -25,10 +22,9 @@ class SmallText extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow,
       style: TextStyle(
-        fontSize: size == 0 ? ThemeAppSize.kFontSize18 : size,
+        fontSize: size == 0 ? ThemeAppSize.kFontSize22 : size,
         color: color,
-        height: height,
-        fontWeight: FontWeight.w300,
+        fontWeight: FontWeight.w100,
       ),
     );
   }

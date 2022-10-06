@@ -46,6 +46,17 @@ class CartModel extends ChangeNotifier {
     return numberD;
   }
 
+  int number() {
+    var number = 0;
+    cartItem.forEach(
+      (key, item) {
+        number += item.number;
+      },
+    );
+
+    return number;
+  }
+
   double get total {
     var total = 0.0;
     _cartItem.forEach(

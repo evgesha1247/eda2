@@ -2,8 +2,8 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
-import 'package:text/ui/widgets/big_text.dart';
-import 'package:text/ui/widgets/small_text.dart';
+import 'package:text/ui/widgets/text/big_text.dart';
+import 'package:text/ui/widgets/text/small_text.dart';
 import '../../../object/dish_object.dart';
 import '../../theme/theme_app.dart';
 
@@ -25,12 +25,9 @@ class _BodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Padding(
-        padding: EdgeInsets.only(left: ThemeAppSize.kInterval12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [_PromoWidget()],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [_PromoWidget()],
       ),
     );
   }
@@ -45,7 +42,13 @@ class _PromoWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: isNotEmpty
           ? [
-              const BigText(text: 'Hot Promo'),
+              Padding(
+                padding: EdgeInsets.all(ThemeAppSize.kFontSize14),
+                child: const BigText(
+                  text: 'Hot Promo',
+                  color: ThemeAppColor.kFrontColor,
+                ),
+              ),
               SizedBox(height: ThemeAppSize.kInterval12),
               const ItemsPromoWidget(),
             ]

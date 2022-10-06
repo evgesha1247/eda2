@@ -1,8 +1,10 @@
 import 'package:bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text/ui/screens/favorite_screen/favorite_screen.dart';
+import 'package:text/ui/screens/home_screen/home_screen.dart';
+import 'package:text/ui/screens/menu_screnn/menu_screen.dart';
 import 'package:text/ui/theme/theme_app.dart';
-import '../../screens_factory.dart/widget_factory.dart';
 import 'guiding_model.dart';
 
 class GuidingScreen extends StatelessWidget {
@@ -27,15 +29,14 @@ class _GuidingBodyWidget extends StatelessWidget {
     final currentIndexTab = context.select((GuidingScreenModel e) {
       return e.currentIndexTab;
     });
-    final factor = ScreensFactory();
     return SafeArea(
       child: IndexedStack(
         index: currentIndexTab,
-        children: [
-          factor.makeHome(),
-          factor.makeMenu(),
-          factor.makeFavorite(),
-          const Text(''),
+        children: const [
+          HomeScreen(),
+          MenuScreen(),
+          FavoriteScreen(),
+          Text(''),
         ],
       ),
     );

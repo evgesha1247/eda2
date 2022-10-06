@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:text/ui/screens/splesh_screen/splesh_screen.dart';
+import 'package:text/ui/screens/cart_screen/cart_screen.dart';
+import 'package:text/ui/screens/dish_detailed_screen/dish_detailed_screen.dart';
 import '../screens_factory.dart/widget_factory.dart';
 
 abstract class MainNavigationRouteName {
@@ -20,9 +23,9 @@ class MainNavigation {
   Map<String, WidgetBuilder> get routes => <String, WidgetBuilder>{
         guiding: (_) => _widgetFactory.makeGuiding(),
         auth: (_) => _widgetFactory.makeAuth(),
-        details: (_) => _widgetFactory.makeDetailed(),
-        cart: (_) => _widgetFactory.makeCart(),
-        splash: (_) => _widgetFactory.makeSplash(),
+        details: (_) => const DishDetailedScreen(),
+        cart: (_) => const CartScreen(),
+        splash: (_) => const SplashScreen()
       };
 
   ////// при ошибке навигации //////

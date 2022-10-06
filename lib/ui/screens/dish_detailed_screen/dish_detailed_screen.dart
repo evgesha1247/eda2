@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/theme/theme_app.dart';
-import 'package:text/ui/widgets/big_text.dart';
-import 'package:text/ui/widgets/small_text.dart';
+import 'package:text/ui/widgets/text/big_text.dart';
+import 'package:text/ui/widgets/text/small_text.dart';
 import '../../../object/cart_object.dart';
 import 'dish_detailed_model.dart';
 
@@ -255,7 +255,7 @@ class _DishDetailedButtonBar extends StatelessWidget {
                     )
                   ],
                 ),
-                Row(children: [BigText(text: 'total : $subTotal\$ ')])
+                Row(children: [SmallText(text: 'total : $subTotal\$ ')])
               ],
             ),
             SizedBox(height: ThemeAppSize.kInterval12),
