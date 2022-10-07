@@ -36,7 +36,6 @@ class Dish extends HiveObject {
 class DishModel extends ChangeNotifier {
   DishModel() {
     _setup();
-    print('object');
   }
   var _items = <Dish>[];
   final _itemsFovarit = <Dish>[];

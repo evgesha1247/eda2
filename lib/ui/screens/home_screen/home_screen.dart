@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text/const/const_app_img.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
@@ -15,10 +16,13 @@ class HomeScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: mediaQuery >= 370
           ? [ScreensFactory().makeHeder(), const _BodyWidget()]
-          : [const _BodyWidget()],
+          : [
+              const _BodyWidget(),
+            ],
     );
   }
 }
+
 
 class _BodyWidget extends StatelessWidget {
   const _BodyWidget({Key? key}) : super(key: key);
@@ -27,14 +31,17 @@ class _BodyWidget extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [_PromoWidget()],
+        children: const [
+          _PromoSuction(),
+          _PopularSuction(),
+        ],
       ),
     );
   }
 }
 
-class _PromoWidget extends StatelessWidget {
-  const _PromoWidget({Key? key}) : super(key: key);
+class _PromoSuction extends StatelessWidget {
+  const _PromoSuction({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final isNotEmpty = context.watch<DishModel>().itemsHotDish.isNotEmpty;
@@ -43,31 +50,29 @@ class _PromoWidget extends StatelessWidget {
       children: isNotEmpty
           ? [
               Padding(
-                padding: EdgeInsets.all(ThemeAppSize.kFontSize14),
+                padding: EdgeInsets.all(ThemeAppSize.kInterval12),
                 child: const BigText(
                   text: 'Hot Promo',
                   color: ThemeAppColor.kFrontColor,
                 ),
               ),
               SizedBox(height: ThemeAppSize.kInterval12),
-              const ItemsPromoWidget(),
+              const _ItemsPromoWidget(),
             ]
           : [],
     );
   }
 }
-
-class ItemsPromoWidget extends StatefulWidget {
-  const ItemsPromoWidget({Key? key}) : super(key: key);
+class _ItemsPromoWidget extends StatefulWidget {
+  const _ItemsPromoWidget({Key? key}) : super(key: key);
   @override
-  State<ItemsPromoWidget> createState() => _ItemsPromoWidgetState();
+  State<_ItemsPromoWidget> createState() => _ItemsPromoWidgetState();
 }
-
-class _ItemsPromoWidgetState extends State<ItemsPromoWidget> {
-  PageController pageController = PageController(viewportFraction: .85);
+class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
   var _currPageValue = 0.0;
   final double _scaleFactore = 0.85;
   final double _height = ThemeAppSize.kPageViewContainer;
+  PageController pageController = PageController(viewportFraction: .85);
   @override
   void initState() {
     super.initState();
@@ -149,7 +154,6 @@ class _ItemsPromoWidgetState extends State<ItemsPromoWidget> {
     );
   }
 }
-
 class _ItemPromoImgWidget extends StatelessWidget {
   const _ItemPromoImgWidget({Key? key, required this.imgUrl}) : super(key: key);
   final String imgUrl;
@@ -169,7 +173,6 @@ class _ItemPromoImgWidget extends StatelessWidget {
     );
   }
 }
-
 class _ItemPromoInfoBlok extends StatelessWidget {
   const _ItemPromoInfoBlok({Key? key, required this.index}) : super(key: key);
   final int index;
@@ -219,6 +222,103 @@ class _ItemPromoInfoBlok extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// _PopularSuction
+class _PopularSuction extends StatelessWidget {
+  const _PopularSuction({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+      child: Column(
+        children: const [
+          _PopularTitleWidget(),
+          _PopularListBuilderWidget(),
+        ],
+      ),
+    );
+  }
+}
+
+class _PopularTitleWidget extends StatelessWidget {
+  const _PopularTitleWidget({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          bottom: ThemeAppSize.kInterval12, top: ThemeAppSize.kInterval12),
+      child: Row(
+        children: [
+          const BigText(
+            text: 'Popular',
+            color: ThemeAppColor.kFrontColor,
+          ),
+          SizedBox(width: ThemeAppSize.kInterval5),
+          SmallText(
+            text: '•',
+            color: ThemeAppColor.kTextBlackColor,
+            size: ThemeAppSize.kFontSize18,
+          ),
+          SizedBox(width: ThemeAppSize.kInterval5),
+          SmallText(
+            text: 'Food pairing',
+            color: ThemeAppColor.kTextBlackColor,
+            size: ThemeAppSize.kFontSize18,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PopularListBuilderWidget extends StatelessWidget {
+  const _PopularListBuilderWidget({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 900,
+      child: ListView.builder(
+        itemCount: 12,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            margin: EdgeInsets.only(
+              top: ThemeAppSize.kInterval12,
+              bottom: ThemeAppSize.kInterval12,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  height: 120,
+                  width: 120,
+                  decoration: BoxDecoration(
+                      borderRadius: ThemeAppFun.decoration(),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          ConstAppImgURL.imgURLPromo1,
+                        ),
+                      )),
+                ),
+                Expanded(
+                  child: Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: ThemeAppColor.kFrontColor,
+                      borderRadius: BorderRadius.horizontal(
+                        right: Radius.circular(ThemeAppSize.kRadius),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

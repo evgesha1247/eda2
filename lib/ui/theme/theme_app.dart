@@ -5,7 +5,7 @@ abstract class ThemeAppColor {
   static const Color kWhite = Color.fromARGB(255, 221, 221, 227);
   static const Color kBlack = Color.fromARGB(255, 15, 15, 15);
 
-  static const Color kTextBlackColor = Colors.black54;
+  static const Color kTextBlackColor = Colors.black38;
   static const Color kTextWhiteColor = Colors.white54;
 
   static const Color kAccent = Color.fromARGB(255, 255, 136, 118);

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/widgets/header_widget/header_model.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
-import 'package:text/ui/widgets/text/small_text.dart';
 import '../../../object/cart_object.dart';
 import '../../theme/theme_app.dart';
 
