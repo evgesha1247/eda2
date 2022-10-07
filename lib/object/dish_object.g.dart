@@ -22,6 +22,7 @@ class DishAdapter extends TypeAdapter<Dish> {
       price: fields[4] as double,
       imgUrl: fields[5] as String,
       description: fields[1] as String,
+      category: fields[8] as String,
       isHot: fields[2] as bool,
       isFovarit: fields[6] as bool,
     );
@@ -30,7 +31,7 @@ class DishAdapter extends TypeAdapter<Dish> {
   @override
   void write(BinaryWriter writer, Dish obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class DishAdapter extends TypeAdapter<Dish> {
       ..writeByte(6)
       ..write(obj.isFovarit)
       ..writeByte(7)
-      ..write(obj.id);
+      ..write(obj.id)
+      ..writeByte(8)
+      ..write(obj.category);
   }
 
   @override
