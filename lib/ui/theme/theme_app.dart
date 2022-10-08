@@ -9,6 +9,8 @@ abstract class ThemeAppColor {
   static const Color kTextWhiteColor = Colors.white54;
 
   static const Color kAccent = Color.fromARGB(255, 255, 136, 118);
+  static const Color kAccent2 = Color.fromARGB(255, 162, 109, 84);
+
   static const Color kFrontColor = Color.fromARGB(255, 102, 61, 37);
   static const Color kBGColor = Color.fromARGB(255, 249, 218, 194);
 
@@ -21,18 +23,27 @@ abstract class ThemeAppColor {
 
 abstract class ThemeAppSize {
   static double height = 780.0;
+  static double width = 392.72;
+  static double kScreensHeight = Get.context!.height;
+  static double kScreensWidth = Get.context!.width;
+
+// отступы
   static double kRadius = kScreensHeight / (height / 12);
   static double kInterval5 = kScreensHeight / (height / 5);
   static double kInterval12 = kScreensHeight / (height / 12);
   static double kInterval24 = kScreensHeight / (height / 24);
 
-  static double kScreensHeight = Get.context!.height;
-  static double kScreensWidth = Get.context!.width;
-
+// home screen
+  // page view
   static double kPageView = kScreensHeight / (height / 270);
   static double kPageViewContainer = kScreensHeight / (height / 190);
   static double kPageViewTextContainer = kScreensHeight / (height / 140);
+  // list view
+  static double kListViewImgSize = kScreensWidth / (width / 120);
+  static double kListViewTextContainer = kScreensWidth / (width / 100);
 
+
+/// fonts
   static double kFontSize14 = kScreensHeight / (height / 14);
   static double kFontSize16 = kScreensHeight / (height / 16);
   static double kFontSize18 = kScreensHeight / (height / 18);

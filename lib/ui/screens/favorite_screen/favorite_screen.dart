@@ -55,6 +55,7 @@ class _GridViewWidget extends StatelessWidget {
     final itemsFovarit = context.watch<DishModel>().itemsFovarit;
     return Expanded(
       child: Container(
+
         decoration: const BoxDecoration(
           color: ThemeAppColor.kBGColor,
           borderRadius: BorderRadius.vertical(

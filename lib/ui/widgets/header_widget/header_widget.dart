@@ -19,7 +19,6 @@ class HederWidget extends StatelessWidget {
     final number = context.watch<CartModel>().number().toString();
     return SliverAppBar(
       leading: const SizedBox.shrink(),
-      collapsedHeight: 68,
       floating: true,
       pinned: false,
       snap: true,
@@ -27,44 +26,41 @@ class HederWidget extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         collapseMode: CollapseMode.pin,
-        title: Padding(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: FittedBox(
-              child: LimitedBox(
-                maxWidth: 400,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 33,
-                        child: TextField(
-                          cursorColor: ThemeAppColor.kFrontColor,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.zero,
-                            isDense: true,
-                            filled: true,
-                            fillColor: ThemeAppColor.kBGColor,
-                            prefixIcon: const Icon(
-                              Icons.search,
-                              color: ThemeAppColor.kFrontColor,
-                            ),
-                            hintText: 'Search',
-                            enabledBorder: styleSearch,
-                            focusedBorder: styleSearch,
-                          ),
+        titlePadding:
+            EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
+        title: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: ThemeAppSize.width),
+          child: Row(
+            children: [
+              Expanded(
+                child: Center(
+                  child: SizedBox(
+                    height: 33,
+                    child: TextField(
+                      cursorColor: ThemeAppColor.kFrontColor,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.zero,
+                        isDense: true,
+                        filled: true,
+                        fillColor: ThemeAppColor.kBGColor,
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: ThemeAppColor.kFrontColor,
                         ),
+                        hintText: 'Search',
+                        enabledBorder: styleSearch,
+                        focusedBorder: styleSearch,
                       ),
                     ),
-                    SizedBox(width: ThemeAppSize.kInterval12),
-                    const _FilterButtonWidget(),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              SizedBox(width: ThemeAppSize.kInterval12),
+              const _FilterButtonWidget(),
+            ],
           ),
         ),
+
       ),
       actions: number != '0'
           ? [

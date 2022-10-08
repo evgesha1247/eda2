@@ -29,16 +29,14 @@ class _GuidingBodyWidget extends StatelessWidget {
     final currentIndexTab = context.select((GuidingScreenModel e) {
       return e.currentIndexTab;
     });
-    return SafeArea(
-      child: IndexedStack(
-        index: currentIndexTab,
-        children: const [
-          HomeScreen(),
-          MenuScreen(),
-          FavoriteScreen(),
-          Text(''),
-        ],
-      ),
+    return IndexedStack(
+      index: currentIndexTab,
+      children: const [
+        HomeScreen(),
+        MenuScreen(),
+        FavoriteScreen(),
+        Text(''),
+      ],
     );
   }
 }

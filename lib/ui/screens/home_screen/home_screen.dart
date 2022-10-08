@@ -22,8 +22,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
 class _BodyWidget extends StatelessWidget {
   const _BodyWidget({Key? key}) : super(key: key);
   @override
@@ -159,15 +157,21 @@ class _ItemPromoImgWidget extends StatelessWidget {
   final String imgUrl;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: ThemeAppSize.kPageViewContainer,
-      margin: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
-      decoration: BoxDecoration(
-        color: ThemeAppColor.kFrontColor,
-        borderRadius: ThemeAppFun.decoration(),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage(imgUrl),
+    return Align(
+      alignment: Alignment.topCenter,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: ThemeAppSize.width),
+        child: Container(
+          height: ThemeAppSize.kPageViewContainer,
+          margin: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
+          decoration: BoxDecoration(
+            color: ThemeAppColor.kFrontColor,
+            borderRadius: ThemeAppFun.decoration(),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(imgUrl),
+            ),
+          ),
         ),
       ),
     );
@@ -274,52 +278,63 @@ class _PopularTitleWidget extends StatelessWidget {
     );
   }
 }
-
 class _PopularListBuilderWidget extends StatelessWidget {
   const _PopularListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 900,
-      child: ListView.builder(
-        itemCount: 12,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: EdgeInsets.only(
-              top: ThemeAppSize.kInterval12,
-              bottom: ThemeAppSize.kInterval12,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  height: 120,
-                  width: 120,
-                  decoration: BoxDecoration(
-                      borderRadius: ThemeAppFun.decoration(),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(
-                          ConstAppImgURL.imgURLPromo1,
-                        ),
-                      )),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: ThemeAppColor.kFrontColor,
-                      borderRadius: BorderRadius.horizontal(
-                        right: Radius.circular(ThemeAppSize.kRadius),
+    final items = context.watch<DishModel>().itemsMainCourse;
+    return ListView.builder(
+      itemCount: items.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          margin: EdgeInsets.only(
+            top: ThemeAppSize.kInterval12,
+            bottom: ThemeAppSize.kInterval12,
+          ),
+          child: Row(
+            children: [
+              Container(
+                height: ThemeAppSize.kListViewImgSize,
+                width: ThemeAppSize.kListViewImgSize,
+                decoration: BoxDecoration(
+                    borderRadius: ThemeAppFun.decoration(),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                        ConstAppImgURL.imgURLPromo1,
                       ),
+                    )),
+              ),
+              Expanded(
+                child: Container(
+                  height: ThemeAppSize.kListViewTextContainer,
+                  decoration: BoxDecoration(
+                    color: ThemeAppColor.kAccent2,
+                    borderRadius: BorderRadius.horizontal(
+                      right: Radius.circular(ThemeAppSize.kRadius),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BigText(text: items[index].name),
+                        SizedBox(height: ThemeAppSize.kInterval5),
+                        SmallText(text: '${items[index].price} \$'),
+                        SizedBox(height: ThemeAppSize.kInterval12),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

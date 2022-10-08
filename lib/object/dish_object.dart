@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../const/const_app_img.dart';
 import '../ui/navigations/main_navigation.dart';
 
 part 'dish_object.g.dart';
@@ -57,9 +59,9 @@ class DishModel extends ChangeNotifier {
 
   List<Dish> get items => _items.toList();
 
-  List<Dish> get itemsDrinkables => itemsDrinkables.toList();
-  List<Dish> get itemsMainCourse => itemsMainCourse.toList();
-  List<Dish> get itemsDessert => itemsDessert.toList();
+  List<Dish> get itemsDrinkables => _itemsDrinkables.toList();
+  List<Dish> get itemsMainCourse => _itemsMainCourse.toList();
+  List<Dish> get itemsDessert => _itemsDessert.toList();
 
   List<Dish> get itemsHotDish => _itemsHotDish.toList();
   List<Dish> get itemsFovarit => _itemsFovarit.toList();
@@ -77,26 +79,60 @@ class DishModel extends ChangeNotifier {
   }
 
   void _readBoxDishsFromHive(Box<Dish> box) {
-    // final q1 = Dish(
-    //   id: '${DateTime.now()}',
-    //   name: 'drinkables 1',
-    //   price: 100.0,
-    //   isHot: true,
-    //   imgUrl: ConstAppImgURL.imgURLPromo2,
-    //   category: Category.drinkables,
-    //   description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
-    // );
-    // box.add(q1);
+    final q1 = Dish(
+      id: '${DateTime.now()}',
+      name: 'dfot ghj,ysq  3',
+      price: 100.0,
+      isHot: true,
+      imgUrl: ConstAppImgURL.imgURLPromo3,
+      category: Category.mainCourse,
+      description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
+    );
+    box.add(q1);
     // box.clear();
-    // box.deleteFromDisk();
+    //box.deleteFromDisk();
     _items = box.values.toList();
     //_items = [];
     _loadData(box);
     notifyListeners();
   }
 
+  // // set Drinkables
+  // for (var element in box.values) {
+  //   if (element.category == Category.drinkables &&
+  //       !_itemsDrinkables.contains(element)) {
+  //     _itemsDrinkables.add(element);
+  //   }
+  //   if (element.category != Category.drinkables) {
+  //     _itemsDrinkables.remove(element);
+  //   }
+  // }
+
+  // // set MainCourse
+
+  // for (var element in box.values) {
+  //   if (element.category == Category.mainCourse &&
+  //       !_itemsMainCourse.contains(element)) {
+  //     _itemsMainCourse.add(element);
+  //   }
+  //   if (element.category != Category.mainCourse) {
+  //     _itemsMainCourse.remove(element);
+  //   }
+  // }
+
+  // //set Dessert
+  // for (var element in box.values) {
+  //   if (element.category == Category.dessert &&
+  //       !_itemsDessert.contains(element)) {
+  //     _itemsDessert.add(element);
+  //   }
+  //   if (element.category != Category.dessert) {
+  //     _itemsDessert.remove(element);
+  //   }
+  // }
+
   void _loadData(Box<Dish> box) {
-    // set Fovarit
+    // to Fovarit
     for (var element in box.values) {
       if (element.isFovarit) {
         if (_itemsFovarit.contains(element)) continue;
@@ -107,8 +143,7 @@ class DishModel extends ChangeNotifier {
       }
     }
 
-    ///set hot
-
+    ///to hot
     for (var element in items) {
       if (element.isHot && !_itemsHotDish.contains(element)) {
         if (_itemsHotDish.length >= 3) {
@@ -122,40 +157,6 @@ class DishModel extends ChangeNotifier {
         _itemsHotDish.remove(element);
       }
     }
-
-    // set Drinkables
-
-    for (var element in _items) {
-      if (_itemsDrinkables.contains(element)) continue;
-      if (element.category == Category.drinkables) {
-        _itemsDrinkables.add(element);
-      } else {
-        _itemsDrinkables.remove(element);
-      }
-    }
-
-    // set MainCourse
-
-    for (var element in _items) {
-      if (_itemsMainCourse.contains(element)) continue;
-      if (element.category == Category.mainCourse) {
-        _itemsMainCourse.add(element);
-      } else {
-        _itemsMainCourse.remove(element);
-      }
-    }
-
-    //set Dessert
-    for (var element in _items) {
-      if (_itemsDessert.contains(element)) continue;
-      if (element.category == Category.dessert) {
-        _itemsDessert.add(element);
-      } else {
-        _itemsDessert.remove(element);
-      }
-    }
-
-
     notifyListeners();
   }
 
