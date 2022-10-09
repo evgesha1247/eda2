@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+// ignore: unused_import
 import '../../../const/const_app_img.dart';
 import '../../../object/dish_object.dart';
 import '../../navigations/main_navigation.dart';
@@ -78,14 +79,14 @@ class HomeModel extends ChangeNotifier {
       Hive.registerAdapter(DishAdapter());
     }
     final box = await Hive.openBox<Dish>('dish_box');
-    int dishKey = -1;
+
     for (var element in box.values) {
       if (element == item) {
-        dishKey = element.key;
+
+        await Navigator.of(context)
+            .pushNamed(MainNavigationRouteName.details, arguments: element.key);
       }
     }
 
-    await Navigator.of(context)
-        .pushNamed(MainNavigationRouteName.details, arguments: dishKey);
   }
 }
