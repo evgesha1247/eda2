@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../const/const_app_img.dart';
 import '../../../object/dish_object.dart';
+import '../../navigations/main_navigation.dart';
 
 class HomeModel extends ChangeNotifier {
   HomeModel() {
@@ -28,32 +29,14 @@ class HomeModel extends ChangeNotifier {
   void _readDishData(Box<Dish> box) async {
     // final dish = Dish(
     //   id: '${DateTime.now()}',
-    //   name: 'qwe1',
-    //   price: 100.0,
-    //   isHot: true,
-    //   imgUrl: ConstAppImgURL.imgURLPromo1,
-    //   category: Category.dessert,
-    //   description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
-    // );
-    // final dish1 = Dish(
-    //   id: '1',
     //   name: 'qwe2',
     //   price: 100.0,
     //   isHot: true,
     //   imgUrl: ConstAppImgURL.imgURLPromo2,
-    //   category: Category.drinkables,
+    //   category: Category.dessert,
     //   description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
     // );
-    // final dish2 = Dish(
-    //   id: '2',
-    //   name: 'qwe3',
-    //   price: 100.0,
-    //   isHot: true,
-    //   imgUrl: ConstAppImgURL.imgURLPromo3,
-    //   category: Category.mainCourse,
-    //   description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
-    // );
-    // await box.addAll([dish, dish1, dish2]);
+    // await box.add(dish);
     //await box.clear();
     _loadHotDish(box);
     _loadMainCourse(box);
@@ -88,5 +71,21 @@ class HomeModel extends ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  void showDetail(BuildContext context, Dish item) async {
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(DishAdapter());
+    }
+    final box = await Hive.openBox<Dish>('dish_box');
+    int dishKey = -1;
+    for (var element in box.values) {
+      if (element == item) {
+        dishKey = element.key;
+      }
+    }
+
+    await Navigator.of(context)
+        .pushNamed(MainNavigationRouteName.details, arguments: dishKey);
   }
 }

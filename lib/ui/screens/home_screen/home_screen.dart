@@ -90,19 +90,19 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<HomeModel>().itemsHotDish;
+    final itemsHot = context.watch<HomeModel>().itemsHotDish;
     return Column(
       children: [
         SizedBox(
           height: ThemeAppSize.kPageView,
           child: PageView.builder(
             controller: pageController,
-            itemCount: model.length,
-            itemBuilder: (_, index) => _itemWidget(index, model[index]),
+            itemCount: itemsHot.length,
+            itemBuilder: (_, index) => _itemWidget(index, itemsHot[index]),
           ),
         ),
         DotsIndicator(
-          dotsCount: model.length,
+          dotsCount: itemsHot.length,
           position: _currPageValue,
           decorator: DotsDecorator(
             size: const Size.square(9.0),
@@ -142,13 +142,18 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
       matrix = Matrix4.diagonal3Values(1, currScale, 1)
         ..setTranslationRaw(0, _height * (1 - _scaleFactore) / 2, 1);
     }
+    final model = context.read<HomeModel>();
+    final item = context.read<HomeModel>().itemsHotDish[index];
     return Transform(
       transform: matrix,
-      child: Stack(
-        children: [
-          _ItemPromoImgWidget(imgUrl: dish.imgUrl),
-          _ItemPromoInfoBlok(index: index),
-        ],
+      child: InkWell(
+        onTap: () => model.showDetail(context, item),
+        child: Stack(
+          children: [
+            _ItemPromoImgWidget(imgUrl: dish.imgUrl),
+            _ItemPromoInfoBlok(index: index),
+          ],
+        ),
       ),
     );
   }
@@ -248,7 +253,6 @@ class _PopularSuction extends StatelessWidget {
     );
   }
 }
-
 class _PopularTitleWidget extends StatelessWidget {
   const _PopularTitleWidget({Key? key}) : super(key: key);
   @override

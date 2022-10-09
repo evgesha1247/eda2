@@ -33,9 +33,7 @@ class MenuModel extends ChangeNotifier {
     final box = await Hive.openBox<Dish>('dish_box');
     box.values.toList()[index].isFavorit =
         !box.values.toList()[index].isFavorit;
-    print(box.values.toList()[index].isFavorit);
     await box.values.toList()[index].save();
-    print(box.values.toList()[index].isFavorit);
     notifyListeners();
   }
 
