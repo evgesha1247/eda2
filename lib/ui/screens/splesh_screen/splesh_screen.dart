@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:text/const/const_app_img.dart';
 import 'package:text/object/dish_object.dart';
+import 'package:text/ui/screens/home_screen/home_model.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/theme/theme_app.dart';
 
@@ -11,7 +12,6 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widgetFactory = ScreensFactory();
-    context.read<DishModel>();
     return SplashScreenView(
       navigateRoute: widgetFactory.makeGuiding(),
       duration: 3000,

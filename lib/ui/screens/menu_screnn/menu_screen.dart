@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text/ui/screens/menu_screnn/manu_model.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
-import '../../../object/dish_object.dart';
 import '../../theme/theme_app.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -25,7 +25,7 @@ class _MenuBodyWidget extends StatelessWidget {
   const _MenuBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final length = context.watch<DishModel>().items.length;
+    final length = context.watch<MenuModel>().items.length;
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 346.0,
@@ -46,10 +46,11 @@ class _CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
-    final modelMenu = context.read<DishModel>();
-    final itemImgUrl = modelMenu.items[index].imgUrl;
+    final model = context.read<MenuModel>();
+
+    final itemImgUrl = model.items[index].imgUrl;
     return GestureDetector(
-        onTap: () => modelMenu.showDetail(context, index),
+        onTap: () => model.showDetail(context, index),
         child: Stack(
           children: (mediaQuery >= 370)
               ? [
@@ -77,7 +78,7 @@ class _CartItemContainerWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final itemImgUrl = context.read<DishModel>().items[index].imgUrl;
+    final itemImgUrl = context.read<MenuModel>().items[index].imgUrl;
     return Container(
         margin: const EdgeInsets.only(top: 30, left: 10, right: 10),
         decoration: BoxDecoration(
@@ -116,16 +117,16 @@ class _ButtonFavoritWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final dishItem = context.watch<DishModel>();
+    final model = context.watch<MenuModel>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          child: dishItem.items[index].isFovarit
+          child: model.items[index].isFovarit
               ? const Icon(Icons.favorite, color: ThemeAppColor.kBGColor)
               : const Icon(Icons.favorite_border, color: Colors.grey),
-          onTap: () => dishItem.toggFovarit(index),
+          onTap: () => {}, //model.toggFovarit(index),
         )
       ],
     );
@@ -137,7 +138,7 @@ class _CartItemContainerTextWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final item = context.read<DishModel>().items[index];
+    final item = context.read<MenuModel>().items[index];
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: Column(

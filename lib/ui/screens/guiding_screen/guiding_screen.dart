@@ -2,8 +2,7 @@ import 'package:bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens/favorite_screen/favorite_screen.dart';
-import 'package:text/ui/screens/home_screen/home_screen.dart';
-import 'package:text/ui/screens/menu_screnn/menu_screen.dart';
+import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/theme/theme_app.dart';
 import 'guiding_model.dart';
 
@@ -29,13 +28,14 @@ class _GuidingBodyWidget extends StatelessWidget {
     final currentIndexTab = context.select((GuidingScreenModel e) {
       return e.currentIndexTab;
     });
+    final widgetFactory = ScreensFactory();
     return IndexedStack(
       index: currentIndexTab,
-      children: const [
-        HomeScreen(),
-        MenuScreen(),
-        FavoriteScreen(),
-        Text(''),
+      children: [
+        widgetFactory.makeHome(),
+        widgetFactory.makeMenu(),
+        widgetFactory.makeFavorite(),
+        const Text(''),
       ],
     );
   }

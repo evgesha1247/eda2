@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
+import 'package:text/ui/screens/favorite_screen/favorite_model.dart';
 import 'package:text/ui/theme/theme_app.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
 
-import '../../../object/dish_object.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
@@ -52,7 +52,7 @@ class _GridViewWidget extends StatelessWidget {
   const _GridViewWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final itemsFovarit = context.watch<DishModel>().itemsFovarit;
+    final itemsFovarit = context.watch<FavoriteModel>().itemsFovarit;
     return Expanded(
       child: Container(
 
@@ -111,7 +111,7 @@ class _ItemFovaritContainerImgWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final itemsFovarit = context.watch<DishModel>().itemsFovarit;
+    final itemsFovarit = context.watch<FavoriteModel>().itemsFovarit;
     return Image(
       image: AssetImage(itemsFovarit[index].imgUrl),
       fit: BoxFit.cover,

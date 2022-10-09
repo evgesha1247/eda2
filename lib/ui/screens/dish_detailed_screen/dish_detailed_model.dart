@@ -4,34 +4,28 @@ import 'package:text/ui/navigations/main_navigation.dart';
 import '../../../object/dish_object.dart';
 
 class DishDetailedModel extends ChangeNotifier {
+  DishDetailedModel({required this.dishKey}) {
+    _setupDetailed();
+  }
   int dishKey;
   late final Future<Box<Dish>> _dishBox;
   Dish? _dish;
   Dish? get dish => _dish;
 
-  DishDetailedModel({required this.dishKey}) {
-    _setupDetailed();
-  }
 
-  void showMenu(context) {
-    Navigator.of(context).pop();
-  }
 
-  void showCart(context) {
-    Navigator.of(context).pushNamed(MainNavigation().cart);
-  }
+  void showMenu(context) => Navigator.of(context).pop();
+  void showCart(context) =>
+      Navigator.of(context).pushNamed(MainNavigation().cart);
 
-  void toggFovarit() {
-    _dish!.isFovarit = !_dish!.isFovarit;
-    _dish!.save();
+
+  void toggFovarit() async {
+    final crrent = _dish?.isFovarit ?? false;
+    _dish?.isFovarit = !crrent;
+    await _dish?.save();
     notifyListeners();
   }
 
-  void _loadDetailed() async {
-    final box = await _dishBox;
-    _dish = box.get(dishKey);
-    notifyListeners();
-  }
 
   void _setupDetailed() async {
     if (!Hive.isAdapterRegistered(0)) {
@@ -39,5 +33,9 @@ class DishDetailedModel extends ChangeNotifier {
     }
     _dishBox = Hive.openBox<Dish>('dish_box');
     _loadDetailed();
+  }
+  void _loadDetailed() async {
+    _dish = (await _dishBox).get(dishKey);
+    notifyListeners();
   }
 }

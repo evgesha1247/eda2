@@ -2,6 +2,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/const/const_app_img.dart';
+import 'package:text/ui/screens/home_screen/home_model.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
@@ -42,7 +43,7 @@ class _PromoSuction extends StatelessWidget {
   const _PromoSuction({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final isNotEmpty = context.watch<DishModel>().itemsHotDish.isNotEmpty;
+    final isNotEmpty = context.watch<HomeModel>().itemsHotDish.isNotEmpty;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: isNotEmpty
@@ -89,7 +90,7 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<DishModel>().itemsHotDish;
+    final model = context.watch<HomeModel>().itemsHotDish;
     return Column(
       children: [
         SizedBox(
@@ -182,7 +183,7 @@ class _ItemPromoInfoBlok extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final dish = context.watch<DishModel>().itemsHotDish[index];
+    final dish = context.watch<HomeModel>().itemsHotDish[index];
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -282,7 +283,7 @@ class _PopularListBuilderWidget extends StatelessWidget {
   const _PopularListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final items = context.watch<DishModel>().itemsMainCourse;
+    final items = context.watch<HomeModel>().itemsMainCourse;
     return ListView.builder(
       itemCount: items.length,
       shrinkWrap: true,
