@@ -1,27 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../../box_menager/box_menager.dart';
 import '../../../object/dish_object.dart';
 
 class FavoriteModel extends ChangeNotifier {
-  final _itemsFovarit = <Dish>[];
-  List<Dish> get itemsFovarit => _itemsFovarit.toList();
 
   FavoriteModel() {
     _setup();
   }
+  late final Future<Box<Dish>> _box;
+  final _itemsFovarit = <Dish>[];
+  List<Dish> get itemsFovarit => _itemsFovarit.toList();
 
-  void _setup() async {
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(DishAdapter());
-    }
-    final box = await Hive.openBox<Dish>('dish_box');
-    _loadFavoritDish(box);
-    box.listenable().addListener(() => _loadFavoritDish(box));
+  Future<void> _setup() async {
+    _box = BoxManadger.instance.openBoxDish();
+    _loadFavoritDish();
+    (await _box).listenable().addListener(_loadFavoritDish);
   }
 
-  void _loadFavoritDish(Box<Dish> box) {
-    for (var element in box.values) {
+  Future<void> _loadFavoritDish() async {
+    for (var element in (await _box).values) {
       if (element.isFavorit && !_itemsFovarit.contains(element)) {
         _itemsFovarit.add(element);
       } else if (!element.isFavorit) {

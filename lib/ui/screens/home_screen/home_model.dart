@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-// ignore: unused_import
-import '../../../const/const_app_img.dart';
+// ignore: unused_import'
+import '../../../box_menager/box_menager.dart';
 import '../../../object/dish_object.dart';
 import '../../navigations/main_navigation.dart';
 
@@ -10,6 +10,7 @@ class HomeModel extends ChangeNotifier {
   HomeModel() {
     _setup();
   }
+  late final Future<Box<Dish>> _box;
 
   final _itemsHotDish = <Dish>[];
   List<Dish> get itemsHotDish => _itemsHotDish.toList();
@@ -17,17 +18,13 @@ class HomeModel extends ChangeNotifier {
   final _itemsMainCourse = <Dish>[];
   List<Dish> get itemsMainCourse => _itemsMainCourse.toList();
 
-  void _setup() async {
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(DishAdapter());
-    }
-    final box = await Hive.openBox<Dish>('dish_box');
-    _readDishData(box);
-
-    box.listenable().addListener(() => _readDishData(box));
+  Future<void> _setup() async {
+    _box = BoxManadger.instance.openBoxDish();
+    await _readDishData();
+    (await _box).listenable().addListener(_readDishData);
   }
 
-  void _readDishData(Box<Dish> box) async {
+  Future<void> _readDishData() async {
     // final dish = Dish(
     //   id: '${DateTime.now()}',
     //   name: 'qwe3',
@@ -39,13 +36,13 @@ class HomeModel extends ChangeNotifier {
     // );
     // await box.add(dish);
     //await box.clear();
-    _loadHotDish(box);
-    _loadMainCourse(box);
+    _loadHotDish();
+    _loadMainCourse();
     notifyListeners();
   }
 
-  void _loadHotDish(Box<Dish> box) {
-    for (var element in box.values) {
+  Future<void> _loadHotDish() async {
+    for (var element in (await _box).values) {
       if (element.isHot && !_itemsHotDish.contains(element)) {
         if (_itemsHotDish.length >= 3) {
           _itemsHotDish.remove(_itemsHotDish.first);
@@ -61,8 +58,8 @@ class HomeModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _loadMainCourse(Box<Dish> box) {
-    for (var element in box.values) {
+  Future<void> _loadMainCourse() async {
+    for (var element in (await _box).values) {
       if (element.category == Category.mainCourse &&
           !_itemsMainCourse.contains(element)) {
         _itemsMainCourse.add(element);
@@ -74,19 +71,14 @@ class HomeModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void showDetail(BuildContext context, Dish item) async {
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(DishAdapter());
-    }
-    final box = await Hive.openBox<Dish>('dish_box');
-
-    for (var element in box.values) {
+  Future<void> showDetail(BuildContext context, Dish item) async {
+    for (var element in (await _box).values) {
       if (element == item) {
-
-        await Navigator.of(context)
-            .pushNamed(MainNavigationRouteName.details, arguments: element.key);
+        Navigator.of(context).pushNamed(
+          MainNavigationRouteName.details,
+          arguments: element.key,
+        );
       }
     }
-
   }
 }
