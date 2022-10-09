@@ -28,15 +28,33 @@ class HomeModel extends ChangeNotifier {
   void _readDishData(Box<Dish> box) async {
     // final dish = Dish(
     //   id: '${DateTime.now()}',
+    //   name: 'qwe1',
+    //   price: 100.0,
+    //   isHot: true,
+    //   imgUrl: ConstAppImgURL.imgURLPromo1,
+    //   category: Category.dessert,
+    //   description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
+    // );
+    // final dish1 = Dish(
+    //   id: '1',
     //   name: 'qwe2',
     //   price: 100.0,
     //   isHot: true,
     //   imgUrl: ConstAppImgURL.imgURLPromo2,
+    //   category: Category.drinkables,
+    //   description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
+    // );
+    // final dish2 = Dish(
+    //   id: '2',
+    //   name: 'qwe3',
+    //   price: 100.0,
+    //   isHot: true,
+    //   imgUrl: ConstAppImgURL.imgURLPromo3,
     //   category: Category.mainCourse,
     //   description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
     // );
-    // await box.add(dish);
-    // await box.clear();
+    // await box.addAll([dish, dish1, dish2]);
+    //await box.clear();
     _loadHotDish(box);
     _loadMainCourse(box);
     notifyListeners();

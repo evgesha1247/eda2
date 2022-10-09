@@ -24,7 +24,7 @@ class DishAdapter extends TypeAdapter<Dish> {
       description: fields[1] as String,
       category: fields[9] as String,
       isHot: fields[2] as bool,
-      isFovarit: fields[6] as bool,
+      isFavorit: fields[6] as bool,
     );
   }
 
@@ -43,7 +43,7 @@ class DishAdapter extends TypeAdapter<Dish> {
       ..writeByte(5)
       ..write(obj.imgUrl)
       ..writeByte(6)
-      ..write(obj.isFovarit)
+      ..write(obj.isFavorit)
       ..writeByte(7)
       ..write(obj.id)
       ..writeByte(9)

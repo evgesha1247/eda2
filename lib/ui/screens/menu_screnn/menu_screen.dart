@@ -123,10 +123,10 @@ class _ButtonFavoritWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          child: model.items[index].isFovarit
+          child: model.items[index].isFavorit
               ? const Icon(Icons.favorite, color: ThemeAppColor.kBGColor)
               : const Icon(Icons.favorite_border, color: Colors.grey),
-          onTap: () => {}, //model.toggFovarit(index),
+          onTap: () => model.toggFovarit(index),
         )
       ],
     );

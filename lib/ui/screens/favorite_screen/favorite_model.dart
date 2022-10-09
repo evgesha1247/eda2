@@ -22,10 +22,9 @@ class FavoriteModel extends ChangeNotifier {
 
   void _loadFavoritDish(Box<Dish> box) {
     for (var element in box.values) {
-      if (element.isFovarit && !_itemsFovarit.contains(element)) {
+      if (element.isFavorit && !_itemsFovarit.contains(element)) {
         _itemsFovarit.add(element);
-      }
-      if (!element.isHot) {
+      } else if (!element.isFavorit) {
         _itemsFovarit.remove(element);
       }
     }

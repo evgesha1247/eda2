@@ -1,7 +1,6 @@
 import 'package:bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:text/ui/screens/favorite_screen/favorite_screen.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/theme/theme_app.dart';
 import 'guiding_model.dart';

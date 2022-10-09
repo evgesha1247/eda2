@@ -150,12 +150,12 @@ class _ButtBookmark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<DishDetailedModel>();
-    final isFovarit = model.dish?.isFovarit ?? false;
+    final isFavorit = model.dish?.isFavorit ?? false;
     return GestureDetector(
       onTap: () => model.toggFovarit(),
       child: Align(
         alignment: Alignment.topRight,
-        child: isFovarit
+        child: isFavorit
             ? const Icon(Icons.favorite, color: ThemeAppColor.kBGColor)
             : const Icon(Icons.favorite_border, color: Colors.grey),
       ),

@@ -26,11 +26,18 @@ class MenuModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void toggFovarit(int index) async {
-  //   _items[index].isFovarit = !_items[index].isFovarit;
-  //   await _items[index].save();
-  //   notifyListeners();
-  // }
+  void toggFovarit(int index) async {
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(DishAdapter());
+    }
+    final box = await Hive.openBox<Dish>('dish_box');
+    box.values.toList()[index].isFavorit =
+        !box.values.toList()[index].isFavorit;
+    print(box.values.toList()[index].isFavorit);
+    await box.values.toList()[index].save();
+    print(box.values.toList()[index].isFavorit);
+    notifyListeners();
+  }
 
   void showDetail(BuildContext context, int index) async {
     if (!Hive.isAdapterRegistered(0)) {

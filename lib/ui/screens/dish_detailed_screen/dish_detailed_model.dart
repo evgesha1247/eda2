@@ -20,8 +20,8 @@ class DishDetailedModel extends ChangeNotifier {
 
 
   void toggFovarit() async {
-    final crrent = _dish?.isFovarit ?? false;
-    _dish?.isFovarit = !crrent;
+    final crrent = _dish?.isFavorit ?? false;
+    _dish?.isFavorit = !crrent;
     await _dish?.save();
     notifyListeners();
   }

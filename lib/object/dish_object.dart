@@ -23,7 +23,7 @@ class Dish extends HiveObject {
   @HiveField(5)
   String imgUrl;
   @HiveField(6)
-  bool isFovarit;
+  bool isFavorit;
   @HiveField(7)
   String id;
   //@HiveField(8)
@@ -38,12 +38,11 @@ class Dish extends HiveObject {
     required this.description,
     required this.category,
     this.isHot = false,
-    this.isFovarit = false,
+    this.isFavorit = false,
   });
 }
 
-class DishModel extends ChangeNotifier {
-
+class DishModel extends ChangeNotifier {}
 
   // final _itemsFovarit = <Dish>[];
   // final _itemsHotDish = <Dish>[];
@@ -60,13 +59,13 @@ class DishModel extends ChangeNotifier {
 
   // List<Dish> get itemsHotDish => _itemsHotDish.toList();
   // List<Dish> get itemsFovarit => _itemsFovarit.toList();
-}
+
 
 
 
   // void _loadData(Box<Dish> box) {
   //   for (var element in _items) {
-  //     if (element.isFovarit) {
+  //     if (element.isFavorit) {
   //       if (_itemsFovarit.contains(element)) continue;
   //       _itemsFovarit.add(element);
   //     }
@@ -79,7 +78,7 @@ class DishModel extends ChangeNotifier {
   //         _itemsHotDish.add(element);
   //       }
   //     }
-  //     if (!element.isFovarit) {
+  //     if (!element.isFavorit) {
   //       _itemsFovarit.remove(element);
   //     }
   //     if (!element.isHot) {
@@ -91,8 +90,8 @@ class DishModel extends ChangeNotifier {
   // }
 
 //   void toggFovarit(index) async {
-    // final current = _items[index].isFovarit;
-    // _items[index].isFovarit = !current;
+    // final current = _items[index].isFavorit;
+    // _items[index].isFavorit = !current;
     // await _items[index].save();
     // notifyListeners();
 //   }
