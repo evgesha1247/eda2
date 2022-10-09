@@ -70,6 +70,7 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
   var _currPageValue = 0.0;
   final double _scaleFactore = 0.85;
   final double _height = ThemeAppSize.kPageViewContainer;
+
   PageController pageController = PageController(viewportFraction: .85);
   @override
   void initState() {
@@ -85,6 +86,7 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
   void dispose() {
     super.dispose();
     pageController.dispose();
+
   }
 
   @override
@@ -320,7 +322,7 @@ class _PopularListBuilderWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: ThemeAppColor.kAccent2,
                       borderRadius: BorderRadius.horizontal(
-                        right: Radius.circular(ThemeAppSize.kRadius),
+                        right: Radius.circular(ThemeAppSize.kRadius20),
                       ),
                     ),
                     child: Padding(

@@ -50,7 +50,7 @@ class _FooterBottomBarWidget extends StatelessWidget {
     return BottomNavBar(
       curve: Curves.easeInOutCubicEmphasized,
       showElevation: false,
-      itemCornerRadius: ThemeAppSize.kRadius,
+      itemCornerRadius: ThemeAppSize.kRadius20,
       selectedIndex: currentIndexTab,
       containerHeight: 60,
       containerPadding: const EdgeInsets.only(top: 8),

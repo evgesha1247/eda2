@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../box_menager/box_menager.dart';
@@ -14,11 +15,14 @@ class MenuModel extends ChangeNotifier {
   var _items = <Dish>[];
   List<Dish> get items => _items;
 
+
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
     _readDishData();
     (await _box).listenable().addListener(_readDishData);
   }
+
+
 
   Future<void> _readDishData() async {
     _items = (await _box).values.toList();

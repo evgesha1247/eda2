@@ -12,7 +12,7 @@ class HederWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     InputBorder styleSearch = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius)),
+      borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
       borderSide: const BorderSide(style: BorderStyle.none),
     );
 

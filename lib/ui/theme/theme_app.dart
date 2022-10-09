@@ -28,10 +28,13 @@ abstract class ThemeAppSize {
   static double kScreensWidth = Get.context!.width;
 
 // отступы
-  static double kRadius = kScreensHeight / (height / 12);
+  static double kRadius12 = kScreensHeight / (height / 12);
+  static double kRadius20 = kScreensHeight / (height / 20);
   static double kInterval5 = kScreensHeight / (height / 5);
   static double kInterval12 = kScreensHeight / (height / 12);
   static double kInterval24 = kScreensHeight / (height / 24);
+// iconSize
+  static double kIcon16 = kScreensHeight / (height / 16);
 
 // home screen
   // page view
@@ -41,6 +44,9 @@ abstract class ThemeAppSize {
   // list view
   static double kListViewImgSize = kScreensWidth / (width / 120);
   static double kListViewTextContainer = kScreensWidth / (width / 100);
+  // ditalit
+  static double kDetaildImgContainer = kScreensHeight / (height / 350);
+  static double kDetaildButtomContainer = kScreensHeight / (height / 120);
 
 
 /// fonts
@@ -55,7 +61,7 @@ abstract class ThemeAppSize {
 abstract class ThemeAppFun {
   static decoration({double radius = 0}) {
     return BorderRadius.all(
-      Radius.circular(radius == 0 ? ThemeAppSize.kRadius : radius),
+      Radius.circular(radius == 0 ? ThemeAppSize.kRadius20 : radius),
     );
   }
 }

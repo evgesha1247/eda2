@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 part 'dish_object.g.dart';
 
-abstract class Category {
+abstract class DishCategory {
   static const String drinkables = 'drinkables';
   static const String mainCourse = 'mainCourse';
   static const String dessert = 'dessert';

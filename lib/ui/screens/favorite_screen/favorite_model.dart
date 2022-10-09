@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../box_menager/box_menager.dart';
@@ -12,12 +13,12 @@ class FavoriteModel extends ChangeNotifier {
   late final Future<Box<Dish>> _box;
   final _itemsFovarit = <Dish>[];
   List<Dish> get itemsFovarit => _itemsFovarit.toList();
-
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
     _loadFavoritDish();
     (await _box).listenable().addListener(_loadFavoritDish);
   }
+
 
   Future<void> _loadFavoritDish() async {
     for (var element in (await _box).values) {

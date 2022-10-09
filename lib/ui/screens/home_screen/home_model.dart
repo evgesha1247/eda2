@@ -17,24 +17,24 @@ class HomeModel extends ChangeNotifier {
 
   final _itemsMainCourse = <Dish>[];
   List<Dish> get itemsMainCourse => _itemsMainCourse.toList();
-
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
     await _readDishData();
     (await _box).listenable().addListener(_readDishData);
   }
 
+
   Future<void> _readDishData() async {
     // final dish = Dish(
     //   id: '${DateTime.now()}',
-    //   name: 'qwe3',
+    //   name: 'qwe5',
     //   price: 200.0,
-    //   isHot: true,
-    //   imgUrl: ConstAppImgURL.imgURLPromo3,
-    //   category: Category.mainCourse,
+    //   isHot: false,
+    //   imgUrl: ThemeAppImgURL.imgURLPromo3,
+    //   category: Category.drinkables,
     //   description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
     // );
-    // await box.add(dish);
+    // (await _box).add(dish);
     //await box.clear();
     _loadHotDish();
     _loadMainCourse();
@@ -60,11 +60,11 @@ class HomeModel extends ChangeNotifier {
 
   Future<void> _loadMainCourse() async {
     for (var element in (await _box).values) {
-      if (element.category == Category.mainCourse &&
+      if (element.category == DishCategory.mainCourse &&
           !_itemsMainCourse.contains(element)) {
         _itemsMainCourse.add(element);
       }
-      if (element.category != Category.mainCourse) {
+      if (element.category != DishCategory.mainCourse) {
         _itemsMainCourse.remove(element);
       }
     }

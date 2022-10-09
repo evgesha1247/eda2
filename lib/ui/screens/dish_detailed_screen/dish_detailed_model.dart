@@ -23,11 +23,14 @@ class DishDetailedModel extends ChangeNotifier {
     notifyListeners();
   }
 
+
   Future<void> toggFovarit() async {
     final crrent = _dish?.isFavorit ?? false;
     _dish?.isFavorit = !crrent;
     await _dish?.save();
     notifyListeners();
   }
+
+
 
 }
