@@ -7,33 +7,28 @@ import '../../../object/cart_object.dart';
 import 'dish_detailed_model.dart';
 
 class DishDetailedScreen extends StatefulWidget {
-  const DishDetailedScreen({Key? key}) : super(key: key);
+  final int dishKey;
+  const DishDetailedScreen({Key? key, required this.dishKey}) : super(key: key);
   @override
   State<DishDetailedScreen> createState() => _DishDetailedScreenState();
 }
 
 class _DishDetailedScreenState extends State<DishDetailedScreen> {
-  DishDetailedModel? _model;
+late final DishDetailedModel _model;
   @override
-  void didChangeDependencies() {
-    if (_model == null) {
-      final dishKey = ModalRoute.of(context)!.settings.arguments as int;
-      _model = DishDetailedModel(dishKey: dishKey);
-    }
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    _model = DishDetailedModel(dishKey: widget.dishKey);
   }
+
 
   @override
   Widget build(BuildContext context) {
     DishDetailedModel? model = _model;
-    if (model != null) {
-      return ChangeNotifierProvider(
+    return ChangeNotifierProvider(
         create: (context) => model,
         child: const DishDetaild(),
-      );
-    } else {
-      return const Center(child: CircularProgressIndicator());
-    }
+    );
   }
 }
 

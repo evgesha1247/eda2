@@ -146,7 +146,7 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
     final item = context.read<HomeModel>().itemsHotDish[index];
     return Transform(
       transform: matrix,
-      child: InkWell(
+      child: GestureDetector(
         onTap: () => model.showDetail(context, item),
         child: Stack(
           children: [
@@ -228,7 +228,7 @@ class _ItemPromoInfoBlok extends StatelessWidget {
               SizedBox(height: ThemeAppSize.kInterval5),
               SmallText(text: dish.description),
               SizedBox(height: ThemeAppSize.kInterval12),
-              const SmallText(text: '(мб будут кнопки добавление)'),
+              const SmallText(text: '(цена, добавить , фаворит)'),
             ],
           ),
         ),
@@ -288,55 +288,59 @@ class _PopularListBuilderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = context.watch<HomeModel>().itemsMainCourse;
+    final model = context.watch<HomeModel>();
     return ListView.builder(
       itemCount: items.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-          margin: EdgeInsets.only(
-            top: ThemeAppSize.kInterval12,
-            bottom: ThemeAppSize.kInterval12,
-          ),
-          child: Row(
-            children: [
-              Container(
-                height: ThemeAppSize.kListViewImgSize,
-                width: ThemeAppSize.kListViewImgSize,
-                decoration: BoxDecoration(
-                    borderRadius: ThemeAppFun.decoration(),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(
-                        ConstAppImgURL.imgURLPromo1,
-                      ),
-                    )),
-              ),
-              Expanded(
-                child: Container(
-                  height: ThemeAppSize.kListViewTextContainer,
+        return GestureDetector(
+          onTap: () => model.showDetail(context, items[index]),
+          child: Container(
+            margin: EdgeInsets.only(
+              top: ThemeAppSize.kInterval12,
+              bottom: ThemeAppSize.kInterval12,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  height: ThemeAppSize.kListViewImgSize,
+                  width: ThemeAppSize.kListViewImgSize,
                   decoration: BoxDecoration(
-                    color: ThemeAppColor.kAccent2,
-                    borderRadius: BorderRadius.horizontal(
-                      right: Radius.circular(ThemeAppSize.kRadius),
+                      borderRadius: ThemeAppFun.decoration(),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          items[index].imgUrl,
+                        ),
+                      )),
+                ),
+                Expanded(
+                  child: Container(
+                    height: ThemeAppSize.kListViewTextContainer,
+                    decoration: BoxDecoration(
+                      color: ThemeAppColor.kAccent2,
+                      borderRadius: BorderRadius.horizontal(
+                        right: Radius.circular(ThemeAppSize.kRadius),
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        BigText(text: items[index].name),
-                        SizedBox(height: ThemeAppSize.kInterval5),
-                        SmallText(text: '${items[index].price} \$'),
-                        SizedBox(height: ThemeAppSize.kInterval12),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          BigText(text: items[index].name),
+                          SizedBox(height: ThemeAppSize.kInterval5),
+                          SmallText(text: '${items[index].price} \$'),
+                          SizedBox(height: ThemeAppSize.kInterval12),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

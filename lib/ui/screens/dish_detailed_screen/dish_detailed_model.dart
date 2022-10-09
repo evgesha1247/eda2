@@ -16,7 +16,7 @@ class DishDetailedModel extends ChangeNotifier {
 
   void showMenu(context) => Navigator.of(context).pop();
   void showCart(context) =>
-      Navigator.of(context).pushNamed(MainNavigation().cart);
+      Navigator.of(context).pushNamed(MainNavigationRouteName.cart);
 
 
   void toggFovarit() async {

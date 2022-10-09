@@ -15,25 +15,32 @@ abstract class MainNavigationRouteName {
 class MainNavigation {
   final _widgetFactory = ScreensFactory();
   final initialRoute = MainNavigationRouteName.splash;
-  final guiding = MainNavigationRouteName.guiding;
+
   final auth = MainNavigationRouteName.auth;
-  final details = MainNavigationRouteName.details;
-  final cart = MainNavigationRouteName.cart;
-  final splash = MainNavigationRouteName.splash;
+
   Map<String, WidgetBuilder> get routes => <String, WidgetBuilder>{
-        guiding: (_) => _widgetFactory.makeGuiding(),
+        MainNavigationRouteName.guiding: (_) => _widgetFactory.makeGuiding(),
         auth: (_) => _widgetFactory.makeAuth(),
-        details: (_) => const DishDetailedScreen(),
-        cart: (_) => const CartScreen(),
-        splash: (_) => const SplashScreen()
+        // details: (_) => DishDetailedScreen(dishKey: null),
+        MainNavigationRouteName.cart: (_) => const CartScreen(),
+        MainNavigationRouteName.splash: (_) => const SplashScreen()
       };
 
   ////// при ошибке навигации //////
   Route? onGenerateRoute(RouteSettings settings) {
-    return MaterialPageRoute(
+    switch (settings.name) {
+      case MainNavigationRouteName.details:
+        final dishKey = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (context) => DishDetailedScreen(dishKey: dishKey),
+        );
+
+      default:
+        return MaterialPageRoute(
       builder: (context) => Scaffold(
         body: Center(child: Text('ошибка навигации ! , ${settings.name}')),
       ),
     );
+    }
   }
 }
