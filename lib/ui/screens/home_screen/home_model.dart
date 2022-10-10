@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 // ignore: unused_import'
 import '../../../box_menager/box_menager.dart';
 import '../../../object/dish_object.dart';
 import '../../navigations/main_navigation.dart';
+import '../../theme/theme_app.dart';
 
 class HomeModel extends ChangeNotifier {
   HomeModel() {
@@ -27,12 +29,13 @@ class HomeModel extends ChangeNotifier {
   Future<void> _readDishData() async {
     // final dish = Dish(
     //   id: '${DateTime.now()}',
-    //   name: 'qwe5',
+    //   name: 'qwe7',
     //   price: 200.0,
     //   isHot: false,
-    //   imgUrl: ThemeAppImgURL.imgURLPromo3,
-    //   category: Category.drinkables,
-    //   description: 'Lorem dolor ipsum dolor ipsum dolor ipsum',
+    //   imgUrl: ThemeAppImgURL.imgURL2,
+    //   category: DishCategory.mainCourse,
+    //   description:
+    //       'Lorem dolor ipsum dolor ipsum dolor ipsum , Lorem dolor ipsum dolor ipsum dolor ipsumLorem dolor ipsum dolor ipsum dolor ipsum, Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum',
     // );
     // (await _box).add(dish);
     //await box.clear();

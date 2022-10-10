@@ -6,7 +6,7 @@ class SmallText extends StatelessWidget {
   final String text;
   final double size;
   final double height;
-  final int maxLines;
+  final int? maxLines;
   final Color? color;
   final TextOverflow overflow;
   const SmallText({

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:text/object/dish_object.dart';
 import 'package:text/ui/theme/theme_app.dart';
 import 'package:text/ui/widgets/icon/my_icon.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
 import '../../../object/cart_object.dart';
+import '../../widgets/text/expandable_text.dart';
 import 'dish_detailed_model.dart';
 
 class DishDetailedScreen extends StatefulWidget {
@@ -37,90 +37,9 @@ class DishDetaild extends StatelessWidget {
   const DishDetaild({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final cartModel = context.watch<CartModel>();
-    final dishModel = context.watch<DishDetailedModel>();
-    final dishkey = dishModel.dish?.id ?? '';
-    final number = cartModel.namber(dishkey);
-    final subTotal = cartModel.subTotal(dishkey).toStringAsFixed(1);
-    return Scaffold(
-      body: const _DishDetailedBody(),
-      bottomNavigationBar: Container(
-        height: ThemeAppSize.kDetaildButtomContainer,
-        padding: EdgeInsets.all(ThemeAppSize.kInterval24),
-        decoration: BoxDecoration(
-          color: ThemeAppColor.kFrontColor,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(ThemeAppSize.kRadius20 * 2),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-              decoration: BoxDecoration(
-                color: ThemeAppColor.kBGColor,
-                borderRadius: ThemeAppFun.decoration(
-                  radius: ThemeAppSize.kRadius12,
-                ),
-              ),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => cartModel.updataSubOne(dishkey),
-                    child: const Icon(
-                      Icons.remove,
-                      color: ThemeAppColor.kFrontColor,
-                    ),
-                  ),
-                  SizedBox(width: ThemeAppSize.kInterval5),
-                  SmallText(
-                    text: '$number',
-                    color: ThemeAppColor.kFrontColor,
-                  ),
-                  SizedBox(width: ThemeAppSize.kInterval5),
-                  GestureDetector(
-                    onTap: () => cartModel.addItem(
-                        dishId: dishModel.dish?.id,
-                        price: dishModel.dish?.price,
-                        name: dishModel.dish?.name,
-                        imgUrl: dishModel.dish?.imgUrl),
-                    child: const Icon(
-                      Icons.add,
-                      color: ThemeAppColor.kFrontColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () => dishModel.showCart(context),
-              child: Container(
-                padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: ThemeAppFun.decoration(
-                    radius: ThemeAppSize.kRadius12,
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    SmallText(
-                      text: '\$ $subTotal | ',
-                      color: ThemeAppColor.kWhite,
-                    ),
-                    BigText(
-                      text: 'Go to cart',
-                      color: ThemeAppColor.kWhite,
-                      size: ThemeAppSize.kFontSize20,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+    return const Scaffold(
+      body: _DishDetailedBody(),
+      bottomNavigationBar: _DishDetailedBottomBarWidget(),
     );
   }
 }
@@ -132,6 +51,7 @@ class _DishDetailedBody extends StatelessWidget {
     final model = context.watch<DishDetailedModel>();
     final imgUrl = model.dish?.imgUrl ?? 'assets/imgs/food2.png';
     final name = model.dish?.name ?? '404';
+    final description = model.dish?.description ?? '404';
     return Stack(
       children: [
         // img
@@ -201,7 +121,10 @@ class _DishDetailedBody extends StatelessWidget {
                   text: 'Introduce ... ',
                   color: ThemeAppColor.kFrontColor,
                   //size: ThemeAppSize.kFontSize18,
-                )
+                ),
+                ExpandableTextWidget(
+                  text: description,
+                ),
               ],
             ),
           ),
@@ -211,23 +134,91 @@ class _DishDetailedBody extends StatelessWidget {
     );
   }
 }
-
-//////////////////////////////////////
-
-
-
-
-class _MarcetWidget extends StatelessWidget {
-  const _MarcetWidget({Key? key}) : super(key: key);
+class _DishDetailedBottomBarWidget extends StatelessWidget {
+  const _DishDetailedBottomBarWidget();
   @override
   Widget build(BuildContext context) {
+    final cartModel = context.watch<CartModel>();
+    final dishModel = context.watch<DishDetailedModel>();
+    final dishkey = dishModel.dish?.id ?? '';
+    final number = cartModel.namber(dishkey);
+    final subTotal = cartModel.subTotal(dishkey).toStringAsFixed(1);
     return Container(
+      height: ThemeAppSize.kDetaildButtomContainer,
+      padding: EdgeInsets.all(ThemeAppSize.kInterval24),
       decoration: BoxDecoration(
-        borderRadius: ThemeAppFun.decoration(),
         color: ThemeAppColor.kFrontColor,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(ThemeAppSize.kRadius20 * 2),
+        ),
       ),
-      height: 3.5,
-      width: 30,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+            decoration: BoxDecoration(
+              color: ThemeAppColor.kBGColor,
+              borderRadius: ThemeAppFun.decoration(
+                radius: ThemeAppSize.kRadius12,
+              ),
+            ),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () => cartModel.updataSubOne(dishkey),
+                  child: const Icon(
+                    Icons.remove,
+                    color: ThemeAppColor.kFrontColor,
+                  ),
+                ),
+                SizedBox(width: ThemeAppSize.kInterval5),
+                SmallText(
+                  text: '$number',
+                  color: ThemeAppColor.kFrontColor,
+                ),
+                SizedBox(width: ThemeAppSize.kInterval5),
+                GestureDetector(
+                  onTap: () => cartModel.addItem(
+                      dishId: dishModel.dish?.id,
+                      price: dishModel.dish?.price,
+                      name: dishModel.dish?.name,
+                      imgUrl: dishModel.dish?.imgUrl),
+                  child: const Icon(
+                    Icons.add,
+                    color: ThemeAppColor.kFrontColor,
+                  ),
+                )
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () => dishModel.showCart(context),
+            child: Container(
+              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+              decoration: BoxDecoration(
+                color: ThemeAppColor.kAccent,
+                borderRadius: ThemeAppFun.decoration(
+                  radius: ThemeAppSize.kRadius12,
+                ),
+              ),
+              child: Row(
+                children: [
+                  SmallText(
+                    text: '\$ $subTotal | ',
+                    color: ThemeAppColor.kWhite,
+                  ),
+                  BigText(
+                    text: 'Go to cart',
+                    color: ThemeAppColor.kWhite,
+                    size: ThemeAppSize.kFontSize20,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
