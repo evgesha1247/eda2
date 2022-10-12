@@ -43,39 +43,24 @@ class DishDetaild extends StatelessWidget {
     );
   }
 }
-
 class _DishDetailedBody extends StatelessWidget {
   const _DishDetailedBody();
   @override
   Widget build(BuildContext context) {
     final model = context.watch<DishDetailedModel>();
-    final imgUrl = model.dish?.imgUrl ?? 'assets/imgs/food2.png';
     final name = model.dish?.name ?? '404';
     final description = model.dish?.description ?? '404';
-    return Stack(
-      children: [
-        // img
-        Positioned(
-          left: 0,
-          right: 0,
-          child: Container(
-            height: ThemeAppSize.kDetaildImgContainer,
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(imgUrl),
-              ),
-              color: ThemeAppColor.kFrontColor,
-            ),
-          ),
-        ),
-        // icon
-        Positioned(
-          top: ThemeAppSize.kInterval12,
-          left: ThemeAppSize.kInterval12,
-          right: ThemeAppSize.kInterval12,
-          child: Row(
+    final imgUrl = model.dish?.imgUrl ?? ThemeAppImgURL.imgURL1;
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          automaticallyImplyLeading: false,
+          pinned: true,
+          backgroundColor: ThemeAppColor.kFrontColor,
+          expandedHeight: 280,
+          toolbarHeight: 120,
+          elevation: 0,
+          title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
@@ -88,52 +73,67 @@ class _DishDetailedBody extends StatelessWidget {
                         icon: Icons.favorite,
                         iconColor: ThemeAppColor.kAccent,
                       )
-                    : const MyIcon(
-                        icon: Icons.favorite_border,
-                      ),
+                    : const MyIcon(icon: Icons.favorite_border),
               ),
             ],
           ),
-        ),
-        // info
-        Positioned(
-          top: ThemeAppSize.kDetaildImgContainer - 20,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: Container(
-            padding: EdgeInsets.all(ThemeAppSize.kInterval24),
-            decoration: BoxDecoration(
-              color: ThemeAppColor.kBGColor,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(ThemeAppSize.kRadius20),
+          flexibleSpace: FlexibleSpaceBar(
+            background: Image.asset(
+              imgUrl,
+              width: double.maxFinite,
+              fit: BoxFit.cover,
+            ),
+          ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(0),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: ThemeAppColor.kBGColor,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(ThemeAppSize.kRadius20 * 2),
+                ),
+              ),
+              child: Center(
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
+                  child: BigText(
+                    text: name,
+                    color: ThemeAppColor.kFrontColor,
+                    size: ThemeAppSize.kFontSize25,
+                  ),
+                ),
               ),
             ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.all(ThemeAppSize.kInterval24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BigText(
-                  text: name,
-                  color: ThemeAppColor.kFrontColor,
-                  size: ThemeAppSize.kFontSize25,
-                ),
                 const BigText(
-                  text: 'Introduce ... ',
+                  text: 'Introduce',
                   color: ThemeAppColor.kFrontColor,
                   //size: ThemeAppSize.kFontSize18,
                 ),
-                ExpandableTextWidget(
-                  text: description,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 1.7,
+                  child: ExpandableTextWidget(
+                    text: description,
+                  ),
                 ),
               ],
             ),
           ),
         ),
-
       ],
     );
   }
 }
+
 class _DishDetailedBottomBarWidget extends StatelessWidget {
   const _DishDetailedBottomBarWidget();
   @override

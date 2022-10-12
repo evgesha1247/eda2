@@ -13,6 +13,7 @@ class MyAppWidget extends StatelessWidget {
         overlays: [SystemUiOverlay.bottom]);
     final mainNavigation = MainNavigation();
     return GetMaterialApp(
+
       title: 'flutter app',
       theme: ThemeData(
         fontFamily: 'Insaniburger',

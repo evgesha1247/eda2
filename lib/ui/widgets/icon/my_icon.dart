@@ -22,6 +22,9 @@ class MyIcon extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(size / 2),
         color: bgColor,
+          border: Border.all(color: iconColor, width: 0.3)
+
+
       ),
       child: Icon(
         icon,

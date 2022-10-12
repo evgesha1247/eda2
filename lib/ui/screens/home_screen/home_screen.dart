@@ -204,20 +204,11 @@ class _ItemPromoInfoBlok extends StatelessWidget {
           borderRadius: ThemeAppFun.decoration(),
           boxShadow: const [
             BoxShadow(
-              blurRadius: 5.0,
-              color: ThemeAppColor.kFrontColor,
-              offset: Offset(0, 4),
+              blurRadius: 3.0,
+              color: ThemeAppColor.kBlack,
+              offset: Offset(0, 2),
             ),
-            BoxShadow(
-              blurRadius: 4.0,
-              color: ThemeAppColor.kBGColor,
-              offset: Offset(4, 0),
-            ),
-            BoxShadow(
-              blurRadius: 4.0,
-              color: ThemeAppColor.kBGColor,
-              offset: Offset(-5, 0),
-            ),
+
           ],
         ),
         child: Padding(
@@ -270,13 +261,11 @@ class _PopularTitleWidget extends StatelessWidget {
           SizedBox(width: ThemeAppSize.kInterval5),
           SmallText(
             text: '•',
-            color: ThemeAppColor.kTextBlackColor,
             size: ThemeAppSize.kFontSize18,
           ),
           SizedBox(width: ThemeAppSize.kInterval5),
           SmallText(
             text: 'Food pairing',
-            color: ThemeAppColor.kTextBlackColor,
             size: ThemeAppSize.kFontSize18,
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/cart_object.dart';
 import 'package:text/ui/screens/home_screen/home_screen.dart';
+import 'package:text/ui/screens/profile_screen/profile_screen.dart';
 
 import 'package:text/ui/widgets/auth/auth_widget.dart';
 import 'package:text/ui/widgets/header_widget/header_model.dart';
@@ -53,4 +54,5 @@ class ScreensFactory {
         create: (context) => FavoriteModel(),
         child: const FavoriteScreen(),
       );
+  Widget makeProfile() => const ProfileScreen();
 }

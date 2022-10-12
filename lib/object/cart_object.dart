@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 
 class Cart {
@@ -19,6 +18,7 @@ class Cart {
 }
 
 class CartModel extends ChangeNotifier {
+
   Map<String, Cart> _cartItem = {};
   UnmodifiableMapView<String, Cart> get cartItem =>
       UnmodifiableMapView(_cartItem);

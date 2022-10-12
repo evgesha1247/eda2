@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-// ignore: unused_import'
 import '../../../box_menager/box_menager.dart';
 import '../../../object/dish_object.dart';
 import '../../navigations/main_navigation.dart';
-import '../../theme/theme_app.dart';
 
 class HomeModel extends ChangeNotifier {
   HomeModel() {

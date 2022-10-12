@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/cart_object.dart';
 import 'package:text/ui/theme/theme_app.dart';
@@ -182,7 +183,24 @@ class _BottnCart extends StatelessWidget {
           ),
           SizedBox(height: ThemeAppSize.kInterval12),
           GestureDetector(
-            onTap: () => cart.clear(),
+            onTap: () {
+              cart.clear();
+              Get.snackbar(
+                '',
+                '',
+                overlayBlur: 4,
+                margin: EdgeInsets.all(ThemeAppSize.kInterval12),
+                duration: const Duration(milliseconds: 1200),
+                dismissDirection: DismissDirection.horizontal,
+                backgroundColor: ThemeAppColor.kFrontColor.withOpacity(0.3),
+                icon: const Icon(Icons.check, color: Colors.green),
+                titleText: const Text('Thanks for your order'),
+                messageText: const SmallText(
+                  text: 'positions in processing',
+                  color: ThemeAppColor.kFrontColor,
+                ),
+              );
+            },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
               width: double.infinity,

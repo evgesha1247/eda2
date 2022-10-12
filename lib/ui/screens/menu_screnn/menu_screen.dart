@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text/object/dish_object.dart';
 import 'package:text/ui/screens/menu_screnn/manu_model.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
+
 import '../../theme/theme_app.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -15,17 +17,24 @@ class MenuScreen extends StatelessWidget {
     return Scaffold(
         body: CustomScrollView(
       slivers: mediaQuery >= 370
-          ? [factor.makeHeder(), const _MenuBodyWidget()]
-          : [const _MenuBodyWidget()],
+          ? [
+              factor.makeHeder(),
+              const _MenuBodyWidget(),
+            ]
+          : [
+              const _MenuBodyWidget(),
+            ],
     ));
   }
 }
+
+
 
 class _MenuBodyWidget extends StatelessWidget {
   const _MenuBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final length = context.watch<MenuModel>().items.length;
+    final length = context.watch<MenuModel>().itemsFilter.length;
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 346.0,
@@ -47,8 +56,7 @@ class _CartItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
     final model = context.read<MenuModel>();
-
-    final itemImgUrl = model.items[index].imgUrl;
+    final itemImgUrl = model.itemsFilter[index].imgUrl;
     return GestureDetector(
         onTap: () => model.showDetail(context, index),
         child: Stack(
@@ -78,7 +86,7 @@ class _CartItemContainerWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final itemImgUrl = context.read<MenuModel>().items[index].imgUrl;
+    final itemImgUrl = context.read<MenuModel>().itemsFilter[index].imgUrl;
     return Container(
         margin: const EdgeInsets.only(top: 30, left: 10, right: 10),
         decoration: BoxDecoration(
@@ -123,7 +131,7 @@ class _ButtonFavoritWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          child: model.items[index].isFavorit
+          child: model.itemsFilter[index].isFavorit
               ? const Icon(Icons.favorite, color: ThemeAppColor.kBGColor)
               : const Icon(Icons.favorite_border, color: Colors.grey),
           onTap: () => model.toggFovarit(index),
@@ -138,7 +146,7 @@ class _CartItemContainerTextWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final item = context.read<MenuModel>().items[index];
+    final item = context.read<MenuModel>().itemsFilter[index];
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: Column(

@@ -17,7 +17,6 @@ class ExpandableTextWidgetModel extends ChangeNotifier {
       secondText = '';
     }
   }
-
   tog() {
     hiddeText = !hiddeText;
     notifyListeners();
@@ -43,41 +42,39 @@ class _TextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.watch<ExpandableTextWidgetModel>();
     model.initText(text);
-    return Expanded(
-      child: SingleChildScrollView(
-        child: model.secondText == ''
-            ? SmallText(text: model.firstText, color: ThemeAppColor.kFrontColor)
-            : Column(
-                children: [
-                  SmallText(
-                    height: 1.6,
-                    size: ThemeAppSize.kFontSize18,
-                    text: model.hiddeText
-                        ? ('${model.firstText}. . .')
-                        : (model.firstText + model.secondText),
-                    color: ThemeAppColor.kFrontColor,
-                    maxLines: 99,
+    return SingleChildScrollView(
+      child: model.secondText == ''
+          ? SmallText(text: model.firstText, color: ThemeAppColor.kFrontColor)
+          : Column(
+              children: [
+                SmallText(
+                  height: 1.6,
+                  size: ThemeAppSize.kFontSize18,
+                  text: model.hiddeText
+                      ? ('${model.firstText}. . .')
+                      : (model.firstText + model.secondText),
+                  color: ThemeAppColor.kFrontColor,
+                  maxLines: 99,
+                ),
+                InkWell(
+                  onTap: () => model.tog(),
+                  child: Row(
+                    children: [
+                      const SmallText(
+                        text: 'show more',
+                        color: ThemeAppColor.kFrontColor,
+                      ),
+                      Icon(
+                        color: ThemeAppColor.kFrontColor,
+                        model.hiddeText
+                            ? Icons.arrow_drop_down
+                            : Icons.arrow_drop_up,
+                      ),
+                    ],
                   ),
-                  InkWell(
-                    onTap: () => model.tog(),
-                    child: Row(
-                      children: [
-                        const SmallText(
-                          text: 'show more',
-                          color: ThemeAppColor.kFrontColor,
-                        ),
-                        Icon(
-                          color: ThemeAppColor.kFrontColor,
-                          model.hiddeText
-                              ? Icons.arrow_drop_down
-                              : Icons.arrow_drop_up,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-      ),
+                )
+              ],
+            ),
     );
   }
 }

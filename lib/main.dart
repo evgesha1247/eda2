@@ -6,5 +6,6 @@ void main() async {
   final factor = ScreensFactory();
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+
   runApp(factor.makeMainApp());
 }

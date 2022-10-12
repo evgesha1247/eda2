@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import '../../../box_menager/box_menager.dart';
 import '../../../object/dish_object.dart';
 import '../../navigations/main_navigation.dart';
@@ -14,6 +12,8 @@ class MenuModel extends ChangeNotifier {
 
   var _items = <Dish>[];
   List<Dish> get items => _items;
+  var _itemsFilter = <Dish>[];
+  List<Dish> get itemsFilter => _itemsFilter;
 
 
   Future<void> _setup() async {
@@ -23,9 +23,16 @@ class MenuModel extends ChangeNotifier {
   }
 
 
+  void filter(String dishCategory) {
+    _itemsFilter = [];
+    _items.where((element) => element.category == dishCategory).map((e) {
+      _itemsFilter.add(e);
+    }).toList();
+  }
 
   Future<void> _readDishData() async {
     _items = (await _box).values.toList();
+    _itemsFilter = _items;
     notifyListeners();
   }
 
