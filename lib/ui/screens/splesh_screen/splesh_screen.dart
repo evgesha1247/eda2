@@ -13,13 +13,14 @@ class SplashScreen extends StatelessWidget {
       navigateRoute: widgetFactory.makeGuiding(),
       duration: 3000,
       speed: 6000,
-      imageSize: 130,
-      imageSrc: ThemeAppImgURL.imgURL2,
+      imageSize: 500,
+      imageSrc: ThemeAppImgURL.imgURLlogo,
       text: "loading...",
       textType: TextType.ColorizeAnimationText,
       textStyle: const TextStyle(
-        fontSize: 40.0,
+        fontSize: 30.0,
       ),
+      pageRouteTransition: PageRouteTransition.CupertinoPageRoute,
       colors: const [
         ThemeAppColor.kFrontColor,
         ThemeAppColor.kBGColor,

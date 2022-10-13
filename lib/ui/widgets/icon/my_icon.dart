@@ -10,8 +10,8 @@ class MyIcon extends StatelessWidget {
     Key? key,
     required this.icon,
     this.size = 40,
-    this.iconColor = const Color.fromARGB(255, 102, 61, 37),
-    this.bgColor = const Color.fromARGB(255, 249, 218, 194),
+    this.iconColor = const Color.fromARGB(255, 80, 35, 20),
+    this.bgColor = const Color.fromARGB(255, 255, 237, 230),
   }) : super(key: key);
 
   @override
@@ -21,15 +21,12 @@ class MyIcon extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(size / 2),
-        color: bgColor,
-          border: Border.all(color: iconColor, width: 0.3)
-
-
+        color: bgColor
       ),
       child: Icon(
         icon,
         color: iconColor,
-        size: ThemeAppSize.kIcon16,
+        size: ThemeAppSize.kIcon16
       ),
     );
   }

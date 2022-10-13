@@ -54,7 +54,7 @@ class _FooterBottomBarWidget extends StatelessWidget {
       itemCornerRadius: ThemeAppSize.kRadius20,
       selectedIndex: currentIndexTab,
       containerHeight: 60,
-      containerPadding: const EdgeInsets.only(top: 8),
+      containerPadding: EdgeInsets.only(top: ThemeAppSize.kInterval5),
       backgroundColor: ThemeAppColor.kBGColor,
       onItemSelected: model.setCurrentIndexTab,
       animationDuration: const Duration(milliseconds: 300),

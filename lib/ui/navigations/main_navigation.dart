@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
+
 import 'package:text/ui/screens/splesh_screen/splesh_screen.dart';
 import 'package:text/ui/screens/cart_screen/cart_screen.dart';
 import 'package:text/ui/screens/dish_detailed_screen/dish_detailed_screen.dart';
@@ -13,12 +13,6 @@ abstract class MainNavigationRouteName {
   static const splash = '/splash';
 }
 
-class GetXNavigation {
-  static List<GetPage> routes = [
-    GetPage(name: '/', page: () => const SplashScreen()),
-    GetPage(name: '/guiding', page: () => ScreensFactory().makeGuiding()),
-  ];
-}
 
 class MainNavigation {
   final _widgetFactory = ScreensFactory();

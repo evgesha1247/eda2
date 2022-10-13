@@ -23,12 +23,19 @@ class MenuModel extends ChangeNotifier {
   }
 
 
-  void filter(String dishCategory) {
+  void filter({String dishCategory = ''}) {
+    if (dishCategory != 'reset') {
     _itemsFilter = [];
-    _items.where((element) => element.category == dishCategory).map((e) {
-      _itemsFilter.add(e);
-    }).toList();
+      _items
+          .where((e) => e.category == dishCategory)
+          .map((e) => _itemsFilter.add(e))
+          .toList();
+    } else {
+      _itemsFilter = _items;
+    }
+    notifyListeners();
   }
+
 
   Future<void> _readDishData() async {
     _items = (await _box).values.toList();
@@ -43,8 +50,14 @@ class MenuModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> showDetail(BuildContext context, int index) async {
-    Navigator.of(context).pushNamed(MainNavigationRouteName.details,
-        arguments: (await _box).keyAt(index));
+  Future<void> showDetail(BuildContext context, Dish item) async {
+    for (var element in (await _box).values) {
+      if (element == item) {
+        Navigator.of(context).pushNamed(
+          MainNavigationRouteName.details,
+          arguments: element.key,
+        );
+      }
+    }
   }
 }

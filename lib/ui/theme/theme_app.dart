@@ -46,6 +46,9 @@ abstract class ThemeAppSize {
   // ditalit
   static double kDetaildImgContainer = kScreensHeight / (height / 350);
   static double kDetaildButtomContainer = kScreensHeight / (height / 120);
+  // menu filter
+  static double kMenuFilter = kScreensHeight / (height / 80);
+  static double kMenuFilterItemWidth = kScreensWidth / (width / 4);
 
 
 /// fonts
@@ -65,13 +68,24 @@ abstract class ThemeAppFun {
   }
 }
 abstract class ThemeAppImgURL {
-  static String imgURLPromo1 = 'assets/imgs/food6.jpg';
-  static String imgURLPromo2 = 'assets/imgs/food7.jpg';
-  static String imgURLPromo3 = 'assets/imgs/food8.jpeg';
-  static String imgURLPromo4 = 'assets/imgs/food9.jpg';
-  static String imgURL1 = 'assets/imgs/food1.png';
-  static String imgURL2 = 'assets/imgs/food2.png';
-  static String imgURL3 = 'assets/imgs/food3.png';
-  static String imgURL4 = 'assets/imgs/food4.png';
-  static String imgURL5 = 'assets/imgs/food5.png';
+  static const String imgURLPromo1 = 'assets/imgs/food6.jpg';
+  static const String imgURLPromo2 = 'assets/imgs/food7.jpg';
+  static const String imgURLPromo3 = 'assets/imgs/food8.jpeg';
+  static const String imgURLPromo4 = 'assets/imgs/food9.jpg';
+  static const String imgURL1 = 'assets/imgs/food1.png';
+  static const String imgURL2 = 'assets/imgs/food2.png';
+  static const String imgURL3 = 'assets/imgs/food3.png';
+  static const String imgURL4 = 'assets/imgs/food4.png';
+  static const String imgURL5 = 'assets/imgs/food5.png';
+  static const String imgURLlogo = 'assets/imgs/logo.png';
+}
+
+abstract class ThemeAppIconURL {
+  static const String iconUrlDessert = 'assets/icons/dessert.png';
+  static const String iconUrlDrink = 'assets/icons/iconDrink.png';
+  static const String iconUrlReset = 'assets/icons/reset.png';
+  static const String iconUrlIceCream = 'assets/icons/ice-cream.png';
+  static const String iconUrlMainCourse = 'assets/icons/main_course.png';
+
+
 }
