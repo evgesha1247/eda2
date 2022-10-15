@@ -49,6 +49,8 @@ abstract class ThemeAppSize {
   // menu filter
   static double kMenuFilter = kScreensHeight / (height / 80);
   static double kMenuFilterItemWidth = kScreensWidth / (width / 4);
+  static double kNebuFilterItemContaiter = kScreensWidth / 4;
+
 
 
 /// fonts

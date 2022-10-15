@@ -36,6 +36,21 @@ class MenuModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  searchFilter({String text = ''}) {
+    if (text.isNotEmpty) {
+      var itemsSert = <Dish>[];
+      _itemsFilter.forEach((element) {
+        if (element.name.toLowerCase().contains(text.toLowerCase())) {
+          itemsSert.add(element);
+          _itemsFilter = itemsSert;
+        }
+      });
+    } else {
+      _itemsFilter = _items;
+    }
+    notifyListeners();
+  }
+
 
   Future<void> _readDishData() async {
     _items = (await _box).values.toList();
@@ -60,4 +75,9 @@ class MenuModel extends ChangeNotifier {
       }
     }
   }
+
+
+  showCart(context) =>
+      Navigator.pushNamed(context, MainNavigationRouteName.cart);
+
 }

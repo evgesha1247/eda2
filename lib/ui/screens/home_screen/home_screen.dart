@@ -2,7 +2,6 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/ui/screens/home_screen/home_model.dart';
-import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
 import '../../../object/dish_object.dart';
@@ -12,12 +11,9 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   @override
   Widget build(context) {
-    final mediaQuery = MediaQuery.of(context).size.width;
-    return CustomScrollView(
-      slivers: mediaQuery >= 370
-          ? [ScreensFactory().makeHeder(), const _BodyWidget()]
-          : [
-              const _BodyWidget(),
+
+    return const CustomScrollView(
+      slivers: [_BodyWidget()
             ],
     );
   }

@@ -26,10 +26,9 @@ class SmallText extends StatelessWidget {
       overflow: overflow,
       style: TextStyle(
         fontSize: size == 0 ? ThemeAppSize.kFontSize20 : size,
-        fontFamily: 'Mariupol',
         color: color,
         height: height,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w300,
       ),
     );
   }

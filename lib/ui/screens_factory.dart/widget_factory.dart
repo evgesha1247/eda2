@@ -5,8 +5,6 @@ import 'package:text/ui/screens/home_screen/home_screen.dart';
 import 'package:text/ui/screens/profile_screen/profile_screen.dart';
 
 import 'package:text/ui/widgets/auth/auth_widget.dart';
-import 'package:text/ui/widgets/header_widget/header_model.dart';
-import 'package:text/ui/widgets/header_widget/header_widget.dart';
 import '../../object/dish_object.dart';
 
 import '../screens/favorite_screen/favorite_model.dart';
@@ -37,10 +35,7 @@ class ScreensFactory {
         create: (context) => AuthModel(),
         child: const AuthWidget(),
       );
-  Widget makeHeder() => ChangeNotifierProvider(
-        create: (context) => HeaderModel(),
-        child: const HederWidget(),
-      );
+
   /////////
   Widget makeHome() => ChangeNotifierProvider(
         create: (context) => HomeModel(),

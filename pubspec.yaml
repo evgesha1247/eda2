@@ -42,22 +42,22 @@ flutter:
 
 
   fonts:
-    - family: Scripto
-      fonts:
-        - asset: assets/fonts/Scripto.ttf
-    - family: OleoScript
-      fonts:
-        - asset: assets/fonts/OleoScript-Regular.ttf
-        - asset: assets/fonts/OleoScript-Bold.ttf
     - family: Insaniburger
       fonts:
         - asset: assets/fonts/Insaniburger.ttf
-        - asset: assets/fonts/InsaniburgerWithCheese-47Dp.ttf
     - family: Mariupol
       fonts:
         - asset: assets/fonts/Mariupol-Bold.ttf
         - asset: assets/fonts/Mariupol-Medium.ttf
         - asset: assets/fonts/Mariupol-Regular.ttf
+    - family: Tienne
+      fonts:
+        - asset: assets/fonts/Tienne-Black.ttf
+        - asset: assets/fonts/Tienne-Bold.ttf
+        - asset: assets/fonts/Tienne-Regular.ttf
+
+
+
 
 
 

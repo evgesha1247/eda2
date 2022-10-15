@@ -3,9 +3,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 import 'package:text/object/dish_object.dart';
 import 'package:text/ui/screens/menu_screnn/manu_model.dart';
-import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
+import '../../../object/cart_object.dart';
 import '../../theme/theme_app.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -15,10 +15,10 @@ class MenuScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: MediaQuery.of(context).size.width >= 370
-            ? [
-                ScreensFactory().makeHeder(),
-                const FilterMenuWidget(),
-                const _MenuBodyWidget(),
+            ? const [
+                _HederWidget(),
+                _FilterMenuWidget(),
+                _MenuBodyWidget(),
               ]
             : [const _MenuBodyWidget()],
       ),
@@ -26,8 +26,8 @@ class MenuScreen extends StatelessWidget {
   }
 }
 
-class FilterMenuWidget extends StatelessWidget {
-  const FilterMenuWidget({super.key});
+class _FilterMenuWidget extends StatelessWidget {
+  const _FilterMenuWidget();
   static const _icon = [
     MdiIcons.foodCroissant,
     MdiIcons.glassTulip,
@@ -46,42 +46,25 @@ class FilterMenuWidget extends StatelessWidget {
     Widget itemFilterBtn({required int index}) {
       return GestureDetector(
         onTap: () => model.filter(dishCategory: _dishCategory[index]),
-        child: Container(
-          margin: EdgeInsets.all(ThemeAppSize.kInterval12),
-          decoration: BoxDecoration(
+        child: Padding(
+          padding: EdgeInsets.all(ThemeAppSize.kInterval5),
+          child: Container(
+            decoration: BoxDecoration(
               borderRadius: ThemeAppFun.decoration(radius: 12),
-              color: ThemeAppColor.kBGColor,
-              boxShadow: const [
-                BoxShadow(
-                  color: ThemeAppColor.kFrontColor,
-                  offset: Offset(0, 2),
-                  blurRadius: 4.0,
-                  spreadRadius: .3,
-                ),
-                BoxShadow(
+              color: ThemeAppColor.kFrontColor,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(_icon[index], color: ThemeAppColor.kBGColor),
+                SmallText(
+                  text: _dishCategory[index],
+                  size: ThemeAppSize.kFontSize16,
                   color: ThemeAppColor.kBGColor,
-                  offset: Offset(-2, 0),
-                  blurRadius: 5.0,
-                  spreadRadius: .3,
-                ),
-                BoxShadow(
-                  color: ThemeAppColor.kBGColor,
-                  offset: Offset(2, 0),
-                  blurRadius: 5.0,
-                  spreadRadius: .3,
-                ),
-              ]),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(_icon[index]),
-              SmallText(
-                text: _dishCategory[index],
-                color: ThemeAppColor.kFrontColor,
-                size: ThemeAppSize.kFontSize16,
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       );
@@ -89,10 +72,10 @@ class FilterMenuWidget extends StatelessWidget {
 
     return SliverToBoxAdapter(
       child: SizedBox(
-        height: ThemeAppSize.kMenuFilter + 30,
+        height: ThemeAppSize.kMenuFilter,
         child: ListView.builder(
           prototypeItem: SizedBox(
-            width: MediaQuery.of(context).size.width / _dishCategory.length,
+            width: ThemeAppSize.kNebuFilterItemContaiter,
           ),
           scrollDirection: Axis.horizontal,
           itemCount: _dishCategory.length,
@@ -254,5 +237,125 @@ class _CartItemContainerTextWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _HederWidget extends StatelessWidget {
+  const _HederWidget({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return const SliverAppBar(
+      leading: SizedBox.shrink(),
+      floating: true,
+      pinned: false,
+      snap: true,
+      backgroundColor: ThemeAppColor.kFrontColor,
+      flexibleSpace: _SearchWidget(),
+    );
+  }
+}
+
+class _SearchWidget extends StatelessWidget {
+  const _SearchWidget();
+  @override
+  Widget build(BuildContext context) {
+    InputBorder styleSearch = OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
+      borderSide: const BorderSide(style: BorderStyle.none),
+    );
+    final model = context.watch<MenuModel>();
+    return FlexibleSpaceBar(
+      centerTitle: true,
+      titlePadding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
+      title: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: ThemeAppSize.width),
+        child: Row(
+          children: [
+            Expanded(
+              child: Center(
+                child: SizedBox(
+                  height: 33,
+                  child: TextField(
+                    cursorColor: ThemeAppColor.kFrontColor,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.zero,
+                      isDense: true,
+                      filled: true,
+                      fillColor: ThemeAppColor.kBGColor,
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: ThemeAppColor.kFrontColor,
+                      ),
+                      hintText: 'Search',
+                      enabledBorder: styleSearch,
+                      focusedBorder: styleSearch,
+                    ),
+                    onChanged: (text) {
+                      model.searchFilter(text: text);
+                    },
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: ThemeAppSize.kInterval12),
+            const _ButtonToCartWidget(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ButtonToCartWidget extends StatelessWidget {
+  const _ButtonToCartWidget({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final styleBut = ElevatedButton.styleFrom(
+      elevation: 0,
+      shadowColor: Colors.transparent,
+      foregroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      side: const BorderSide(
+        width: 2,
+        color: ThemeAppColor.kBGColor,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: ThemeAppFun.decoration(),
+      ),
+    );
+    final number = context.watch<CartModel>().number().toString();
+    final model = context.read<MenuModel>();
+    return Stack(children: [
+      ElevatedButton(
+        style: styleBut,
+        onPressed: () => model.showCart(context),
+        child: const SizedBox(
+          height: 33,
+          child: Icon(
+            Icons.shopping_cart,
+            color: ThemeAppColor.kBGColor,
+          ),
+        ),
+      ),
+      number != '0'
+          ? Positioned(
+              right: 0,
+              child: Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Colors.white38,
+                  borderRadius: ThemeAppFun.decoration(radius: 15),
+                ),
+                child: Center(
+                  child: BigText(
+                    text: number,
+                    color: ThemeAppColor.kBGColor,
+                  ),
+                ),
+              ),
+            )
+          : const SizedBox.shrink()
+    ]);
   }
 }
