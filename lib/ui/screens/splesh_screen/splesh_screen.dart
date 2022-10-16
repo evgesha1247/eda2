@@ -23,11 +23,11 @@ class SplashScreen extends StatelessWidget {
       pageRouteTransition: PageRouteTransition.CupertinoPageRoute,
       colors: const [
         ThemeAppColor.kFrontColor,
-        ThemeAppColor.kBGColor,
-        ThemeAppColor.kBGColor,
+        ThemeAppColor.kWhite,
+        ThemeAppColor.kWhite,
         ThemeAppColor.kFrontColor,
       ],
-      backgroundColor: ThemeAppColor.kAccent,
+      backgroundColor: ThemeAppColor.kBGColor,
     );
   }
 }

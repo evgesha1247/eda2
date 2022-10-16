@@ -17,9 +17,17 @@ class MenuModel extends ChangeNotifier {
 
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
-    _readDishData();
+    await _readDishData();
     (await _box).listenable().addListener(_readDishData);
   }
+
+
+  Future<void> _readDishData() async {
+    _items = (await _box).values.toList();
+    _itemsFilter = _items;
+    notifyListeners();
+  }
+
 
   void filter({String dishCategory = ''}) {
     if (dishCategory != 'reset') {
@@ -47,11 +55,7 @@ _itemsFilter = [];
     notifyListeners();
   }
 
-  Future<void> _readDishData() async {
-    _items = (await _box).values.toList();
-    _itemsFilter = _items;
-    notifyListeners();
-  }
+
 
   Future<void> toggFovarit(Dish item) async {
     for (var element in (await _box).values) {

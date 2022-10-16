@@ -12,9 +12,10 @@ class HomeModel extends ChangeNotifier {
 
   final _itemsHotDish = <Dish>[];
   List<Dish> get itemsHotDish => _itemsHotDish.toList();
-
   final _itemsMainCourse = <Dish>[];
   List<Dish> get itemsMainCourse => _itemsMainCourse.toList();
+
+
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
     await _readDishData();
@@ -23,18 +24,6 @@ class HomeModel extends ChangeNotifier {
 
 
   Future<void> _readDishData() async {
-    // final dish = Dish(
-    //   id: '${DateTime.now()}',
-    //   name: 'qwe7',
-    //   price: 200.0,
-    //   isHot: false,
-    //   imgUrl: ThemeAppImgURL.imgURL2,
-    //   category: DishCategory.mainCourse,
-    //   description:
-    //       'Lorem dolor ipsum dolor ipsum dolor ipsum , Lorem dolor ipsum dolor ipsum dolor ipsumLorem dolor ipsum dolor ipsum dolor ipsum, Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum Lorem dolor ipsum dolor ipsum dolor ipsum',
-    // );
-    // (await _box).add(dish);
-    //await box.clear();
     _loadHotDish();
     _loadMainCourse();
     notifyListeners();

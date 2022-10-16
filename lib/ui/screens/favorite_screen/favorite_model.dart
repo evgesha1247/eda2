@@ -15,7 +15,7 @@ class FavoriteModel extends ChangeNotifier {
   List<Dish> get itemsFovarit => _itemsFovarit.toList();
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
-    _loadFavoritDish();
+    await _loadFavoritDish();
     (await _box).listenable().addListener(_loadFavoritDish);
   }
 

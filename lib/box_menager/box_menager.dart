@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:text/object/dish_object.dart';
 
-class BoxManadger {
+class BoxManadger extends ChangeNotifier {
   static final BoxManadger instance = BoxManadger._();
   BoxManadger._();
 
