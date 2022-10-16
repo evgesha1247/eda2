@@ -291,7 +291,7 @@ class _SearchWidget extends StatelessWidget {
                       focusedBorder: styleSearch,
                     ),
                     onChanged: (text) {
-                      model.searchFilter(text: text);
+                      model.searchFilter(text);
                     },
                   ),
                 ),

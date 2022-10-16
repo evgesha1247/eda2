@@ -34,7 +34,7 @@ class MenuModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  searchFilter({String text = ''}) {
+  searchFilter(String text) {
     if (text.isNotEmpty) {
 _itemsFilter = [];
       _itemsFilter = _items
@@ -60,8 +60,9 @@ _itemsFilter = [];
         item.save();
       }
     }
-    // notifyListeners();
+    notifyListeners();
   }
+
 
   Future<void> showDetail(BuildContext context, Dish item) async {
     for (var element in (await _box).values) {

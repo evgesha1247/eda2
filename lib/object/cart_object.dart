@@ -37,13 +37,15 @@ class CartModel extends ChangeNotifier {
   }
 
   int namber(String dishKey) {
-    var numberD = 0;
+    var number = 0;
     _cartItem.forEach(
       (key, item) {
-        if (key == dishKey) numberD = item.number;
+        if (key == dishKey) {
+          number = item.number;
+        }
       },
     );
-    return numberD;
+    return number;
   }
 
   int number() {
@@ -53,7 +55,6 @@ class CartModel extends ChangeNotifier {
         number += item.number;
       },
     );
-
     return number;
   }
 

@@ -58,7 +58,7 @@ class CartScreen extends StatelessWidget {
         key: const ValueKey(0),
         endActionPane: ActionPane(
           motion: const DrawerMotion(),
-          dismissible: DismissiblePane(onDismissed: () {}),
+
           children: [
             SlidableAction(
               spacing: 0,
