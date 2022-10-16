@@ -192,7 +192,7 @@ class _ButtonFavoritWidget extends StatelessWidget {
           child: model.itemsFilter[index].isFavorit
               ? const Icon(Icons.favorite, color: ThemeAppColor.kBGColor)
               : const Icon(Icons.favorite_border, color: Colors.grey),
-          onTap: () => model.toggFovarit(index),
+          onTap: () => model.toggFovarit(model.itemsFilter[index]),
         )
       ],
     );

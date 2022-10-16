@@ -15,17 +15,15 @@ class MenuModel extends ChangeNotifier {
   var _itemsFilter = <Dish>[];
   List<Dish> get itemsFilter => _itemsFilter;
 
-
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
     _readDishData();
     (await _box).listenable().addListener(_readDishData);
   }
 
-
   void filter({String dishCategory = ''}) {
     if (dishCategory != 'reset') {
-    _itemsFilter = [];
+      _itemsFilter = [];
       _items
           .where((e) => e.category == dishCategory)
           .map((e) => _itemsFilter.add(e))
@@ -38,19 +36,16 @@ class MenuModel extends ChangeNotifier {
 
   searchFilter({String text = ''}) {
     if (text.isNotEmpty) {
-      var itemsSert = <Dish>[];
-      _itemsFilter.forEach((element) {
-        if (element.name.toLowerCase().contains(text.toLowerCase())) {
-          itemsSert.add(element);
-          _itemsFilter = itemsSert;
-        }
-      });
+_itemsFilter = [];
+      _itemsFilter = _items
+          .where((element) =>
+              element.name.toLowerCase().contains(RegExp(text.toLowerCase())))
+          .toList();
     } else {
       _itemsFilter = _items;
     }
     notifyListeners();
   }
-
 
   Future<void> _readDishData() async {
     _items = (await _box).values.toList();
@@ -58,11 +53,14 @@ class MenuModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggFovarit(int index) async {
-    final box = (await _box).values.toList()[index];
-    box.isFavorit = !box.isFavorit;
-    box.save();
-    notifyListeners();
+  Future<void> toggFovarit(Dish item) async {
+    for (var element in (await _box).values) {
+      if (element == item) {
+        element.isFavorit = !element.isFavorit;
+        item.save();
+      }
+    }
+    // notifyListeners();
   }
 
   Future<void> showDetail(BuildContext context, Dish item) async {
@@ -76,8 +74,6 @@ class MenuModel extends ChangeNotifier {
     }
   }
 
-
   showCart(context) =>
       Navigator.pushNamed(context, MainNavigationRouteName.cart);
-
 }
