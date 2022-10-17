@@ -9,28 +9,25 @@ class DishDetailedModel extends ChangeNotifier {
     _setup();
   }
   int dishKey;
-  late final Future<Box<Dish>> _box;
   Dish? _dish;
   Dish? get dish => _dish;
+  late final Future<Box<Dish>> _box;
+
 
   void showMenu(context) => Navigator.of(context).pop();
-  void showCart(context) =>
-      Navigator.of(context).pushNamed(MainNavigationRouteName.cart);
 
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
     _dish = (await _box).get(dishKey);
     notifyListeners();
   }
-
+showCart(context) =>
+      Navigator.pushNamed(context, MainNavigationRouteName.cart);
 
   Future<void> toggFovarit() async {
-    final crrent = _dish?.isFavorit ?? false;
-    _dish?.isFavorit = !crrent;
-    await _dish?.save();
+    dish!.isFavorit = !dish!.isFavorit;
+    await dish!.save();
     notifyListeners();
   }
-
-
 
 }

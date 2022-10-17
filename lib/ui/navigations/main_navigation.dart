@@ -16,7 +16,7 @@ abstract class MainNavigationRouteName {
 
 class MainNavigation {
   final _widgetFactory = ScreensFactory();
-  final initialRoute = MainNavigationRouteName.splash;
+  final initialRoute = MainNavigationRouteName.auth;
 
 
   Map<String, WidgetBuilder> get routes => <String, WidgetBuilder>{

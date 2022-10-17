@@ -13,6 +13,7 @@ class FavoriteModel extends ChangeNotifier {
   late final Future<Box<Dish>> _box;
   final _itemsFovarit = <Dish>[];
   List<Dish> get itemsFovarit => _itemsFovarit.toList();
+
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
     await _loadFavoritDish();

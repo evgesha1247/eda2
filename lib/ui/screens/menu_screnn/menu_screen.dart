@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/dish_object.dart';
-import 'package:text/ui/screens/menu_screnn/manu_model.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
 import '../../../object/cart_object.dart';
@@ -42,7 +41,7 @@ class _FilterMenuWidget extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    final model = context.read<MenuModel>();
+    final model = context.read<DishModel>();
     Widget itemFilterBtn({required int index}) {
       return GestureDetector(
         onTap: () => model.filter(dishCategory: _dishCategory[index]),
@@ -92,12 +91,13 @@ class _MenuBodyWidget extends StatelessWidget {
   const _MenuBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final length = context.watch<MenuModel>().itemsFilter.length;
+    final length = context.watch<DishModel>().itemsFilter.length;
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 346.0,
-        mainAxisExtent: 250,
+        mainAxisExtent: 200,
         mainAxisSpacing: 10,
+
       ),
       delegate: SliverChildBuilderDelegate(
         childCount: length,
@@ -113,7 +113,7 @@ class _CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
-    final model = context.read<MenuModel>();
+    final model = context.read<DishModel>();
     final itemImgUrl = model.itemsFilter[index].imgUrl;
     return GestureDetector(
         onTap: () => model.showDetail(context, model.itemsFilter[index]),
@@ -144,7 +144,7 @@ class _CartItemContainerWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final itemImgUrl = context.read<MenuModel>().itemsFilter[index].imgUrl;
+    final itemImgUrl = context.read<DishModel>().itemsFilter[index].imgUrl;
     return Container(
         margin: const EdgeInsets.only(top: 30, left: 10, right: 10),
         decoration: BoxDecoration(
@@ -153,7 +153,7 @@ class _CartItemContainerWidget extends StatelessWidget {
           image: MediaQuery.of(context).size.width < 370
               ? DecorationImage(
                   image: AssetImage(itemImgUrl),
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                   alignment: Alignment.topCenter)
               : null,
         ),
@@ -183,7 +183,7 @@ class _ButtonFavoritWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<MenuModel>();
+    final model = context.watch<DishModel>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -204,7 +204,7 @@ class _CartItemContainerTextWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final item = context.read<MenuModel>().itemsFilter[index];
+    final item = context.read<DishModel>().itemsFilter[index];
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: Column(
@@ -263,7 +263,7 @@ class _SearchWidget extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
       borderSide: const BorderSide(style: BorderStyle.none),
     );
-    final model = context.watch<MenuModel>();
+    final model = context.watch<DishModel>();
     return FlexibleSpaceBar(
       centerTitle: true,
       titlePadding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
@@ -324,7 +324,7 @@ class _ButtonToCartWidget extends StatelessWidget {
       ),
     );
     final number = context.watch<CartModel>().number().toString();
-    final model = context.read<MenuModel>();
+    final model = context.read<DishModel>();
     return Stack(children: [
       ElevatedButton(
         style: styleBut,

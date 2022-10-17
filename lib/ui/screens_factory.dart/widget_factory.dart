@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/cart_object.dart';
+import 'package:text/ui/screens/auth_screens/auth_screen.dart';
 import 'package:text/ui/screens/home_screen/home_screen.dart';
 import 'package:text/ui/screens/profile_screen/profile_screen.dart';
-
-import 'package:text/ui/widgets/auth/auth_widget.dart';
 import '../../object/dish_object.dart';
 
+import '../screens/auth_screens/auth_model.dart';
 import '../screens/favorite_screen/favorite_model.dart';
 import '../screens/favorite_screen/favorite_screen.dart';
 import '../screens/guiding_screen/guiding_model.dart';
@@ -16,7 +16,6 @@ import '../screens/home_screen/home_model.dart';
 import '../screens/menu_screnn/manu_model.dart';
 import '../screens/menu_screnn/menu_screen.dart';
 import '../widgets/app/my_app_widget.dart';
-import '../widgets/auth/auth_widget_model.dart';
 
 class ScreensFactory {
   Widget makeMainApp() => MultiProvider(
@@ -26,6 +25,8 @@ class ScreensFactory {
         ],
         child: const MyAppWidget(),
       );
+
+
   Widget makeGuiding() => ChangeNotifierProvider(
         create: (context) => GuidingScreenModel(),
         child: const GuidingScreen(),
@@ -33,7 +34,7 @@ class ScreensFactory {
   /////// страница регестрации  ///////
   Widget makeAuth() => ChangeNotifierProvider(
         create: (context) => AuthModel(),
-        child: const AuthWidget(),
+        child: const AuthScreen(),
       );
 
   /////////

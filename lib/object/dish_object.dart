@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import '../box_menager/box_menager.dart';
+import '../ui/navigations/main_navigation.dart';
 part 'dish_object.g.dart';
 
 abstract class DishCategory {
@@ -42,4 +45,112 @@ class Dish extends HiveObject {
   });
 }
 
-class DishModel extends ChangeNotifier {}
+class DishModel extends ChangeNotifier {
+  late final Future<Box<Dish>> _box;
+  DishModel() {
+    _setup();
+  }
+
+  var _items = <Dish>[];
+  List<Dish> get items => _items;
+  final _itemsHotDish = <Dish>[];
+  List<Dish> get itemsHotDish => _itemsHotDish.toList();
+  final _itemsMainCourse = <Dish>[];
+  List<Dish> get itemsMainCourse => _itemsMainCourse.toList();
+
+  var _itemsFilter = <Dish>[];
+  List<Dish> get itemsFilter => _itemsFilter;
+
+  Future<void> _setup() async {
+    _box = BoxManadger.instance.openBoxDish();
+    await _readDishData();
+    (await _box).listenable().addListener(_readDishData);
+  }
+
+  Future<void> _readDishData() async {
+    _loadHotDish();
+    _loadMainCourse();
+    _loadAllDish();
+    notifyListeners();
+  }
+
+  Future<void> _loadAllDish() async {
+    _items = (await _box).values.toList();
+    _itemsFilter = _items;
+  }
+
+  Future<void> _loadHotDish() async {
+    for (var element in (await _box).values) {
+      if (element.isHot && !_itemsHotDish.contains(element)) {
+        if (_itemsHotDish.length >= 3) {
+          _itemsHotDish.remove(_itemsHotDish.first);
+          _itemsHotDish.add(element);
+        } else {
+          _itemsHotDish.add(element);
+        }
+      }
+      if (!element.isHot) {
+        _itemsHotDish.remove(element);
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<void> _loadMainCourse() async {
+    for (var element in (await _box).values) {
+      if (element.category == DishCategory.mainCourse &&
+          !_itemsMainCourse.contains(element)) {
+        _itemsMainCourse.add(element);
+      }
+      if (element.category != DishCategory.mainCourse) {
+        _itemsMainCourse.remove(element);
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<void> showDetail(BuildContext context, Dish item) async {
+    for (var element in (await _box).values) {
+      if (element == item) {
+        Navigator.of(context).pushNamed(
+          MainNavigationRouteName.details,
+          arguments: element.key,
+        );
+      }
+    }
+  }
+
+  void filter({String dishCategory = ''}) {
+    if (dishCategory != 'reset') {
+      _itemsFilter = [];
+      _items
+          .where((e) => e.category == dishCategory)
+          .map((e) => _itemsFilter.add(e))
+          .toList();
+    } else {
+      _itemsFilter = _items;
+    }
+    notifyListeners();
+  }
+
+  searchFilter(String text) {
+    if (text.isNotEmpty) {
+      _itemsFilter = [];
+      _itemsFilter = _items
+          .where((element) =>
+              element.name.toLowerCase().contains(RegExp(text.toLowerCase())))
+          .toList();
+    } else {
+      _itemsFilter = _items;
+    }
+    notifyListeners();
+  }
+
+  Future<void> toggFovarit(Dish item) async {
+    item.isFavorit = !item.isFavorit;
+    await item.save();
+  }
+
+  showCart(context) =>
+      Navigator.pushNamed(context, MainNavigationRouteName.cart);
+}

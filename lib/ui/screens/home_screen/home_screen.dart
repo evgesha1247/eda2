@@ -1,7 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:text/ui/screens/home_screen/home_model.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
 import '../../../object/dish_object.dart';
@@ -38,7 +37,7 @@ class _PromoSuction extends StatelessWidget {
   const _PromoSuction({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final isNotEmpty = context.watch<HomeModel>().itemsHotDish.isNotEmpty;
+    final isNotEmpty = context.watch<DishModel>().itemsHotDish.isNotEmpty;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: isNotEmpty
@@ -87,7 +86,7 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final itemsHot = context.watch<HomeModel>().itemsHotDish;
+    final itemsHot = context.watch<DishModel>().itemsHotDish;
     return Column(
       children: [
         SizedBox(
@@ -139,8 +138,8 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
       matrix = Matrix4.diagonal3Values(1, currScale, 1)
         ..setTranslationRaw(0, _height * (1 - _scaleFactore) / 2, 1);
     }
-    final model = context.read<HomeModel>();
-    final item = context.read<HomeModel>().itemsHotDish[index];
+    final model = context.read<DishModel>();
+    final item = context.read<DishModel>().itemsHotDish[index];
     return Transform(
       transform: matrix,
       child: GestureDetector(
@@ -185,7 +184,7 @@ class _ItemPromoInfoBlok extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final dish = context.watch<HomeModel>().itemsHotDish[index];
+    final dish = context.watch<DishModel>().itemsHotDish[index];
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -273,8 +272,8 @@ class _PopularListBuilderWidget extends StatelessWidget {
   const _PopularListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final items = context.watch<HomeModel>().itemsMainCourse;
-    final model = context.watch<HomeModel>();
+    final items = context.watch<DishModel>().itemsMainCourse;
+    final model = context.watch<DishModel>();
     return ListView.builder(
       itemCount: items.length,
       shrinkWrap: true,

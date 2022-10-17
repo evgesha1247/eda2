@@ -4,11 +4,14 @@ import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 import 'package:text/ui/theme/theme_app.dart';
 
+import '../../../object/dish_object.dart';
+
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final widgetFactory = ScreensFactory();
+    DishModel();
     return SplashScreenView(
       navigateRoute: widgetFactory.makeGuiding(),
       duration: 3000,

@@ -19,8 +19,9 @@ class _DishDetailedScreenState extends State<DishDetailedScreen> {
   late final DishDetailedModel _model;
   @override
   void initState() {
-    super.initState();
+
     _model = DishDetailedModel(dishKey: widget.dishKey);
+    super.initState();
   }
 
   @override
@@ -49,6 +50,7 @@ class _DishDetailedBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.watch<DishDetailedModel>();
     final name = model.dish?.name ?? '404';
+
     final description = model.dish?.description ?? '404';
     final imgUrl = model.dish?.imgUrl ?? ThemeAppImgURL.imgURL1;
     return CustomScrollView(
