@@ -26,7 +26,7 @@ class MyIcon extends StatelessWidget {
       child: Icon(
         icon,
         color: iconColor,
-        size: ThemeAppSize.kIcon16
+        size: ThemeAppSize.kFontSize16
       ),
     );
   }

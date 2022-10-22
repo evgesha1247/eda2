@@ -61,7 +61,7 @@ class _FilterMenuWidget extends StatelessWidget {
                   text: _dishCategory[index],
                   size: ThemeAppSize.kFontSize16,
                   color: ThemeAppColor.kBGColor,
-                )
+                ),
               ],
             ),
           ),
@@ -95,13 +95,16 @@ class _MenuBodyWidget extends StatelessWidget {
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 346.0,
-        mainAxisExtent: 200,
-        mainAxisSpacing: 10,
-
+        mainAxisExtent: 230,
+        mainAxisSpacing: 0,
+        crossAxisSpacing: 0,
       ),
       delegate: SliverChildBuilderDelegate(
         childCount: length,
-        (_, int index) => _CartItemWidget(index: index),
+        (_, int index) => Padding(
+          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+          child: _CartItemWidget(index: index),
+        ),
       ),
     );
   }

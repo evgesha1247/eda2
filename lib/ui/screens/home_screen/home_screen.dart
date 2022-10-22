@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text/ui/widgets/icon/my_icon.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import 'package:text/ui/widgets/text/small_text.dart';
 import '../../../object/dish_object.dart';
@@ -10,13 +11,12 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   @override
   Widget build(context) {
-
     return const CustomScrollView(
-      slivers: [_BodyWidget()
-            ],
+      slivers: [_BodyWidget()],
     );
   }
 }
+
 class _BodyWidget extends StatelessWidget {
   const _BodyWidget({Key? key}) : super(key: key);
   @override
@@ -56,11 +56,13 @@ class _PromoSuction extends StatelessWidget {
     );
   }
 }
+
 class _ItemsPromoWidget extends StatefulWidget {
   const _ItemsPromoWidget({Key? key}) : super(key: key);
   @override
   State<_ItemsPromoWidget> createState() => _ItemsPromoWidgetState();
 }
+
 class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
   var _currPageValue = 0.0;
   final double _scaleFactore = 0.85;
@@ -81,7 +83,6 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
   void dispose() {
     super.dispose();
     pageController.dispose();
-
   }
 
   @override
@@ -154,6 +155,7 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
     );
   }
 }
+
 class _ItemPromoImgWidget extends StatelessWidget {
   const _ItemPromoImgWidget({Key? key, required this.imgUrl}) : super(key: key);
   final String imgUrl;
@@ -179,6 +181,7 @@ class _ItemPromoImgWidget extends StatelessWidget {
     );
   }
 }
+
 class _ItemPromoInfoBlok extends StatelessWidget {
   const _ItemPromoInfoBlok({Key? key, required this.index}) : super(key: key);
   final int index;
@@ -188,6 +191,7 @@ class _ItemPromoInfoBlok extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
+        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         height: ThemeAppSize.kPageViewTextContainer,
         margin: EdgeInsets.only(
           left: ThemeAppSize.kInterval24,
@@ -203,21 +207,24 @@ class _ItemPromoInfoBlok extends StatelessWidget {
               color: ThemeAppColor.kBlack,
               offset: Offset(0, 2),
             ),
-
           ],
         ),
-        child: Padding(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BigText(text: dish.name),
-              SizedBox(height: ThemeAppSize.kInterval5),
-              SmallText(text: dish.description),
-              SizedBox(height: ThemeAppSize.kInterval12),
-              const SmallText(text: '(цена, добавить , фаворит)'),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BigText(text: dish.name),
+            SizedBox(height: ThemeAppSize.kInterval5),
+            SmallText(text: dish.description),
+            SizedBox(height: ThemeAppSize.kInterval12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: const [
+                MyIcon(icon: Icons.add, size: 30),
+                MyIcon(icon: Icons.gesture, size: 30),
+                MyIcon(icon: Icons.rtt, size: 30),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -240,6 +247,7 @@ class _PopularSuction extends StatelessWidget {
     );
   }
 }
+
 class _PopularTitleWidget extends StatelessWidget {
   const _PopularTitleWidget({Key? key}) : super(key: key);
   @override
@@ -268,12 +276,13 @@ class _PopularTitleWidget extends StatelessWidget {
     );
   }
 }
+
 class _PopularListBuilderWidget extends StatelessWidget {
   const _PopularListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final items = context.watch<DishModel>().itemsMainCourse;
-    final model = context.watch<DishModel>();
+    final model = context.read<DishModel>();
     return ListView.builder(
       itemCount: items.length,
       shrinkWrap: true,
@@ -291,14 +300,17 @@ class _PopularListBuilderWidget extends StatelessWidget {
                 Container(
                   height: ThemeAppSize.kListViewImgSize,
                   width: ThemeAppSize.kListViewImgSize,
+
                   decoration: BoxDecoration(
+                    color: ThemeAppColor.kAccent2,
                       borderRadius: ThemeAppFun.decoration(),
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: AssetImage(
-                          items[index].imgUrl,
+                          items[index].imgUrl
                         ),
-                      )),
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: Container(
@@ -310,7 +322,7 @@ class _PopularListBuilderWidget extends StatelessWidget {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,

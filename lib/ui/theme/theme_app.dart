@@ -32,24 +32,21 @@ abstract class ThemeAppSize {
   static double kInterval5 = kScreensHeight / (height / 5);
   static double kInterval12 = kScreensHeight / (height / 12);
   static double kInterval24 = kScreensHeight / (height / 24);
-// iconSize
-  static double kIcon16 = kScreensHeight / (height / 16);
-
 // home screen
   // page view
-  static double kPageView = kScreensHeight / (height / 270);
+  static double kPageView = kScreensHeight / (height / 275);
   static double kPageViewContainer = kScreensHeight / (height / 190);
-  static double kPageViewTextContainer = kScreensHeight / (height / 140);
+  static double kPageViewTextContainer = kScreensHeight / (height / 150);
   // list view
-  static double kListViewImgSize = kScreensWidth / (width / 120);
-  static double kListViewTextContainer = kScreensWidth / (width / 100);
+  static double kListViewImgSize = kScreensHeight / (height / 150);
+  static double kListViewTextContainer = kScreensHeight / (height / 120);
   // ditalit
   static double kDetaildImgContainer = kScreensHeight / (height / 350);
   static double kDetaildButtomContainer = kScreensHeight / (height / 120);
   // menu filter
   static double kMenuFilter = kScreensHeight / (height / 80);
   static double kMenuFilterItemWidth = kScreensWidth / (width / 4);
-  static double kNebuFilterItemContaiter = kScreensWidth / 4;
+  static double kNebuFilterItemContaiter = (kScreensWidth / 4);
 
 
 
