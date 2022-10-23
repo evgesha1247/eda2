@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:text/object/user_object.dart';
 import 'package:text/ui/widgets/text/big_text.dart';
 import '../../theme/theme_app.dart';
 
@@ -16,49 +18,57 @@ class AuthScreen extends StatelessWidget {
     );
   }
 }
+final _controllerName = TextEditingController();
+final _controllerAge = TextEditingController();
+final _controllerAdress = TextEditingController();
+final _controllerPhone = TextEditingController();
 
-class TextFieldWidget extends StatelessWidget {
-  const TextFieldWidget({super.key, required this.name, required this.icon});
-  final IconData icon;
-  final String name;
+class _AuthTextFieldWidget extends StatelessWidget {
+  const _AuthTextFieldWidget();
   @override
   Widget build(BuildContext context) {
     InputBorder styleSearch = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kInterval12)),
       borderSide: const BorderSide(style: BorderStyle.solid),
     );
-    return TextField(
-      cursorColor: ThemeAppColor.kFrontColor,
-      decoration: InputDecoration(
-        isDense: true,
-        fillColor: ThemeAppColor.kBGColor,
-        prefixIcon: Icon(
-         icon,
-          color: ThemeAppColor.kFrontColor
-        ),
-        hintText: name,
-        enabledBorder: styleSearch,
-        focusedBorder: styleSearch,
-      ),
-    );
-  }
-}
+    InputDecoration decoration({required name, required icon}) =>
+        InputDecoration(
+          isDense: true,
+          fillColor: ThemeAppColor.kBGColor,
+          prefixIcon: Icon(icon, color: ThemeAppColor.kFrontColor),
+          hintText: name,
+          enabledBorder: styleSearch,
+          focusedBorder: styleSearch,
+        );
 
-class _AuthTextFieldWidget extends StatelessWidget {
-  const _AuthTextFieldWidget();
-  @override
-  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(ThemeAppSize.kInterval24),
       child: Column(
         children: [
-          const TextFieldWidget(name: 'Ivan', icon: Icons.person),
+          TextField(
+            controller: _controllerName,
+            cursorColor: ThemeAppColor.kFrontColor,
+            decoration: decoration(name: 'Ivan', icon: Icons.person),
+          ),
           SizedBox(height: ThemeAppSize.kInterval24),
-          const TextFieldWidget(name: 'password', icon: Icons.key),
+          TextField(
+            controller: _controllerAge,
+            cursorColor: ThemeAppColor.kFrontColor,
+            decoration: decoration(name: 'age', icon: Icons.summarize),
+          ),
           SizedBox(height: ThemeAppSize.kInterval24),
-          const TextFieldWidget(name: '23 Chapel Hill', icon: Icons.home),
+          TextField(
+            controller: _controllerAdress,
+            cursorColor: ThemeAppColor.kFrontColor,
+            decoration: decoration(name: '23 Chapel Hill', icon: Icons.home),
+          ),
           SizedBox(height: ThemeAppSize.kInterval24),
-          const TextFieldWidget(name: '+1-234-567-890', icon: Icons.phone),
+          TextField(
+            controller: _controllerPhone,
+            keyboardType: TextInputType.phone,
+            cursorColor: ThemeAppColor.kFrontColor,
+            decoration: decoration(name: '1-234-567-890', icon: Icons.phone),
+          ),
         ],
       ),
     );
@@ -69,8 +79,24 @@ class _AuthButtonWidget extends StatelessWidget {
   const _AuthButtonWidget();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+
+Future<void> createUser(User user) async {
+      final docUser = FirebaseFirestore.instance.collection('users').doc();
+      user.id = docUser.id;
+      final json = user.toJson();
+      await docUser.set(json);
+    }
+
+    return GestureDetector(
+      onTap: () {
+        final user = User(
+          name: _controllerName.text,
+          age: int.parse(_controllerAge.text),
+          address: _controllerAdress.text,
+          telephone: _controllerPhone.text,
+        );
+        createUser(user);
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
