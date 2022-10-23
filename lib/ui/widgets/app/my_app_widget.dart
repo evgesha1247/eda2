@@ -5,6 +5,11 @@ import 'package:text/ui/theme/theme_app.dart';
 
 import 'package:flutter/services.dart';
 
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+
 class MyAppWidget extends StatelessWidget {
   const MyAppWidget({Key? key}) : super(key: key);
   @override
@@ -13,7 +18,6 @@ class MyAppWidget extends StatelessWidget {
         overlays: [SystemUiOverlay.bottom]);
     final mainNavigation = MainNavigation();
     return GetMaterialApp(
-
       title: 'flutter app',
       theme: ThemeData(
         fontFamily: 'Mariupol',

@@ -26,8 +26,8 @@ dependencies:
 
   cloud_firestore: ^4.0.2
 
-
   material_design_icons_flutter: ^5.0.6996
+  firebase_core: ^2.1.0
   #analyzer: 0.39.14
 
 dev_dependencies:

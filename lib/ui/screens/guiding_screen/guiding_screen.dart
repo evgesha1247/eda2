@@ -34,7 +34,7 @@ class _GuidingBodyWidget extends StatelessWidget {
         widgetFactory.makeHome(),
         widgetFactory.makeMenu(),
         widgetFactory.makeFavorite(),
-        widgetFactory.makeProfile(),
+        widgetFactory.makeAuth(),
 
       ],
     );

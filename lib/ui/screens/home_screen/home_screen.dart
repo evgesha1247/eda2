@@ -300,7 +300,6 @@ class _PopularListBuilderWidget extends StatelessWidget {
                 Container(
                   height: ThemeAppSize.kListViewImgSize,
                   width: ThemeAppSize.kListViewImgSize,
-
                   decoration: BoxDecoration(
                     color: ThemeAppColor.kAccent2,
                       borderRadius: ThemeAppFun.decoration(),
