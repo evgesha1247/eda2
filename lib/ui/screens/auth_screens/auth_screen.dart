@@ -81,15 +81,12 @@ class _AuthButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
 Future<void> createUser(User user) async {
-      try {
+
         final docUser = FirebaseFirestore.instance.collection('users').doc();
         user.id = docUser.id;
         final json = user.toJson();
         await docUser.set(json);
-        print(docUser);
-      } catch (e) {
-        print(e);
-      }
+
     }
 
     return GestureDetector(
