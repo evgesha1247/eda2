@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/object/cart_object.dart';
 import 'package:text/ui/screens/auth_screens/auth_screen.dart';
+import 'package:text/ui/screens/auth_screens/register_screen.dart';
 import 'package:text/ui/screens/home_screen/home_screen.dart';
 import 'package:text/ui/screens/profile_screen/profile_screen.dart';
 import '../../object/dish_object.dart';
 
 import '../screens/auth_screens/auth_model.dart';
+import '../screens/auth_screens/login_screen.dart';
 import '../screens/favorite_screen/favorite_model.dart';
 import '../screens/favorite_screen/favorite_screen.dart';
 import '../screens/guiding_screen/guiding_model.dart';
@@ -36,7 +38,14 @@ class ScreensFactory {
         create: (context) => AuthModel(),
         child: const AuthScreen(),
       );
-
+  Widget makeLogin() => ChangeNotifierProvider(
+        create: (context) => AuthModel(),
+        child: const LoginScreen(),
+      );
+  Widget makeRegister() => ChangeNotifierProvider(
+        create: (context) => AuthModel(),
+        child: const RegisterScreen(),
+      );
   /////////
   Widget makeHome() => ChangeNotifierProvider(
         create: (context) => HomeModel(),

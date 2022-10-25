@@ -36,7 +36,7 @@ abstract class ThemeAppSize {
   // page view
   static double kPageView = kScreensHeight / (height / 275);
   static double kPageViewContainer = kScreensHeight / (height / 190);
-  static double kPageViewTextContainer = kScreensHeight / (height / 150);
+  static double kPageViewTextContainer = kScreensHeight / (height / 160);
   // list view
   static double kListViewImgSize = kScreensHeight / (height / 150);
   static double kListViewTextContainer = kScreensHeight / (height / 120);

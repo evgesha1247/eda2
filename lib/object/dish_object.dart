@@ -49,6 +49,7 @@ class DishModel extends ChangeNotifier {
   late final Future<Box<Dish>> _box;
   DishModel() {
     _setup();
+
   }
 
   var _items = <Dish>[];

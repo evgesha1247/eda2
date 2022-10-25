@@ -13,11 +13,11 @@ class MyAppWidget extends StatelessWidget {
         overlays: [SystemUiOverlay.bottom]);
     final mainNavigation = MainNavigation();
     return GetMaterialApp(
-
       title: 'flutter app',
       theme: ThemeData(
         fontFamily: 'Mariupol',
         scaffoldBackgroundColor: ThemeAppColor.kBGColor,
+        useMaterial3: true,
       ),
       routes: mainNavigation.routes,
       initialRoute: mainNavigation.initialRoute,

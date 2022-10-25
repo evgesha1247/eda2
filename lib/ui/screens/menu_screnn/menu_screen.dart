@@ -95,7 +95,7 @@ class _MenuBodyWidget extends StatelessWidget {
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 346.0,
-        mainAxisExtent: 230,
+        mainAxisExtent: 235,
         mainAxisSpacing: 0,
         crossAxisSpacing: 0,
       ),

@@ -11,6 +11,8 @@ abstract class MainNavigationRouteName {
   static const details = '/guiding/details';
   static const cart = '/guiding/cart';
   static const splash = '/splash';
+  static const login = '/login';
+  static const register = '/register';
 }
 
 
@@ -24,7 +26,9 @@ class MainNavigation {
         MainNavigationRouteName.auth: (_) => _widgetFactory.makeAuth(),
         // details: (_) => DishDetailedScreen(dishKey: null),
         MainNavigationRouteName.cart: (_) => const CartScreen(),
-        MainNavigationRouteName.splash: (_) => const SplashScreen()
+        MainNavigationRouteName.splash: (_) => const SplashScreen(),
+        MainNavigationRouteName.login: (_) => _widgetFactory.makeLogin(),
+        MainNavigationRouteName.register: (_) => _widgetFactory.makeRegister(),
       };
 
   ////// при ошибке навигации //////
