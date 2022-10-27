@@ -16,6 +16,7 @@ class FavoriteModel extends ChangeNotifier {
 
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
+
     await _loadFavoritDish();
     (await _box).listenable().addListener(_loadFavoritDish);
   }
@@ -25,7 +26,7 @@ class FavoriteModel extends ChangeNotifier {
     for (var element in (await _box).values) {
       if (element.isFavorit && !_itemsFovarit.contains(element)) {
         _itemsFovarit.add(element);
-      } else if (!element.isFavorit) {
+      } else if ((!element.isFavorit) && _itemsFovarit.contains(element)) {
         _itemsFovarit.remove(element);
       }
     }

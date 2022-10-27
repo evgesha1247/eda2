@@ -24,7 +24,6 @@ class MainNavigation {
   Map<String, WidgetBuilder> get routes => <String, WidgetBuilder>{
         MainNavigationRouteName.guiding: (_) => _widgetFactory.makeGuiding(),
         MainNavigationRouteName.auth: (_) => _widgetFactory.makeAuth(),
-        // details: (_) => DishDetailedScreen(dishKey: null),
         MainNavigationRouteName.cart: (_) => const CartScreen(),
         MainNavigationRouteName.splash: (_) => const SplashScreen(),
         MainNavigationRouteName.login: (_) => _widgetFactory.makeLogin(),

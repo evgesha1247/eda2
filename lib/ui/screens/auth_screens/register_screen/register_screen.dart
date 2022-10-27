@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
+import 'package:text/ui/screens/auth_screens/login_screen/login_screen.dart';
+import 'package:text/ui/screens/auth_screens/register_screen/register_controller.dart';
 
-import '../../../services/auth.dart';
-import '../../theme/theme_app.dart';
-import '../../widgets/text/big_text.dart';
-import '../../widgets/text/small_text.dart';
-import '../../widgets/text_field/my_auth_button.dart';
-import '../../widgets/text_field/my_text_field.dart';
-import 'auth_model.dart';
-
-final _cName = TextEditingController();
-final _cEmail = TextEditingController();
-final _cPassword = TextEditingController();
+import '../../../theme/theme_app.dart';
+import '../../../widgets/text/big_text.dart';
+import '../../../widgets/text/small_text.dart';
+import '../../../widgets/text_field/my_auth_button.dart';
+import '../../../widgets/text_field/my_text_field.dart';
+import '../auth_model.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    final auth = AuthServices();
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(ThemeAppSize.kInterval24),
@@ -27,13 +25,6 @@ class RegisterScreen extends StatelessWidget {
             SizedBox(height: ThemeAppSize.kInterval24),
             const _RegisterToLogin(),
             SizedBox(height: ThemeAppSize.kInterval24),
-            myAuthButton(() {
-              auth.userRegister(
-                context,
-                email: _cEmail.text,
-                password: _cPassword.text,
-              );
-            }, 'Register')
           ],
         ),
       ),
@@ -45,10 +36,11 @@ class _RegisterBody extends StatelessWidget {
   const _RegisterBody();
   @override
   Widget build(BuildContext context) {
+    final constroller = Get.put(RegisterController());
     return Column(
       children: [
         myTextField(
-          controller: _cName,
+          controller: constroller.cName,
           text: 'Ivan',
           icon: Icons.person,
           textInputAction: TextInputAction.next,
@@ -56,7 +48,7 @@ class _RegisterBody extends StatelessWidget {
         ),
         SizedBox(height: ThemeAppSize.kInterval24),
         myTextField(
-          controller: _cEmail,
+          controller: constroller.cEmail,
           text: 'Ivan@gmail.com',
           icon: Icons.mail,
           textInputAction: TextInputAction.next,
@@ -64,12 +56,18 @@ class _RegisterBody extends StatelessWidget {
         ),
         SizedBox(height: ThemeAppSize.kInterval24),
         myTextField(
-          controller: _cPassword,
+          controller: constroller.cPassword,
           text: 'Password',
           icon: Icons.key,
           textInputAction: TextInputAction.next,
           onSubmitted: (_) => FocusScope.of(context).nextFocus(),
         ),
+        myAuthButton(() {
+          RegisterController.instance.registerUser(
+            email: constroller.cEmail.text,
+            pass: constroller.cPassword.text,
+          );
+        }, 'Register')
       ],
     );
   }
@@ -79,7 +77,6 @@ class _RegisterToLogin extends StatelessWidget {
   const _RegisterToLogin();
   @override
   Widget build(BuildContext context) {
-    final model = context.read<AuthModel>();
     return Row(
       children: [
         const SmallText(
@@ -88,7 +85,7 @@ class _RegisterToLogin extends StatelessWidget {
         ),
         SizedBox(width: ThemeAppSize.kInterval12),
         InkWell(
-            onTap: () => model.showLogin(context),
+            onTap: () => Get.offAll(() => const LoginScreen()),
             child: const BigText(
               text: 'adafadf ? ',
               color: ThemeAppColor.kFrontColor,
