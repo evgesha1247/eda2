@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:text/ui/screens/auth_screens/login_screen/login_controller.dart';
 import 'package:text/ui/screens/auth_screens/register_screen/register_screen.dart';
 import 'package:text/ui/widgets/text/small_text.dart';

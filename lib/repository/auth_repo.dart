@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:text/ui/screens/auth_screens/login_screen/login_screen.dart';
 import 'package:text/ui/screens/auth_screens/register_screen/register_screen.dart';
@@ -18,20 +19,19 @@ class AuthRepo extends GetxController {
   }
 
   _setScreen(User? user) {
-    user != null
-        ? Get.offAll(() => factor.makeGuiding())
-        : Get.offAll(() => const LoginScreen());
+    user == null
+        ? Get.offAll(() => const LoginScreen())
+        : Get.offAll(() => factor.makeGuiding());
   }
 
   Future<void> createUser({required email, required password}) async {
     try {
       await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+          email: email, password: password
       );
-      firebaseUser.value != null
-          ? Get.offAll(() => factor.makeGuiding())
-          : Get.offAll(() => const LoginScreen());
+      firebaseUser.value == null
+          ? Get.offAll(() => const LoginScreen())
+          : Get.offAll(() => factor.makeGuiding());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('косячный пороль.');

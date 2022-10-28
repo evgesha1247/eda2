@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'package:text/ui/screens/splesh_screen/splesh_screen.dart';
+import 'package:text/repository/auth_repo.dart';
 import 'package:text/ui/screens/cart_screen/cart_screen.dart';
 import 'package:text/ui/screens/dish_detailed_screen/dish_detailed_screen.dart';
+import '../screens/splash_screen/splash_screen.dart';
 import '../screens_factory.dart/widget_factory.dart';
 
 abstract class MainNavigationRouteName {

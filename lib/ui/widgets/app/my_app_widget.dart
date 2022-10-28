@@ -20,9 +20,22 @@ class MyAppWidget extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: mainNavigation.routes,
-      initialRoute: mainNavigation.initialRoute,
+      home: const _Home(),
       onGenerateRoute: mainNavigation.onGenerateRoute,
       debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+
+class _Home extends StatelessWidget {
+  const _Home();
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

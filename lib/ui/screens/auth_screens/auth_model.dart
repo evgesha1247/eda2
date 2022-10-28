@@ -10,16 +10,4 @@ class AuthModel extends ChangeNotifier {
   void showLogin(BuildContext context) =>
       Navigator.pushNamed(context, MainNavigationRouteName.login);
 
-  Future<void> createUser({name, age, adress, phone}) async {
-    // final user = UserApp(
-    //   name: name.text,
-    //   age: int.parse(age.text),
-    //   address: adress.text,
-    //   telephone: phone.text,
-    // );
-    // final docUser = FirebaseFirestore.instance.collection('users').doc();
-    // user.id = docUser.id;
-    // final json = user.toJson();
-    // await docUser.set(json);
-  }
 }

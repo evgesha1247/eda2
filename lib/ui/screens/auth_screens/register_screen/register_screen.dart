@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:provider/provider.dart';
 import 'package:text/ui/screens/auth_screens/login_screen/login_screen.dart';
 import 'package:text/ui/screens/auth_screens/register_screen/register_controller.dart';
 
@@ -10,7 +8,7 @@ import '../../../widgets/text/big_text.dart';
 import '../../../widgets/text/small_text.dart';
 import '../../../widgets/text_field/my_auth_button.dart';
 import '../../../widgets/text_field/my_text_field.dart';
-import '../auth_model.dart';
+
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
