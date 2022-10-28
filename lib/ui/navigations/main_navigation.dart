@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:text/repository/auth_repo.dart';
 import 'package:text/ui/screens/cart_screen/cart_screen.dart';
 import 'package:text/ui/screens/dish_detailed_screen/dish_detailed_screen.dart';
 import '../screens/splash_screen/splash_screen.dart';
@@ -26,8 +25,7 @@ class MainNavigation {
         MainNavigationRouteName.auth: (_) => _widgetFactory.makeAuth(),
         MainNavigationRouteName.cart: (_) => const CartScreen(),
         MainNavigationRouteName.splash: (_) => const SplashScreen(),
-        MainNavigationRouteName.login: (_) => _widgetFactory.makeLogin(),
-        MainNavigationRouteName.register: (_) => _widgetFactory.makeRegister(),
+
       };
 
   ////// при ошибке навигации //////

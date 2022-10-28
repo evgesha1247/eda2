@@ -1,8 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:text/ui/screens/auth_screens/login_screen/login_screen.dart';
-import 'package:text/ui/screens/auth_screens/register_screen/register_screen.dart';
+import 'package:text/ui/screens/auth_screens/auth_screen.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 
 class AuthRepo extends GetxController {
@@ -20,7 +20,7 @@ class AuthRepo extends GetxController {
 
   _setScreen(User? user) {
     user == null
-        ? Get.offAll(() => const LoginScreen())
+        ? Get.offAll(() => factor.makeAuth())
         : Get.offAll(() => factor.makeGuiding());
   }
 
@@ -30,7 +30,7 @@ class AuthRepo extends GetxController {
           email: email, password: password
       );
       firebaseUser.value == null
-          ? Get.offAll(() => const LoginScreen())
+          ? Get.offAll(() => factor.makeAuth())
           : Get.offAll(() => factor.makeGuiding());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -49,9 +49,9 @@ class AuthRepo extends GetxController {
         email: email,
         password: password,
       );
-      firebaseUser.value != null
-          ? Get.offAll(() => factor.makeGuiding())
-          : Get.offAll(() => const RegisterScreen());
+      firebaseUser.value == null
+          ? Get.offAll(() => factor.makeAuth())
+          : Get.offAll(() => factor.makeGuiding());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('косячный пороль.');

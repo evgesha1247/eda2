@@ -1,13 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
-
-import '../../navigations/main_navigation.dart';
+import 'package:text/repository/auth_repo.dart';
 
 class AuthModel extends ChangeNotifier {
-  void showRegister(BuildContext context) =>
-      Navigator.pushNamed(context, MainNavigationRouteName.register);
-  void showLogin(BuildContext context) =>
-      Navigator.pushNamed(context, MainNavigationRouteName.login);
+  final cName = TextEditingController();
+  final cEmail = TextEditingController();
+  final cPassword = TextEditingController();
+
+  var isLogScreen = true;
+  togScreenAuth() {
+    isLogScreen = !isLogScreen;
+    notifyListeners();
+  }
+
+  Future<void> authUser({required email, required pass}) async {
+    isLogScreen
+        ? AuthRepo.instance.loginUser(email: email, password: pass)
+        : AuthRepo.instance.createUser(email: email, password: pass);
+    notifyListeners();
+  }
 
 }
