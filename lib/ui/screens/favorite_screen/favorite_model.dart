@@ -30,6 +30,6 @@ class FavoriteModel extends ChangeNotifier {
         _itemsFovarit.remove(element);
       }
     }
-    notifyListeners();
+
   }
 }

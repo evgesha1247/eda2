@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:text/ui/screens/auth_screens/auth_screen.dart';
 import 'package:text/ui/screens_factory.dart/widget_factory.dart';
 
+import '../ui/screens/splash_screen/splash_screen.dart';
+
 class AuthRepo extends GetxController {
   static AuthRepo get instance => Get.find();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -31,7 +33,7 @@ class AuthRepo extends GetxController {
       );
       firebaseUser.value == null
           ? Get.offAll(() => factor.makeAuth())
-          : Get.offAll(() => factor.makeGuiding());
+          : Get.offAll(() => const SplashScreen());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('косячный пороль.');
@@ -51,7 +53,7 @@ class AuthRepo extends GetxController {
       );
       firebaseUser.value == null
           ? Get.offAll(() => factor.makeAuth())
-          : Get.offAll(() => factor.makeGuiding());
+          : Get.offAll(() => const SplashScreen());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('косячный пороль.');
