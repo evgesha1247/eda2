@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:text/repository/auth_repo.dart';
 
@@ -11,8 +12,7 @@ class AuthModel extends ChangeNotifier {
     isLogScreen = !isLogScreen;
     notifyListeners();
   }
-
-  Future<void> authUser({required email, required pass}) async {
+  Future authUser({required email, required pass}) async {
     isLogScreen
         ? AuthRepo.instance.loginUser(email: email, password: pass)
         : AuthRepo.instance.createUser(email: email, password: pass);

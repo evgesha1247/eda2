@@ -33,8 +33,6 @@ class _AuthBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final constroller = context.watch<AuthModel>();
     final bool isLog = constroller.isLogScreen;
-    final String email = constroller.cEmail.text;
-    final String pass = constroller.cPassword.text;
 
     return Column(
       children: [
@@ -64,6 +62,9 @@ class _AuthBody extends StatelessWidget {
           onSubmitted: (_) => FocusScope.of(context).nextFocus(),
         ),
         myAuthButton(() {
+          final String email = constroller.cEmail.text;
+          final String pass = constroller.cPassword.text;
+
           constroller.authUser(email: email, pass: pass);
         }, isLog ? 'Login' : 'Register'),
       ],

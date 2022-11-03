@@ -1,7 +1,13 @@
 import 'dart:async';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../navigations/main_navigation.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:text/ui/navigations/main_navigation.dart';
+import 'package:text/ui/theme/theme_app.dart';
+import 'package:text/ui/widgets/text/big_text.dart';
+
+import '../../screens_factory.dart/widget_factory.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -9,59 +15,29 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 4), () {
-      Navigator.pushNamed(context, MainNavigationRouteName.guiding);
-    });
+    _navigationToHome();
   }
 
-  late final AnimationController _container = AnimationController(
-    duration: const Duration(seconds: 2),
-    vsync: this,
-  )..forward();
-  late final Animation<Offset> _leftToRight = Tween<Offset>(
-    begin: const Offset(-1.5, 0.0),
-    end: Offset.zero,
-  ).animate(CurvedAnimation(
-    parent: _container,
-    curve: Curves.easeIn,
-  ));
-  late final Animation<Offset> _rightToLeft = Tween<Offset>(
-    begin: const Offset(1.5, 0.0),
-    end: Offset.zero,
-  ).animate(CurvedAnimation(
-    parent: _container,
-    curve: Curves.easeIn,
-  ));
+  _navigationToHome() async {
+    final factor = ScreensFactory();
+    await Future.delayed(const Duration(seconds: 3), () {});
+    Get.offAll(() => factor.makeGuiding());
 
-  @override
-  void dispose() {
-    _container.dispose();
-    super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
+    final User user = FirebaseAuth.instance.currentUser as User;
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SlideTransition(
-                    position: _leftToRight, child: const Text('туды')),
-                SlideTransition(
-                    position: _rightToLeft, child: const Text('сюды')),
-              ],
-            ),
-          ],
+        child: BigText(
+          text: 'Good day ${user.displayName ?? ' '}',
+          color: ThemeAppColor.kFrontColor,
         ),
       ),
     );

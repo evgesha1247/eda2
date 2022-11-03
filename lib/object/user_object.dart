@@ -1,8 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
 class UserApp {
-  late final String id;
-  UserApp.fromFirebase(User user) {
-    id = user.uid;
-  }
+  final String id;
+  final String name;
+  final String email;
+  final String photoURL;
+  UserApp({
+    required this.name,
+    required this.id,
+    required this.email,
+    required this.photoURL,
+  });
 }
