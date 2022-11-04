@@ -18,9 +18,9 @@ class MyAppWidget extends StatelessWidget {
         scaffoldBackgroundColor: ThemeAppColor.kBGColor,
         useMaterial3: true,
       ),
-      routes: mainNavigation.routes,
+      // routes: mainNavigation.routes,
+      getPages: mainNavigation.getPages,
       home: const _Home(),
-      onGenerateRoute: mainNavigation.onGenerateRoute,
       debugShowCheckedModeBanner: false,
     );
   }

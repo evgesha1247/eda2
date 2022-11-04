@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, depend_on_referenced_packages
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +11,7 @@ import 'ui/screens_factory.dart/widget_factory.dart';
 
 
 Future<void> main() async {
-  final factor = ScreensFactory();
+  final factor = ScreensFactory.instance;
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await Firebase.initializeApp(

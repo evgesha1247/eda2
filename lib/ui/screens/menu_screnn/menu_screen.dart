@@ -138,7 +138,8 @@ class _CartItemWidget extends StatelessWidget {
                   ),
                 ]
               : [_CartItemContainerWidget(index: index)],
-        ));
+      ),
+    );
   }
 }
 

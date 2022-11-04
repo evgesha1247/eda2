@@ -27,7 +27,7 @@ class _GuidingBodyWidget extends StatelessWidget {
     final currentIndexTab = context.select((GuidingScreenModel e) {
       return e.currentIndexTab;
     });
-    final widgetFactory = ScreensFactory();
+    final widgetFactory = ScreensFactory.instance;
     return IndexedStack(
       index: currentIndexTab,
       children: [

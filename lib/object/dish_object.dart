@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import '../box_menager/box_menager.dart';
 import '../ui/navigations/main_navigation.dart';
+import '../ui/theme/theme_app.dart';
 part 'dish_object.g.dart';
 
 abstract class DishCategory {
@@ -63,7 +64,21 @@ class DishModel extends ChangeNotifier {
   List<Dish> get itemsFilter => _itemsFilter;
 
   Future<void> _setup() async {
+
     _box = BoxManadger.instance.openBoxDish();
+
+    // final dish = Dish(
+    //   name: 'name',
+    //   id: DateTime.now().toString(),
+    //   price: 300,
+    //   imgUrl: ThemeAppImgURL.imgURLPromo1,
+    //   description: 'description',
+    //   category: DishCategory.dessert,
+    // );
+
+    // (await _box).add(dish);
+
+
     await _readDishData();
     (await _box).listenable().addListener(_readDishData);
   }
@@ -113,10 +128,14 @@ class DishModel extends ChangeNotifier {
   Future<void> showDetail(BuildContext context, Dish item) async {
     for (var element in (await _box).values) {
       if (element == item) {
-        Navigator.of(context).pushNamed(
+        Get.toNamed(
           MainNavigationRouteName.details,
           arguments: element.key,
         );
+        // Navigator.of(context).pushNamed(
+        //   MainNavigationRouteName.details,
+        //   arguments: element.key,
+        // );
       }
     }
   }
