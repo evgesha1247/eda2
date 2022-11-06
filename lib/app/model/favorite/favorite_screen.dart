@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
-
 import 'favorite_model.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -48,11 +47,11 @@ class _HeaderFavoritWidget extends StatelessWidget {
   }
 }
 
-class _GridViewWidget extends StatelessWidget {
+class _GridViewWidget extends GetView<FavoriteModel> {
   const _GridViewWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final itemsFovarit = context.watch<FavoriteModel>().itemsFovarit;
+    final itemsFovarit = controller.itemsFovarit;
     return Expanded(
       child: Container(
         decoration: const BoxDecoration(
@@ -110,7 +109,7 @@ class _ItemFovaritContainerImgWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final itemsFovarit = context.watch<FavoriteModel>().itemsFovarit;
+    final itemsFovarit = Get.find().itemsFovarit;
     return Image(
       image: AssetImage(itemsFovarit[index].imgUrl),
       fit: BoxFit.cover,

@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../data/box_menager/box_menager.dart';
 import '../../data/object/dish_object.dart';
 
-class FavoriteModel extends ChangeNotifier {
+class FavoriteModel extends GetxController {
   FavoriteModel() {
     _setup();
   }

@@ -1,34 +1,29 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:text/app/model/guiding/guiding_model.dart';
 import 'package:text/app/widgets/icon/my_icon.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 import '../../data/object/dish_object.dart';
 import '../../theme/theme_app.dart';
+import 'home_model.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   @override
   Widget build(context) {
-    return const CustomScrollView(
-      slivers: [_BodyWidget()],
-    );
-  }
-}
-
-class _BodyWidget extends StatelessWidget {
-  const _BodyWidget({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          _PromoSuction(),
-          _PopularSuction(),
-        ],
-      ),
+    return CustomScrollView(slivers: [
+      SliverToBoxAdapter(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            _PromoSuction(),
+            _PopularSuction(),
+          ],
+        ),
+      )
+    ]
     );
   }
 }
@@ -37,22 +32,23 @@ class _PromoSuction extends StatelessWidget {
   const _PromoSuction({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final isNotEmpty = context.watch<DishModel>().itemsHotDish.isNotEmpty;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: isNotEmpty
-          ? [
-              Padding(
-                padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-                child: const BigText(
-                  text: 'Hot Promo',
-                  color: ThemeAppColor.kFrontColor,
+    return GetBuilder(
+      builder: (HomeModel model) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: model.itemsHotDish.isNotEmpty
+            ? [
+                Padding(
+                  padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                  child: const BigText(
+                    text: 'Hot Promo',
+                    color: ThemeAppColor.kFrontColor,
+                  ),
                 ),
-              ),
-              SizedBox(height: ThemeAppSize.kInterval12),
-              const _ItemsPromoWidget(),
-            ]
-          : [],
+                SizedBox(height: ThemeAppSize.kInterval12),
+                const _ItemsPromoWidget(),
+              ]
+            : [],
+      ),
     );
   }
 }
@@ -87,7 +83,8 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final itemsHot = context.watch<DishModel>().itemsHotDish;
+    HomeModel controller = Get.find();
+    final itemsHot = controller.itemsHotDish;
     return Column(
       children: [
         SizedBox(
@@ -139,12 +136,12 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
       matrix = Matrix4.diagonal3Values(1, currScale, 1)
         ..setTranslationRaw(0, _height * (1 - _scaleFactore) / 2, 1);
     }
-    final model = context.read<DishModel>();
-    final item = context.read<DishModel>().itemsHotDish[index];
+    final item = Get.find<HomeModel>().itemsHotDish[index];
     return Transform(
       transform: matrix,
       child: GestureDetector(
-        onTap: () => model.showDetail(item),
+        onTap: () => Get.find<GuidingScreenModel>().showDetail(item),
+        //Get.toNamed(MainRoutes.details, arguments: item),
         child: Stack(
           children: [
             _ItemPromoImgWidget(imgUrl: dish.imgUrl),
@@ -187,7 +184,7 @@ class _ItemPromoInfoBlok extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final dish = context.watch<DishModel>().itemsHotDish[index];
+    Dish dish = HomeModel.model.itemsHotDish[index];
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -281,15 +278,14 @@ class _PopularListBuilderWidget extends StatelessWidget {
   const _PopularListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final items = context.watch<DishModel>().itemsMainCourse;
-    final model = context.read<DishModel>();
+    final items = Get.find<HomeModel>().itemsMainCourse;
     return ListView.builder(
       itemCount: items.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
-          onTap: () => model.showDetail(items[index]),
+          onTap: () => Get.find<GuidingScreenModel>().showDetail(items[index]),
           child: Container(
             margin: EdgeInsets.only(
               top: ThemeAppSize.kInterval12,

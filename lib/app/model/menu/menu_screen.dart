@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:text/app/model/menu/menu_model.dart';
+import 'package:text/app/routes/main_screens.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 import '../../data/object/cart_object.dart';
@@ -25,7 +28,7 @@ class MenuScreen extends StatelessWidget {
   }
 }
 
-class _FilterMenuWidget extends StatelessWidget {
+class _FilterMenuWidget extends GetView<MenuModel> {
   const _FilterMenuWidget();
   static const _icon = [
     MdiIcons.foodCroissant,
@@ -41,7 +44,7 @@ class _FilterMenuWidget extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    final model = context.read<DishModel>();
+    final model = Get.find<MenuModel>();
     Widget itemFilterBtn({required int index}) {
       return GestureDetector(
         onTap: () => model.filter(dishCategory: _dishCategory[index]),
@@ -91,19 +94,20 @@ class _MenuBodyWidget extends StatelessWidget {
   const _MenuBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final length = context.watch<DishModel>().itemsFilter.length;
-    return SliverGrid(
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 346.0,
-        mainAxisExtent: 235,
-        mainAxisSpacing: 0,
-        crossAxisSpacing: 0,
-      ),
-      delegate: SliverChildBuilderDelegate(
-        childCount: length,
-        (_, int index) => Padding(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          child: _CartItemWidget(index: index),
+    return GetBuilder(
+      builder: (MenuModel model) => SliverGrid(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 346.0,
+          mainAxisExtent: 235,
+          mainAxisSpacing: 0,
+          crossAxisSpacing: 0,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          childCount: model.itemsFilter.length,
+          (_, int index) => Padding(
+            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+            child: _CartItemWidget(index: index),
+          ),
         ),
       ),
     );
@@ -116,10 +120,10 @@ class _CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
-    final model = context.read<DishModel>();
+    final model = Get.find<MenuModel>();
     final itemImgUrl = model.itemsFilter[index].imgUrl;
     return GestureDetector(
-      onTap: () => model.showDetail(model.itemsFilter[index]),
+      onTap: () => {}, // model.showDetail(model.itemsFilter[index]),
       child: Stack(
         children: (mediaQuery >= 370)
             ? [
@@ -148,7 +152,7 @@ class _CartItemContainerWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final itemImgUrl = context.read<DishModel>().itemsFilter[index].imgUrl;
+    final itemImgUrl = Get.find<MenuModel>().itemsFilter[index].imgUrl;
     return Container(
         margin: const EdgeInsets.only(top: 30, left: 10, right: 10),
         decoration: BoxDecoration(
@@ -187,7 +191,7 @@ class _ButtonFavoritWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<DishModel>();
+    final model = Get.find<MenuModel>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,7 +212,7 @@ class _CartItemContainerTextWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final item = context.read<DishModel>().itemsFilter[index];
+    final item = Get.find<MenuModel>().itemsFilter[index];
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: Column(
@@ -267,7 +271,7 @@ class _SearchWidget extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
       borderSide: const BorderSide(style: BorderStyle.none),
     );
-    final model = context.watch<DishModel>();
+    final model = Get.find<MenuModel>();
     return FlexibleSpaceBar(
       centerTitle: true,
       titlePadding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
@@ -328,11 +332,11 @@ class _ButtonToCartWidget extends StatelessWidget {
       ),
     );
     final number = context.watch<CartModel>().number().toString();
-    final model = context.read<DishModel>();
+
     return Stack(children: [
       ElevatedButton(
         style: styleBut,
-        onPressed: () => model.showCart(context),
+        onPressed: () => Get.toNamed(MainRoutes.cart),
         child: const SizedBox(
           height: 33,
           child: Icon(

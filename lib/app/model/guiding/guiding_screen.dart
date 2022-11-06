@@ -1,8 +1,13 @@
 import 'package:bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/factory/widget_factory.dart';
+import 'package:text/app/model/home/home_model.dart';
+import 'package:text/app/model/menu/menu_screen.dart';
+import 'package:text/app/model/profile/profile_screen.dart';
+import 'package:text/app/routes/main_screens.dart';
 import 'package:text/app/theme/theme_app.dart';
+import '../favorite/favorite_screen.dart';
+import '../home/home_screen.dart';
 import 'guiding_model.dart';
 
 class GuidingScreen extends StatelessWidget {
@@ -27,11 +32,11 @@ class _GuidingBodyWidget extends GetView<GuidingScreenModel> {
     return GetBuilder(
       builder: (GuidingScreenModel model) => IndexedStack(
         index: model.currentIndexTab,
-        children: [
-          ScreensFactory.instance.makeHome(),
-          ScreensFactory.instance.makeMenu(),
-          ScreensFactory.instance.makeFavorite(),
-          ScreensFactory.instance.makeProfile()
+        children: const [
+          HomeScreen(),
+          MenuScreen(),
+          FavoriteScreen(),
+          ProfileScreen(),
         ],
       ),
     );

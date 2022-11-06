@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../data/object/dish_object.dart';
+import '../../routes/main_screens.dart';
 
 class GuidingScreenModel extends GetxController {
-
   static get model => Get.find()<GuidingScreenModel>();
-
   var _currentIndexTab = 0;
   get currentIndexTab => _currentIndexTab;
   setCurrentIndexTab(int? index) {
@@ -12,5 +11,8 @@ class GuidingScreenModel extends GetxController {
       _currentIndexTab = index;
       update();
     }
+  }
+  void showDetail(Dish item) {
+    Get.toNamed(MainRoutes.details, arguments: item.key);
   }
 }
