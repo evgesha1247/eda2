@@ -144,7 +144,7 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
     return Transform(
       transform: matrix,
       child: GestureDetector(
-        onTap: () => model.showDetail(context, item),
+        onTap: () => model.showDetail(item),
         child: Stack(
           children: [
             _ItemPromoImgWidget(imgUrl: dish.imgUrl),
@@ -289,7 +289,7 @@ class _PopularListBuilderWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
-          onTap: () => model.showDetail(context, items[index]),
+          onTap: () => model.showDetail(items[index]),
           child: Container(
             margin: EdgeInsets.only(
               top: ThemeAppSize.kInterval12,

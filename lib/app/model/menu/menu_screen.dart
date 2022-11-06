@@ -119,7 +119,7 @@ class _CartItemWidget extends StatelessWidget {
     final model = context.read<DishModel>();
     final itemImgUrl = model.itemsFilter[index].imgUrl;
     return GestureDetector(
-      onTap: () => model.showDetail(context, model.itemsFilter[index]),
+      onTap: () => model.showDetail(model.itemsFilter[index]),
       child: Stack(
         children: (mediaQuery >= 370)
             ? [

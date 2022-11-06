@@ -1,31 +1,13 @@
-import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/factory/widget_factory.dart';
-import 'package:text/app/routes/main_screens.dart';
+import 'package:text/app/model/splash/splash_model.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/text/big_text.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends GetView<SplashModel> {
   const SplashScreen({super.key});
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _navigationToHome();
-  }
-
-  _navigationToHome() {
-    Future.delayed(const Duration(seconds: 3), () {
-      Get.offAllNamed(MainRoutes.appHome);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:text/app/routes/main_screens.dart';
+import '../../theme/theme_app.dart';
 import '../box_menager/box_menager.dart';
 part 'dish_object.g.dart';
 
@@ -64,9 +65,10 @@ class DishModel extends ChangeNotifier {
     _box = BoxManadger.instance.openBoxDish();
 
     // final dish = Dish(
-    //   name: 'name',
+    //   isHot: true,
+    //   name: 'name3',
     //   id: DateTime.now().toString(),
-    //   price: 300,
+    //   price: 320,
     //   imgUrl: ThemeAppImgURL.imgURLPromo1,
     //   description: 'description',
     //   category: DishCategory.dessert,
@@ -120,19 +122,8 @@ class DishModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> showDetail(BuildContext context, Dish item) async {
-    for (var element in (await _box).values) {
-      if (element == item) {
-        Get.toNamed(
-          MainRoutes.details,
-          arguments: element.key,
-        );
-        // Navigator.of(context).pushNamed(
-        //   MainNavigationRouteName.details,
-        //   arguments: element.key,
-        // );
-      }
-    }
+void showDetail(Dish item) {
+    Get.toNamed(MainRoutes.details, arguments: item.key);
   }
 
   void filter({String dishCategory = ''}) {

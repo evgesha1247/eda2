@@ -20,33 +20,30 @@ class GuidingScreen extends StatelessWidget {
   }
 }
 
-class _GuidingBodyWidget extends StatelessWidget {
+class _GuidingBodyWidget extends GetView<GuidingScreenModel> {
   const _GuidingBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final widgetFactory = ScreensFactory.instance;
     return GetBuilder(
-      init: GuidingScreenModel(),
-      builder: (model) => IndexedStack(
+      builder: (GuidingScreenModel model) => IndexedStack(
         index: model.currentIndexTab,
         children: [
-          widgetFactory.makeHome(),
-          widgetFactory.makeMenu(),
-          widgetFactory.makeFavorite(),
-          widgetFactory.makeProfile()
+          ScreensFactory.instance.makeHome(),
+          ScreensFactory.instance.makeMenu(),
+          ScreensFactory.instance.makeFavorite(),
+          ScreensFactory.instance.makeProfile()
         ],
       ),
     );
   }
 }
 
-class _FooterBottomBarWidget extends StatelessWidget {
+class _FooterBottomBarWidget extends GetView<GuidingScreenModel> {
   const _FooterBottomBarWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-        init: GuidingScreenModel(),
-        builder: (model) => BottomNavBar(
+      builder: (GuidingScreenModel model) => BottomNavBar(
               curve: Curves.easeInOutCubicEmphasized,
               showElevation: false,
               itemCornerRadius: ThemeAppSize.kRadius20,
@@ -64,7 +61,8 @@ class _FooterBottomBarWidget extends StatelessWidget {
                 bottomItem('favorite', Icons.favorite, model.currentIndexTab),
                 bottomItem('Profile', Icons.settings, model.currentIndexTab),
               ],
-            ));
+      ),
+    );
   }
 }
 
