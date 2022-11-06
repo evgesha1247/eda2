@@ -1,12 +1,11 @@
 // ignore_for_file: avoid_print, depend_on_referenced_packages
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:text/firebase_options.dart';
-import 'package:text/repository/auth_repo.dart';
-import 'ui/screens_factory.dart/widget_factory.dart';
+import 'app/factory/widget_factory.dart';
+import 'app/repository/auth_repo.dart';
 
 
 
