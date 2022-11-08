@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
-import 'package:text/app/model/favorite/favorite_model.dart';
-import 'package:text/app/model/guiding/guiding_model.dart';
-import 'package:text/app/model/menu/menu_model.dart';
-
-import '../dish_detailed/dish_detailed_model.dart';
+import '../cart/cart_model.dart';
+import '../favorite/favorite_model.dart';
+import '../guiding/guiding_model.dart';
 import '../home/home_model.dart';
+import '../menu/menu_model.dart';
 
 class GuidingBindings extends Bindings {
   @override
@@ -13,7 +12,6 @@ class GuidingBindings extends Bindings {
     Get.lazyPut<HomeModel>(() => HomeModel());
     Get.lazyPut<MenuModel>(() => MenuModel());
     Get.lazyPut<FavoriteModel>(() => FavoriteModel());
-    Get.lazyPut<DishDetailedModel>(() => DishDetailedModel());
-
+    Get.lazyPut<CartModel>(() => CartModel());
   }
 }

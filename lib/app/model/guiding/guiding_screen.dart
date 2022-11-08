@@ -1,10 +1,7 @@
-import 'package:bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/model/home/home_model.dart';
 import 'package:text/app/model/menu/menu_screen.dart';
 import 'package:text/app/model/profile/profile_screen.dart';
-import 'package:text/app/routes/main_screens.dart';
 import 'package:text/app/theme/theme_app.dart';
 import '../favorite/favorite_screen.dart';
 import '../home/home_screen.dart';
@@ -14,75 +11,68 @@ class GuidingScreen extends StatelessWidget {
   const GuidingScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: const _GuidingBodyWidget(),
-      floatingActionButton:
-          (mediaQuery < 370) ? const _FooterFlotingButtom() : null,
-      bottomNavigationBar:
-          (mediaQuery >= 370) ? const _FooterBottomBarWidget() : null,
+      floatingActionButton: (width < 370) ? const _FlotingButtom() : null,
+      bottomNavigationBar: (width >= 370) ? const _BottomBarWidget() : null,
     );
   }
 }
 
-class _GuidingBodyWidget extends GetView<GuidingScreenModel> {
+class _GuidingBodyWidget extends StatelessWidget {
   const _GuidingBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      builder: (GuidingScreenModel model) => IndexedStack(
+    return GetBuilder<GuidingScreenModel>(
+      builder: (model) => IndexedStack(
         index: model.currentIndexTab,
-        children: const [
-          HomeScreen(),
-          MenuScreen(),
-          FavoriteScreen(),
-          ProfileScreen(),
+        children: [
+          const HomeScreen(),
+          const MenuScreen(),
+          const FavoriteScreen(),
+          GetPlatform.isDesktop ? const _ErrorWidget() : const ProfileScreen(),
         ],
       ),
     );
   }
 }
 
-class _FooterBottomBarWidget extends GetView<GuidingScreenModel> {
-  const _FooterBottomBarWidget({Key? key}) : super(key: key);
+
+class _BottomBarWidget extends StatelessWidget {
+  const _BottomBarWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      builder: (GuidingScreenModel model) => BottomNavBar(
-              curve: Curves.easeInOutCubicEmphasized,
-              showElevation: false,
-              itemCornerRadius: ThemeAppSize.kRadius20,
-              selectedIndex: model.currentIndexTab,
-              containerHeight: 60,
-              containerPadding: EdgeInsets.only(top: ThemeAppSize.kInterval5),
-              backgroundColor: ThemeAppColor.kBGColor,
-              onItemSelected: model.setCurrentIndexTab,
-              animationDuration: const Duration(milliseconds: 300),
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              items: <BottomNavBarItem>[
-                bottomItem('Home', Icons.home, model.currentIndexTab),
-                bottomItem('Menu', Icons.restaurant_menu_rounded,
-                    model.currentIndexTab),
-                bottomItem('favorite', Icons.favorite, model.currentIndexTab),
-                bottomItem('Profile', Icons.settings, model.currentIndexTab),
+    return GetBuilder<GuidingScreenModel>(
+      builder: (model) => BottomNavigationBar(
+        onTap: model.setCurrentIndexTab,
+        currentIndex: model.currentIndexTab,
+        selectedItemColor: ThemeAppColor.kFrontColor,
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: ThemeAppColor.kBGColor,
+        elevation: 5,
+        showUnselectedLabels: false,
+        items: [
+          bottomItem('Home', Icons.home),
+          bottomItem('Menu', Icons.restaurant_menu_rounded),
+          bottomItem('favorite', Icons.favorite),
+          bottomItem('Profile', Icons.settings),
               ],
       ),
     );
   }
 }
 
-bottomItem(String text, IconData icon, int index) {
-  return BottomNavBarItem(
-    title: text,
+BottomNavigationBarItem bottomItem(String text, IconData icon) {
+  return BottomNavigationBarItem(
+    label: text,
     icon: Icon(icon),
-    inactiveColor: ThemeAppColor.kFrontColor,
-    activeColor: ThemeAppColor.kBGColor,
-    activeBackgroundColor: ThemeAppColor.kFrontColor,
   );
 }
 
-class _FooterFlotingButtom extends StatelessWidget {
-  const _FooterFlotingButtom({Key? key}) : super(key: key);
+class _FlotingButtom extends StatelessWidget {
+  const _FlotingButtom({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return const CircleAvatar(
@@ -96,6 +86,15 @@ class _FooterFlotingButtom extends StatelessWidget {
           child: Icon(Icons.menu_sharp),
         ),
       ),
+    );
+  }
+}
+class _ErrorWidget extends StatelessWidget {
+  const _ErrorWidget();
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('// попробуйти зайти с другова устройсва'),
     );
   }
 }

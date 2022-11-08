@@ -63,7 +63,6 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
   var _currPageValue = 0.0;
   final double _scaleFactore = 0.85;
   final double _height = ThemeAppSize.kPageViewContainer;
-
   PageController pageController = PageController(viewportFraction: .85);
   @override
   void initState() {
@@ -74,17 +73,14 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
       });
     });
   }
-
   @override
   void dispose() {
     super.dispose();
     pageController.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
-    HomeModel controller = Get.find();
-    final itemsHot = controller.itemsHotDish;
+    final itemsHot = Get.find<HomeModel>().itemsHotDish;
     return Column(
       children: [
         SizedBox(
@@ -136,12 +132,12 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
       matrix = Matrix4.diagonal3Values(1, currScale, 1)
         ..setTranslationRaw(0, _height * (1 - _scaleFactore) / 2, 1);
     }
-    final item = Get.find<HomeModel>().itemsHotDish[index];
+    final model = Get.find<HomeModel>();
     return Transform(
       transform: matrix,
       child: GestureDetector(
-        onTap: () => Get.find<GuidingScreenModel>().showDetail(item),
-        //Get.toNamed(MainRoutes.details, arguments: item),
+        onTap: () => model.showDetail(model.itemsHotDish[index]),
+
         child: Stack(
           children: [
             _ItemPromoImgWidget(imgUrl: dish.imgUrl),
@@ -179,12 +175,12 @@ class _ItemPromoImgWidget extends StatelessWidget {
   }
 }
 
-class _ItemPromoInfoBlok extends StatelessWidget {
+class _ItemPromoInfoBlok extends GetView<HomeModel> {
   const _ItemPromoInfoBlok({Key? key, required this.index}) : super(key: key);
   final int index;
   @override
   Widget build(BuildContext context) {
-    Dish dish = HomeModel.model.itemsHotDish[index];
+    Dish dish = controller.itemsHotDish[index];
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -278,62 +274,65 @@ class _PopularListBuilderWidget extends StatelessWidget {
   const _PopularListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final items = Get.find<HomeModel>().itemsMainCourse;
-    return ListView.builder(
-      itemCount: items.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (BuildContext context, int index) {
-        return GestureDetector(
-          onTap: () => Get.find<GuidingScreenModel>().showDetail(items[index]),
-          child: Container(
-            margin: EdgeInsets.only(
-              top: ThemeAppSize.kInterval12,
-              bottom: ThemeAppSize.kInterval12,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  height: ThemeAppSize.kListViewImgSize,
-                  width: ThemeAppSize.kListViewImgSize,
-                  decoration: BoxDecoration(
-                    color: ThemeAppColor.kAccent2,
-                    borderRadius: ThemeAppFun.decoration(),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(items[index].imgUrl),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: ThemeAppSize.kListViewTextContainer,
+    return GetBuilder(
+      builder: (HomeModel model) => ListView.builder(
+        itemCount: model.itemsMainCourse.length,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () => model.showDetail(model.itemsMainCourse[index]),
+            child: Container(
+              margin: EdgeInsets.only(
+                top: ThemeAppSize.kInterval12,
+                bottom: ThemeAppSize.kInterval12,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    height: ThemeAppSize.kListViewImgSize,
+                    width: ThemeAppSize.kListViewImgSize,
                     decoration: BoxDecoration(
                       color: ThemeAppColor.kAccent2,
-                      borderRadius: BorderRadius.horizontal(
-                        right: Radius.circular(ThemeAppSize.kRadius20),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          BigText(text: items[index].name),
-                          SizedBox(height: ThemeAppSize.kInterval5),
-                          SmallText(text: '${items[index].price} \$'),
-                          SizedBox(height: ThemeAppSize.kInterval12),
-                        ],
+                      borderRadius: ThemeAppFun.decoration(),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(model.itemsMainCourse[index].imgUrl),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: Container(
+                      height: ThemeAppSize.kListViewTextContainer,
+                      decoration: BoxDecoration(
+                        color: ThemeAppColor.kAccent2,
+                        borderRadius: BorderRadius.horizontal(
+                          right: Radius.circular(ThemeAppSize.kRadius20),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            BigText(text: model.itemsMainCourse[index].name),
+                            SizedBox(height: ThemeAppSize.kInterval5),
+                            SmallText(
+                                text:
+                                    '${model.itemsMainCourse[index].price} \$'),
+                            SizedBox(height: ThemeAppSize.kInterval12),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

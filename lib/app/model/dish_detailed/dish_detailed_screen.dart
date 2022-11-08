@@ -1,35 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:text/app/widgets/icon/my_icon.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
-import '../../data/object/cart_object.dart';
 import '../../widgets/text/expandable_text.dart';
+import '../cart/cart_model.dart';
 import 'dish_detailed_model.dart';
 
-class DishDetailedScreen extends StatefulWidget {
-  final int dishKey;
-  const DishDetailedScreen({Key? key, required this.dishKey}) : super(key: key);
-  @override
-  State<DishDetailedScreen> createState() => _DishDetailedScreenState();
-}
+class DishDetailedScreen extends StatelessWidget {
 
-class _DishDetailedScreenState extends State<DishDetailedScreen> {
-  late final DishDetailedModel _model;
-  @override
-  void initState() {
-    _model = DishDetailedModel(dishKey: widget.dishKey);
-    super.initState();
-  }
-
+  const DishDetailedScreen({super.key, required dishKey});
   @override
   Widget build(BuildContext context) {
-    DishDetailedModel? model = _model;
-    return ChangeNotifierProvider(
-      create: (context) => model,
-      child: const DishDetaild(),
-    );
+    return const DishDetaild();
   }
 }
 
@@ -38,6 +22,7 @@ class DishDetaild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+
       body: _DishDetailedBody(),
       bottomNavigationBar: _DishDetailedBottomBarWidget(),
     );
@@ -48,11 +33,11 @@ class _DishDetailedBody extends StatelessWidget {
   const _DishDetailedBody();
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<DishDetailedModel>();
-    final name = model.dish?.name ?? '404';
+    final controller = Get.put(DishDetailedModel());
+    final name = controller.dish?.name ?? '404';
 
-    final description = model.dish?.description ?? '404';
-    final imgUrl = model.dish?.imgUrl ?? ThemeAppImgURL.imgURL1;
+    final description = controller.dish?.description ?? '404';
+    final imgUrl = controller.dish?.imgUrl ?? ThemeAppImgURL.imgURL1;
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -66,11 +51,11 @@ class _DishDetailedBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                  onTap: () => model.showMenu(context),
+                  onTap: () => controller.showMenu(),
                   child: const MyIcon(icon: Icons.arrow_back_ios_new)),
               GestureDetector(
-                onTap: () => model.toggFovarit(),
-                child: model.dish?.isFavorit == true
+                onTap: () => controller.toggFovarit(),
+                child: controller.dish?.isFavorit == true
                     ? const MyIcon(
                         icon: Icons.favorite,
                         iconColor: ThemeAppColor.kAccent,
@@ -100,10 +85,12 @@ class _DishDetailedBody extends StatelessWidget {
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
-                  child: BigText(
-                    text: name,
-                    color: ThemeAppColor.kFrontColor,
-                    size: ThemeAppSize.kFontSize25,
+                  child: GetBuilder<DishDetailedModel>(
+                    builder: (c) => BigText(
+                      text: c.dish?.name ?? '404',
+                      color: ThemeAppColor.kFrontColor,
+                      size: ThemeAppSize.kFontSize25,
+                    ),
                   ),
                 ),
               ),
@@ -136,13 +123,14 @@ class _DishDetailedBody extends StatelessWidget {
   }
 }
 
-class _DishDetailedBottomBarWidget extends StatelessWidget {
+class _DishDetailedBottomBarWidget extends GetView<DishDetailedModel> {
   const _DishDetailedBottomBarWidget();
   @override
   Widget build(BuildContext context) {
-    final cartModel = context.watch<CartModel>();
-    final dishModel = context.watch<DishDetailedModel>();
-    final dishkey = dishModel.dish?.id ?? '';
+
+    final cartModel = Get.put(CartModel());
+
+    final dishkey = controller.dish?.id ?? '';
     final number = cartModel.namber(dishkey);
     final subTotal = cartModel.subTotal(dishkey).toStringAsFixed(1);
     return Container(
@@ -182,10 +170,10 @@ class _DishDetailedBottomBarWidget extends StatelessWidget {
                 SizedBox(width: ThemeAppSize.kInterval5),
                 GestureDetector(
                   onTap: () => cartModel.addItem(
-                      dishId: dishModel.dish?.id,
-                      price: dishModel.dish?.price,
-                      name: dishModel.dish?.name,
-                      imgUrl: dishModel.dish?.imgUrl),
+                      dishId: controller.dish?.id,
+                      price: controller.dish?.price,
+                      name: controller.dish?.name,
+                      imgUrl: controller.dish?.imgUrl),
                   child: const Icon(
                     Icons.add,
                     color: ThemeAppColor.kFrontColor,
@@ -195,7 +183,7 @@ class _DishDetailedBottomBarWidget extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => dishModel.showCart(context),
+            onTap: () => controller.showCart(),
             child: Container(
               padding: EdgeInsets.all(ThemeAppSize.kInterval12),
               decoration: BoxDecoration(

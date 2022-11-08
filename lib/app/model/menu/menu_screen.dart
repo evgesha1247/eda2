@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:text/app/model/menu/menu_model.dart';
 import 'package:text/app/routes/main_screens.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
-import '../../data/object/cart_object.dart';
 import '../../data/object/dish_object.dart';
 import '../../theme/theme_app.dart';
+import '../cart/cart_model.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -28,7 +27,7 @@ class MenuScreen extends StatelessWidget {
   }
 }
 
-class _FilterMenuWidget extends GetView<MenuModel> {
+class _FilterMenuWidget extends StatelessWidget {
   const _FilterMenuWidget();
   static const _icon = [
     MdiIcons.foodCroissant,
@@ -94,8 +93,8 @@ class _MenuBodyWidget extends StatelessWidget {
   const _MenuBodyWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      builder: (MenuModel model) => SliverGrid(
+    final model = Get.find<MenuModel>();
+    return SliverGrid(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 346.0,
           mainAxisExtent: 235,
@@ -109,7 +108,7 @@ class _MenuBodyWidget extends StatelessWidget {
             child: _CartItemWidget(index: index),
           ),
         ),
-      ),
+
     );
   }
 }
@@ -123,7 +122,7 @@ class _CartItemWidget extends StatelessWidget {
     final model = Get.find<MenuModel>();
     final itemImgUrl = model.itemsFilter[index].imgUrl;
     return GestureDetector(
-      onTap: () => {}, // model.showDetail(model.itemsFilter[index]),
+      onTap: () => model.showDetail(model.itemsFilter[index]),
       child: Stack(
         children: (mediaQuery >= 370)
             ? [
@@ -331,8 +330,7 @@ class _ButtonToCartWidget extends StatelessWidget {
         borderRadius: ThemeAppFun.decoration(),
       ),
     );
-    final number = context.watch<CartModel>().number().toString();
-
+    final number = Get.put(CartModel()).number().toString();
     return Stack(children: [
       ElevatedButton(
         style: styleBut,

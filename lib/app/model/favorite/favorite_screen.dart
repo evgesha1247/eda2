@@ -82,10 +82,8 @@ class _GridViewWidget extends GetView<FavoriteModel> {
     );
   }
 
-  Widget _itemFovaritContainerWidget({
-    required int index,
-    required String name,
-  }) {
+  Widget _itemFovaritContainerWidget(
+      {required int index, required String name}) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: ThemeAppFun.decoration(),
@@ -104,12 +102,12 @@ class _GridViewWidget extends GetView<FavoriteModel> {
   }
 }
 
-class _ItemFovaritContainerImgWidget extends StatelessWidget {
+class _ItemFovaritContainerImgWidget extends GetView<FavoriteModel> {
   const _ItemFovaritContainerImgWidget({required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
-    final itemsFovarit = Get.find().itemsFovarit;
+    final itemsFovarit = controller.itemsFovarit;
     return Image(
       image: AssetImage(itemsFovarit[index].imgUrl),
       fit: BoxFit.cover,

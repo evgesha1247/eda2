@@ -4,8 +4,10 @@ import '../../data/box_menager/box_menager.dart';
 import '../../data/object/dish_object.dart';
 
 class FavoriteModel extends GetxController {
-  FavoriteModel() {
+@override
+  void onInit() {
     _setup();
+    super.onInit();
   }
   late final Future<Box<Dish>> _box;
   final _itemsFovarit = <Dish>[];

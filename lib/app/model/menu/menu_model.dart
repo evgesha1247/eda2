@@ -3,6 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 
 import '../../data/box_menager/box_menager.dart';
 import '../../data/object/dish_object.dart';
+import '../../routes/main_screens.dart';
 
 class MenuModel extends GetxController {
   late final Future<Box<Dish>> _box;
@@ -11,10 +12,17 @@ class MenuModel extends GetxController {
   var _itemsFilter = <Dish>[];
   List<Dish> get itemsFilter => _itemsFilter;
 
-  @override
+@override
   void onReady() {
-    _setup();
+    print('readby');
     super.onReady();
+  }
+
+  @override
+  onInit() {
+    _setup();
+    print('init');
+    super.onInit();
   }
 
   Future<void> _setup() async {
@@ -63,5 +71,8 @@ class MenuModel extends GetxController {
   Future<void> toggFovarit(Dish item) async {
     item.isFavorit = !item.isFavorit;
     await item.save();
+  }
+  void showDetail(Dish item) {
+    Get.toNamed(MainRoutes.details, arguments: item.key);
   }
 }

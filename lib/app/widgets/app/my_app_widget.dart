@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:flutter/services.dart';
-
 import '../../routes/main_screens.dart';
 
 class MyAppWidget extends StatelessWidget {

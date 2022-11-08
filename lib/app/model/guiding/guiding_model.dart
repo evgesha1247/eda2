@@ -3,9 +3,9 @@ import '../../data/object/dish_object.dart';
 import '../../routes/main_screens.dart';
 
 class GuidingScreenModel extends GetxController {
-  static get model => Get.find()<GuidingScreenModel>();
   var _currentIndexTab = 0;
   get currentIndexTab => _currentIndexTab;
+
   setCurrentIndexTab(int? index) {
     if (index != null) {
       _currentIndexTab = index;
@@ -13,6 +13,6 @@ class GuidingScreenModel extends GetxController {
     }
   }
   void showDetail(Dish item) {
-    Get.toNamed(MainRoutes.details, arguments: item.key);
+    Get.toNamed(MainRoutes.details, arguments: {'item': item});
   }
 }

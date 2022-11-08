@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   flutter_slidable: ^2.0.0  # слайд для корзины
-  bottom_nav_bar: ^1.0.3    # нижняя меню
   dots_indicator: ^2.1.0    # точки-интикаторы страницы
   flutter_staggered_grid_view: ^0.6.2  # фавориты не ромная сетка
   material_design_icons_flutter: ^5.0.6996 # 4 хромые иконки

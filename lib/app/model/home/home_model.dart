@@ -3,6 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 
 import '../../data/box_menager/box_menager.dart';
 import '../../data/object/dish_object.dart';
+import '../../routes/main_screens.dart';
 
 class HomeModel extends GetxController {
   static HomeModel get model => Get.find();
@@ -11,12 +12,16 @@ class HomeModel extends GetxController {
   List<Dish> get itemsHotDish => _itemsHotDish.toList();
   final _itemsMainCourse = <Dish>[];
   List<Dish> get itemsMainCourse => _itemsMainCourse.toList();
+
   @override
-  void onInit() {
+  onInit() {
     _setup();
     super.onInit();
   }
 
+  void showDetail(Dish item) {
+    Get.toNamed(MainRoutes.details, arguments: <String, Dish>{'item': item});
+  }
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
     await _readDishData();

@@ -6,13 +6,14 @@ import 'package:text/app/theme/theme_app.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 
-import '../../data/object/cart_object.dart';
+import 'cart_model.dart';
+
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final cart = context.watch<CartModel>();
+    final cart = Get.find<CartModel>();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -130,7 +131,7 @@ class _BottnCart extends StatelessWidget {
   const _BottnCart({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final cart = context.watch<CartModel>();
+    final cart = Get.find<CartModel>();
     final promotions = cart.promotions();
     return Container(
       decoration: BoxDecoration(
@@ -226,7 +227,7 @@ class _CartButtonBack extends StatelessWidget {
   const _CartButtonBack({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final model = context.read<CartModel>();
+    final model = Get.find<CartModel>();
     return GestureDetector(
       onTap: () => model.showMenu(context),
       child: Container(
