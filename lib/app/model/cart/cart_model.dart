@@ -22,7 +22,7 @@ class CartModel extends GetxController {
     return 0;
   }
 
-  int namber(String dishKey) {
+  int numberDish(String dishKey) {
     var number = 0;
     _cartItem.forEach(
       (key, item) {

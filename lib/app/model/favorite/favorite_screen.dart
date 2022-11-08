@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
+import '../../data/object/dish_object.dart';
 import 'favorite_model.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -29,13 +30,9 @@ class _HeaderFavoritWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const BigText(
-            text: 'Favorites',
-            color: ThemeAppColor.kBGColor,
-          ),
+          const BigText(text: 'Favorites', color: ThemeAppColor.kBGColor),
           Icon(
             Icons.favorite_border_outlined,
             color: ThemeAppColor.kBGColor,
@@ -47,11 +44,10 @@ class _HeaderFavoritWidget extends StatelessWidget {
   }
 }
 
-class _GridViewWidget extends GetView<FavoriteModel> {
+class _GridViewWidget extends StatelessWidget {
   const _GridViewWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final itemsFovarit = controller.itemsFovarit;
     return Expanded(
       child: Container(
         decoration: const BoxDecoration(
@@ -60,30 +56,30 @@ class _GridViewWidget extends GetView<FavoriteModel> {
             top: Radius.circular(20),
           ),
         ),
-        child: GridView.custom(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          gridDelegate: SliverWovenGridDelegate.count(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            pattern: [
-              const WovenGridTile(1),
-              const WovenGridTile(5 / 7, crossAxisRatio: .9)
-            ],
-          ),
-          childrenDelegate: SliverChildBuilderDelegate(
-            childCount: itemsFovarit.length,
-            (context, index) => _itemFovaritContainerWidget(
-              index: index,
-              name: itemsFovarit[index].name,
+        child: GetBuilder<FavoriteModel>(
+          builder: (c) => GridView.custom(
+            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+            gridDelegate: SliverWovenGridDelegate.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              pattern: [
+                const WovenGridTile(1),
+                const WovenGridTile(5 / 7, crossAxisRatio: .9)
+              ],
+            ),
+            childrenDelegate: SliverChildBuilderDelegate(
+              childCount: c.itemsFovarit.length,
+              (context, index) =>
+                  _itemFovaritContainerWidget(item: c.itemsFovarit[index]),
             ),
           ),
+
         ),
       ),
     );
   }
 
-  Widget _itemFovaritContainerWidget(
-      {required int index, required String name}) {
+  Widget _itemFovaritContainerWidget({required Dish item}) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: ThemeAppFun.decoration(),
@@ -91,27 +87,19 @@ class _GridViewWidget extends GetView<FavoriteModel> {
       clipBehavior: Clip.hardEdge,
       child: Column(
         children: [
-          Expanded(child: _ItemFovaritContainerImgWidget(index: index)),
+          Expanded(
+            child: Image(
+              image: AssetImage(item.imgUrl),
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+            ),
+          ),
           Padding(
             padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-            child: SmallText(text: name, maxLines: 2),
+            child: SmallText(text: item.name, maxLines: 2),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _ItemFovaritContainerImgWidget extends GetView<FavoriteModel> {
-  const _ItemFovaritContainerImgWidget({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    final itemsFovarit = controller.itemsFovarit;
-    return Image(
-      image: AssetImage(itemsFovarit[index].imgUrl),
-      fit: BoxFit.cover,
-      alignment: Alignment.center,
     );
   }
 }

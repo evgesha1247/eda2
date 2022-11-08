@@ -22,8 +22,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       )
-    ]
-    );
+    ]);
   }
 }
 
@@ -31,10 +30,10 @@ class _PromoSuction extends StatelessWidget {
   const _PromoSuction({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      builder: (HomeModel model) => Column(
+    return GetBuilder<HomeModel>(
+      builder: (c) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: model.itemsHotDish.isNotEmpty
+        children: c.itemsHotDish.isNotEmpty
             ? [
                 Padding(
                   padding: EdgeInsets.all(ThemeAppSize.kInterval12),
@@ -72,14 +71,17 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
       });
     });
   }
+
   @override
   void dispose() {
     super.dispose();
     pageController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    final itemsHot = Get.find<HomeModel>().itemsHotDish;
+    final model = Get.find<HomeModel>();
+    final itemsHot = model.itemsHotDish;
     return Column(
       children: [
         SizedBox(
@@ -131,6 +133,7 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
       matrix = Matrix4.diagonal3Values(1, currScale, 1)
         ..setTranslationRaw(0, _height * (1 - _scaleFactore) / 2, 1);
     }
+
     final model = Get.find<HomeModel>();
     return Transform(
       transform: matrix,
@@ -175,12 +178,12 @@ class _ItemPromoImgWidget extends StatelessWidget {
   }
 }
 
-class _ItemPromoInfoBlok extends GetView<HomeModel> {
+class _ItemPromoInfoBlok extends StatelessWidget {
   const _ItemPromoInfoBlok({Key? key, required this.index}) : super(key: key);
   final int index;
   @override
   Widget build(BuildContext context) {
-    Dish dish = controller.itemsHotDish[index];
+    Dish dish = Get.find<HomeModel>().itemsHotDish[index];
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(

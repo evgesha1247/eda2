@@ -15,7 +15,6 @@ class FavoriteModel extends GetxController {
 
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
-
     await _loadFavoritDish();
     (await _box).listenable().addListener(_loadFavoritDish);
   }
@@ -28,5 +27,6 @@ class FavoriteModel extends GetxController {
         _itemsFovarit.remove(element);
       }
     }
+    update();
   }
 }

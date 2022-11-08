@@ -8,8 +8,8 @@ import '../../routes/main_screens.dart';
 class MenuModel extends GetxController {
   late final Future<Box<Dish>> _box;
   var _items = <Dish>[];
-  List<Dish> get items => _items;
   var _itemsFilter = <Dish>[];
+  List<Dish> get items => _items;
   List<Dish> get itemsFilter => _itemsFilter;
 
 
@@ -21,19 +21,14 @@ class MenuModel extends GetxController {
 
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
-
-    await _readDishData();
-    (await _box).listenable().addListener(_readDishData);
-  }
-
-  Future<void> _readDishData() async {
-    _loadAllDish();
-    update();
+    await _loadAllDish();
+    (await _box).listenable().addListener(_loadAllDish);
   }
 
   Future<void> _loadAllDish() async {
     _items = (await _box).values.toList();
     _itemsFilter = _items;
+    update();
   }
 
   void filter({String dishCategory = ''}) {
@@ -49,7 +44,7 @@ class MenuModel extends GetxController {
     update();
   }
 
-  searchFilter(String text) {
+  void searchFilter(String text) {
     if (text.isNotEmpty) {
       _itemsFilter = [];
       _itemsFilter = _items
@@ -66,7 +61,8 @@ class MenuModel extends GetxController {
     item.isFavorit = !item.isFavorit;
     await item.save();
   }
+
   void showDetail(Dish item) {
-    Get.toNamed(MainRoutes.details, arguments: item.key);
+    Get.toNamed(MainRoutes.details, arguments: {'item': item});
   }
 }

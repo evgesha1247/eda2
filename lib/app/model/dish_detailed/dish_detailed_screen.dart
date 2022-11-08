@@ -41,7 +41,6 @@ class _DishDetailedBody extends StatelessWidget {
                 child: const MyIcon(icon: Icons.arrow_back_ios_new),
               ),
               GetBuilder<DishDetailedModel>(
-                init: DishDetailedModel(),
                 builder: (c) => GestureDetector(
                   onTap: () => c.toggFovarit(),
                   child: c.dish?.isFavorit == true
@@ -98,10 +97,9 @@ class _DishDetailedBody extends StatelessWidget {
                 const BigText(
                   text: 'Introduce',
                   color: ThemeAppColor.kFrontColor,
-
                 ),
                 SizedBox(
-                  //    height: MediaQuery.of(context).size.height / 1.7,
+                  height: MediaQuery.of(context).size.height / 1.7,
                   child: GetBuilder<DishDetailedModel>(
                     builder: (c) => ExpandableTextWidget(
                       text: c.dish?.description ?? '404',
@@ -117,15 +115,10 @@ class _DishDetailedBody extends StatelessWidget {
   }
 }
 
-class _DishDetailedBottomBarWidget extends GetView<DishDetailedModel> {
+class _DishDetailedBottomBarWidget extends StatelessWidget {
   const _DishDetailedBottomBarWidget();
   @override
   Widget build(BuildContext context) {
-    final cartModel = Get.put(CartModel());
-    final controller = Get.put(DishDetailedModel());
-    final dishkey = controller.dish?.id ?? '';
-    final number = cartModel.namber(dishkey);
-    final subTotal = cartModel.subTotal(dishkey).toStringAsFixed(1);
     return Container(
       height: ThemeAppSize.kDetaildButtomContainer,
       padding: EdgeInsets.all(ThemeAppSize.kInterval24),
@@ -137,69 +130,94 @@ class _DishDetailedBottomBarWidget extends GetView<DishDetailedModel> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+        children: const [
+          _AddAndSubDishWidget(),
+          _TotalPriceWidget(),
+        ],
+      ),
+    );
+  }
+}
+
+class _TotalPriceWidget extends StatelessWidget {
+  const _TotalPriceWidget();
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DishDetailedModel>();
+    final cartController = Get.put(CartModel());
+    final dishkey = controller.dish?.id ?? '';
+    final subTotal = cartController.subTotal(dishkey).toStringAsFixed(1);
+
+    return GestureDetector(
+      onTap: () => controller.showCart(),
+      child: Container(
+        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+        decoration: BoxDecoration(
+          color: ThemeAppColor.kAccent,
+          borderRadius: ThemeAppFun.decoration(
+            radius: ThemeAppSize.kRadius12,
+          ),
+        ),
+        child: Row(
+          children: [
+            SmallText(
+              text: '\$ $subTotal | ',
+              color: ThemeAppColor.kWhite,
+            ),
+            BigText(
+              text: 'Go to cart',
+              color: ThemeAppColor.kWhite,
+              size: ThemeAppSize.kFontSize20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AddAndSubDishWidget extends StatelessWidget {
+  const _AddAndSubDishWidget();
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DishDetailedModel>();
+    final cartController = Get.put(CartModel());
+    final dishkey = controller.dish?.id ?? '';
+    final number = cartController.numberDish(dishkey);
+    return Container(
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
             decoration: BoxDecoration(
               color: ThemeAppColor.kBGColor,
               borderRadius: ThemeAppFun.decoration(
                 radius: ThemeAppSize.kRadius12,
               ),
             ),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => cartModel.updataSubOne(dishkey),
-                  child: const Icon(
-                    Icons.remove,
-                    color: ThemeAppColor.kFrontColor,
-                  ),
-                ),
-                SizedBox(width: ThemeAppSize.kInterval5),
-                SmallText(
-                  text: '$number',
-                  color: ThemeAppColor.kFrontColor,
-                ),
-                SizedBox(width: ThemeAppSize.kInterval5),
-                GestureDetector(
-                  onTap: () => cartModel.addItem(
-                      dishId: controller.dish?.id,
-                      price: controller.dish?.price,
-                      name: controller.dish?.name,
-                      imgUrl: controller.dish?.imgUrl),
-                  child: const Icon(
-                    Icons.add,
-                    color: ThemeAppColor.kFrontColor,
-                  ),
-                )
-              ],
-            ),
-          ),
+      child: Row(
+        children: [
           GestureDetector(
-            onTap: () => controller.showCart(),
-            child: Container(
-              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-              decoration: BoxDecoration(
-                color: ThemeAppColor.kAccent,
-                borderRadius: ThemeAppFun.decoration(
-                  radius: ThemeAppSize.kRadius12,
-                ),
-              ),
-              child: Row(
-                children: [
-                  SmallText(
-                    text: '\$ $subTotal | ',
-                    color: ThemeAppColor.kWhite,
-                  ),
-                  BigText(
-                    text: 'Go to cart',
-                    color: ThemeAppColor.kWhite,
-                    size: ThemeAppSize.kFontSize20,
-                  ),
-                ],
-              ),
+            onTap: () => cartController.updataSubOne(dishkey),
+            child: const Icon(
+              Icons.remove,
+              color: ThemeAppColor.kFrontColor,
             ),
           ),
+          SizedBox(width: ThemeAppSize.kInterval5),
+          SmallText(
+            text: '$number',
+            color: ThemeAppColor.kFrontColor,
+          ),
+          SizedBox(width: ThemeAppSize.kInterval5),
+          GestureDetector(
+            onTap: () => cartController.addItem(
+                dishId: controller.dish?.id,
+                price: controller.dish?.price,
+                name: controller.dish?.name,
+                imgUrl: controller.dish?.imgUrl),
+            child: const Icon(
+              Icons.add,
+              color: ThemeAppColor.kFrontColor,
+            ),
+          )
         ],
       ),
     );

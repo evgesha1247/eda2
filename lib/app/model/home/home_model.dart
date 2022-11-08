@@ -6,11 +6,10 @@ import '../../data/object/dish_object.dart';
 import '../../routes/main_screens.dart';
 
 class HomeModel extends GetxController {
-  static HomeModel get model => Get.find();
   late final Future<Box<Dish>> _box;
   final _itemsHotDish = <Dish>[];
-  List<Dish> get itemsHotDish => _itemsHotDish.toList();
   final _itemsMainCourse = <Dish>[];
+  List<Dish> get itemsHotDish => _itemsHotDish.toList();
   List<Dish> get itemsMainCourse => _itemsMainCourse.toList();
 
   @override
@@ -19,10 +18,6 @@ class HomeModel extends GetxController {
     super.onInit();
   }
 
-  void showDetail(Dish item) {
-    Map<String, Dish> parameter = {'item': item};
-    Get.toNamed(MainRoutes.details, arguments: {'item': item});
-  }
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
     await _readDishData();
@@ -43,8 +38,7 @@ class HomeModel extends GetxController {
         } else {
           _itemsHotDish.add(element);
         }
-      }
-      if (!element.isHot) {
+      } else if (!element.isHot && _itemsHotDish.contains(element)) {
         _itemsHotDish.remove(element);
       }
     }
@@ -57,10 +51,14 @@ class HomeModel extends GetxController {
           !_itemsMainCourse.contains(element)) {
         _itemsMainCourse.add(element);
       }
-      if (element.category != DishCategory.mainCourse) {
+      if (element.category != DishCategory.mainCourse &&
+          _itemsMainCourse.contains(element)) {
         _itemsMainCourse.remove(element);
       }
     }
     update();
+  }
+  void showDetail(Dish item) {
+    Get.toNamed(MainRoutes.details, arguments: {'item': item});
   }
 }

@@ -14,8 +14,9 @@ class GuidingScreen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: const _GuidingBodyWidget(),
-      floatingActionButton: (width < 370) ? const _FlotingButtom() : null,
       bottomNavigationBar: (width >= 370) ? const _BottomBarWidget() : null,
+      floatingActionButton: (width < 370) ? const _FlotingButtom() : null,
+
     );
   }
 }
