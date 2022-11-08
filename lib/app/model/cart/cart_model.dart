@@ -1,7 +1,5 @@
 import 'dart:collection';
-
 import 'package:get/get.dart';
-
 import '../../data/object/cart_object.dart';
 
 class CartModel extends GetxController {
@@ -22,17 +20,35 @@ class CartModel extends GetxController {
     return 0;
   }
 
-  int numberDish(String dishKey) {
-    var number = 0;
+
+
+
+
+  numberItem(String? dishKey) {
+    var numberDish = 0;
     _cartItem.forEach(
       (key, item) {
         if (key == dishKey) {
-          number = item.number;
+          numberDish = item.number;
         }
       },
     );
-    return number;
+    return numberDish;
   }
+
+  subTotal(String? dishKey) {
+    var subTotal = 0.0;
+    _cartItem.forEach(
+      (key, item) {
+        if (key == dishKey) {
+          subTotal += item.price * item.number;
+        }
+      },
+    );
+    return subTotal;
+  }
+
+
 
   int number() {
     var number = 0;
@@ -44,6 +60,8 @@ class CartModel extends GetxController {
     return number;
   }
 
+
+
   double get total {
     var total = 0.0;
     _cartItem.forEach(
@@ -54,17 +72,7 @@ class CartModel extends GetxController {
     return total;
   }
 
-  double subTotal(String dishKey) {
-    var subTotal = 0.0;
-    _cartItem.forEach(
-      (key, item) {
-        if (key == dishKey) {
-          subTotal += item.price * item.number;
-        }
-      },
-    );
-    return subTotal;
-  }
+
 
   void addItem({dishId, price, name, imgUrl}) {
     if (_cartItem.containsKey(dishId)) {
