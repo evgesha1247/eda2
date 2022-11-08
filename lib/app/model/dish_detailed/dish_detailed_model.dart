@@ -1,26 +1,26 @@
 import 'package:get/get.dart';
-import 'package:text/app/routes/main_screens.dart';
 import '../../data/object/dish_object.dart';
+import '../../routes/main_screens.dart';
 
 class DishDetailedModel extends GetxController {
-  Dish? _dish;
+  Dish? dish;
   @override
-  onReady() {
-    print(Get.parameters['item']);
-    print('wwwwwwwwwwwwwwww');
-    super.onReady();
-    if (Get.arguments != null) {
-      _dish = Get.parameters['item'] as Dish?;
-    }
+  void onReady() {
+    dish = Get.arguments['item'];
     update();
+    super.onReady();
   }
-  Dish? get dish => _dish;
-  void showMenu() => Get.back();
-  void showCart() => Get.toNamed(MainRoutes.cart);
+
+  void showBack() {
+    Get.back();
+  }
+void showCart() {
+    Get.toNamed(MainRoutes.cart);
+  }
 
   Future<void> toggFovarit() async {
-    _dish!.isFavorit = !_dish!.isFavorit;
-    await _dish!.save();
+    dish!.isFavorit = !dish!.isFavorit;
+    await dish!.save();
     update();
   }
 }

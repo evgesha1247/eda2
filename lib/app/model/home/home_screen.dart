@@ -1,7 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/model/guiding/guiding_model.dart';
 import 'package:text/app/widgets/icon/my_icon.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
@@ -136,8 +135,9 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
     return Transform(
       transform: matrix,
       child: GestureDetector(
-        onTap: () => model.showDetail(model.itemsHotDish[index]),
-
+        onTap: () {
+          model.showDetail(model.itemsHotDish[index]);
+        },
         child: Stack(
           children: [
             _ItemPromoImgWidget(imgUrl: dish.imgUrl),

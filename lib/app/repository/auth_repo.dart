@@ -2,7 +2,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:text/app/factory/widget_factory.dart';
 import 'package:text/app/routes/main_screens.dart';
 
 class AuthRepo extends GetxController {
@@ -10,7 +9,6 @@ class AuthRepo extends GetxController {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late final Rx<User?> firebaseUser;
-  final factor = ScreensFactory.instance;
 
   @override
   void onReady() {

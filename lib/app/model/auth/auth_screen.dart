@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/text/big_text.dart';
@@ -27,18 +28,17 @@ class AuthScreen extends StatelessWidget {
   }
 }
 
-class _AuthBody extends StatelessWidget {
+class _AuthBody extends GetView<AuthModel> {
   const _AuthBody();
   @override
   Widget build(BuildContext context) {
-    final constroller = context.watch<AuthModel>();
-    final bool isLog = constroller.isLogScreen;
+    final bool isLog = controller.isLogScreen;
     return Column(
       children: [
         isLog
             ? const SizedBox.shrink()
             : myTextField(
-                controller: constroller.cName,
+                controller: controller.cName,
                 text: 'Ivan',
                 icon: Icons.person,
                 textInputAction: TextInputAction.next,
@@ -46,7 +46,7 @@ class _AuthBody extends StatelessWidget {
               ),
         SizedBox(height: ThemeAppSize.kInterval24),
         myTextField(
-          controller: constroller.cEmail,
+          controller: controller.cEmail,
           text: 'Ivan@gmail.com',
           icon: Icons.mail,
           textInputAction: TextInputAction.next,
@@ -54,16 +54,16 @@ class _AuthBody extends StatelessWidget {
         ),
         SizedBox(height: ThemeAppSize.kInterval24),
         myTextField(
-          controller: constroller.cPassword,
+          controller: controller.cPassword,
           text: 'Password',
           icon: Icons.key,
           textInputAction: TextInputAction.next,
           onSubmitted: (_) => FocusScope.of(context).nextFocus(),
         ),
         myAuthButton(() {
-          final String email = constroller.cEmail.text;
-          final String pass = constroller.cPassword.text;
-          constroller.authUser(email: email, pass: pass);
+          final String email = controller.cEmail.text;
+          final String pass = controller.cPassword.text;
+          controller.authUser(email: email, pass: pass);
         }, isLog ? 'Login' : 'Register'),
       ],
     );

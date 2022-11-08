@@ -9,20 +9,10 @@ import '../cart/cart_model.dart';
 import 'dish_detailed_model.dart';
 
 class DishDetailedScreen extends StatelessWidget {
-
-  const DishDetailedScreen({super.key, required dishKey});
-  @override
-  Widget build(BuildContext context) {
-    return const DishDetaild();
-  }
-}
-
-class DishDetaild extends StatelessWidget {
-  const DishDetaild({Key? key}) : super(key: key);
+  const DishDetailedScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-
       body: _DishDetailedBody(),
       bottomNavigationBar: _DishDetailedBottomBarWidget(),
     );
@@ -34,10 +24,6 @@ class _DishDetailedBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DishDetailedModel());
-    final name = controller.dish?.name ?? '404';
-
-    final description = controller.dish?.description ?? '404';
-    final imgUrl = controller.dish?.imgUrl ?? ThemeAppImgURL.imgURL1;
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -51,24 +37,30 @@ class _DishDetailedBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                  onTap: () => controller.showMenu(),
-                  child: const MyIcon(icon: Icons.arrow_back_ios_new)),
-              GestureDetector(
-                onTap: () => controller.toggFovarit(),
-                child: controller.dish?.isFavorit == true
-                    ? const MyIcon(
-                        icon: Icons.favorite,
-                        iconColor: ThemeAppColor.kAccent,
-                      )
-                    : const MyIcon(icon: Icons.favorite_border),
+                onTap: () => controller.showBack(),
+                child: const MyIcon(icon: Icons.arrow_back_ios_new),
+              ),
+              GetBuilder<DishDetailedModel>(
+                init: DishDetailedModel(),
+                builder: (c) => GestureDetector(
+                  onTap: () => c.toggFovarit(),
+                  child: c.dish?.isFavorit == true
+                      ? const MyIcon(
+                          icon: Icons.favorite,
+                          iconColor: ThemeAppColor.kAccent,
+                        )
+                      : const MyIcon(icon: Icons.favorite_border),
+                ),
               ),
             ],
           ),
           flexibleSpace: FlexibleSpaceBar(
-            background: Image.asset(
-              imgUrl,
-              width: double.maxFinite,
-              fit: BoxFit.cover,
+            background: GetBuilder<DishDetailedModel>(
+              builder: (c) => Image.asset(
+                c.dish?.imgUrl ?? ThemeAppImgURL.imgURL1,
+                width: double.maxFinite,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           bottom: PreferredSize(
@@ -106,12 +98,14 @@ class _DishDetailedBody extends StatelessWidget {
                 const BigText(
                   text: 'Introduce',
                   color: ThemeAppColor.kFrontColor,
-                  //size: ThemeAppSize.kFontSize18,
+
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.7,
-                  child: ExpandableTextWidget(
-                    text: description,
+                  //    height: MediaQuery.of(context).size.height / 1.7,
+                  child: GetBuilder<DishDetailedModel>(
+                    builder: (c) => ExpandableTextWidget(
+                      text: c.dish?.description ?? '404',
+                    ),
                   ),
                 ),
               ],
@@ -127,9 +121,8 @@ class _DishDetailedBottomBarWidget extends GetView<DishDetailedModel> {
   const _DishDetailedBottomBarWidget();
   @override
   Widget build(BuildContext context) {
-
     final cartModel = Get.put(CartModel());
-
+    final controller = Get.put(DishDetailedModel());
     final dishkey = controller.dish?.id ?? '';
     final number = cartModel.namber(dishkey);
     final subTotal = cartModel.subTotal(dishkey).toStringAsFixed(1);

@@ -20,7 +20,8 @@ class HomeModel extends GetxController {
   }
 
   void showDetail(Dish item) {
-    Get.toNamed(MainRoutes.details, arguments: <String, Dish>{'item': item});
+    Map<String, Dish> parameter = {'item': item};
+    Get.toNamed(MainRoutes.details, arguments: {'item': item});
   }
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();

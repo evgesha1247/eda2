@@ -12,16 +12,10 @@ class MenuModel extends GetxController {
   var _itemsFilter = <Dish>[];
   List<Dish> get itemsFilter => _itemsFilter;
 
-@override
-  void onReady() {
-    print('readby');
-    super.onReady();
-  }
 
   @override
   onInit() {
     _setup();
-    print('init');
     super.onInit();
   }
 
