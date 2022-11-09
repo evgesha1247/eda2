@@ -16,13 +16,63 @@ class HomeScreen extends StatelessWidget {
       SliverToBoxAdapter(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            _PromoSuction(),
-            _PopularSuction(),
+          children: [
+            const _HeaderWidget(),
+            const _PromoSuction(),
+            SizedBox(height: ThemeAppSize.kInterval24),
+            const _PopularSuction(),
           ],
         ),
       )
     ]);
+  }
+}
+
+class _HeaderWidget extends StatelessWidget {
+  const _HeaderWidget();
+  @override
+  Widget build(BuildContext context) {
+    final user = Get.put(HomeModel()).user;
+    return Padding(
+      padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+      child: Row(
+        children: [
+          Row(
+            children: [
+              user?.photoURL != null
+                  ? CircleAvatar(
+                      backgroundColor: ThemeAppColor.kFrontColor,
+                      radius: 24,
+                      child: Image(image: NetworkImage(user?.photoURL ?? '')),
+                    )
+                  : const Icon(
+                      Icons.person_outline,
+                      color: ThemeAppColor.kFrontColor,
+                    ),
+              SizedBox(width: ThemeAppSize.kInterval12),
+              Column(
+                children: [
+                  SmallText(
+                    text: 'Welcome',
+                    color: ThemeAppColor.kFrontColor,
+                    size: ThemeAppSize.kFontSize25,
+                  ),
+                  user?.displayName != null
+                      ? BigText(
+                          text: '${user?.displayName ?? ''} ',
+                          color: ThemeAppColor.kFrontColor,
+                          size: ThemeAppSize.kFontSize18,
+                        )
+                      : const SizedBox.shrink(),
+                ],
+              ),
+            ],
+          ),
+          const Spacer(),
+          const Icon(Icons.notifications_outlined),
+        ],
+      ),
+    );
   }
 }
 
@@ -31,15 +81,19 @@ class _PromoSuction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeModel>(
+      init: HomeModel(),
       builder: (c) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: c.itemsHotDish.isNotEmpty
             ? [
                 Padding(
-                  padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: ThemeAppSize.kInterval24,
+                  ),
                   child: const BigText(
                     text: 'Hot Promo',
                     color: ThemeAppColor.kFrontColor,
+                    size: 25,
                   ),
                 ),
                 SizedBox(height: ThemeAppSize.kInterval12),
@@ -58,10 +112,13 @@ class _ItemsPromoWidget extends StatefulWidget {
 }
 
 class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
-  var _currPageValue = 0.0;
-  final double _scaleFactore = 0.85;
+  var _currPageValue = 1.0;
+  final double _scaleFactore = 0.8;
   final double _height = ThemeAppSize.kPageViewContainer;
-  PageController pageController = PageController(viewportFraction: .85);
+  PageController pageController = PageController(
+    viewportFraction: .8,
+    initialPage: 1,
+  );
   @override
   void initState() {
     super.initState();
@@ -227,13 +284,14 @@ class _ItemPromoInfoBlok extends StatelessWidget {
   }
 }
 
-/// _PopularSuction
 class _PopularSuction extends StatelessWidget {
   const _PopularSuction({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: ThemeAppSize.kInterval24,
+      ),
       child: Column(
         children: const [
           _PopularTitleWidget(),
@@ -248,27 +306,20 @@ class _PopularTitleWidget extends StatelessWidget {
   const _PopularTitleWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          bottom: ThemeAppSize.kInterval12, top: ThemeAppSize.kInterval12),
-      child: Row(
-        children: [
-          const BigText(
-            text: 'Popular',
-            color: ThemeAppColor.kFrontColor,
-          ),
-          SizedBox(width: ThemeAppSize.kInterval5),
-          SmallText(
-            text: '•',
-            size: ThemeAppSize.kFontSize18,
-          ),
-          SizedBox(width: ThemeAppSize.kInterval5),
-          SmallText(
-            text: 'Food pairing',
-            size: ThemeAppSize.kFontSize18,
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        const BigText(
+          text: 'Popular',
+          color: ThemeAppColor.kFrontColor,
+          size: 25,
+        ),
+        SizedBox(width: ThemeAppSize.kInterval5),
+        SmallText(
+          text: '• Food pairing',
+          size: ThemeAppSize.kFontSize22,
+          color: ThemeAppColor.kFrontColor.withOpacity(0.5),
+        ),
+      ],
     );
   }
 }
@@ -279,63 +330,107 @@ class _PopularListBuilderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeModel>(
       builder: (model) => ListView.builder(
-        itemCount: model.itemsMainCourse.length,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            onTap: () => model.showDetail(model.itemsMainCourse[index]),
-            child: Container(
-              margin: EdgeInsets.only(
-                top: ThemeAppSize.kInterval12,
-                bottom: ThemeAppSize.kInterval12,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    height: ThemeAppSize.kListViewImgSize,
-                    width: ThemeAppSize.kListViewImgSize,
-                    decoration: BoxDecoration(
-                      color: ThemeAppColor.kAccent2,
-                      borderRadius: ThemeAppFun.decoration(),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(model.itemsMainCourse[index].imgUrl),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: ThemeAppSize.kListViewTextContainer,
-                      decoration: BoxDecoration(
-                        color: ThemeAppColor.kAccent2,
-                        borderRadius: BorderRadius.horizontal(
-                          right: Radius.circular(ThemeAppSize.kRadius20),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            BigText(text: model.itemsMainCourse[index].name),
-                            SizedBox(height: ThemeAppSize.kInterval5),
-                            SmallText(
-                                text:
-                                    '${model.itemsMainCourse[index].price} \$'),
-                            SizedBox(height: ThemeAppSize.kInterval12),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
+          itemCount: model.itemsMainCourse.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            return _itemPopular(index, model);
+          }),
     );
   }
+}
+
+Widget _itemPopular(int index, HomeModel model) {
+  final isShow = model.isShowSort.obs;
+  return GestureDetector(
+    onTap: () => model.showSortDetail(),
+    onLongPress: () => model.showDetail(model.itemsMainCourse[index]),
+    child: Container(
+      decoration: BoxDecoration(
+        color: isShow.value ? Colors.transparent : ThemeAppColor.kFrontColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(ThemeAppSize.kRadius20),
+        ),
+      ),
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+      child: Row(
+        children: [
+          //img
+          Container(
+            height: ThemeAppSize.kListViewImgSize,
+            width: ThemeAppSize.kListViewImgSize,
+            decoration: BoxDecoration(
+              color: ThemeAppColor.kAccent2,
+              borderRadius: ThemeAppFun.decoration(),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage(model.itemsMainCourse[index].imgUrl),
+              ),
+            ),
+          ),
+
+          //info
+          isShow.value
+              ? Expanded(
+                  child: Container(
+                    height: ThemeAppSize.kListViewTextContainer,
+                    decoration: BoxDecoration(
+                      color: ThemeAppColor.kAccent2,
+                      borderRadius: BorderRadius.horizontal(
+                        right: Radius.circular(ThemeAppSize.kRadius20),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          BigText(text: model.itemsMainCourse[index].name),
+                          SizedBox(height: ThemeAppSize.kInterval5),
+                          SmallText(
+                              text: '${model.itemsMainCourse[index].price} \$'),
+                          SizedBox(height: ThemeAppSize.kInterval12),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              : Expanded(
+                  child: Container(
+                    height: ThemeAppSize.kListViewImgSize,
+                    padding: EdgeInsets.only(left: ThemeAppSize.kInterval12),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BigText(text: model.itemsMainCourse[index].name),
+                            SmallText(
+                                text: model.itemsMainCourse[index].description,
+                                maxLines: 3),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const MyIcon(icon: Icons.add, size: 30),
+                              const MyIcon(
+                                  icon: Icons.favorite_outline, size: 30),
+                              TextButton(
+                                  onPressed: () {}, child: Text('see more'))
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+        ],
+      ),
+    ),
+  );
 }

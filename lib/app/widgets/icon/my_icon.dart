@@ -21,7 +21,7 @@ class MyIcon extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(size / 2), color: bgColor),
-      child: Icon(icon, color: iconColor, size: ThemeAppSize.kFontSize16),
+      child: Icon(icon, color: iconColor, size: size / 1.5),
     );
   }
 }

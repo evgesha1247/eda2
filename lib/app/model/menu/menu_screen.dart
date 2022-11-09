@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:text/app/model/menu/menu_model.dart';
 import 'package:text/app/routes/main_screens.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 import '../../data/object/dish_object.dart';
 import '../../theme/theme_app.dart';
-import '../cart/cart_model.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -30,10 +28,10 @@ class MenuScreen extends StatelessWidget {
 class _FilterMenuWidget extends GetView<MenuModel> {
   const _FilterMenuWidget();
   static const _icon = [
-    MdiIcons.foodCroissant,
-    MdiIcons.glassTulip,
-    MdiIcons.foodDrumstick,
-    MdiIcons.restore,
+Icons.aspect_ratio,
+    Icons.aspect_ratio,
+    Icons.aspect_ratio,
+    Icons.aspect_ratio,
   ];
   static const _dishCategory = [
     DishCategory.dessert,

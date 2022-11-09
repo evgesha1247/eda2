@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -7,6 +8,9 @@ import '../../routes/main_screens.dart';
 
 class HomeModel extends GetxController {
   late final Future<Box<Dish>> _box;
+  User? user;
+
+
   final _itemsHotDish = <Dish>[];
   final _itemsMainCourse = <Dish>[];
   List<Dish> get itemsHotDish => _itemsHotDish.toList();
@@ -20,6 +24,11 @@ class HomeModel extends GetxController {
 
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
+    try {
+      user = FirebaseAuth.instance.currentUser as User;
+    } catch (e) {
+      print('user is null !!!');
+    }
     await _readDishData();
     (await _box).listenable().addListener(_readDishData);
   }
@@ -60,5 +69,11 @@ class HomeModel extends GetxController {
   }
   void showDetail(Dish item) {
     Get.toNamed(MainRoutes.details, arguments: {'item': item});
+  }
+
+  var isShowSort = true;
+  void showSortDetail() {
+    isShowSort = !isShowSort;
+    update();
   }
 }
