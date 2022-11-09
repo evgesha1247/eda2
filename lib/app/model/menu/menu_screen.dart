@@ -93,7 +93,6 @@ class _MenuBodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MenuModel>(
-      init: MenuModel(),
       builder: (c) => SliverGrid(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 346.0,
@@ -221,14 +220,12 @@ class _CartItemContainerTextWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 3),
           const Divider(
             color: Colors.grey,
             thickness: .5,
             indent: 20,
             endIndent: 20,
           ),
-          const SizedBox(height: 3),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -325,11 +322,11 @@ class _ButtonToCartWidget extends StatelessWidget {
         borderRadius: ThemeAppFun.decoration(),
       ),
     );
-    final number = Get.find<CartModel>().number();
+    var number = Get.find<MenuModel>().cartNumber;
     return Stack(children: [
       ElevatedButton(
         style: styleBut,
-        onPressed: () => Get.toNamed(MainRoutes.cart),
+        onPressed: () => Get.toNamed(MainRoutes.homeCart),
         child: const SizedBox(
           height: 33,
           child: Icon(
@@ -338,7 +335,7 @@ class _ButtonToCartWidget extends StatelessWidget {
           ),
         ),
       ),
-      number != 0
+      number.value != 0
           ? Positioned(
               right: 0,
               child: Container(
@@ -349,10 +346,10 @@ class _ButtonToCartWidget extends StatelessWidget {
                   borderRadius: ThemeAppFun.decoration(radius: 15),
                 ),
                 child: Center(
-                  child: GetBuilder<CartModel>(
-                    builder: (c) {
+                  child: GetBuilder<MenuModel>(
+                    builder: (_) {
                       return BigText(
-                        text: c.number().toString(),
+                        text: number.toString(),
                         color: ThemeAppColor.kBGColor,
                       );
                     },

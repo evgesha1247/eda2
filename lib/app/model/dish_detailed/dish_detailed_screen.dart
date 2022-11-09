@@ -5,7 +5,6 @@ import 'package:text/app/widgets/icon/my_icon.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 import '../../widgets/text/expandable_text.dart';
-import '../cart/cart_model.dart';
 import 'dish_detailed_model.dart';
 
 class DishDetailedScreen extends StatelessWidget {
@@ -157,12 +156,16 @@ class _TotalPriceWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Obx(() => SmallText(
-                  text: '${controller.subTotal}  | ',
+
+
+            GetBuilder(
+              builder: (DishDetailedModel c) => SmallText(
+                text: '${c.subTotal}  | ',
                   color: ThemeAppColor.kWhite,
-                )),
+              ),
 
 
+            ),
             BigText(
               text: 'Go to cart',
               color: ThemeAppColor.kWhite,
@@ -192,17 +195,21 @@ class _AddAndSubDishWidget extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => controller.upData(),
+            onTap: () => controller.sub(),
             child: const Icon(
               Icons.remove,
               color: ThemeAppColor.kFrontColor,
             ),
           ),
           SizedBox(width: ThemeAppSize.kInterval5),
-          Obx(() => SmallText(
-                text: '${controller.number}',
+          GetBuilder(
+            builder: (DishDetailedModel c) {
+              return SmallText(
+                text: '${c.number}',
                 color: ThemeAppColor.kFrontColor,
-              )),
+              );
+            },
+          ),
           SizedBox(width: ThemeAppSize.kInterval5),
           GestureDetector(
             onTap: () => controller.add(),

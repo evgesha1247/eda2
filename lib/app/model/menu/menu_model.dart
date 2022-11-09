@@ -4,20 +4,26 @@ import 'package:hive_flutter/adapters.dart';
 import '../../data/box_menager/box_menager.dart';
 import '../../data/object/dish_object.dart';
 import '../../routes/main_screens.dart';
+import '../cart/cart_model.dart';
 
 class MenuModel extends GetxController {
   late final Future<Box<Dish>> _box;
   var _items = <Dish>[];
   var _itemsFilter = <Dish>[];
+  var cartNumber = 0.obs;
   List<Dish> get items => _items;
   List<Dish> get itemsFilter => _itemsFilter;
-
+  final _cartModel = Get.put(CartModel());
 
   @override
   onInit() {
     _setup();
+
     super.onInit();
   }
+
+
+
 
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
@@ -28,6 +34,8 @@ class MenuModel extends GetxController {
   Future<void> _loadAllDish() async {
     _items = (await _box).values.toList();
     _itemsFilter = _items;
+    //cartNumber = _cartModel.numberItem;
+
     update();
   }
 

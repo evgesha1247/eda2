@@ -277,8 +277,8 @@ class _PopularListBuilderWidget extends StatelessWidget {
   const _PopularListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      builder: (HomeModel model) => ListView.builder(
+    return GetBuilder<HomeModel>(
+      builder: (model) => ListView.builder(
         itemCount: model.itemsMainCourse.length,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),

@@ -7,7 +7,8 @@ abstract class MainRoutes {
   static const appHome = _Paths.appHome;
   static const auth = _Paths.auth;
   static const details = _Paths.details;
-  static const cart = _Paths.cart;
+  static const detailsCart = _Paths.detailsCart;
+  static const homeCart = _Paths.homeCart;
 }
 
 abstract class _Paths {
@@ -17,5 +18,7 @@ abstract class _Paths {
   static const appHome = '/appHome';
   static const auth = '/auth';
   static const details = '/appHome/details';
-  static const cart = '/appHome/cart';
+
+  static const detailsCart = '/appHome/details/cart';
+  static const homeCart = '/appHome/cart';
 }

@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:text/app/routes/main_screens.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 
 import 'cart_model.dart';
 
-
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final cart = Get.find<CartModel>();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -35,10 +34,14 @@ class CartScreen extends StatelessWidget {
               ),
               SizedBox(height: ThemeAppSize.kInterval12),
               Expanded(
-                child: ListView.builder(
-                  itemCount: cart.cartItem.length,
-                  itemBuilder: (context, index) {
-                    return _cartRows(index: index, cartModel: cart);
+                child: GetBuilder<CartModel>(
+                  builder: (c) {
+                    return ListView.builder(
+                      itemCount: c.cartItem.length,
+                      itemBuilder: (context, index) {
+                        return _cartRows(index: index);
+                      },
+                    );
                   },
                 ),
               ),
@@ -51,9 +54,11 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _cartRows({required cartModel, required int index}) {
-    final img = cartModel.cartItem.values.elementAt(index).imgUrl;
-    final dishkey = cartModel.cartItem.entries.toList()[index].key;
+  Widget _cartRows({required int index}) {
+    final controller = Get.find<CartModel>();
+    final img = controller.cartItem.values.elementAt(index).imgUrl;
+    final dishkey = controller.cartItem.entries.toList()[index].key;
+
     return Padding(
       padding: EdgeInsets.only(bottom: ThemeAppSize.kInterval12),
       child: Slidable(
@@ -68,7 +73,7 @@ class CartScreen extends StatelessWidget {
               icon: Icons.delete_outline_rounded,
               label: 'Delete',
               onPressed: (BuildContext context) {
-                cartModel.delete(dishkey);
+                controller.delete(dishkey);
               },
             ),
           ],
@@ -99,7 +104,7 @@ class _CartContent extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final cart = context.watch<CartModel>();
+    final cart = Get.find<CartModel>();
     final cartItems = cart.cartItem.values.elementAt(index);
     return Expanded(
       child: Padding(
@@ -132,7 +137,6 @@ class _BottnCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Get.find<CartModel>();
-    final promotions = cart.promotions();
     return Container(
       decoration: BoxDecoration(
         color: ThemeAppColor.kFrontColor,
@@ -149,17 +153,26 @@ class _BottnCart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SmallText(text: 'sub-total'),
-              SmallText(text: cart.total.toStringAsFixed(2)),
+              GetBuilder<CartModel>(
+                builder: (c) => SmallText(
+                  text: c.total.toStringAsFixed(2),
+                ),
+              ),
             ],
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            cart.total > 3000
-                ? const SmallText(text: 'save -15%')
-                : cart.total > 1000
-                    ? const SmallText(text: 'delivery')
-                    : const SmallText(text: 'delivery'),
-            SmallText(text: promotions.toStringAsFixed(2))
-          ]),
+          GetBuilder<CartModel>(
+            builder: (c) => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                cart.total > 3000
+                    ? const SmallText(text: 'save -15%')
+                    : cart.total > 1000
+                        ? const SmallText(text: 'delivery')
+                        : const SmallText(text: 'delivery'),
+                SmallText(text: c.promotions().toStringAsFixed(2))
+              ],
+            ),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
             child: const Divider(
@@ -175,10 +188,12 @@ class _BottnCart extends StatelessWidget {
                 size: ThemeAppSize.kFontSize25,
                 color: ThemeAppColor.kBGColor,
               ),
-              BigText(
-                text: (cart.total + promotions).toString(),
-                size: ThemeAppSize.kFontSize25,
-                color: ThemeAppColor.kBGColor,
+              GetBuilder<CartModel>(
+                builder: (c) => BigText(
+                  text: (c.total + c.promotions()).toString(),
+                  size: ThemeAppSize.kFontSize25,
+                  color: ThemeAppColor.kBGColor,
+                ),
               ),
             ],
           ),
@@ -229,7 +244,7 @@ class _CartButtonBack extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Get.find<CartModel>();
     return GestureDetector(
-      onTap: () => model.showMenu(context),
+      onTap: () => model.showBack(),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: ThemeAppFun.decoration(),

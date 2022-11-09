@@ -1,13 +1,14 @@
 import 'dart:collection';
 import 'package:get/get.dart';
+import 'package:text/app/model/dish_detailed/dish_detailed_model.dart';
 import '../../data/object/cart_object.dart';
 
 class CartModel extends GetxController {
   Map<String, Cart> _cartItem = {};
   UnmodifiableMapView<String, Cart> get cartItem =>
       UnmodifiableMapView(_cartItem);
-  final _delivery = 5.0;
 
+  final _delivery = 5.0;
   double get delivery => _delivery;
   promotions() {
     if (total > 3000) {
@@ -21,44 +22,42 @@ class CartModel extends GetxController {
   }
 
 
-
-
-
-  numberItem(String? dishKey) {
-    var numberDish = 0;
+  numberDish(String? dishKey) {
+    var numberItem = 0;
     _cartItem.forEach(
       (key, item) {
         if (key == dishKey) {
-          numberDish = item.number;
+          numberItem = item.number;
         }
       },
     );
-    return numberDish;
+    update();
+    return numberItem;
   }
 
   subTotal(String? dishKey) {
-    var subTotal = 0.0;
+    var subTotalItem = 0.0;
     _cartItem.forEach(
       (key, item) {
         if (key == dishKey) {
-          subTotal += item.price * item.number;
+          subTotalItem += item.price * item.number;
         }
       },
     );
-    return subTotal;
+    update();
+    return subTotalItem;
+
   }
 
-
-
-  int number() {
-    var number = 0;
-    cartItem.forEach(
+  var numberItems = 0;
+  void numberDishs() {
+    _cartItem.forEach(
       (key, item) {
-        number += item.number;
+        numberItems += item.number;
       },
     );
-    return number;
   }
+
 
 
 
@@ -71,8 +70,6 @@ class CartModel extends GetxController {
     );
     return total;
   }
-
-
 
   void addItem({dishId, price, name, imgUrl}) {
     if (_cartItem.containsKey(dishId)) {
@@ -143,7 +140,9 @@ class CartModel extends GetxController {
     update();
   }
 
-  void showMenu(context) {
+
+  void showBack() {
+    Get.put(DishDetailedModel()).upDataDitalit();
     Get.back();
   }
 }

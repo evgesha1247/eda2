@@ -35,9 +35,12 @@ class MainScreens {
       page: () => const AuthScreen()
     ),
     GetPage(
-      name: _Paths.cart,
+      name: _Paths.detailsCart,
       page: () => const CartScreen()
-
+    ),
+    GetPage(
+      name: _Paths.homeCart,
+      page: () => const CartScreen(),
     ),
     GetPage(
       name: _Paths.details,
