@@ -32,6 +32,9 @@ class HomeModel extends GetxController {
     await _readDishData();
     (await _box).listenable().addListener(_readDishData);
   }
+  List<bool> selected = List.generate(4, (i) => false).obs;
+
+
 
   Future<void> _readDishData() async {
     _loadHotDish();
