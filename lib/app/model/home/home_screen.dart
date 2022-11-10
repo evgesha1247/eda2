@@ -1,3 +1,4 @@
+
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -340,13 +341,16 @@ class _PopularListBuilderWidget extends StatelessWidget {
             ),
             child: GetBuilder<HomeModel>(
               builder: (c) {
-                return ListView.builder(
+                return ListView.separated(
                     itemCount: c.itemsMainCourse.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
                       return _itemPopular(index, model);
-                    });
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      SizedBox(height: ThemeAppSize.kInterval12),
+                );
               },
             ),
           ),
@@ -357,65 +361,141 @@ class _PopularListBuilderWidget extends StatelessWidget {
 }
 
 Widget _itemPopular(int index, HomeModel model) {
+
   return GestureDetector(
     onTap: () => model.selected[index] = !model.selected[index],
     onLongPress: () => model.showDetail(model.itemsMainCourse[index]),
-    child: Stack(
-      children: [
-          Container(
-          height: ThemeAppSize.kListViewImgSize,
-          width: ThemeAppSize.kListViewImgSize,
-          decoration: BoxDecoration(
-            color: ThemeAppColor.kAccent2,
-            borderRadius: ThemeAppFun.decoration(),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(model.itemsMainCourse[index].imgUrl),
-            ),
-          ),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    child: GetX<HomeModel>(
+      builder: (_) {
+        return Stack(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BigText(text: model.itemsMainCourse[index].name),
-                SmallText(
-                  text: model.itemsMainCourse[index].description,
-                  maxLines: 3,
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const MyIcon(icon: Icons.add, size: 30),
-                  const MyIcon(icon: Icons.favorite_outline, size: 30),
-                  TextButton(onPressed: () {}, child: Text('see more'))
-                ],
-              ),
-            )
-          ],
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: ThemeAppColor.kFrontColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(ThemeAppSize.kRadius20),
-            ),
-          ),
-          padding: EdgeInsets.only(
-            left: 122,
-            right: ThemeAppSize.kInterval12,
-            top: ThemeAppSize.kInterval12,
-            bottom: ThemeAppSize.kInterval12,
-          ),
-        ),
+            // bg
+            model.selected[index]
+                ? ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: ThemeAppSize.kListViewImgSize,
+                      minWidth: double.infinity,
+                    ),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: ThemeAppColor.kFrontColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(ThemeAppSize.kRadius20),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 150,
+                          top: ThemeAppSize.kInterval12,
+                          bottom: ThemeAppSize.kInterval12,
+                          right: ThemeAppSize.kInterval12,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                BigText(
+                                    text: model.itemsMainCourse[index].name),
+                                SmallText(
+                                  text:
+                                      model.itemsMainCourse[index].description,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: ThemeAppSize.kInterval24),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const MyIcon(icon: Icons.add, size: 30),
+                                const MyIcon(
+                                    icon: Icons.favorite_outline, size: 30),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Row(
+                                    children: const [
+                                      BigText(
+                                        text: 'more',
+                                        color: ThemeAppColor.kAccent,
+                                        size: 14,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : Positioned(
+                    bottom: ThemeAppSize.kInterval12,
+                    top: ThemeAppSize.kInterval12,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        left: ThemeAppSize.kListViewImgSize +
+                            ThemeAppSize.kInterval12,
+                        top: ThemeAppSize.kInterval12,
+                        bottom: ThemeAppSize.kInterval12,
+                        right: ThemeAppSize.kInterval12,
+                      ),
+                      decoration: BoxDecoration(
+                        color: ThemeAppColor.kAccent2,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(ThemeAppSize.kRadius20),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          BigText(text: model.itemsMainCourse[index].name),
+                          SmallText(
+                              text: '${model.itemsMainCourse[index].price}\$'),
+                        ],
+                      ),
+                    ),
+                  ),
+            // img
+            model.selected[index]
+                ? Positioned(
+                    top: ThemeAppSize.kInterval12,
+                    bottom: ThemeAppSize.kInterval12,
+                    left: ThemeAppSize.kInterval12,
+                    child: Container(
+                      width: ThemeAppSize.kListViewImgSize,
+                      decoration: BoxDecoration(
+                        color: ThemeAppColor.kAccent2,
+                        borderRadius: ThemeAppFun.decoration(),
+                        image: DecorationImage(
+                          fit: BoxFit.fitHeight,
+                          image:
+                              AssetImage(model.itemsMainCourse[index].imgUrl),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(
+                    width: ThemeAppSize.kListViewImgSize,
+                    height: ThemeAppSize.kListViewImgSize,
+                    decoration: BoxDecoration(
+                      color: ThemeAppColor.kAccent2,
+                      borderRadius: ThemeAppFun.decoration(),
+                      image: DecorationImage(
+                        fit: BoxFit.fitHeight,
+                        image: AssetImage(model.itemsMainCourse[index].imgUrl),
+                      ),
+                    ),
+                  )
+            // info
 
-      ],
+
+          ],
+        );
+      },
     ),
   );
 }

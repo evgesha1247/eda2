@@ -32,6 +32,7 @@ class HomeModel extends GetxController {
     await _readDishData();
     (await _box).listenable().addListener(_readDishData);
   }
+
   List<bool> selected = List.generate(4, (i) => false).obs;
 
 
@@ -74,9 +75,4 @@ class HomeModel extends GetxController {
     Get.toNamed(MainRoutes.details, arguments: {'item': item});
   }
 
-  var isShowSort = true;
-  void showSortDetail() {
-    isShowSort = !isShowSort;
-    update();
-  }
 }
