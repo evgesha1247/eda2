@@ -48,12 +48,14 @@ class _BottomBarWidget extends StatelessWidget {
       builder: (model) => BottomNavigationBar(
         onTap: model.setCurrentIndexTab,
         currentIndex: model.currentIndexTab,
-        selectedItemColor: ThemeAppColor.kFrontColor,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: ThemeAppColor.kAccent,
+        unselectedItemColor: ThemeAppColor.kAccent2,
         type: BottomNavigationBarType.fixed,
         backgroundColor: ThemeAppColor.kBGColor,
         elevation: 5,
         showUnselectedLabels: false,
+        showSelectedLabels: true,
+
         items: [
           bottomItem('Home', Icons.home),
           bottomItem('Menu', Icons.restaurant_menu_rounded),

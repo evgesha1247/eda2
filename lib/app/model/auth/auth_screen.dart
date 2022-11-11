@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/text/big_text.dart';
 import '../../widgets/text/small_text.dart';
@@ -28,10 +27,11 @@ class AuthScreen extends StatelessWidget {
   }
 }
 
-class _AuthBody extends GetView<AuthModel> {
+class _AuthBody extends StatelessWidget {
   const _AuthBody();
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(AuthModel());
     final bool isLog = controller.isLogScreen;
     return Column(
       children: [
@@ -74,7 +74,7 @@ class _ToggScreenTextWidget extends StatelessWidget {
   const _ToggScreenTextWidget();
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<AuthModel>();
+    final model = Get.find<AuthModel>();
     return Row(
       children: [
         const SmallText(

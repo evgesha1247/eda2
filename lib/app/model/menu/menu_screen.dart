@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/model/menu/menu_model.dart';
@@ -16,10 +17,89 @@ class MenuScreen extends StatelessWidget {
         slivers: MediaQuery.of(context).size.width >= 370
             ? const [
                 _HederWidget(),
-                _FilterMenuWidget(),
+                //_FilterMenuWidget(),
                 _MenuBodyWidget(),
               ]
             : [const _MenuBodyWidget()],
+      ),
+
+    );
+  }
+}
+
+class _HederWidget extends StatelessWidget {
+  const _HederWidget({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      floating: true,
+      pinned: false,
+      snap: true,
+      backgroundColor: ThemeAppColor.kBGColor,
+      toolbarHeight: 50,
+      flexibleSpace: FlexibleSpaceBar(
+        titlePadding: EdgeInsets.symmetric(
+          horizontal: ThemeAppSize.kInterval12,
+        ),
+        title: Row(
+          children: [
+            const _SearchWidget(),
+            SizedBox(width: ThemeAppSize.kInterval12),
+            const _ButtonToCartWidget(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SearchWidget extends StatelessWidget {
+  const _SearchWidget();
+  @override
+  Widget build(BuildContext context) {
+    InputBorder styleSearch = OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
+      borderSide: const BorderSide(
+        color: ThemeAppColor.kFrontColor,
+        width: 1.5,
+        style: BorderStyle.solid,
+      ),
+    );
+    final controller = Get.find<MenuModel>();
+    return Expanded(
+      child: TextField(
+        cursorColor: ThemeAppColor.kFrontColor,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
+          isDense: true,
+          filled: true,
+          fillColor: ThemeAppColor.kBGColor,
+          prefixIcon: const Icon(
+            Icons.search,
+            color: ThemeAppColor.kFrontColor,
+          ),
+          hintText: 'Search',
+          enabledBorder: styleSearch,
+          focusedBorder: styleSearch,
+        ),
+        onChanged: (text) {
+          controller.searchFilter(text);
+        },
+      ),
+    );
+  }
+}
+
+class _ButtonToCartWidget extends StatelessWidget {
+  const _ButtonToCartWidget({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Get.toNamed(MainRoutes.homeCart),
+      child: const Icon(
+        Icons.grid_view,
+        size: 30,
+        color: ThemeAppColor.kFrontColor,
       ),
     );
   }
@@ -28,7 +108,7 @@ class MenuScreen extends StatelessWidget {
 class _FilterMenuWidget extends GetView<MenuModel> {
   const _FilterMenuWidget();
   static const _icon = [
-Icons.aspect_ratio,
+    Icons.aspect_ratio,
     Icons.aspect_ratio,
     Icons.aspect_ratio,
     Icons.aspect_ratio,
@@ -93,16 +173,14 @@ class _MenuBodyWidget extends StatelessWidget {
     return GetBuilder<MenuModel>(
       builder: (c) => SliverGrid(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 346.0,
-          mainAxisExtent: 235,
-          mainAxisSpacing: 0,
-          crossAxisSpacing: 0,
+          maxCrossAxisExtent: 350.0,
+          mainAxisExtent: 200,
         ),
         delegate: SliverChildBuilderDelegate(
           childCount: c.itemsFilter.length,
           (_, int index) => Padding(
             padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-            child: _CartItemWidget(index: index),
+            child: _CartItem(index: index),
           ),
         ),
       ),
@@ -110,252 +188,45 @@ class _MenuBodyWidget extends StatelessWidget {
   }
 }
 
-class _CartItemWidget extends StatelessWidget {
-  const _CartItemWidget({Key? key, required this.index}) : super(key: key);
+class _CartItem extends StatelessWidget {
+  const _CartItem({required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
     final model = Get.find<MenuModel>();
-    final itemImgUrl = model.itemsFilter[index].imgUrl;
+    final item = model.itemsFilter[index];
     return GestureDetector(
       onTap: () => model.showDetail(model.itemsFilter[index]),
-      child: Stack(children: [
-        _CartItemContainerWidget(index: index),
-        Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          clipBehavior: Clip.hardEdge,
-          child: Image.asset(
-            width: 90,
-            height: 90,
-            itemImgUrl,
-            fit: BoxFit.cover,
-          ),
-        ),
-      ]),
-    );
-  }
-}
-
-class _CartItemContainerWidget extends StatelessWidget {
-  const _CartItemContainerWidget({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.only(top: 30, left: 10, right: 10),
+      child: Container(
         decoration: BoxDecoration(
           color: ThemeAppColor.kFrontColor,
           borderRadius: ThemeAppFun.decoration(),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            opacity: 0.7,
+            image: AssetImage(model.itemsFilter[index].imgUrl),
+          ),
         ),
-        child: _CartItemContainerContentWidget(index: index));
-  }
-}
-
-class _CartItemContainerContentWidget extends StatelessWidget {
-  const _CartItemContainerContentWidget({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-      child: Column(
-        children: [
-          _ButtonFavoritWidget(index: index),
-          _CartItemContainerTextWidget(index: index),
-        ],
-      ),
-    );
-  }
-}
-
-class _ButtonFavoritWidget extends StatelessWidget {
-  const _ButtonFavoritWidget({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    final model = Get.find<MenuModel>();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
-          child: model.itemsFilter[index].isFavorit
-              ? const Icon(Icons.favorite, color: ThemeAppColor.kBGColor)
-              : const Icon(Icons.favorite_border, color: Colors.grey),
-          onTap: () => model.toggFovarit(model.itemsFilter[index]),
-        )
-      ],
-    );
-  }
-}
-
-class _CartItemContainerTextWidget extends StatelessWidget {
-  const _CartItemContainerTextWidget({required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    final item = Get.find<MenuModel>().itemsFilter[index];
-    return Padding(
-      padding: const EdgeInsets.only(top: 30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          BigText(text: item.name),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Expanded(
-                child: SmallText(text: item.description),
-              ),
-              BigText(
-                text: 'more',
-                size: ThemeAppSize.kFontSize18,
-                color: ThemeAppColor.kAccent,
-              ),
-            ],
-          ),
-          const Divider(
-            color: Colors.grey,
-            thickness: .5,
-            indent: 20,
-            endIndent: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const BigText(text: 'price : '),
-              BigText(text: '\$ ${item.price}'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HederWidget extends StatelessWidget {
-  const _HederWidget({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return const SliverAppBar(
-      leading: SizedBox.shrink(),
-      floating: true,
-      pinned: false,
-      snap: true,
-      backgroundColor: ThemeAppColor.kFrontColor,
-      flexibleSpace: _SearchWidget(),
-    );
-  }
-}
-
-class _SearchWidget extends StatelessWidget {
-  const _SearchWidget();
-  @override
-  Widget build(BuildContext context) {
-    InputBorder styleSearch = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
-      borderSide: const BorderSide(style: BorderStyle.none),
-    );
-    final controller = Get.find<MenuModel>();
-    return FlexibleSpaceBar(
-      centerTitle: true,
-      titlePadding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
-      title: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: ThemeAppSize.width),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Expanded(
-              child: Center(
-                child: SizedBox(
-                  height: 33,
-                  child: TextField(
-                    cursorColor: ThemeAppColor.kFrontColor,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.zero,
-                      isDense: true,
-                      filled: true,
-                      fillColor: ThemeAppColor.kBGColor,
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: ThemeAppColor.kFrontColor,
-                      ),
-                      hintText: 'Search',
-                      enabledBorder: styleSearch,
-                      focusedBorder: styleSearch,
-                    ),
-                    onChanged: (text) {
-                      controller.searchFilter(text);
-                    },
-                  ),
+            Container(
+              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+              decoration: BoxDecoration(
+                color: ThemeAppColor.kFrontColor,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(ThemeAppSize.kRadius12),
+                  bottomLeft: Radius.circular(ThemeAppSize.kRadius20),
                 ),
               ),
+              child: BigText(
+                text: '\$ ${item.price}',
+                color: ThemeAppColor.kBGColor,
+              ),
             ),
-            SizedBox(width: ThemeAppSize.kInterval12),
-            const _ButtonToCartWidget(),
           ],
         ),
       ),
     );
-  }
-}
-
-class _ButtonToCartWidget extends StatelessWidget {
-  const _ButtonToCartWidget({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    final styleBut = ElevatedButton.styleFrom(
-      elevation: 0,
-      shadowColor: Colors.transparent,
-      foregroundColor: Colors.transparent,
-      backgroundColor: Colors.transparent,
-      side: const BorderSide(
-        width: 2,
-        color: ThemeAppColor.kBGColor,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: ThemeAppFun.decoration(),
-      ),
-    );
-    var number = Get.find<MenuModel>().cartNumber;
-    return Stack(children: [
-      ElevatedButton(
-        style: styleBut,
-        onPressed: () => Get.toNamed(MainRoutes.homeCart),
-        child: const SizedBox(
-          height: 33,
-          child: Icon(
-            Icons.shopping_cart,
-            color: ThemeAppColor.kBGColor,
-          ),
-        ),
-      ),
-      number.value != 0
-          ? Positioned(
-              right: 0,
-              child: Container(
-                width: 20,
-                height: 20,
-                decoration: BoxDecoration(
-                  color: Colors.white38,
-                  borderRadius: ThemeAppFun.decoration(radius: 15),
-                ),
-                child: Center(
-                  child: GetBuilder<MenuModel>(
-                    builder: (_) {
-                      return BigText(
-                        text: number.toString(),
-                        color: ThemeAppColor.kBGColor,
-                      );
-                    },
-                  ),
-                ),
-              ),
-            )
-          : const SizedBox.shrink()
-    ]);
   }
 }

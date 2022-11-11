@@ -6,12 +6,17 @@ abstract class ThemeAppColor {
   static const Color kBlack = Color.fromARGB(255, 15, 15, 15);
 
 
-  static const Color kAccent = Color.fromARGB(255, 255, 121, 101);
-  static const Color kFrontColor = Color.fromARGB(255, 80, 35, 20);
-  static const Color kBGColor = Color.fromARGB(255, 255, 237, 230);
-  static const Color kAccent2 = Color.fromARGB(255, 100, 55, 50);
+  //static const Color kAccent = Color.fromARGB(255, 255, 121, 101);
+  //static const Color kFrontColor = Color.fromARGB(255, 80, 35, 20);
+  //static const Color kBGColor = Color.fromARGB(255, 255, 237, 230);
+  // static const Color kAccent2 = Color.fromARGB(255, 100, 55, 50);
 
+  /// неплохое решение
+  static const Color kFrontColor = Color(0xff553b3e); //0xff553b3e 0xff442c2e
+  static const Color kBGColor = Color(0xffFedbd0);
 
+  static const Color kAccent2 = Color.fromARGB(255, 113, 80, 84);
+  static const Color kAccent = Colors.pink;
   // static const Color kAccent2 = Color.fromARGB(255, 47, 46, 64);
   // static const Color kFrontColor = Color.fromARGB(255, 42, 45, 61);
   // static const Color kBGColor = Color.fromARGB(255, 32, 35, 51);

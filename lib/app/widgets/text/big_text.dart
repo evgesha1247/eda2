@@ -9,6 +9,8 @@ class BigText extends StatelessWidget {
   final TextOverflow overflow;
   final TextDecoration decoration;
   final double decorationThickness;
+  final FontWeight fontWeight;
+
   const BigText({
     Key? key,
     required this.text,
@@ -16,6 +18,7 @@ class BigText extends StatelessWidget {
     this.overflow = TextOverflow.ellipsis,
     this.size = 0,
     this.maxLines = 1,
+    this.fontWeight = FontWeight.w500,
     this.decoration = TextDecoration.none,
     this.decorationThickness = 2,
   }) : super(key: key);
@@ -27,12 +30,13 @@ class BigText extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow,
       style: TextStyle(
+
         decorationColor: color,
         decorationThickness: decorationThickness,
         decoration: decoration,
         fontSize: size == 0 ? ThemeAppSize.kFontSize22 : size,
         color: color,
-        fontWeight: FontWeight.w500,
+        fontWeight: fontWeight,
       ),
     );
   }
