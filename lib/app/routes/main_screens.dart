@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:text/app/model/auth/auth_screen.dart';
-import 'package:text/app/model/splash/splash_binding.dart';
 import 'package:text/app/model/splash/splash_screen.dart';
 import '../model/cart/cart_screen.dart';
 import '../model/dish_detailed/dish_detailed_screen.dart';
@@ -15,33 +14,14 @@ class MainScreens {
 
   static final List<GetPage> getPages = [
     /// загрузка
-    GetPage(
-      name: _Paths.load,
-      page: () => const CircularWidget(),
-    ),
-    GetPage(
-      name: _Paths.splash,
-        page: () => const SplashScreen(),
-        binding: SplashBindings()
-    ),
+    GetPage(name: _Paths.load, page: () => const CircularWidget()),
+    GetPage(name: _Paths.splash, page: () => const SplashScreen()),
 
+    GetPage(name: _Paths.appHome, page: () => const GuidingScreen()),
+    GetPage(name: _Paths.auth, page: () => const AuthScreen()),
+    GetPage(name: _Paths.detailsCart, page: () => CartScreen()),
+    GetPage(name: _Paths.homeCart, page: () => CartScreen()),
 
-    GetPage(
-      name: _Paths.appHome,
-      page: () => const GuidingScreen(),
-    ),
-    GetPage(
-      name: _Paths.auth,
-      page: () => const AuthScreen()
-    ),
-    GetPage(
-      name: _Paths.detailsCart,
-      page: () => CartScreen()
-    ),
-    GetPage(
-      name: _Paths.homeCart,
-      page: () => CartScreen(),
-    ),
     GetPage(
       name: _Paths.details,
       page: () => const DishDetailedScreen(),

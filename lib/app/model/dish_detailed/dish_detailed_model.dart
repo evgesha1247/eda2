@@ -6,43 +6,40 @@ import '../cart/cart_model.dart';
 class DishDetailedModel extends GetxController {
   final cartController = Get.put(CartModel());
 
-  Dish? dish;
-  var number = 0;
-  var subTotal = 0.0;
+  late final Dish dish;
+  final _count = 0.obs;
+  final _total = 0.0.obs;
+  get count => _count.value.toString();
+  get total => _total.value.toString();
 
-  void upDataDitalit() {
-    number = cartController.numberDish(dish?.id);
-    subTotal = cartController.subTotal(dish?.id);
-    update();
+  void countUpData() {
+    cartController.cart[dish] != null
+        ? _count.value = cartController.cart[dish]
+        : _count.value = 0;
+    _total.value = dish.price * _count.value;
   }
 
   void sub() {
-    cartController.updataSubOne(dish?.id);
-    upDataDitalit();
-    update();
+    cartController.removeProduct(dish);
+    countUpData();
   }
 
   void add() {
-    cartController.addItem(
-        dishId: dish?.id,
-        price: dish?.price,
-        name: dish?.name,
-      imgUrl: dish?.imgUrl,
-    );
-    upDataDitalit();
-    update();
+    cartController.addProduct(dish);
+    countUpData();
+  }
+
+  @override
+  void onInit() {
+    print('object');
+    dish = Get.arguments['item'];
+    super.onInit();
   }
 
   @override
   void onReady() {
-    dish = Get.arguments['item'];
-    upDataDitalit();
-    update();
+    countUpData();
     super.onReady();
-  }
-
-  void showBack() {
-    Get.back();
   }
 
   void showCart() {
@@ -50,8 +47,8 @@ class DishDetailedModel extends GetxController {
   }
 
   Future<void> toggFovarit() async {
-    dish!.isFavorit = !dish!.isFavorit;
-    await dish!.save();
+    dish.isFavorit = !dish.isFavorit;
+    await dish.save();
     update();
   }
 }

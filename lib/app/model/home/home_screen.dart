@@ -1,11 +1,13 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/widgets/icon/my_icon.dart';
+import 'package:text/app/model/cart/cart_model.dart';
+import 'package:text/app/routes/main_screens.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 import '../../data/object/dish_object.dart';
 import '../../theme/theme_app.dart';
+import '../../widgets/icon/menu_icon.dart';
 import 'home_model.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const _HeaderWidget(),
+            _HeaderWidget(),
             const _PromoSuction(),
             SizedBox(height: ThemeAppSize.kInterval24),
             const _PopularSuction(),
@@ -29,47 +31,48 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _HeaderWidget extends StatelessWidget {
-  const _HeaderWidget();
+  final user = Get.find<HomeModel>().user;
+  final cart = Get.find<CartModel>().cart;
+  _HeaderWidget();
   @override
   Widget build(BuildContext context) {
-    final user = Get.put(HomeModel()).user;
     return Padding(
-      padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: Row(
         children: [
           Row(
             children: [
-              user?.photoURL != null
-                  ? CircleAvatar(
-                      backgroundColor: ThemeAppColor.kFrontColor,
-                      radius: 24,
-                      child: Image(image: NetworkImage(user?.photoURL ?? '')),
-                    )
-                  : const Icon(
-                      Icons.person_outline,
-                      color: ThemeAppColor.kFrontColor,
-                    ),
+              CircleAvatar(
+                radius: 22,
+                backgroundColor: Colors.transparent,
+                child: user?.photoURL != null
+                    ? Image(image: NetworkImage(user?.photoURL ?? ''))
+                    : const MenuButtonIcon(
+                        icon: Icons.person_outline,
+                        colorIcon: ThemeAppColor.kFrontColor,
+                      ),
+              ),
               SizedBox(width: ThemeAppSize.kInterval12),
               Column(
                 children: [
-                  SmallText(
-                    text: 'Welcome',
+                  BigText(
+                    text: user?.displayName != null
+                        ? 'Hello ${user?.displayName ?? ''} '
+                        : 'Welcom back',
                     color: ThemeAppColor.kFrontColor,
-                    size: ThemeAppSize.kFontSize25,
-                  ),
-                  user?.displayName != null
-                      ? BigText(
-                          text: '${user?.displayName ?? ''} ',
-                          color: ThemeAppColor.kFrontColor,
-                          size: ThemeAppSize.kFontSize18,
-                        )
-                      : const SizedBox.shrink(),
+                  )
                 ],
               ),
             ],
           ),
           const Spacer(),
-          const Icon(Icons.notifications_outlined),
+          InkWell(
+            onTap: () => Get.toNamed(MainRoutes.homeCart),
+            child: cart == {}
+                ? const Icon(Icons.notifications_outlined)
+                : const Icon(Icons.notification_add_outlined),
+          ),
+
         ],
       ),
     );
@@ -270,11 +273,11 @@ class _ItemPromoInfoBlok extends StatelessWidget {
             SmallText(text: dish.description),
             SizedBox(height: ThemeAppSize.kInterval12),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [
-                MyIcon(icon: Icons.add, size: 30),
-                MyIcon(icon: Icons.gesture, size: 30),
-                MyIcon(icon: Icons.rtt, size: 30),
+                MenuButtonIcon(icon: Icons.add, statusBorder: true),
+                MenuButtonIcon(icon: Icons.favorite, statusBorder: true),
+                BigText(text: 'see more')
               ],
             ),
           ],
@@ -288,16 +291,11 @@ class _PopularSuction extends StatelessWidget {
   const _PopularSuction({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: ThemeAppSize.kInterval24,
-      ),
-      child: Column(
-        children: const [
-          _PopularTitleWidget(),
-          _PopularListBuilderWidget(),
-        ],
-      ),
+    return Column(
+      children: const [
+        _PopularTitleWidget(),
+        _PopularListBuilderWidget(),
+      ],
     );
   }
 }
@@ -306,20 +304,25 @@ class _PopularTitleWidget extends StatelessWidget {
   const _PopularTitleWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const BigText(
-          text: 'Popular',
-          color: ThemeAppColor.kFrontColor,
-          size: 25,
-        ),
-        SizedBox(width: ThemeAppSize.kInterval5),
-        SmallText(
-          text: '• Food pairing',
-          size: ThemeAppSize.kFontSize22,
-          color: ThemeAppColor.kFrontColor.withOpacity(0.5),
-        ),
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: ThemeAppSize.kInterval24,
+      ),
+      child: Row(
+        children: [
+          const BigText(
+            text: 'Popular',
+            color: ThemeAppColor.kFrontColor,
+            size: 25,
+          ),
+          SizedBox(width: ThemeAppSize.kInterval5),
+          SmallText(
+            text: '• Food pairing',
+            size: ThemeAppSize.kFontSize22,
+            color: ThemeAppColor.kFrontColor.withOpacity(0.5),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -329,8 +332,11 @@ class _PopularListBuilderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Get.put(HomeModel());
-    return SizedBox(
+    return Container(
       height: context.height / 1.2,
+      padding: EdgeInsets.symmetric(
+        horizontal: ThemeAppSize.kInterval24,
+      ),
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
@@ -398,12 +404,14 @@ Widget _itemPopular(int index, HomeModel model) {
                         SizedBox(height: ThemeAppSize.kInterval24),
                         Row(
                           children: [
-                            const MyIcon(icon: Icons.add, size: 30),
-                            SizedBox(width: ThemeAppSize.kInterval24),
-                            const MyIcon(
-                              icon: Icons.favorite_outline,
-                              size: 30,
+                            const MenuButtonIcon(
+                              icon: Icons.add,
+                              statusBorder: true,
                             ),
+                            SizedBox(width: ThemeAppSize.kInterval24),
+                            const MenuButtonIcon(
+                                icon: Icons.favorite_outline,
+                                statusBorder: true),
                           ],
                         ),
                       ],

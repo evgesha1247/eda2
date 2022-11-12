@@ -16,6 +16,7 @@ abstract class ThemeAppColor {
   static const Color kBGColor = Color(0xffFedbd0);
 
   static const Color kAccent2 = Color.fromARGB(255, 113, 80, 84);
+  static const Color grey = Color.fromARGB(255, 160, 113, 118);
   static const Color kAccent = Colors.pink;
   // static const Color kAccent2 = Color.fromARGB(255, 47, 46, 64);
   // static const Color kFrontColor = Color.fromARGB(255, 42, 45, 61);
@@ -41,7 +42,7 @@ abstract class ThemeAppSize {
   // page view
   static double kPageView = kScreensHeight / (height / 275);
   static double kPageViewContainer = kScreensHeight / (height / 190);
-  static double kPageViewTextContainer = kScreensHeight / (height / 160);
+  static double kPageViewTextContainer = kScreensHeight / (height / 165);
   // list view
   static double kListViewImgSize = kScreensHeight / (height / 150);
   static double kListViewTextContainer = kScreensHeight / (height / 120);

@@ -7,10 +7,8 @@ import '../../data/object/dish_object.dart';
 import '../../routes/main_screens.dart';
 
 class HomeModel extends GetxController {
-  late final Future<Box<Dish>> _box;
   User? user;
-
-
+  late final Future<Box<Dish>> _box;
   final _itemsHotDish = <Dish>[];
   final _itemsMainCourse = <Dish>[];
   List<Dish> get itemsHotDish => _itemsHotDish.toList();

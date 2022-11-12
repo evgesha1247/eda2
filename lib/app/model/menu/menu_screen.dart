@@ -7,6 +7,7 @@ import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 import '../../data/object/dish_object.dart';
 import '../../theme/theme_app.dart';
+import '../../widgets/icon/menu_icon.dart';
 import '../cart/cart_model.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -17,10 +18,10 @@ class MenuScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: MediaQuery.of(context).size.width >= 370
             ? [
-                _HederWidget(),
+                const _HederWidget(),
                 //_FilterMenuWidget(),
-                // _MenuBodyWidget(),
-                _Exapmle(),
+                const _MenuBodyWidget(),
+
               ]
             : [const _MenuBodyWidget()],
       ),
@@ -34,30 +35,6 @@ class MenuScreen extends StatelessWidget {
 
 
 
-
-
-class _Exapmle extends StatelessWidget {
-  final cartController = Get.put(CartModel());
-  _Exapmle();
-  @override
-  Widget build(BuildContext context) {
-    return SliverGrid(
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 350.0),
-      delegate: SliverChildBuilderDelegate(
-        childCount: Dish.dish.length,
-        (_, int index) => Padding(
-            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-            child: GestureDetector(
-              onTap: () => cartController.addProduct(Dish.dish[index]),
-              child: Text(
-                Dish.dish[index].name,
-              ),
-            )),
-      ),
-    );
-  }
-}
 
 
 
@@ -90,7 +67,6 @@ class _HederWidget extends StatelessWidget {
     );
   }
 }
-
 class _SearchWidget extends StatelessWidget {
   const _SearchWidget();
   @override
@@ -127,7 +103,6 @@ class _SearchWidget extends StatelessWidget {
     );
   }
 }
-
 class _ButtonToCartWidget extends StatelessWidget {
   const _ButtonToCartWidget({Key? key}) : super(key: key);
   @override
@@ -142,7 +117,6 @@ class _ButtonToCartWidget extends StatelessWidget {
     );
   }
 }
-
 class _FilterMenuWidget extends GetView<MenuModel> {
   const _FilterMenuWidget();
   static const _icon = [
@@ -227,15 +201,18 @@ class _MenuBodyWidget extends StatelessWidget {
 }
 
 class _CartItem extends StatelessWidget {
-  const _CartItem({required this.index});
+final model = Get.find<MenuModel>();
+  final cartModel = Get.put(CartModel());
+  _CartItem({required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
-    final model = Get.find<MenuModel>();
     final item = model.itemsFilter[index];
     return GestureDetector(
       onTap: () => model.showDetail(model.itemsFilter[index]),
       child: Container(
+
+        /// img
         decoration: BoxDecoration(
           color: ThemeAppColor.kFrontColor,
           borderRadius: ThemeAppFun.decoration(),
@@ -245,8 +222,11 @@ class _CartItem extends StatelessWidget {
             image: AssetImage(model.itemsFilter[index].imgUrl),
           ),
         ),
+
+        /// content cart
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               padding: EdgeInsets.all(ThemeAppSize.kInterval12),
@@ -260,6 +240,37 @@ class _CartItem extends StatelessWidget {
               child: BigText(
                 text: '\$ ${item.price}',
                 color: ThemeAppColor.kBGColor,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () => cartModel.addProduct(item),
+                    child: const MenuButtonIcon(
+                      icon: Icons.add,
+                      bg: ThemeAppColor.kFrontColor,
+                    ),
+                  ),
+                  item.isFavorit
+                      ? InkWell(
+                          onTap: () => model.toggFovarit(item),
+                          child: const MenuButtonIcon(
+                            icon: Icons.favorite,
+                            colorIcon: ThemeAppColor.kBGColor,
+                            bg: ThemeAppColor.kFrontColor,
+                          ),
+                        )
+                      : InkWell(
+                          onTap: () => model.toggFovarit(item),
+                          child: const MenuButtonIcon(
+                            icon: Icons.favorite_outline,
+                            bg: ThemeAppColor.kFrontColor,
+                          ),
+                        )
+                ],
               ),
             ),
           ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
-import 'package:text/app/widgets/icon/my_icon.dart';
+import 'package:text/app/widgets/icon/menu_icon.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 import '../../widgets/text/expandable_text.dart';
@@ -11,18 +11,18 @@ class DishDetailedScreen extends StatelessWidget {
   const DishDetailedScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: _DishDetailedBody(),
-      bottomNavigationBar: _DishDetailedBottomBarWidget(),
+      bottomNavigationBar: const _DishDetailedBottomBarWidget(),
     );
   }
 }
 
 class _DishDetailedBody extends StatelessWidget {
-  const _DishDetailedBody();
+  final DishDetailedModel controller = Get.find();
+  _DishDetailedBody();
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DishDetailedModel());
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -36,29 +36,28 @@ class _DishDetailedBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                onTap: () => controller.showBack(),
-                child: const MyIcon(icon: Icons.arrow_back_ios_new),
+                onTap: () => Get.back(),
+                child: const MenuButtonIcon(icon: Icons.arrow_back_ios_new),
               ),
-              GetBuilder<DishDetailedModel>(
-                builder: (c) => GestureDetector(
-                  onTap: () => c.toggFovarit(),
-                  child: c.dish?.isFavorit == true
-                      ? const MyIcon(
-                          icon: Icons.favorite,
-                          iconColor: ThemeAppColor.kAccent,
-                        )
-                      : const MyIcon(icon: Icons.favorite_border),
-                ),
-              ),
+              GestureDetector(
+                  onTap: () => controller.toggFovarit(),
+                  child: GetBuilder<DishDetailedModel>(
+                    builder: (_) => MenuButtonIcon(
+                      icon: controller.dish.isFavorit == true
+                          ? Icons.favorite
+                          : Icons.favorite_outline,
+                      colorIcon: controller.dish.isFavorit == true
+                          ? ThemeAppColor.kAccent
+                          : ThemeAppColor.kBGColor,
+                    ),
+                  )),
             ],
           ),
           flexibleSpace: FlexibleSpaceBar(
-            background: GetBuilder<DishDetailedModel>(
-              builder: (c) => Image.asset(
-                c.dish?.imgUrl ?? ThemeAppImgURL.imgURL1,
-                width: double.maxFinite,
-                fit: BoxFit.cover,
-              ),
+            background: Image.asset(
+              controller.dish.imgUrl,
+              width: double.maxFinite,
+              fit: BoxFit.cover,
             ),
           ),
           bottom: PreferredSize(
@@ -75,12 +74,10 @@ class _DishDetailedBody extends StatelessWidget {
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
-                  child: GetBuilder<DishDetailedModel>(
-                    builder: (c) => BigText(
-                      text: c.dish?.name ?? '404',
-                      color: ThemeAppColor.kFrontColor,
-                      size: ThemeAppSize.kFontSize25,
-                    ),
+                  child: BigText(
+                    text: controller.dish.name,
+                    color: ThemeAppColor.kFrontColor,
+                    size: ThemeAppSize.kFontSize25,
                   ),
                 ),
               ),
@@ -99,10 +96,8 @@ class _DishDetailedBody extends StatelessWidget {
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 1.7,
-                  child: GetBuilder<DishDetailedModel>(
-                    builder: (c) => ExpandableTextWidget(
-                      text: c.dish?.description ?? '404',
-                    ),
+                  child: ExpandableTextWidget(
+                    text: controller.dish.description,
                   ),
                 ),
               ],
@@ -129,7 +124,7 @@ class _DishDetailedBottomBarWidget extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
+        children: [
           _AddAndSubDishWidget(),
           _TotalPriceWidget(),
         ],
@@ -139,11 +134,10 @@ class _DishDetailedBottomBarWidget extends StatelessWidget {
 }
 
 class _TotalPriceWidget extends StatelessWidget {
-  const _TotalPriceWidget();
+  final controller = Get.find<DishDetailedModel>();
+  _TotalPriceWidget();
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DishDetailedModel>();
-
     return GestureDetector(
       onTap: () => controller.showCart(),
       child: Container(
@@ -156,15 +150,9 @@ class _TotalPriceWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-
-
-            GetBuilder(
-              builder: (DishDetailedModel c) => SmallText(
-                text: '${c.subTotal}  | ',
-                  color: ThemeAppColor.kWhite,
-              ),
-
-
+            SmallText(
+              text: '0  | ',
+              color: ThemeAppColor.kWhite,
             ),
             BigText(
               text: 'Go to cart',
@@ -179,11 +167,11 @@ class _TotalPriceWidget extends StatelessWidget {
 }
 
 class _AddAndSubDishWidget extends StatelessWidget {
-  const _AddAndSubDishWidget();
+  final controller = Get.find<DishDetailedModel>();
+
+  _AddAndSubDishWidget();
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DishDetailedModel>();
-
     return Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(
@@ -202,14 +190,10 @@ class _AddAndSubDishWidget extends StatelessWidget {
             ),
           ),
           SizedBox(width: ThemeAppSize.kInterval5),
-          GetBuilder(
-            builder: (DishDetailedModel c) {
-              return SmallText(
-                text: '${c.number}',
+          Obx(() => SmallText(
+                text: controller.count,
                 color: ThemeAppColor.kFrontColor,
-              );
-            },
-          ),
+              )),
           SizedBox(width: ThemeAppSize.kInterval5),
           GestureDetector(
             onTap: () => controller.add(),

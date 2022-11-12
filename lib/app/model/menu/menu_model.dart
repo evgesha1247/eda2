@@ -19,9 +19,6 @@ class MenuModel extends GetxController {
     super.onInit();
   }
 
-
-
-
   Future<void> _setup() async {
     _box = BoxManadger.instance.openBoxDish();
     await _loadAllDish();
