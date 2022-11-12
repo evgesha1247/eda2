@@ -36,11 +36,11 @@ class MainScreens {
     ),
     GetPage(
       name: _Paths.detailsCart,
-      page: () => const CartScreen()
+      page: () => CartScreen()
     ),
     GetPage(
       name: _Paths.homeCart,
-      page: () => const CartScreen(),
+      page: () => CartScreen(),
     ),
     GetPage(
       name: _Paths.details,

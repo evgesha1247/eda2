@@ -7,6 +7,7 @@ import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 import '../../data/object/dish_object.dart';
 import '../../theme/theme_app.dart';
+import '../cart/cart_model.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -15,10 +16,11 @@ class MenuScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: MediaQuery.of(context).size.width >= 370
-            ? const [
+            ? [
                 _HederWidget(),
                 //_FilterMenuWidget(),
-                _MenuBodyWidget(),
+                // _MenuBodyWidget(),
+                _Exapmle(),
               ]
             : [const _MenuBodyWidget()],
       ),
@@ -26,6 +28,42 @@ class MenuScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+class _Exapmle extends StatelessWidget {
+  final cartController = Get.put(CartModel());
+  _Exapmle();
+  @override
+  Widget build(BuildContext context) {
+    return SliverGrid(
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 350.0),
+      delegate: SliverChildBuilderDelegate(
+        childCount: Dish.dish.length,
+        (_, int index) => Padding(
+            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+            child: GestureDetector(
+              onTap: () => cartController.addProduct(Dish.dish[index]),
+              child: Text(
+                Dish.dish[index].name,
+              ),
+            )),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
 
 class _HederWidget extends StatelessWidget {
   const _HederWidget({Key? key}) : super(key: key);

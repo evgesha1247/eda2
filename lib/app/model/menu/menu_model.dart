@@ -16,7 +16,6 @@ class MenuModel extends GetxController {
   @override
   onInit() {
     _setup();
-
     super.onInit();
   }
 
@@ -32,8 +31,6 @@ class MenuModel extends GetxController {
   Future<void> _loadAllDish() async {
     _items = (await _box).values.toList();
     _itemsFilter = _items;
-    //cartNumber = _cartModel.numberItem;
-
     update();
   }
 

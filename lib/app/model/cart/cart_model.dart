@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:get/get.dart';
+import 'package:text/app/data/object/dish_object.dart';
 import 'package:text/app/model/dish_detailed/dish_detailed_model.dart';
 import '../../data/object/cart_object.dart';
 
@@ -144,5 +145,15 @@ class CartModel extends GetxController {
   void showBack() {
     Get.put(DishDetailedModel()).upDataDitalit();
     Get.back();
+  }
+
+  ///////////
+  ///
+  ///
+  var _cart = {}.obs;
+  get cart => _cart;
+  void addProduct(Dish product) {
+    _cart.containsKey(product) ? _cart[product] += 1 : _cart[product] = 1;
+    print('good');
   }
 }

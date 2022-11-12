@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:text/app/theme/theme_app.dart';
 part 'dish_object.g.dart';
 
 abstract class DishCategory {
@@ -38,4 +40,31 @@ class Dish extends HiveObject {
     this.isHot = false,
     this.isFavorit = false,
   });
+
+  static List<Dish> dish = [
+    Dish(
+      name: 'name',
+      id: 'qw',
+      price: 100,
+      imgUrl: ThemeAppImgURL.imgURL1,
+      description: 'description',
+      category: DishCategory.mainCourse,
+    ),
+    Dish(
+      name: 'name1',
+      id: 'qw2',
+      price: 100,
+      imgUrl: ThemeAppImgURL.imgURL1,
+      description: 'description',
+      category: DishCategory.mainCourse,
+    ),
+    Dish(
+      name: 'name2',
+      id: 'qw3',
+      price: 100,
+      imgUrl: ThemeAppImgURL.imgURL1,
+      description: 'description',
+      category: DishCategory.mainCourse,
+    )
+  ];
 }

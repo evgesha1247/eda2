@@ -5,58 +5,91 @@ import 'package:text/app/theme/theme_app.dart';
 import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 
+import '../../data/object/dish_object.dart';
 import 'cart_model.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key}) : super(key: key);
+
+  final controller = Get.find<CartModel>();
+  CartScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Widget _cartItem({
+      required CartModel model,
+      required Dish product,
+      required int index,
+      required int quantity,
+    }) {
+      return ListTile(
+        title: Text(product.name),
+        leading: Text('$quantity'),
+      );
+    }
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          child: Column(
-            children: [
-              Stack(
-                alignment: Alignment.center,
-                children: const [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: _CartButtonBack(),
-                  ),
-                  BigText(
-                    text: 'Cart',
-                    color: ThemeAppColor.kFrontColor,
-                  )
-                ],
-              ),
-              SizedBox(height: ThemeAppSize.kInterval12),
-              Expanded(
-                child: GetBuilder<CartModel>(
-                  builder: (c) {
-                    return ListView.builder(
-                      itemCount: c.cartItem.length,
-                      itemBuilder: (context, index) {
-                        return _cartRows(index: index);
-                      },
-                    );
-                  },
-                ),
-              ),
-              SizedBox(height: ThemeAppSize.kInterval12),
-              const _BottnCart(),
-            ],
-          ),
+      appBar: AppBar(),
+      body: SizedBox(
+        height: 600,
+        child: ListView.builder(
+          itemCount: controller.cart.length,
+          itemBuilder: (BuildContext context, int index) {
+            return _cartItem(
+              model: controller,
+              product: controller.cart.keys.toList()[index],
+              index: index,
+              quantity: controller.cart.values.toList()[index],
+            );
+          },
         ),
       ),
     );
+
+
+
+    // Scaffold(
+    //   body: SafeArea(
+    //     child: Padding(
+    //       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+    //       child: Column(
+    //         children: [
+    //           Stack(
+    //             alignment: Alignment.center,
+    //             children: const [
+    //               Align(
+    //                 alignment: Alignment.centerLeft,
+    //                 child: _CartButtonBack(),
+    //               ),
+    //               BigText(
+    //                 text: 'Cart',
+    //                 color: ThemeAppColor.kFrontColor,
+    //               )
+    //             ],
+    //           ),
+    //           SizedBox(height: ThemeAppSize.kInterval12),
+    //           Expanded(
+    //             child: GetBuilder<CartModel>(
+    //               builder: (c) {
+    //                 return ListView.builder(
+    //                   itemCount: c.cartItem.length,
+    //                   itemBuilder: (context, index) {
+    //                     return _cartRows(index: index);
+    //                   },
+    //                 );
+    //               },
+    //             ),
+    //           ),
+    //           SizedBox(height: ThemeAppSize.kInterval12),
+    //           const _BottnCart(),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   Widget _cartRows({required int index}) {
     final controller = Get.find<CartModel>();
     final img = controller.cartItem.values.elementAt(index).imgUrl;
     final dishkey = controller.cartItem.entries.toList()[index].key;
-
     return Padding(
       padding: EdgeInsets.only(bottom: ThemeAppSize.kInterval12),
       child: Slidable(
