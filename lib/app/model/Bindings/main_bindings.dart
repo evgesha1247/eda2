@@ -10,7 +10,7 @@ import '../splash/splash_model.dart';
 class MainBindings extends Bindings {
   @override
   void dependencies() {
-    Get.put<SplashModel>(SplashModel());
+    Get.lazyPut<SplashModel>(() => SplashModel());
     Get.lazyPut<GuidingScreenModel>(() => GuidingScreenModel());
     Get.lazyPut<HomeModel>(() => HomeModel());
     Get.lazyPut<MenuModel>(() => MenuModel());

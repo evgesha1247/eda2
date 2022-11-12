@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../theme/theme_app.dart';
 
 class MenuButtonIcon extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final Color colorIcon;
   final Color bg;
   final bool statusBorder;
@@ -28,7 +28,7 @@ class MenuButtonIcon extends StatelessWidget {
         padding: EdgeInsets.all(
           sizePading == 0 ? ThemeAppSize.kInterval5 : sizePading,
         ),
-        child: Icon(icon, color: colorIcon),
+        child: icon,
       ),
     );
   }

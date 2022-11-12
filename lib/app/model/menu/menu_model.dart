@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -12,7 +13,6 @@ class MenuModel extends GetxController {
   var cartNumber = 0.obs;
   List<Dish> get items => _items;
   List<Dish> get itemsFilter => _itemsFilter.obs;
-
   @override
   onInit() {
     _setup();
@@ -48,8 +48,7 @@ class MenuModel extends GetxController {
     if (text.isNotEmpty) {
       _itemsFilter = [];
       _itemsFilter = _items
-          .where((element) =>
-              element.name.toLowerCase().contains(RegExp(text.toLowerCase())))
+          .where((item) => item.name.toLowerCase().contains(text.toLowerCase()))
           .toList();
     } else {
       _itemsFilter = _items;
@@ -65,4 +64,5 @@ class MenuModel extends GetxController {
   void showDetail(Dish item) {
     Get.toNamed(MainRoutes.details, arguments: {'item': item});
   }
+
 }

@@ -13,12 +13,12 @@ abstract class MainRoutes {
 
 abstract class _Paths {
   _Paths._();
-  static const splash = '/splash';
+  static const splash = '/load/splash';
   static const load = '/load';
-  static const appHome = '/appHome';
-  static const auth = '/auth';
-  static const details = '/appHome/details';
 
-  static const detailsCart = '/appHome/details/cart';
-  static const homeCart = '/appHome/cart';
+  static const auth = '/load/auth';
+  static const appHome = '/load/auth/splash/appHome';
+  static const details = '/load/splash/appHome/details';
+  static const detailsCart = '/load/splash/appHome/details/cart';
+  static const homeCart = '/load/splash/appHome/cart';
 }

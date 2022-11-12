@@ -31,7 +31,6 @@ class DishDetailedModel extends GetxController {
 
   @override
   void onInit() {
-    print('object');
     dish = Get.arguments['item'];
     super.onInit();
   }

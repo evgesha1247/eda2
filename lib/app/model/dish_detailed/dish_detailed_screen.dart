@@ -37,15 +37,16 @@ class _DishDetailedBody extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () => Get.back(),
-                child: const MenuButtonIcon(icon: Icons.arrow_back_ios_new),
+                child:
+                    const MenuButtonIcon(icon: Icon(Icons.arrow_back_ios_new)),
               ),
               GestureDetector(
                   onTap: () => controller.toggFovarit(),
                   child: GetBuilder<DishDetailedModel>(
                     builder: (_) => MenuButtonIcon(
                       icon: controller.dish.isFavorit == true
-                          ? Icons.favorite
-                          : Icons.favorite_outline,
+                          ? const Icon(Icons.favorite)
+                          : const Icon(Icons.favorite_outline),
                       colorIcon: controller.dish.isFavorit == true
                           ? ThemeAppColor.kAccent
                           : ThemeAppColor.kBGColor,
@@ -148,18 +149,12 @@ class _TotalPriceWidget extends StatelessWidget {
             radius: ThemeAppSize.kRadius12,
           ),
         ),
-        child: Row(
-          children: [
-            SmallText(
-              text: '0  | ',
-              color: ThemeAppColor.kWhite,
-            ),
-            BigText(
-              text: 'Go to cart',
-              color: ThemeAppColor.kWhite,
-              size: ThemeAppSize.kFontSize20,
-            ),
-          ],
+        child: Obx(
+          () => BigText(
+            text: '${controller.total} | Go to cart',
+            color: ThemeAppColor.kWhite,
+            size: ThemeAppSize.kFontSize20,
+          ),
         ),
       ),
     );

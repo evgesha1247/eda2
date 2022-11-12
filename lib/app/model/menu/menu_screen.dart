@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/model/menu/menu_model.dart';
@@ -7,7 +6,7 @@ import 'package:text/app/widgets/text/big_text.dart';
 import 'package:text/app/widgets/text/small_text.dart';
 import '../../data/object/dish_object.dart';
 import '../../theme/theme_app.dart';
-import '../../widgets/icon/menu_icon.dart';
+import '../../widgets/icon/anumated_icon_favorit.dart';
 import '../cart/cart_model.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -21,26 +20,12 @@ class MenuScreen extends StatelessWidget {
                 const _HederWidget(),
                 //_FilterMenuWidget(),
                 const _MenuBodyWidget(),
-
               ]
             : [const _MenuBodyWidget()],
       ),
-
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 class _HederWidget extends StatelessWidget {
   const _HederWidget({Key? key}) : super(key: key);
@@ -67,6 +52,7 @@ class _HederWidget extends StatelessWidget {
     );
   }
 }
+
 class _SearchWidget extends StatelessWidget {
   const _SearchWidget();
   @override
@@ -103,6 +89,7 @@ class _SearchWidget extends StatelessWidget {
     );
   }
 }
+
 class _ButtonToCartWidget extends StatelessWidget {
   const _ButtonToCartWidget({Key? key}) : super(key: key);
   @override
@@ -117,6 +104,7 @@ class _ButtonToCartWidget extends StatelessWidget {
     );
   }
 }
+
 class _FilterMenuWidget extends GetView<MenuModel> {
   const _FilterMenuWidget();
   static const _icon = [
@@ -192,7 +180,7 @@ class _MenuBodyWidget extends StatelessWidget {
           childCount: c.itemsFilter.length,
           (_, int index) => Padding(
             padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-            child: _CartItem(index: index),
+            child: _CardItem(index: index),
           ),
         ),
       ),
@@ -200,81 +188,74 @@ class _MenuBodyWidget extends StatelessWidget {
   }
 }
 
-class _CartItem extends StatelessWidget {
-final model = Get.find<MenuModel>();
-  final cartModel = Get.put(CartModel());
-  _CartItem({required this.index});
+class _CardItem extends StatelessWidget {
+  final model = Get.find<MenuModel>();
+  final cartModel = Get.find<CartModel>();
+  _CardItem({required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
     final item = model.itemsFilter[index];
     return GestureDetector(
       onTap: () => model.showDetail(model.itemsFilter[index]),
-      child: Container(
-
-        /// img
-        decoration: BoxDecoration(
-          color: ThemeAppColor.kFrontColor,
-          borderRadius: ThemeAppFun.decoration(),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            opacity: 0.7,
-            image: AssetImage(model.itemsFilter[index].imgUrl),
-          ),
-        ),
-
-        /// content cart
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-              decoration: BoxDecoration(
-                color: ThemeAppColor.kFrontColor,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(ThemeAppSize.kRadius12),
-                  bottomLeft: Radius.circular(ThemeAppSize.kRadius20),
-                ),
-              ),
-              child: BigText(
-                text: '\$ ${item.price}',
-                color: ThemeAppColor.kBGColor,
+      child: Stack(
+        children: [
+          /// img
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: ThemeAppColor.kFrontColor,
+              borderRadius: ThemeAppFun.decoration(),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                opacity: 0.7,
+                image: AssetImage(model.itemsFilter[index].imgUrl),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () => cartModel.addProduct(item),
-                    child: const MenuButtonIcon(
-                      icon: Icons.add,
-                      bg: ThemeAppColor.kFrontColor,
+
+            /// content cart
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                  decoration: BoxDecoration(
+                    color: ThemeAppColor.kFrontColor,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(ThemeAppSize.kRadius12),
+                      bottomLeft: Radius.circular(ThemeAppSize.kRadius20),
                     ),
                   ),
-                  item.isFavorit
-                      ? InkWell(
-                          onTap: () => model.toggFovarit(item),
-                          child: const MenuButtonIcon(
-                            icon: Icons.favorite,
-                            colorIcon: ThemeAppColor.kBGColor,
-                            bg: ThemeAppColor.kFrontColor,
-                          ),
-                        )
-                      : InkWell(
-                          onTap: () => model.toggFovarit(item),
-                          child: const MenuButtonIcon(
-                            icon: Icons.favorite_outline,
-                            bg: ThemeAppColor.kFrontColor,
-                          ),
-                        )
-                ],
-              ),
+                  child: BigText(
+                    text: '\$ ${item.price}',
+                    color: ThemeAppColor.kBGColor,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Obx(() => AnimatedIconWidget(
+                            currIndex:
+                                (cartModel.cart[item] != null ? 0 : 1).obs,
+                            fun: () => cartModel.addProduct(item),
+                            widget1: const Icon(Icons.done),
+                            widget2: const Icon(Icons.add),
+                          )),
+                      AnimatedIconWidget(
+                        currIndex: (item.isFavorit ? 0 : 1).obs,
+                        fun: () => model.toggFovarit(item),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

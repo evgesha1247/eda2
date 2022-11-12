@@ -15,7 +15,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
     ).then((value) => Get.put(AuthRepo()));
   } catch (e) {
-    GetPlatform.isDesktop ? Get.put(SplashModel()) : null;
+    // GetPlatform.isDesktop ? Get.put(SplashModel()) : null;
   }
   await Hive.initFlutter();
   runApp(const MyAppWidget());

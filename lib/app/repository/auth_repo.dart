@@ -19,6 +19,7 @@ class AuthRepo extends GetxController {
   }
 
   _setScreen(User? user) {
+
     user == null
         ? Get.offNamed(MainRoutes.auth)
         : Get.toNamed(MainRoutes.splash);

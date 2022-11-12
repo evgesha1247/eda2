@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:text/app/theme/theme_app.dart';
 part 'dish_object.g.dart';

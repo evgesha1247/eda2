@@ -142,7 +142,7 @@ class _CartContent extends StatelessWidget {
                     SmallText(text: product.price.toString()),
                   ],
                 ),
-                SmallText(text: 'ₓ${count}'),
+                SmallText(text: 'ₓ$count'),
               ],
             ),
           ],
