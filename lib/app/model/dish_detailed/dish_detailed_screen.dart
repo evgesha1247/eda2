@@ -38,16 +38,17 @@ class _DishDetailedBody extends StatelessWidget {
               GestureDetector(
                 onTap: () => Get.back(),
                 child:
-                    const MenuButtonIcon(icon: Icon(Icons.arrow_back_ios_new)),
+                    const CustomButtonIcon(
+                    icon: Icon(Icons.arrow_back_ios_new)),
               ),
               GestureDetector(
                   onTap: () => controller.toggFovarit(),
                   child: GetBuilder<DishDetailedModel>(
-                    builder: (_) => MenuButtonIcon(
+                    builder: (_) => CustomButtonIcon(
                       icon: controller.dish.isFavorit == true
                           ? const Icon(Icons.favorite)
                           : const Icon(Icons.favorite_outline),
-                      colorIcon: controller.dish.isFavorit == true
+                      colorBorder: controller.dish.isFavorit == true
                           ? ThemeAppColor.kAccent
                           : ThemeAppColor.kBGColor,
                     ),

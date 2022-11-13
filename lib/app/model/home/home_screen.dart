@@ -1,7 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:text/app/model/cart/cart_model.dart';
 import 'package:text/app/routes/main_screens.dart';
 import 'package:text/app/widgets/text/big_text.dart';
@@ -10,6 +9,8 @@ import '../../data/object/dish_object.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/icon/anumated_icon_favorit.dart';
 import '../../widgets/icon/menu_icon.dart';
+import '../dish_detailed/dish_detailed_model.dart';
+import '../guiding/guiding_model.dart';
 import '../menu/menu_model.dart';
 import 'home_model.dart';
 
@@ -36,6 +37,7 @@ class HomeScreen extends StatelessWidget {
 class _HeaderWidget extends StatelessWidget {
   final user = Get.find<HomeModel>().user;
   final cart = Get.find<CartModel>().cart;
+  final pageModel = Get.find<GuidingScreenModel>();
   _HeaderWidget();
   @override
   Widget build(BuildContext context) {
@@ -45,15 +47,22 @@ class _HeaderWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                radius: 22,
-                backgroundColor: Colors.transparent,
-                child: user?.photoURL != null
-                    ? Image(image: NetworkImage(user?.photoURL ?? ''))
-                    : const MenuButtonIcon(
-                        icon: Icon(Icons.person_outline),
-                        colorIcon: ThemeAppColor.kFrontColor,
-                      ),
+              GestureDetector(
+                onTap: () => pageModel.setCurrentIndexTab(3),
+                child: CircleAvatar(
+                  radius: 22,
+                  backgroundColor: Colors.transparent,
+                  child: user?.photoURL != null
+                      ? Image(image: NetworkImage(user?.photoURL ?? ''))
+                      : const CustomButtonIcon(
+                          icon: Icon(
+                            Icons.person_outline,
+                            color: ThemeAppColor.kFrontColor,
+                          ),
+                          colorBorder: ThemeAppColor.kFrontColor,
+                          statusBorder: true,
+                        ),
+                ),
               ),
               SizedBox(width: ThemeAppSize.kInterval12),
               Column(
@@ -69,12 +78,12 @@ class _HeaderWidget extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          InkWell(
-            onTap: () => Get.toNamed(MainRoutes.homeCart),
-            child: cart == {}
-                ? const Icon(Icons.notifications_outlined)
-                : const Icon(Icons.notification_add_outlined),
-          ),
+          Obx(() => GestureDetector(
+                onTap: () => Get.toNamed(MainRoutes.homeCart),
+                child: cart == {}.obs
+                    ? const Icon(Icons.notifications_outlined)
+                    : const Icon(Icons.notification_add_outlined),
+              )),
         ],
       ),
     );
@@ -273,20 +282,44 @@ class _ItemPromoInfoBlok extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Obx(() => AnimatedIconWidget(
-                      currIndex:
-                          (cartController.cart[item] != null ? 0 : 1).obs,
-                      fun: () => cartController.addProduct(item),
-                      widget1: const Icon(Icons.done),
-                      widget2: const Icon(Icons.add),
-                    )),
+                Obx(
+                  () => AnimatedIconWidget(
+                    currIndex: (cartController.cart[item] != null ? 0 : 1).obs,
+                    fun: () => cartController.addAndClearOneProduct(item),
+                    widget1: const CustomButtonIcon(
+                      icon: Icon(
+                        Icons.done,
+                        color: Colors.green,
+                      ),
+                      statusBorder: true,
+                      colorBorder: Colors.green,
+                    ),
+                    widget2: const Icon(
+                      Icons.add,
+                      color: ThemeAppColor.grey,
+                    ),
+                  ),
+                ),
                 GetBuilder<MenuModel>(
                   builder: (_) {
                     return AnimatedIconWidget(
                       currIndex:
                           (menuController.items[index].isFavorit ? 0 : 1).obs,
-                      fun: () => menuController.toggFovarit(
-                        menuController.items[index],
+                      fun: () => menuController
+                          .toggFovarit(menuController.items[index]),
+                      widget1: const CustomButtonIcon(
+                        icon: Icon(
+                          Icons.favorite,
+                          color: ThemeAppColor.kAccent,
+                        ),
+                        statusBorder: true,
+                        colorBorder: ThemeAppColor.kAccent,
+                      ),
+                      widget2: const CustomButtonIcon(
+                        icon: Icon(
+                          Icons.favorite_outline,
+                          color: ThemeAppColor.grey,
+                        ),
                       ),
                     );
                   },
@@ -310,11 +343,15 @@ class _PopularSuction extends StatelessWidget {
   const _PopularSuction({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const _PopularTitleWidget(),
-        _PopularListBuilderWidget(),
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
+      child: Column(
+        children: [
+          const _PopularTitleWidget(),
+          SizedBox(height: ThemeAppSize.kInterval12),
+          _PopularListBuilderWidget(),
+        ],
+      ),
     );
   }
 }
@@ -323,25 +360,20 @@ class _PopularTitleWidget extends StatelessWidget {
   const _PopularTitleWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: ThemeAppSize.kInterval24,
-      ),
-      child: Row(
-        children: [
-          const BigText(
-            text: 'Popular',
-            color: ThemeAppColor.kFrontColor,
-            size: 25,
-          ),
-          SizedBox(width: ThemeAppSize.kInterval5),
-          SmallText(
-            text: '• Food pairing',
-            size: ThemeAppSize.kFontSize22,
-            color: ThemeAppColor.kFrontColor.withOpacity(0.5),
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        const BigText(
+          text: 'Popular',
+          color: ThemeAppColor.kFrontColor,
+          size: 25,
+        ),
+        SizedBox(width: ThemeAppSize.kInterval5),
+        SmallText(
+          text: '• Food pairing',
+          size: ThemeAppSize.kFontSize22,
+          color: ThemeAppColor.kFrontColor.withOpacity(0.5),
+        ),
+      ],
     );
   }
 }
@@ -351,117 +383,75 @@ class _PopularListBuilderWidget extends StatelessWidget {
   _PopularListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Widget itemPopular(
-      int index,
-    ) {
+    Widget itemPopular(int index) {
       var selected = controller.selected[index].obs;
       final item = controller.itemsMainCourse[index];
       return GestureDetector(
         onTap: () => selected.value = !selected.value,
         onLongPress: () => controller.showDetail(item),
-        child: Obx(() => Stack(
-              children: [
-                // bg
-                selected.value
-                    ? Container(
-                        constraints: BoxConstraints(
-                            minHeight: ThemeAppSize.kListViewImgSize),
-                        decoration: BoxDecoration(
-                          color: ThemeAppColor.kFrontColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(ThemeAppSize.kRadius20),
-                          ),
+        child: Obx(
+          () => Stack(
+            children: [
+              Positioned(
+                bottom: selected.value ? null : ThemeAppSize.kInterval12,
+                top: selected.value ? null : ThemeAppSize.kInterval12,
+                left: selected.value ? null : 0,
+                right: selected.value ? null : 30,
+                child: Container(
+                  height: ThemeAppSize.kListViewImgSize,
+                  padding: EdgeInsets.only(
+                      left: ThemeAppSize.kListViewImgSize +
+                          ThemeAppSize.kInterval12),
+                  decoration: BoxDecoration(
+                    color: ThemeAppColor.kFrontColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(ThemeAppSize.kRadius20),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        BigText(text: item.name),
+                        SizedBox(height: ThemeAppSize.kInterval12),
+                        SmallText(
+                          maxLines: 3,
+                          text: !selected.value
+                              ? '${item.price}\$'
+                              : '${item.description}\$',
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: ThemeAppSize.kListViewImgSize +
-                                ThemeAppSize.kInterval24,
-                            top: ThemeAppSize.kInterval12,
-                            bottom: ThemeAppSize.kInterval12,
-                            right: ThemeAppSize.kInterval12,
-                          ),
-                          child: Column(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  BigText(text: item.name),
-                                  SmallText(text: item.description),
-                                ],
-                              ),
-                              SizedBox(height: ThemeAppSize.kInterval24),
-                              Row(
-                                children: [
-                                  const MenuButtonIcon(
-                                    icon: Icon(Icons.add),
-                                    statusBorder: true,
-                                  ),
-                                  SizedBox(width: ThemeAppSize.kInterval24),
-                                  const MenuButtonIcon(
-                                      icon: Icon(Icons.favorite_outline),
-                                      statusBorder: true),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    : Positioned(
-                        bottom: ThemeAppSize.kInterval12,
-                        top: ThemeAppSize.kInterval12,
-                        left: 0,
-                        right: 30,
-                        child: Container(
-                          padding: EdgeInsets.only(
-                            left: ThemeAppSize.kListViewImgSize +
-                                ThemeAppSize.kInterval12,
-                            top: ThemeAppSize.kInterval12,
-                            bottom: ThemeAppSize.kInterval12,
-                            right: ThemeAppSize.kInterval12,
-                          ),
-                          decoration: BoxDecoration(
-                            color: ThemeAppColor.kAccent2,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(ThemeAppSize.kRadius20),
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              BigText(text: item.name),
-                              SmallText(text: '${item.price}\$'),
-                            ],
-                          ),
-                        ),
-                      ),
-                // img
-                Positioned(
-                  top: selected.value ? ThemeAppSize.kInterval12 : null,
-                  bottom: selected.value ? ThemeAppSize.kInterval12 : null,
-                  left: selected.value ? ThemeAppSize.kInterval12 : null,
-                  child: Container(
-                    width: ThemeAppSize.kListViewImgSize,
-                    height: ThemeAppSize.kListViewImgSize,
-                    decoration: BoxDecoration(
-                      color: ThemeAppColor.kAccent2,
-                      borderRadius: ThemeAppFun.decoration(),
-                      image: DecorationImage(
-                        fit: BoxFit.fitHeight,
-                        image: AssetImage(item.imgUrl),
-                      ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            )),
+              ),
+              // img
+              Positioned(
+                top: selected.value ? ThemeAppSize.kInterval12 : null,
+                bottom: selected.value ? ThemeAppSize.kInterval12 : null,
+                left: selected.value ? ThemeAppSize.kInterval12 : null,
+                child: Container(
+                  width: ThemeAppSize.kListViewImgSize,
+                  height: ThemeAppSize.kListViewImgSize,
+                  decoration: BoxDecoration(
+                    color: ThemeAppColor.kAccent2,
+                    borderRadius: ThemeAppFun.decoration(),
+                    image: DecorationImage(
+                      fit: BoxFit.fitHeight,
+                      image: AssetImage(item.imgUrl),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       );
     }
 
-    return Container(
+    return SizedBox(
       height: context.height / 1.2,
-      padding: EdgeInsets.symmetric(
-        horizontal: ThemeAppSize.kInterval24,
-      ),
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
@@ -474,9 +464,8 @@ class _PopularListBuilderWidget extends StatelessWidget {
                 itemCount: controller.itemsMainCourse.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  return itemPopular(index);
-                },
+                itemBuilder: (BuildContext context, int index) =>
+                    itemPopular(index),
                 separatorBuilder: (BuildContext context, int index) =>
                     SizedBox(height: ThemeAppSize.kInterval12),
               ),

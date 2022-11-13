@@ -19,11 +19,11 @@ class AnimatedIconWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => fun != null ? fun!() : null,
       child: Obx(() => AnimatedSwitcher(
-          duration: const Duration(milliseconds: 350),
-          transitionBuilder: (child, anim) => RotationTransition(
-                turns: child.key == const ValueKey('1')
-                    ? Tween<double>(begin: 1, end: 0).animate(anim)
-                    : Tween<double>(begin: 0, end: 1).animate(anim),
+          duration: const Duration(milliseconds: 320),
+          transitionBuilder: (child, anim) => ScaleTransition(
+                scale: child.key == const ValueKey('1')
+                    ? Tween<double>(begin: 1, end: 1).animate(anim)
+                    : Tween<double>(begin: 1, end: 1).animate(anim),
                 child: ScaleTransition(scale: anim, child: child),
               ),
           child: currIndex.value == 0

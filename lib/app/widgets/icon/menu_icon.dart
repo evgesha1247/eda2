@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../theme/theme_app.dart';
 
-class MenuButtonIcon extends StatelessWidget {
+class CustomButtonIcon extends StatelessWidget {
   final Widget icon;
-  final Color colorIcon;
+  final Color colorBorder;
   final Color bg;
   final bool statusBorder;
   final double sizePading;
-  const MenuButtonIcon({
+  const CustomButtonIcon({
     required this.icon,
     super.key,
-    this.colorIcon = ThemeAppColor.kBGColor,
+    this.colorBorder = ThemeAppColor.kBGColor,
     this.bg = Colors.transparent,
     this.statusBorder = false,
     this.sizePading = 0,
@@ -22,7 +22,8 @@ class MenuButtonIcon extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
-        border: statusBorder ? Border.all(color: colorIcon, width: 0.5) : null,
+        border:
+            statusBorder ? Border.all(color: colorBorder, width: 0.8) : null,
       ),
       child: Padding(
         padding: EdgeInsets.all(

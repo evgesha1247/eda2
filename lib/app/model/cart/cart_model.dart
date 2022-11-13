@@ -54,8 +54,20 @@ class CartModel extends GetxController {
         duration: const Duration(milliseconds: 700),
       );
     }
+  }
+
+  void addAndClearOneProduct(Dish product) {
+    if (_cart.containsKey(product)) {
+      _cart.removeWhere((key, value) => key == product);
+    } else if (!_cart.containsKey(product)) {
+      _cart[product] = 1;
+    }
+
+
 
   }
+
+
 
   void removeProduct(Dish product) {
     (_cart.containsKey(product) && _cart[product] == 1)
