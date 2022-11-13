@@ -18,7 +18,7 @@ class MenuScreen extends StatelessWidget {
         slivers: MediaQuery.of(context).size.width >= 370
             ? [
                 const _HederWidget(),
-                //_FilterMenuWidget(),
+                _FilterMenuWidget(),
                 const _MenuBodyWidget(),
               ]
             : [const _MenuBodyWidget()],
@@ -113,52 +113,43 @@ class _FilterMenuWidget extends GetView<MenuModel> {
     Icons.aspect_ratio,
     Icons.aspect_ratio,
   ];
-  static const _dishCategory = [
+  static const _dishCategory = <String>[
     DishCategory.dessert,
     DishCategory.drinkables,
     DishCategory.mainCourse,
+    DishCategory.mainCourse,
+    DishCategory.mainCourse,
+    DishCategory.mainCourse,
+
     'reset'
   ];
+
   @override
   Widget build(BuildContext context) {
-    Widget itemFilterBtn({required int index}) {
-      return GestureDetector(
-        onTap: () => controller.filter(dishCategory: _dishCategory[index]),
-        child: Padding(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval5),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: ThemeAppFun.decoration(radius: 12),
-              color: ThemeAppColor.kFrontColor,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(_icon[index], color: ThemeAppColor.kBGColor),
-                SmallText(
-                  text: _dishCategory[index],
-                  size: ThemeAppSize.kFontSize16,
-                  color: ThemeAppColor.kBGColor,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
+    var defaultChoiceIndex = (_dishCategory.length - 1).obs;
     return SliverToBoxAdapter(
-      child: SizedBox(
-        height: ThemeAppSize.kMenuFilter,
-        child: ListView.builder(
-          prototypeItem: SizedBox(
-            width: ThemeAppSize.kNebuFilterItemContaiter,
-          ),
+      child: Container(
+        height: 50,
+        child: ListView(
           scrollDirection: Axis.horizontal,
-          itemCount: _dishCategory.length,
-          itemBuilder: (BuildContext context, int index) => itemFilterBtn(
-            index: index,
+          children: List.generate(
+            _dishCategory.length,
+            (index) {
+              return Obx(
+                () => ChoiceChip(
+                  label: Text(_dishCategory[index]),
+                  selected: defaultChoiceIndex.value == index,
+                  selectedColor: ThemeAppColor.kAccent,
+                  onSelected: (value) {
+                    defaultChoiceIndex.value =
+                        value ? index : defaultChoiceIndex.value;
+                    controller.filter(
+                      dishCategory: _dishCategory[defaultChoiceIndex.value],
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -237,7 +228,6 @@ class _CardItem extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       Obx(() => AnimatedIconWidget(
                             currIndex:
                                 (cartModel.cart[item] != null ? 0 : 1).obs,

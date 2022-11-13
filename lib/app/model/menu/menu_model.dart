@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -10,6 +10,11 @@ class MenuModel extends GetxController {
   late final Future<Box<Dish>> _box;
   var _items = <Dish>[];
   var _itemsFilter = <Dish>[];
+
+
+
+
+
   var cartNumber = 0.obs;
   List<Dish> get items => _items;
   List<Dish> get itemsFilter => _itemsFilter.obs;
@@ -32,6 +37,7 @@ class MenuModel extends GetxController {
   }
 
   void filter({String dishCategory = ''}) {
+
     if (dishCategory != 'reset') {
       _itemsFilter = [];
       _items

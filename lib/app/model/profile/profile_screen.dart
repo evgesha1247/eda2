@@ -1,17 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../repository/auth_repo.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   User? user;
-  ProfileScreen({super.key}) {
+  @override
+  void initState() {
     try {
       user = FirebaseAuth.instance.currentUser as User;
     } catch (e) {
       print('user is null !!!');
       user = null;
     }
+    super.initState();
   }
 
   @override

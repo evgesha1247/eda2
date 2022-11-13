@@ -46,23 +46,27 @@ class _HeaderWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              user?.photoURL != null
-                  ? GestureDetector(
+              GestureDetector(
                       onTap: () => pageModel.setCurrentIndexTab(3),
                       child: CircleAvatar(
                         radius: 22,
                         backgroundColor: Colors.transparent,
-                        backgroundImage: NetworkImage(user?.photoURL ?? ''),
-                      ),
-                    )
-                  : const CustomButtonIcon(
+                  backgroundImage: user?.photoURL == null
+                      ? null
+                      : NetworkImage(user?.photoURL ?? ''),
+                  child: user?.photoURL == null
+                      ? const CustomButtonIcon(
                       icon: Icon(
                         Icons.person_outline,
                         color: ThemeAppColor.kFrontColor,
                       ),
                       colorBorder: ThemeAppColor.kFrontColor,
                       statusBorder: true,
-                    ),
+                        )
+                      : null,
+                ),
+              ),
+
               SizedBox(width: ThemeAppSize.kInterval12),
               Column(
                 children: [
