@@ -164,7 +164,6 @@ class _TotalPriceWidget extends StatelessWidget {
 
 class _AddAndSubDishWidget extends StatelessWidget {
   final controller = Get.find<DishDetailedModel>();
-
   _AddAndSubDishWidget();
   @override
   Widget build(BuildContext context) {

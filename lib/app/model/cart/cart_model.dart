@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:text/app/data/object/dish_object.dart';
+import 'package:text/app/model/dish_detailed/dish_detailed_model.dart';
 class CartModel extends GetxController {
+  //final DishDetailedModel detalController = Get.find<DishDetailedModel>();
 
   final _delivery = 5.0;
   double get delivery => _delivery;
@@ -56,18 +58,14 @@ class CartModel extends GetxController {
     }
   }
 
-  void addAndClearOneProduct(Dish product) {
+  void addOneAndClearProduct(Dish product) {
     if (_cart.containsKey(product)) {
       _cart.removeWhere((key, value) => key == product);
     } else if (!_cart.containsKey(product)) {
       _cart[product] = 1;
     }
-
-
-
+    update();
   }
-
-
 
   void removeProduct(Dish product) {
     (_cart.containsKey(product) && _cart[product] == 1)
@@ -77,5 +75,13 @@ class CartModel extends GetxController {
             : null;
   }
 
+  void showBackDitailed() {
+    if (Get.currentRoute == '/load/splash/appHome/details/cart') {
+      Get.find<DishDetailedModel>().countUpData();
+      Get.back();
+    } else {
+      Get.back();
+    }
+  }
 
 }

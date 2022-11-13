@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:text/app/model/splash/splash_model.dart';
-import '../../routes/main_screens.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/text/big_text.dart';
 

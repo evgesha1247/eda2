@@ -9,7 +9,6 @@ import '../../data/object/dish_object.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/icon/anumated_icon_favorit.dart';
 import '../../widgets/icon/menu_icon.dart';
-import '../dish_detailed/dish_detailed_model.dart';
 import '../guiding/guiding_model.dart';
 import '../menu/menu_model.dart';
 import 'home_model.dart';
@@ -47,23 +46,23 @@ class _HeaderWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              GestureDetector(
-                onTap: () => pageModel.setCurrentIndexTab(3),
-                child: CircleAvatar(
-                  radius: 22,
-                  backgroundColor: Colors.transparent,
-                  child: user?.photoURL != null
-                      ? Image(image: NetworkImage(user?.photoURL ?? ''))
-                      : const CustomButtonIcon(
-                          icon: Icon(
-                            Icons.person_outline,
-                            color: ThemeAppColor.kFrontColor,
-                          ),
-                          colorBorder: ThemeAppColor.kFrontColor,
-                          statusBorder: true,
-                        ),
-                ),
-              ),
+              user?.photoURL != null
+                  ? GestureDetector(
+                      onTap: () => pageModel.setCurrentIndexTab(3),
+                      child: CircleAvatar(
+                        radius: 22,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: NetworkImage(user?.photoURL ?? ''),
+                      ),
+                    )
+                  : const CustomButtonIcon(
+                      icon: Icon(
+                        Icons.person_outline,
+                        color: ThemeAppColor.kFrontColor,
+                      ),
+                      colorBorder: ThemeAppColor.kFrontColor,
+                      statusBorder: true,
+                    ),
               SizedBox(width: ThemeAppSize.kInterval12),
               Column(
                 children: [
@@ -285,7 +284,7 @@ class _ItemPromoInfoBlok extends StatelessWidget {
                 Obx(
                   () => AnimatedIconWidget(
                     currIndex: (cartController.cart[item] != null ? 0 : 1).obs,
-                    fun: () => cartController.addAndClearOneProduct(item),
+                    fun: () => cartController.addOneAndClearProduct(item),
                     widget1: const CustomButtonIcon(
                       icon: Icon(
                         Icons.done,
@@ -328,7 +327,7 @@ class _ItemPromoInfoBlok extends StatelessWidget {
                 //MenuButtonIcon(icon: Icons.favorite, statusBorder: true),
                 GestureDetector(
                   onTap: () => homeControler.showDetail(item),
-                  child: const BigText(text: 'see more'),
+                  child: const SmallText(text: 'see more'),
                 ),
               ],
             ),

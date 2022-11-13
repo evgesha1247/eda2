@@ -9,9 +9,7 @@ import '../../data/object/dish_object.dart';
 import 'cart_model.dart';
 
 class CartScreen extends StatelessWidget {
-
-  final controller = Get.find<CartModel>();
-  CartScreen({Key? key}) : super(key: key);
+  const CartScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,37 +18,9 @@ class CartScreen extends StatelessWidget {
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: Column(
             children: [
-              Stack(
-                alignment: Alignment.center,
-                children: const [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: _CartButtonBack(),
-                  ),
-                  BigText(
-                    text: 'Cart',
-                    color: ThemeAppColor.kFrontColor,
-                  )
-                ],
-              ),
+              const _HeaderCart(),
               SizedBox(height: ThemeAppSize.kInterval12),
-              Expanded(
-                child: GetBuilder<CartModel>(
-                  builder: (c) {
-                    return ListView.builder(
-                      itemCount: c.cart.length,
-                      itemBuilder: (context, index) {
-                        return _cartRows(
-                          model: controller,
-              product: controller.cart.keys.toList()[index],
-              index: index,
-                          count: controller.cart.values.toList()[index],
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
+              _CartBody(),
               SizedBox(height: ThemeAppSize.kInterval12),
               _BottnCart(),
             ],
@@ -59,13 +29,58 @@ class CartScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _cartRows({
-    required CartModel model,
-    required Dish product,
-    required int index,
-    required int count,
-  }) {
+class _HeaderCart extends StatelessWidget {
+  const _HeaderCart();
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Align(alignment: Alignment.centerLeft, child: _CartButtonBack()),
+        const BigText(text: 'Cart', color: ThemeAppColor.kFrontColor)
+      ],
+    );
+  }
+}
+
+class _CartBody extends StatelessWidget {
+  final controller = Get.find<CartModel>();
+  _CartBody();
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GetBuilder<CartModel>(
+        builder: (c) {
+          return ListView.builder(
+            itemCount: c.cart.length,
+            itemBuilder: (context, index) {
+              return _CartRows(
+                product: controller.cart.keys.toList()[index],
+                index: index,
+                count: controller.cart.values.toList()[index],
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _CartRows extends StatelessWidget {
+  final controller = Get.find<CartModel>();
+  _CartRows({
+    required this.product,
+    required this.index,
+    required this.count,
+  });
+  final Dish product;
+  final int index;
+  final int count;
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: ThemeAppSize.kInterval12),
       child: Slidable(
@@ -80,7 +95,7 @@ class CartScreen extends StatelessWidget {
               icon: Icons.delete_outline_rounded,
               label: 'Delete',
               onPressed: (BuildContext context) {
-                //  controller.delete(dishkey);
+                controller.addOneAndClearProduct(product);
               },
             ),
           ],
@@ -125,7 +140,6 @@ class _CartContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Expanded(
       child: Padding(
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
@@ -259,11 +273,13 @@ class _BottnCart extends StatelessWidget {
 }
 
 class _CartButtonBack extends StatelessWidget {
-  const _CartButtonBack({Key? key}) : super(key: key);
+
+  final controller = Get.find<CartModel>();
+  _CartButtonBack({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.back(),
+      onTap: () => controller.showBackDitailed(),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: ThemeAppFun.decoration(),

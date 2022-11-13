@@ -32,7 +32,7 @@ class _GuidingBodyWidget extends StatelessWidget {
           const HomeScreen(),
           const MenuScreen(),
           const FavoriteScreen(),
-          GetPlatform.isDesktop ? const _ErrorWidget() : const ProfileScreen(),
+          ProfileScreen(),
         ],
       ),
     );
@@ -78,26 +78,11 @@ class _FlotingButtom extends StatelessWidget {
   const _FlotingButtom({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const CircleAvatar(
-      radius: 33,
-      backgroundColor: ThemeAppColor.kFrontColor,
-      child: Center(
-        child: FloatingActionButton(
-          elevation: 0,
-          onPressed: null,
-          backgroundColor: ThemeAppColor.kAccent,
-          child: Icon(Icons.menu_sharp),
-        ),
-      ),
-    );
-  }
-}
-class _ErrorWidget extends StatelessWidget {
-  const _ErrorWidget();
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('// попробуйти зайти с другова устройсва'),
+    return const FloatingActionButton(
+      elevation: 0,
+      onPressed: null,
+      backgroundColor: ThemeAppColor.kAccent,
+      child: Icon(Icons.menu_sharp),
     );
   }
 }

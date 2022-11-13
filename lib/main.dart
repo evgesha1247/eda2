@@ -18,6 +18,7 @@ Future<void> main() async {
 
     /// багает на телефоне
     /// но нужен для десктопа
+    print('no initialize Firebase !!!');
     GetPlatform.isDesktop ? Get.put(SplashModel()) : null;
   }
   await Hive.initFlutter();

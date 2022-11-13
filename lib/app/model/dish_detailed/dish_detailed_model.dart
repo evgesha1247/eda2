@@ -4,7 +4,7 @@ import '../../routes/main_screens.dart';
 import '../cart/cart_model.dart';
 
 class DishDetailedModel extends GetxController {
-  final cartController = Get.put(CartModel());
+  final CartModel cartController = Get.find();
 
   late final Dish dish;
   final _count = 0.obs;

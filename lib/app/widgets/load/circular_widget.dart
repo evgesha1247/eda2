@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:text/app/theme/theme_app.dart';
 
 class CircularWidget extends StatelessWidget {
   const CircularWidget({super.key});
@@ -6,7 +7,10 @@ class CircularWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          color: ThemeAppColor.kAccent,
+          strokeWidth: 3,
+        ),
       ),
     );
   }

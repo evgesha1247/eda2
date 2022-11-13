@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -13,7 +12,8 @@ class HomeModel extends GetxController {
   late final Future<Box<Dish>> _box;
   final _itemsHotDish = <Dish>[].obs;
   final _itemsMainCourse = <Dish>[].obs;
-  List<bool> selected = List.generate(99, (i) => false).obs;
+  late List<bool> selected =
+      List.generate(_itemsMainCourse.length, (i) => false).obs;
   List<Dish> get itemsHotDish => _itemsHotDish.toList();
   List<Dish> get itemsMainCourse => _itemsMainCourse.toList();
 
@@ -28,7 +28,7 @@ class HomeModel extends GetxController {
     try {
       user = FirebaseAuth.instance.currentUser as User;
     } catch (e) {
-      print('user is null ');
+
     }
     await _readDishData();
     (await _box).listenable().addListener(_readDishData);
