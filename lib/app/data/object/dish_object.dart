@@ -3,8 +3,8 @@ import 'package:text/app/theme/theme_app.dart';
 part 'dish_object.g.dart';
 
 abstract class DishCategory {
-  static const String drinkables = 'drinkables';
-  static const String mainCourse = 'mainCourse';
+  static const String drinkables = 'drink';
+  static const String mainCourse = 'basic';
   static const String dessert = 'dessert';
 }
 

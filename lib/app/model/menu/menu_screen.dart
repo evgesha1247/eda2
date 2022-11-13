@@ -18,7 +18,7 @@ class MenuScreen extends StatelessWidget {
         slivers: MediaQuery.of(context).size.width >= 370
             ? [
                 const _HederWidget(),
-                _FilterMenuWidget(),
+                const _FilterMenuWidget(),
                 const _MenuBodyWidget(),
               ]
             : [const _MenuBodyWidget()],
@@ -108,19 +108,15 @@ class _ButtonToCartWidget extends StatelessWidget {
 class _FilterMenuWidget extends GetView<MenuModel> {
   const _FilterMenuWidget();
   static const _icon = [
-    Icons.aspect_ratio,
-    Icons.aspect_ratio,
-    Icons.aspect_ratio,
-    Icons.aspect_ratio,
+    Icons.cookie,
+    Icons.local_drink,
+    Icons.restaurant_menu_rounded,
+    Icons.restore_outlined,
   ];
   static const _dishCategory = <String>[
     DishCategory.dessert,
     DishCategory.drinkables,
     DishCategory.mainCourse,
-    DishCategory.mainCourse,
-    DishCategory.mainCourse,
-    DishCategory.mainCourse,
-
     'reset'
   ];
 
@@ -128,19 +124,37 @@ class _FilterMenuWidget extends GetView<MenuModel> {
   Widget build(BuildContext context) {
     var defaultChoiceIndex = (_dishCategory.length - 1).obs;
     return SliverToBoxAdapter(
-      child: Container(
-        height: 50,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: EdgeInsets.all(
+          ThemeAppSize.kInterval12,
+        ),
+        child: Wrap(
+          spacing: 12,
+          runSpacing: 12,
           children: List.generate(
             _dishCategory.length,
             (index) {
               return Obx(
-                () => ChoiceChip(
-                  label: Text(_dishCategory[index]),
-                  selected: defaultChoiceIndex.value == index,
-                  selectedColor: ThemeAppColor.kAccent,
-                  onSelected: (value) {
+                () => FilterChip(
+                  showCheckmark: false,
+                  avatar: Icon(_icon[index],
+                      color: index == defaultChoiceIndex.value
+                          ? ThemeAppColor.kAccent
+                          : Colors.grey),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      ThemeAppSize.kInterval12,
+                    ),
+                  ),
+                  backgroundColor: Colors.white,
+                  padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                  label: SmallText(
+                      text: _dishCategory[index],
+                      size: ThemeAppSize.kFontSize14,
+                      color: index == defaultChoiceIndex.value
+                          ? ThemeAppColor.kAccent
+                          : Colors.grey),
+                  onSelected: (bool value) {
                     defaultChoiceIndex.value =
                         value ? index : defaultChoiceIndex.value;
                     controller.filter(
@@ -148,6 +162,7 @@ class _FilterMenuWidget extends GetView<MenuModel> {
                     );
                   },
                 ),
+
               );
             },
           ),
@@ -170,7 +185,11 @@ class _MenuBodyWidget extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
           childCount: c.itemsFilter.length,
           (_, int index) => Padding(
-            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+            padding: EdgeInsets.only(
+              left: ThemeAppSize.kInterval12,
+              bottom: ThemeAppSize.kInterval24,
+              right: ThemeAppSize.kInterval12,
+            ),
             child: _CardItem(index: index),
           ),
         ),
