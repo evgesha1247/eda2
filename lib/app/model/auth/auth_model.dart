@@ -8,16 +8,19 @@ class AuthModel extends GetxController {
   final cEmail = TextEditingController();
   final cPassword = TextEditingController();
 
-  var isLogScreen = true;
+
+  final RxBool _isLogScreen = true.obs;
+  final RxString _buttonText = ''.obs;
+  get buttonText =>
+      _buttonText.value = _isLogScreen.value ? 'Login' : 'Register';
+  get isLogScreen => _isLogScreen.value;
   togScreenAuth() {
-    isLogScreen = !isLogScreen;
-    update();
+    _isLogScreen.value = !_isLogScreen.value;
   }
 
   Future authUser({required email, required pass}) async {
     isLogScreen
         ? AuthRepo.instance.loginUser(email: email, password: pass)
         : AuthRepo.instance.createUser(email: email, password: pass);
-    update();
   }
 }

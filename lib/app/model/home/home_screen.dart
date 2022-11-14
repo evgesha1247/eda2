@@ -34,12 +34,13 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _HeaderWidget extends StatelessWidget {
-  final user = Get.find<HomeModel>().user;
+  final controller = Get.find<HomeModel>();
   final cart = Get.find<CartModel>().cart;
   final pageModel = Get.find<GuidingScreenModel>();
   _HeaderWidget();
   @override
   Widget build(BuildContext context) {
+    final user = controller.user;
     return Padding(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: Row(
@@ -47,33 +48,30 @@ class _HeaderWidget extends StatelessWidget {
           Row(
             children: [
               GestureDetector(
-                      onTap: () => pageModel.setCurrentIndexTab(3),
-                      child: CircleAvatar(
-                        radius: 22,
-                        backgroundColor: Colors.transparent,
+                onTap: () => pageModel.setCurrentIndexTab(3),
+                child: CircleAvatar(
+                  radius: 22,
+                  backgroundColor: Colors.transparent,
                   backgroundImage: user?.photoURL == null
                       ? null
                       : NetworkImage(user?.photoURL ?? ''),
                   child: user?.photoURL == null
                       ? const CustomButtonIcon(
-                      icon: Icon(
-                        Icons.person_outline,
-                        color: ThemeAppColor.kFrontColor,
-                      ),
-                      colorBorder: ThemeAppColor.kFrontColor,
-                      statusBorder: true,
+                          icon: Icon(
+                            Icons.person_outline,
+                            color: ThemeAppColor.kFrontColor,
+                          ),
+                          colorBorder: ThemeAppColor.kFrontColor,
+                          statusBorder: true,
                         )
                       : null,
                 ),
               ),
-
               SizedBox(width: ThemeAppSize.kInterval12),
               Column(
                 children: [
                   BigText(
-                    text: user?.displayName != null
-                        ? 'Hello ${user?.displayName ?? ''} '
-                        : 'Welcom back',
+                    text: controller.titleText,
                     color: ThemeAppColor.kFrontColor,
                   )
                 ],
@@ -81,12 +79,16 @@ class _HeaderWidget extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          Obx(() => GestureDetector(
-                onTap: () => Get.toNamed(MainRoutes.homeCart),
-                child: cart == {}.obs
-                    ? const Icon(Icons.notifications_outlined)
-                    : const Icon(Icons.notification_add_outlined),
-              )),
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(MainRoutes.homeCart);
+            },
+            child: Obx(
+              () => cart.length > 0
+                  ? const Icon(Icons.notification_add_outlined)
+                  : const Icon(Icons.notifications_outlined),
+            ),
+          ),
         ],
       ),
     );
@@ -98,25 +100,25 @@ class _PromoSuction extends StatelessWidget {
   _PromoSuction({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: controller.itemsHotDish.isNotEmpty
-              ? [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: ThemeAppSize.kInterval24,
-                    ),
-                    child: const BigText(
-                      text: 'Hot Promo',
-                      color: ThemeAppColor.kFrontColor,
-                      size: 25,
-                    ),
-                  ),
-                  SizedBox(height: ThemeAppSize.kInterval12),
-                  _ItemsPromoWidget(),
-                ]
-              : [],
-        ));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: controller.itemsHotDish.isNotEmpty
+          ? [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: ThemeAppSize.kInterval24,
+                ),
+                child: const BigText(
+                  text: 'Hot Promo',
+                  color: ThemeAppColor.kFrontColor,
+                  size: 25,
+                ),
+              ),
+              SizedBox(height: ThemeAppSize.kInterval12),
+              _ItemsPromoWidget(),
+            ]
+          : [],
+    );
   }
 }
 
@@ -388,7 +390,7 @@ class _PopularListBuilderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget itemPopular(int index) {
       var selected = controller.selected[index].obs;
-      final item = controller.itemsMainCourse[index];
+      final item = controller.itemPopular[index];
       return GestureDetector(
         onTap: () => selected.value = !selected.value,
         onLongPress: () => controller.showDetail(item),
@@ -462,17 +464,15 @@ class _PopularListBuilderWidget extends StatelessWidget {
             constraints: BoxConstraints(
               minHeight: viewportConstraints.maxHeight,
             ),
-            child: Obx(
-              () => ListView.separated(
-                itemCount: controller.itemsMainCourse.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) =>
-                    itemPopular(index),
-                separatorBuilder: (BuildContext context, int index) =>
-                    SizedBox(height: ThemeAppSize.kInterval12),
-              ),
-            ),
+            child: Obx(() => ListView.separated(
+                  itemCount: controller.itemPopular.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) =>
+                      itemPopular(index),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      SizedBox(height: ThemeAppSize.kInterval12),
+                )),
           ),
         );
       }),

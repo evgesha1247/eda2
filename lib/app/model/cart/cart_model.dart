@@ -31,7 +31,7 @@ class CartModel extends GetxController {
 
 
 
-  final _cart = {}.obs;
+  final RxMap _cart = <Dish, int>{}.obs;
   get cart => _cart;
 
   get cartSubTotal => _cart.entries

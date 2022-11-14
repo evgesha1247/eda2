@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../auth/auth_model.dart';
 import '../cart/cart_model.dart';
 import '../dish_detailed/dish_detailed_model.dart';
 import '../favorite/favorite_model.dart';
@@ -16,6 +17,7 @@ class MainBindings extends Bindings {
     Get.lazyPut<MenuModel>(() => MenuModel());
     Get.lazyPut<FavoriteModel>(() => FavoriteModel());
     Get.lazyPut<CartModel>(() => CartModel());
+    Get.lazyPut<AuthModel>(() => AuthModel(), fenix: true);
     Get.lazyPut<DishDetailedModel>(() => DishDetailedModel(), fenix: true);
   }
 }

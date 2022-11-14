@@ -83,6 +83,7 @@ abstract class ThemeAppImgURL {
   static const String imgURL4 = 'assets/imgs/food4.png';
   static const String imgURL5 = 'assets/imgs/food5.png';
   static const String imgURLlogo = 'assets/imgs/logo.png';
+  static const String imgURLuserImg = 'assets/imgs/userImg.png';
 }
 
 abstract class ThemeAppIconURL {

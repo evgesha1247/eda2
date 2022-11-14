@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/text/big_text.dart';
-import '../../widgets/text/small_text.dart';
-import '../../widgets/text_field/my_auth_button.dart';
+import '../../widgets/text_field/my_submit_button.dart';
 import '../../widgets/text_field/my_text_field.dart';
 import 'auth_model.dart';
 
@@ -16,10 +15,9 @@ class AuthScreen extends StatelessWidget {
         padding: EdgeInsets.all(ThemeAppSize.kInterval24),
         child: Column(
           children: [
-            const _AuthBody(),
-            SizedBox(height: ThemeAppSize.kInterval24),
-            const _ToggScreenTextWidget(),
-            SizedBox(height: ThemeAppSize.kInterval24),
+            _AuthBody(),
+            _AuthButtonSubmit(),
+            _ToggScreenTextWidget(),
           ],
         ),
       ),
@@ -28,67 +26,63 @@ class AuthScreen extends StatelessWidget {
 }
 
 class _AuthBody extends StatelessWidget {
-  const _AuthBody();
+  final AuthModel controller = Get.find();
+  _AuthBody();
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AuthModel());
-    final bool isLog = controller.isLogScreen;
     return Column(
       children: [
-        isLog
+        Obx(() => controller.isLogScreen
             ? const SizedBox.shrink()
-            : myTextField(
+            : MyTextField(
                 controller: controller.cName,
                 text: 'Ivan',
                 icon: Icons.person,
-                textInputAction: TextInputAction.next,
-                onSubmitted: (_) => FocusScope.of(context).nextFocus(),
-              ),
-        SizedBox(height: ThemeAppSize.kInterval24),
-        myTextField(
+              )),
+        SizedBox(height: ThemeAppSize.kInterval12),
+        MyTextField(
           controller: controller.cEmail,
           text: 'Ivan@gmail.com',
           icon: Icons.mail,
-          textInputAction: TextInputAction.next,
-          onSubmitted: (_) => FocusScope.of(context).nextFocus(),
         ),
-        SizedBox(height: ThemeAppSize.kInterval24),
-        myTextField(
-          controller: controller.cPassword,
-          text: 'Password',
-          icon: Icons.key,
-          textInputAction: TextInputAction.next,
-          onSubmitted: (_) => FocusScope.of(context).nextFocus(),
-        ),
-        myAuthButton(() {
-          final String email = controller.cEmail.text;
-          final String pass = controller.cPassword.text;
-          controller.authUser(email: email, pass: pass);
-        }, isLog ? 'Login' : 'Register'),
+        SizedBox(height: ThemeAppSize.kInterval12),
+        MyTextField(
+            controller: controller.cPassword,
+            text: 'Password',
+            icon: Icons.key),
       ],
     );
   }
 }
 
-class _ToggScreenTextWidget extends StatelessWidget {
-  const _ToggScreenTextWidget();
+class _AuthButtonSubmit extends StatelessWidget {
+  final AuthModel controller = Get.find();
+  _AuthButtonSubmit();
   @override
   Widget build(BuildContext context) {
-    final model = Get.find<AuthModel>();
-    return Row(
-      children: [
-        const SmallText(
-          text: 'wwwerw',
-          color: ThemeAppColor.kFrontColor,
-        ),
-        SizedBox(width: ThemeAppSize.kInterval12),
-        InkWell(
-            onTap: () => model.togScreenAuth(),
-            child: const BigText(
-              text: 'adafadf ? ',
-              color: ThemeAppColor.kFrontColor,
-            ))
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
+      child: Obx(() => MySubmitButton(
+          fun: () => controller.authUser(
+                email: controller.cEmail.text,
+                pass: controller.cPassword.text,
+              ),
+          text: controller.buttonText)),
+    );
+  }
+}
+
+class _ToggScreenTextWidget extends StatelessWidget {
+  final AuthModel controller = Get.find();
+  _ToggScreenTextWidget();
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => controller.togScreenAuth(),
+      child: const BigText(
+        text: 'adafadf',
+        color: ThemeAppColor.kFrontColor,
+      ),
     );
   }
 }

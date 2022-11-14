@@ -16,8 +16,6 @@ Future<void> main() async {
     ).then((value) => Get.put(AuthRepo()));
   } catch (e) {
 
-    /// багает на телефоне
-    /// но нужен для десктопа
     print('no initialize Firebase !!!');
     GetPlatform.isDesktop ? Get.put(SplashModel()) : null;
   }
