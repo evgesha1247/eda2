@@ -15,7 +15,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
     ).then((value) => Get.put(AuthRepo()));
   } catch (e) {
-
     print('no initialize Firebase !!!');
     GetPlatform.isDesktop ? Get.put(SplashModel()) : null;
   }

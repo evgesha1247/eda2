@@ -123,8 +123,7 @@ class _PromoSuction extends StatelessWidget {
 }
 
 class _ItemsPromoWidget extends StatefulWidget {
-  final model = Get.find<HomeModel>();
-  _ItemsPromoWidget({Key? key}) : super(key: key);
+  const _ItemsPromoWidget({Key? key}) : super(key: key);
   @override
   State<_ItemsPromoWidget> createState() => _ItemsPromoWidgetState();
 }
@@ -134,7 +133,7 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
   final double _scaleFactore = 0.8;
   final double _height = ThemeAppSize.kPageViewContainer;
   final pageController = PageController(viewportFraction: .8, initialPage: 1);
-
+  final model = Get.find<HomeModel>();
   @override
   void initState() {
     super.initState();
@@ -153,32 +152,33 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: ThemeAppSize.kPageView,
-          child: PageView.builder(
-            controller: pageController,
-            itemCount: widget.model.itemsHotDish.length,
-            itemBuilder: (_, index) =>
-                _itemHotPromo(index, widget.model.itemsHotDish[index]),
-          ),
-        ),
-        DotsIndicator(
-          dotsCount: widget.model.itemsHotDish.length,
-          position: _currPageValue,
-          decorator: DotsDecorator(
-            size: const Size.square(9.0),
-            spacing: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            activeColor: ThemeAppColor.kAccent,
-            color: ThemeAppColor.kFrontColor,
-            activeSize: const Size(25.0, 9.0),
-            activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-          ),
-        ),
-      ],
-    );
+    return Obx(() => Column(
+          children: [
+            SizedBox(
+              height: ThemeAppSize.kPageView,
+              child: PageView.builder(
+                controller: pageController,
+                itemCount: model.itemsHotDish.length,
+                itemBuilder: (_, index) =>
+                    _itemHotPromo(index, model.itemsHotDish[index]),
+              ),
+            ),
+            DotsIndicator(
+              dotsCount: model.itemsHotDish.length,
+              position: _currPageValue,
+              decorator: DotsDecorator(
+                size: const Size.square(9.0),
+                spacing:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                activeColor: ThemeAppColor.kAccent,
+                color: ThemeAppColor.kFrontColor,
+                activeSize: const Size(25.0, 9.0),
+                activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0)),
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget _itemHotPromo(int index, Dish dish) {
@@ -209,7 +209,7 @@ class _ItemsPromoWidgetState extends State<_ItemsPromoWidget> {
     return Transform(
       transform: matrix,
       child: GestureDetector(
-        onTap: () => widget.model.showDetail(widget.model.itemsHotDish[index]),
+        onTap: () => model.showDetail(model.itemsHotDish[index]),
         child: Stack(
           children: [
             _ItemPromoImgWidget(imgUrl: dish.imgUrl),
@@ -458,13 +458,16 @@ class _PopularListBuilderWidget extends StatelessWidget {
     return SizedBox(
       height: context.height / 1.2,
       child: LayoutBuilder(
+
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
+
         return SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
               minHeight: viewportConstraints.maxHeight,
             ),
-            child: Obx(() => ListView.separated(
+            child: Obx(() {
+              return ListView.separated(
                   itemCount: controller.itemPopular.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -472,7 +475,8 @@ class _PopularListBuilderWidget extends StatelessWidget {
                       itemPopular(index),
                   separatorBuilder: (BuildContext context, int index) =>
                       SizedBox(height: ThemeAppSize.kInterval12),
-                )),
+              );
+            }),
           ),
         );
       }),
