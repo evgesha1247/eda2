@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:text/app/theme/theme_app.dart';
-import 'package:text/app/widgets/text/big_text.dart';
+import 'package:text/app/widgets/text/my_text.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({Key? key}) : super(key: key);

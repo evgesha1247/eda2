@@ -16,7 +16,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       user = FirebaseAuth.instance.currentUser as User;
     } catch (e) {
-      print('user is null !!!');
+      debugPrint('user is null !!!');
       user = null;
     }
     super.initState();
@@ -25,24 +25,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: user != null ? _ProfileBody(user: user!) : _Example(),
+      body: user != null ? _ProfileBody(user: user!) : const _Example(),
     );
   }
 }
 
-class _ErrorWidget extends StatelessWidget {
-  const _ErrorWidget();
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('// попробуйти зайти с другова устройсва'),
-    );
-  }
-}
+// class _ErrorWidget extends StatelessWidget {
+//   const _ErrorWidget();
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(
+//       child: Text('// попробуйти зайти с другова устройсва'),
+//     );
+//   }
+// }
 
 class _ProfileBody extends StatelessWidget {
   _ProfileBody({required this.user});
-  User user;
+  final User user;
   final auth = AuthRepo.instance;
   @override
   Widget build(BuildContext context) {
@@ -64,15 +64,12 @@ class _ProfileBody extends StatelessWidget {
 }
 
 class _Example extends StatefulWidget {
-  _Example({super.key});
+  const _Example();
   @override
   State<_Example> createState() => _ExampleState();
 }
 
 class _ExampleState extends State<_Example> {
-  var _currPageValue = 1.0;
-  final double _scaleFactore = 0.8;
-  final double _height = ThemeAppSize.kPageViewContainer;
   final pageController = PageController(viewportFraction: .8, initialPage: 1);
 
   @override
@@ -80,7 +77,6 @@ class _ExampleState extends State<_Example> {
     super.initState();
     pageController.addListener(() {
       setState(() {
-        _currPageValue = pageController.page!;
       });
     });
   }
@@ -100,44 +96,13 @@ class _ExampleState extends State<_Example> {
           child: PageView(
             scrollDirection: Axis.vertical,
             controller: pageController,
-            children: [
+            children: const [
               Text('data'),
               Text('data'),
             ],
           ),
         ),
       ],
-    );
-  }
-
-  Widget _itemHotPromo(int index) {
-    Matrix4 matrix = Matrix4.identity();
-    if (index == _currPageValue.floor()) {
-      var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactore);
-      var currTrans = _height * (1 - currScale) / 2;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)
-        ..setTranslationRaw(0, currTrans, 0);
-    } else if (index == _currPageValue.floor() + 1) {
-      var currScale =
-          _scaleFactore + (_currPageValue - index + 1) * (1 - _scaleFactore);
-      var currTrans = _height * (1 - currScale) / 2;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)
-        ..setTranslationRaw(0, currTrans, 0);
-    } else if (index == _currPageValue.floor() - 1) {
-      var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactore);
-      var currTrans = _height * (1 - currScale) / 2;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1);
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)
-        ..setTranslationRaw(0, currTrans, 0);
-    } else {
-      var currScale = 0.8;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)
-        ..setTranslationRaw(0, _height * (1 - _scaleFactore) / 2, 1);
-    }
-
-    return Transform(
-      transform: matrix,
-      child: GestureDetector(onTap: () => {}, child: Center()),
     );
   }
 }

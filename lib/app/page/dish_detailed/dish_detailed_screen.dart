@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:text/app/widgets/icon/menu_icon.dart';
-import 'package:text/app/widgets/text/big_text.dart';
-import 'package:text/app/widgets/text/small_text.dart';
+import 'package:text/app/widgets/text/my_text.dart';
 import '../../widgets/text/expandable_text.dart';
 
 class DishDetailedScreen extends StatelessWidget {

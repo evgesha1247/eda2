@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/theme_app.dart';
-import '../text/big_text.dart';
+import '../text/my_text.dart';
 
 class MySubmitButton extends StatelessWidget {
   const MySubmitButton({super.key, required this.text, required this.fun});

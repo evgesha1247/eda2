@@ -19,8 +19,8 @@ class MainScreens {
 
     GetPage(name: _Paths.appHome, page: () => const GuidingScreen()),
     GetPage(name: _Paths.auth, page: () => const AuthScreen()),
-    GetPage(name: _Paths.detailsCart, page: () => CartScreen()),
-    GetPage(name: _Paths.homeCart, page: () => CartScreen()),
+    GetPage(name: _Paths.detailsCart, page: () => const CartScreen()),
+    GetPage(name: _Paths.homeCart, page: () => const CartScreen()),
 
     GetPage(
       name: _Paths.details,

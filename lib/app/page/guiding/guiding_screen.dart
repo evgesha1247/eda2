@@ -4,7 +4,7 @@ import 'package:text/app/page/menu/menu_screen.dart';
 import 'package:text/app/page/profile/profile_screen.dart';
 import 'package:text/app/theme/theme_app.dart';
 import '../favorite/favorite_screen.dart';
-import '../home/home_screen.dart';
+import '../home/home_page.dart';
 import 'guiding_model.dart';
 
 class GuidingScreen extends StatelessWidget {
@@ -27,10 +27,10 @@ class _GuidingBodyWidget extends StatelessWidget {
     return GetBuilder<GuidingScreenModel>(
       builder: (model) => IndexedStack(
         index: model.currentIndexTab,
-        children: [
-          const HomeScreen(),
-          const MenuScreen(),
-          const FavoriteScreen(),
+        children: const [
+          HomeScreen(),
+          MenuScreen(),
+          FavoriteScreen(),
           ProfileScreen(),
         ],
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../theme/theme_app.dart';
-import '../../widgets/text/big_text.dart';
+import '../../widgets/text/my_text.dart';
 import '../../widgets/text_field/my_submit_button.dart';
 import '../../widgets/text_field/my_text_field.dart';
 import 'auth_model.dart';

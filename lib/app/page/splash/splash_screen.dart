@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:text/app/page/splash/splash_model.dart';
 import '../../theme/theme_app.dart';
-import '../../widgets/text/big_text.dart';
+import '../../widgets/text/my_text.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

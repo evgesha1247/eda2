@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:text/app/theme/theme_app.dart';
-import 'package:text/app/widgets/text/small_text.dart';
+
+import 'my_text.dart';
 
 class ExpandableTextWidgetModel extends ChangeNotifier {
   late String firstText;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/routes/main_screens.dart';
-import 'package:text/app/widgets/text/big_text.dart';
+import 'package:text/app/widgets/text/my_text.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/icon/anumated_icon_favorit.dart';
 

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/data/repository/popular_product_pero.dart';
@@ -9,16 +10,20 @@ class PopularProductController extends GetxController {
   List<dynamic> _popularProductList = [];
   List<dynamic> get popularProductList => _popularProductList;
 
+  bool _isLoaded = false;
+  bool get isLoaded => _isLoaded;
+
   Future<void> getPopularProductList() async {
     Response response = await popularProductRepo.getPopularProductList();
     if (response.statusCode == 200) {
-      print('gooooooooooooooooooooooooooood');
       _popularProductList = [];
       _popularProductList.addAll(Product.fromJson(response.body).products);
+      debugPrint('popular product list in Load good');
+      _isLoaded = true;
       update();
     } else {
-      print(response.statusCode);
-      print('noooooooooooooooooooooooooooooooooon');
+      _isLoaded = false;
+      debugPrint('${response.statusCode}');
     }
   }
 }
