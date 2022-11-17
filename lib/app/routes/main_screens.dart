@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:text/app/model/auth/auth_screen.dart';
-import 'package:text/app/model/splash/splash_screen.dart';
-import '../model/cart/cart_screen.dart';
-import '../model/dish_detailed/dish_detailed_screen.dart';
-import '../model/guiding/guiding_screen.dart';
+import 'package:text/app/page/auth/auth_screen.dart';
+import 'package:text/app/page/splash/splash_screen.dart';
+import '../page/cart/cart_screen.dart';
+import '../page/dish_detailed/dish_detailed_screen.dart';
+import '../page/guiding/guiding_screen.dart';
 import '../widgets/load/circular_widget.dart';
 part 'main_routes.dart';
 

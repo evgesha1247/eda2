@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:flutter/services.dart';
-import '../../model/Bindings/main_bindings.dart';
+import '../../../Bindings/main_bindings.dart';
+import '../../controllers/popular_product_controller.dart';
 import '../../routes/main_screens.dart';
 
 class MyAppWidget extends StatelessWidget {
@@ -11,6 +12,8 @@ class MyAppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
+    Get.find<PopularProductController>().getPopularProductList();
+
     return GetMaterialApp(
       title: 'Restaurant',
       theme: ThemeData(

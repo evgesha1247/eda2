@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:text/app/widgets/app/my_app_widget.dart';
 import 'package:text/firebase_options.dart';
-import 'app/model/splash/splash_model.dart';
-import 'app/repository/auth_repo.dart';
-
+import 'app/controllers/popular_product_controller.dart';
+import 'app/page/splash/splash_model.dart';
+import 'app/data/repository/auth_repo.dart';
+import 'helper/dependencies.dart' as dep;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dep.init();
   try {
     await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
