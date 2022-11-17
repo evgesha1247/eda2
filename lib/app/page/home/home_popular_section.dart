@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/routes/main_screens.dart';
 import 'package:text/app/widgets/load/circular_widget.dart';
 import '../../../utils/app_constants.dart';
 import '../../controllers/popular_product_controller.dart';
@@ -128,7 +129,7 @@ class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
     return Transform(
       transform: matrix,
       child: GestureDetector(
-        onTap: () => {},
+        onTap: () => Get.toNamed(MainRoutes.getPopularFood(index)),
         child: Stack(
           children: [
             _ItemImgWidget(imgUrl: imgUrl),

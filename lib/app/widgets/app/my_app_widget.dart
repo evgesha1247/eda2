@@ -4,15 +4,17 @@ import 'package:text/app/theme/theme_app.dart';
 import 'package:flutter/services.dart';
 import '../../../Bindings/main_bindings.dart';
 import '../../controllers/popular_product_controller.dart';
+import '../../controllers/recommended_product_controller.dart';
 import '../../routes/main_screens.dart';
 
 class MyAppWidget extends StatelessWidget {
   const MyAppWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.bottom]);
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     Get.find<PopularProductController>().getPopularProductList();
+    Get.find<RecommendedProductController>().getRecommendedProductList();
 
     return GetMaterialApp(
       title: 'Restaurant',
@@ -22,8 +24,8 @@ class MyAppWidget extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      getPages: MainScreens.getPages,
-      initialRoute: MainScreens.load,
+      getPages: MainRoutes.getPages,
+      initialRoute: MainRoutes.getInitial(),
       initialBinding: MainBindings(),
     );
   }

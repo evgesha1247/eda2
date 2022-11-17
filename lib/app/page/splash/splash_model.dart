@@ -11,7 +11,8 @@ class SplashModel extends GetxController {
 
   void showHome() {
     Future.delayed(const Duration(seconds: 3), () {
-      Get.offAllNamed(MainRoutes.appHome);
-    });
+        Get.offAllNamed(MainRoutes.getMain());
+      },
+    );
   }
 }

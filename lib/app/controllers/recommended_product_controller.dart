@@ -27,7 +27,7 @@ class RecommendedProductController extends GetxController {
       update();
     } else {
       _isLoaded = false;
-      debugPrint("${response.statusCode}");
+      debugPrint("response.statusCode recommended --- ${response.statusCode}");
     }
   }
 }

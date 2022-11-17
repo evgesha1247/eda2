@@ -22,8 +22,7 @@ class PopularProductController extends GetxController {
       _isLoaded = true;
       update();
     } else {
-      _isLoaded = false;
-      debugPrint('${response.statusCode}');
+      debugPrint('response.statusCode popular ---   ${response.statusCode}');
     }
   }
 }

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/models/products_model.dart';
 
+import '../../../utils/app_constants.dart';
+import '../../controllers/recommended_product_controller.dart';
 import '../../theme/theme_app.dart';
+import '../../widgets/load/circular_widget.dart';
 import '../../widgets/text/my_text.dart';
 
 class RecommendedSuction extends StatelessWidget {
@@ -47,8 +51,9 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
   const _RecommendedListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Widget itemPopular(int index) {
-      var selected = true.obs;
+    Widget itemPopular(ProductModel item) {
+      var selected = false.obs;
+      final imgUrl = "${AppConstansts.BASE_URL}/uploads/${item.img!}";
       return GestureDetector(
         onTap: () => selected.value = !selected.value,
         child: Obx(
@@ -75,18 +80,20 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const BigText(text: 'name'),
+                        BigText(text: item.name!),
                         SizedBox(height: ThemeAppSize.kInterval12),
                         SmallText(
                           maxLines: 3,
-                          text: !selected.value ? 'price}\$' : 'description',
+                          text: !selected.value
+                              ? '${item.price!}\$'
+                              : item.description!,
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              // img
+
               Positioned(
                 top: selected.value ? ThemeAppSize.kInterval12 : null,
                 bottom: selected.value ? ThemeAppSize.kInterval12 : null,
@@ -97,9 +104,9 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: ThemeAppColor.kAccent2,
                     borderRadius: ThemeAppFun.decoration(),
-                    image: const DecorationImage(
-                      fit: BoxFit.fitHeight,
-                      image: AssetImage(ThemeAppImgURL.imgURL1),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(imgUrl),
                     ),
                   ),
                 ),
@@ -111,7 +118,7 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
     }
 
     return SizedBox(
-      height: context.height / 1.2,
+      height: context.height / 1.8,
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
           return SingleChildScrollView(
@@ -119,14 +126,23 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
               constraints: BoxConstraints(
                 minHeight: viewportConstraints.maxHeight,
               ),
-              child: ListView.separated(
-                itemCount: 1, //controller.itemPopular.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) =>
-                    itemPopular(index),
-                separatorBuilder: (BuildContext context, int index) =>
-                    SizedBox(height: ThemeAppSize.kInterval12),
+              child: GetBuilder<RecommendedProductController>(
+                builder: (recommendedProduct) {
+                  return recommendedProduct.isLoaded
+                      ? ListView.separated(
+                          itemCount:
+                              recommendedProduct.recommendedProductList.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) =>
+                              itemPopular(
+                            recommendedProduct.recommendedProductList[index],
+                          ),
+                          separatorBuilder: (BuildContext context, int index) =>
+                              SizedBox(height: ThemeAppSize.kInterval12),
+                        )
+                      : const CircularWidget();
+                },
               ),
             ),
           );

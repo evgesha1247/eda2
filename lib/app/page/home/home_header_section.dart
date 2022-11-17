@@ -41,7 +41,7 @@ class HomeHeaderWidget extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              Get.toNamed(MainRoutes.homeCart);
+              Get.toNamed(MainRoutes.getCart());
             },
             child: const Icon(Icons.notifications_outlined),
           ),

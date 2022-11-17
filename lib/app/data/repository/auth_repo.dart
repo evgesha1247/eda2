@@ -21,8 +21,8 @@ class AuthRepo extends GetxController {
   _setScreen(User? user) {
 
     user == null
-        ? Get.offNamed(MainRoutes.auth)
-        : Get.toNamed(MainRoutes.splash);
+        ? Get.offNamed(MainRoutes.getAuth())
+        : Get.toNamed(MainRoutes.getSplash());
   }
 
   Future<void> createUser({required email, required password}) async {

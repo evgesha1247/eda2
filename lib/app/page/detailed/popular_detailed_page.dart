@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/controllers/popular_product_controller.dart';
+import 'package:text/app/models/products_model.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:text/app/widgets/icon/menu_icon.dart';
 import 'package:text/app/widgets/text/my_text.dart';
+import '../../../utils/app_constants.dart';
 import '../../widgets/text/expandable_text.dart';
 
-class DishDetailedScreen extends StatelessWidget {
-  const DishDetailedScreen({super.key});
+class PopularDetailedPage extends StatelessWidget {
+  final int pageID;
+  const PopularDetailedPage({super.key, required this.pageID});
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: _DishDetailedBody(),
-      bottomNavigationBar: _DishDetailedBottomBarWidget(),
+    return Scaffold(
+      body: _DetailedPageBody(id: pageID),
+      bottomNavigationBar: const _BottomWidget(),
     );
   }
 }
 
-class _DishDetailedBody extends StatelessWidget {
-  const _DishDetailedBody();
+class _DetailedPageBody extends StatelessWidget {
+  const _DetailedPageBody({required this.id});
+  final int id;
   @override
   Widget build(BuildContext context) {
+    ProductModel item =
+        Get.find<PopularProductController>().popularProductList[id];
+
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -45,8 +53,8 @@ class _DishDetailedBody extends StatelessWidget {
             )
           ]),
           flexibleSpace: FlexibleSpaceBar(
-            background: Image.asset(
-              ThemeAppImgURL.imgURL1,
+            background: Image.network(
+              "${AppConstansts.BASE_URL}/uploads/${item.img!}",
               width: double.maxFinite,
               fit: BoxFit.cover,
             ),
@@ -66,7 +74,7 @@ class _DishDetailedBody extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
                   child: BigText(
-                    text: 'name',
+                    text: item.name!,
                     color: ThemeAppColor.kFrontColor,
                     size: ThemeAppSize.kFontSize25,
                   ),
@@ -87,8 +95,8 @@ class _DishDetailedBody extends StatelessWidget {
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 1.7,
-                  child: const ExpandableTextWidget(
-                    text: 'description',
+                  child: ExpandableTextWidget(
+                    text: item.description!,
                   ),
                 ),
               ],
@@ -100,8 +108,8 @@ class _DishDetailedBody extends StatelessWidget {
   }
 }
 
-class _DishDetailedBottomBarWidget extends StatelessWidget {
-  const _DishDetailedBottomBarWidget();
+class _BottomWidget extends StatelessWidget {
+  const _BottomWidget();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -138,12 +146,10 @@ class _TotalPriceWidget extends StatelessWidget {
             radius: ThemeAppSize.kRadius12,
           ),
         ),
-        child: Obx(
-          () => BigText(
-            text: 'total | Go to cart',
-            color: ThemeAppColor.kWhite,
-            size: ThemeAppSize.kFontSize20,
-          ),
+        child: BigText(
+          text: '0 | Go to cart',
+          color: ThemeAppColor.kWhite,
+          size: ThemeAppSize.kFontSize20,
         ),
       ),
     );
@@ -172,10 +178,10 @@ class _AddAndSubDishWidget extends StatelessWidget {
             ),
           ),
           SizedBox(width: ThemeAppSize.kInterval5),
-          Obx(() => const SmallText(
-                text: 'count',
-                color: ThemeAppColor.kFrontColor,
-              )),
+          const SmallText(
+            text: '0',
+            color: ThemeAppColor.kFrontColor,
+          ),
           SizedBox(width: ThemeAppSize.kInterval5),
           GestureDetector(
             onTap: () {},

@@ -89,7 +89,7 @@ class _ButtonToCartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(MainRoutes.homeCart),
+      onTap: () => Get.toNamed(MainRoutes.getCart()),
       child: const Icon(
         Icons.grid_view,
         size: 30,
