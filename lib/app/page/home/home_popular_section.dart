@@ -1,7 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/routes/main_screens.dart';
+import 'package:text/app/routes/main_routes.dart';
 import 'package:text/app/widgets/load/circular_widget.dart';
 import '../../../utils/app_constants.dart';
 import '../../controllers/popular_product_controller.dart';
@@ -101,7 +101,7 @@ class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
     );
   }
 
-  Widget _itemPopularWidget(int index, ProductModel product) {
+  Widget _itemPopularWidget(int index, ProductModel item) {
     Matrix4 matrix = Matrix4.identity();
     if (index == _currPageValue.floor()) {
       var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactore);
@@ -125,15 +125,18 @@ class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
       matrix = Matrix4.diagonal3Values(1, currScale, 1)
         ..setTranslationRaw(0, _height * (1 - _scaleFactore) / 2, 1);
     }
-    final imgUrl = "${AppConstansts.BASE_URL}/uploads/${product.img!}";
+    final imgUrl = "${AppConstansts.BASE_URL}/uploads/${item.img!}";
     return Transform(
       transform: matrix,
       child: GestureDetector(
-        onTap: () => Get.toNamed(MainRoutes.getPopularFood(index)),
+        onTap: () => Get.toNamed(
+          MainRoutes.getDetailedFood(item.id),
+          arguments: item,
+        ),
         child: Stack(
           children: [
             _ItemImgWidget(imgUrl: imgUrl),
-            _ItemInfoBlok(product: product),
+            _ItemInfoBlok(product: item),
           ],
         ),
       ),

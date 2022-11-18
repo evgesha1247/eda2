@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:text/app/routes/main_screens.dart';
+import 'package:text/app/routes/main_routes.dart';
 
 class AuthRepo extends GetxController {
   static AuthRepo get instance => Get.find<AuthRepo>();

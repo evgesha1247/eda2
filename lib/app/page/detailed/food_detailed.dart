@@ -8,26 +8,25 @@ import 'package:text/app/widgets/text/my_text.dart';
 import '../../../utils/app_constants.dart';
 import '../../widgets/text/expandable_text.dart';
 
-class PopularDetailedPage extends StatelessWidget {
-  final int pageID;
-  const PopularDetailedPage({super.key, required this.pageID});
+class FoodDetailedPage extends StatelessWidget {
+  late final ProductModel item;
+  FoodDetailedPage({super.key}) {
+    item = Get.arguments;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _DetailedPageBody(id: pageID),
+      body: _DetailedPageBody(item: item),
       bottomNavigationBar: const _BottomWidget(),
     );
   }
 }
 
 class _DetailedPageBody extends StatelessWidget {
-  const _DetailedPageBody({required this.id});
-  final int id;
+  const _DetailedPageBody({required this.item});
+  final ProductModel item;
   @override
   Widget build(BuildContext context) {
-    ProductModel item =
-        Get.find<PopularProductController>().popularProductList[id];
-
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -168,29 +167,33 @@ class _AddAndSubDishWidget extends StatelessWidget {
           radius: ThemeAppSize.kRadius12,
         ),
       ),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () {},
-            child: const Icon(
-              Icons.remove,
-              color: ThemeAppColor.kFrontColor,
-            ),
-          ),
-          SizedBox(width: ThemeAppSize.kInterval5),
-          const SmallText(
-            text: '0',
-            color: ThemeAppColor.kFrontColor,
-          ),
-          SizedBox(width: ThemeAppSize.kInterval5),
-          GestureDetector(
-            onTap: () {},
-            child: const Icon(
-              Icons.add,
-              color: ThemeAppColor.kFrontColor,
-            ),
-          )
-        ],
+      child: GetBuilder<PopularProductController>(
+        builder: (pularProduct) {
+          return Row(
+            children: [
+              GestureDetector(
+                onTap: () => pularProduct.setCountProduct(false),
+                child: const Icon(
+                  Icons.remove,
+                  color: ThemeAppColor.kFrontColor,
+                ),
+              ),
+              SizedBox(width: ThemeAppSize.kInterval5),
+              SmallText(
+                text: '${pularProduct.countProduct}',
+                color: ThemeAppColor.kFrontColor,
+              ),
+              SizedBox(width: ThemeAppSize.kInterval5),
+              GestureDetector(
+                onTap: () => pularProduct.setCountProduct(true),
+                child: const Icon(
+                  Icons.add,
+                  color: ThemeAppColor.kFrontColor,
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }

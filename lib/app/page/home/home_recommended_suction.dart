@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
+import 'package:text/app/routes/main_routes.dart';
 
 import '../../../utils/app_constants.dart';
 import '../../controllers/recommended_product_controller.dart';
@@ -18,7 +19,7 @@ class RecommendedSuction extends StatelessWidget {
         children: [
           const _RecommendedTitleWidget(),
           SizedBox(height: ThemeAppSize.kInterval12),
-          const _RecommendedListBuilderWidget(),
+          _RecommendedListBuilderWidget(),
         ],
       ),
     );
@@ -48,14 +49,20 @@ class _RecommendedTitleWidget extends StatelessWidget {
 }
 
 class _RecommendedListBuilderWidget extends StatelessWidget {
-  const _RecommendedListBuilderWidget({Key? key}) : super(key: key);
+  _RecommendedListBuilderWidget({Key? key}) : super(key: key);
+  final recommendedProduct = Get.find<RecommendedProductController>();
   @override
   Widget build(BuildContext context) {
     Widget itemPopular(ProductModel item) {
+
       var selected = false.obs;
       final imgUrl = "${AppConstansts.BASE_URL}/uploads/${item.img!}";
       return GestureDetector(
         onTap: () => selected.value = !selected.value,
+        onDoubleTap: () => Get.toNamed(
+          MainRoutes.getDetailedFood(item.id),
+          arguments: item,
+        ),
         child: Obx(
           () => Stack(
             children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../routes/main_screens.dart';
+import '../../routes/main_routes.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/icon/menu_icon.dart';
 import '../../widgets/text/my_text.dart';

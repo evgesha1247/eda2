@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../routes/main_screens.dart';
+import '../../routes/main_routes.dart';
 
 class SplashModel extends GetxController {
   @override

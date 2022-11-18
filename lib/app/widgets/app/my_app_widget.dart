@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import '../../../Bindings/main_bindings.dart';
 import '../../controllers/popular_product_controller.dart';
 import '../../controllers/recommended_product_controller.dart';
-import '../../routes/main_screens.dart';
+import '../../routes/main_routes.dart';
 
 class MyAppWidget extends StatelessWidget {
   const MyAppWidget({Key? key}) : super(key: key);
