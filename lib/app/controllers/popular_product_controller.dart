@@ -34,48 +34,49 @@ class PopularProductController extends GetxController {
       debugPrint('response.statusCode popular ---   ${response.statusCode}');
     }
   }
+
+
   void setCountProduct(bool isIncroment) {
     isIncroment
         ? _countProduct = _checkCount(_countProduct + 1)
         : _countProduct = _checkCount(_countProduct - 1);
     update();
   }
+
   int _checkCount(int countProduct) {
-    if (countProduct < 0) {
-      printSnackBar('You can\'t reduce more !');
+    if ((_inCartItems + countProduct) < 0) {
+      ThemeAppFun.printSnackBar('You can\'t reduce more !');
       return 0;
-    } else if (countProduct > 20) {
-      printSnackBar('You can\'t add more !');
-      return 20;
+    } else if ((_inCartItems + countProduct) > 20) {
+      ThemeAppFun.printSnackBar('You can\'t add more !');
+      return 0;
     } else {
       return countProduct;
     }
   }
-  void printSnackBar(String message) {
-    Get.snackbar(
-      'Item count',
-      message,
-      backgroundColor: ThemeAppColor.kAccent.withOpacity(0.7),
-      colorText: ThemeAppColor.kBGColor,
-      duration: const Duration(milliseconds: 1200),
-      margin: EdgeInsets.all(ThemeAppSize.kInterval12),
-    );
-  }
 
-  void initCount(CartController cart) {
+  void initCount({
+    required ProductModel product,
+    required CartController cartController,
+  }) {
     _countProduct = 0;
     _inCartItems = 0;
-    _cart = cart;
+    _cart = cartController;
+    if (_cart.existInCart(product)) {
+      _inCartItems = _cart.getCount(product);
+    }
   }
 
+  int get totalItems => _cart.totalItems;
+
+
   void addProduct(ProductModel product) {
-    if (_countProduct > 0) {
-      _cart.addItem(product, _countProduct);
-      _cart.items.forEach((key, value) {
-        print('${value.id} --- ${value.count} ');
-      });
-    } else {
-      printSnackBar('You can\'t add zero to carts !');
-    }
+    _cart.addItem(product, _countProduct);
+
+    _countProduct = 0;
+    _inCartItems = _cart.getCount(product);
+
+    update();
+
   }
 }

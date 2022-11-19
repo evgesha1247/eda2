@@ -10,7 +10,6 @@ import '../../../utils/app_constants.dart';
 import '../../widgets/text/expandable_text.dart';
 
 class FoodDetailedPage extends StatelessWidget {
-
   late final ProductModel item;
   FoodDetailedPage({super.key}) {
     item = Get.arguments;
@@ -36,24 +35,44 @@ class _DetailedPageBody extends StatelessWidget {
           automaticallyImplyLeading: false,
           pinned: true,
           backgroundColor: ThemeAppColor.kFrontColor,
+          surfaceTintColor: ThemeAppColor.kAccent,
           expandedHeight: 280,
-          toolbarHeight: 120,
-          elevation: 0,
-          title:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            GestureDetector(
-              onTap: () => Get.back(),
-              child:
-                  const CustomButtonIcon(icon: Icon(Icons.arrow_back_ios_new)),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: const CustomButtonIcon(
-                icon: Icon(Icons.favorite_outline),
-                colorBorder: ThemeAppColor.kBGColor,
+          collapsedHeight: 120,
+          toolbarHeight: 100,
+          excludeHeaderSemantics: true,
+          titleSpacing: ThemeAppSize.kInterval24,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: CustomButtonIcon(
+                  sizePading: ThemeAppSize.kInterval12,
+                  icon: const Icon(Icons.arrow_back_ios_new),
+                  bg: ThemeAppColor.kBGColor,
+                ),
               ),
-            )
-          ]),
+              GetBuilder<PopularProductController>(
+                builder: (_) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: CustomButtonIcon(
+                      sizePading: ThemeAppSize.kInterval12,
+                      icon: _.totalItems >= 1
+                          ? Row(children: [
+                              const Icon(Icons.shopping_bag_rounded),
+                              SmallText(
+                                  text: '${_.totalItems}',
+                                  color: ThemeAppColor.kFrontColor)
+                            ])
+                          : const Icon(Icons.shopping_bag_outlined),
+                      bg: ThemeAppColor.kBGColor,
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
           flexibleSpace: FlexibleSpaceBar(
             background: Image.network(
               "${AppConstansts.BASE_URL}/uploads/${item.img!}",
@@ -62,7 +81,7 @@ class _DetailedPageBody extends StatelessWidget {
             ),
           ),
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(0),
+            preferredSize: const Size.fromHeight(-5),
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
@@ -116,7 +135,6 @@ class _BottomWidget extends StatelessWidget {
   final ProductModel item;
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: ThemeAppSize.kDetaildButtomContainer,
       padding: EdgeInsets.all(ThemeAppSize.kInterval24),
@@ -129,7 +147,7 @@ class _BottomWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const _AddAndSubDishWidget(),
+          _AddAndSubDishWidget(item: item),
           _TotalPriceWidget(item: item),
         ],
       ),
@@ -142,9 +160,7 @@ class _TotalPriceWidget extends StatelessWidget {
   final ProductModel item;
   final controller = Get.find<PopularProductController>();
   @override
-
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () => controller.addProduct(item),
       child: Container(
@@ -155,11 +171,14 @@ class _TotalPriceWidget extends StatelessWidget {
             radius: ThemeAppSize.kRadius12,
           ),
         ),
-        child: BigText(
-          text: '\$ ${item.price} | Go to cart',
-          color: ThemeAppColor.kWhite,
-          size: ThemeAppSize.kFontSize20,
-
+        child: GetBuilder<PopularProductController>(
+          builder: (_) {
+            return BigText(
+              text: '\$ ${_.inCartItems * item.price!} | Go to cart',
+              color: ThemeAppColor.kWhite,
+              size: ThemeAppSize.kFontSize20,
+            );
+          },
         ),
       ),
     );
@@ -167,11 +186,14 @@ class _TotalPriceWidget extends StatelessWidget {
 }
 
 class _AddAndSubDishWidget extends StatelessWidget {
-  const _AddAndSubDishWidget();
-
+  const _AddAndSubDishWidget({required this.item});
+  final ProductModel item;
   @override
   Widget build(BuildContext context) {
-    Get.find<PopularProductController>().initCount(Get.find<CartController>());
+    Get.find<PopularProductController>().initCount(
+      product: item,
+      cartController: Get.find<CartController>(),
+    );
     return Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(
@@ -180,33 +202,35 @@ class _AddAndSubDishWidget extends StatelessWidget {
           radius: ThemeAppSize.kRadius12,
         ),
       ),
-      child: GetBuilder<PopularProductController>(
-        builder: (pularProduct) {
-          return Row(
-            children: [
-              GestureDetector(
-                onTap: () => pularProduct.setCountProduct(false),
-                child: const Icon(
-                  Icons.remove,
-                  color: ThemeAppColor.kFrontColor,
-                ),
-              ),
-              SizedBox(width: ThemeAppSize.kInterval5),
-              SmallText(
-                text: '${pularProduct.countProduct}',
+      child: Row(
+        children: [
+          GetBuilder<PopularProductController>(
+            builder: (_) => GestureDetector(
+              onTap: () => _.setCountProduct(false),
+              child: const Icon(
+                Icons.remove,
                 color: ThemeAppColor.kFrontColor,
               ),
-              SizedBox(width: ThemeAppSize.kInterval5),
-              GestureDetector(
-                onTap: () => pularProduct.setCountProduct(true),
-                child: const Icon(
-                  Icons.add,
-                  color: ThemeAppColor.kFrontColor,
-                ),
-              )
-            ],
-          );
-        },
+            ),
+          ),
+          SizedBox(width: ThemeAppSize.kInterval5),
+          GetBuilder<PopularProductController>(
+            builder: (_) => SmallText(
+              text: '${_.inCartItems}',
+              color: ThemeAppColor.kFrontColor,
+            ),
+          ),
+          SizedBox(width: ThemeAppSize.kInterval5),
+          GetBuilder<PopularProductController>(
+            builder: (_) => GestureDetector(
+              onTap: () => _.setCountProduct(true),
+              child: const Icon(
+                Icons.add,
+                color: ThemeAppColor.kFrontColor,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

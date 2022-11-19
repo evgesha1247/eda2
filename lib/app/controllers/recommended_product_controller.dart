@@ -22,7 +22,6 @@ class RecommendedProductController extends GetxController {
       _recommendedProductList = [];
       _recommendedProductList.addAll(Product.fromJson(response.body).products);
       debugPrint('recommended product list in Load good');
-
       _isLoaded = true;
       update();
     } else {
@@ -30,4 +29,5 @@ class RecommendedProductController extends GetxController {
       debugPrint("response.statusCode recommended --- ${response.statusCode}");
     }
   }
+
 }

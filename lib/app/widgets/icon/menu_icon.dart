@@ -21,7 +21,11 @@ class CustomButtonIcon extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: bg,
-        borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            sizePading == 0 ? ThemeAppSize.kRadius12 : sizePading,
+          ),
+        ),
         border:
             statusBorder ? Border.all(color: colorBorder, width: 0.8) : null,
       ),

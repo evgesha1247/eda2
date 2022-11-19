@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import '../data/repository/cart_repo.dart';
 import '../models/cart_model.dart';
+import '../theme/theme_app.dart';
 
 class CartController extends GetxController {
   final CartRepo cartRepo;
@@ -11,8 +12,11 @@ class CartController extends GetxController {
   Map<int, CartModel> get items => _items;
 
   void addItem(ProductModel product, int count) {
+    var totalCount = 0;
     if (_items.containsKey(product.id)) {
       _items.update(product.id!, (value) {
+        totalCount = value.count! + count;
+
         return CartModel(
           id: value.id,
           name: value.name,
@@ -23,7 +27,11 @@ class CartController extends GetxController {
           isExit: true,
         );
       });
-    } else {
+
+      if (totalCount <= 0) {
+        items.remove(product.id);
+      }
+    } else if (count > 0) {
       _items.putIfAbsent(
         product.id!,
         () {
@@ -38,6 +46,41 @@ class CartController extends GetxController {
           );
         },
       );
+    } else {
+      ThemeAppFun.printSnackBar('You can\'t add zero to carts !');
     }
   }
+
+  bool existInCart(ProductModel product) {
+    if (_items.containsKey(product.id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  int getCount(ProductModel product) {
+    var count = 0;
+    if (_items.containsKey(product.id)) {
+      _items.forEach(
+        (key, value) {
+          if (key == product.id) {
+            count = value.count!;
+          }
+        },
+      );
+    }
+    return count;
+  }
+
+  int get totalItems {
+    var totalCount = 0;
+    _items.forEach((key, value) {
+      totalCount += value.count!;
+    });
+
+    return totalCount;
+  }
+
+
 }

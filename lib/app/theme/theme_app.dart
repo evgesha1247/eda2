@@ -58,6 +58,17 @@ abstract class ThemeAppFun {
       Radius.circular(radius == 0 ? ThemeAppSize.kRadius20 : radius),
     );
   }
+  static void printSnackBar(String message) {
+    Get.snackbar(
+      'Item count',
+      message,
+      backgroundColor: ThemeAppColor.kAccent.withOpacity(0.7),
+      colorText: ThemeAppColor.kBGColor,
+      duration: const Duration(milliseconds: 1200),
+      margin: EdgeInsets.all(ThemeAppSize.kInterval12),
+    );
+  }
+
 }
 abstract class ThemeAppImgURL {
   static const String imgURLPromo1 = 'assets/imgs/food6.jpg';
