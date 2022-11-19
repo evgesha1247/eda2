@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/models/products_model.dart';
-import 'package:text/app/data/repository/popular_product_pero.dart';
 import 'package:text/app/theme/theme_app.dart';
 
+import '../data/repository/product_repo.dart';
+
 class PopularProductController extends GetxController {
-  static final to = Get.find<PopularProductController>();
-  final PopularProductRepo popularProductRepo;
+  final ProductRepo popularProductRepo;
   PopularProductController({required this.popularProductRepo});
+  late CartController _cart;
   List<dynamic> _popularProductList = [];
   List<dynamic> get popularProductList => _popularProductList;
 
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
+
   int _countProduct = 0;
   int get countProduct => _countProduct;
+  int _inCartItems = 0;
+  int get inCartItems => _inCartItems + _countProduct;
+
 
   Future<void> getPopularProductList() async {
     Response response = await popularProductRepo.getPopularProductList();
@@ -29,14 +35,11 @@ class PopularProductController extends GetxController {
     }
   }
   void setCountProduct(bool isIncroment) {
-    if (isIncroment) {
-      _countProduct = _checkCount(_countProduct + 1);
-    } else {
-      _countProduct = _countProduct = _checkCount(_countProduct - 1);
-    }
+    isIncroment
+        ? _countProduct = _checkCount(_countProduct + 1)
+        : _countProduct = _checkCount(_countProduct - 1);
     update();
   }
-
   int _checkCount(int countProduct) {
     if (countProduct < 0) {
       printSnackBar('You can\'t reduce more !');
@@ -48,7 +51,6 @@ class PopularProductController extends GetxController {
       return countProduct;
     }
   }
-
   void printSnackBar(String message) {
     Get.snackbar(
       'Item count',
@@ -60,4 +62,20 @@ class PopularProductController extends GetxController {
     );
   }
 
+  void initCount(CartController cart) {
+    _countProduct = 0;
+    _inCartItems = 0;
+    _cart = cart;
+  }
+
+  void addProduct(ProductModel product) {
+    if (_countProduct > 0) {
+      _cart.addItem(product, _countProduct);
+      _cart.items.forEach((key, value) {
+        print('${value.id} --- ${value.count} ');
+      });
+    } else {
+      printSnackBar('You can\'t add zero to carts !');
+    }
+  }
 }

@@ -4,25 +4,12 @@ import 'package:get/get.dart';
 abstract class ThemeAppColor {
   static const Color kWhite = Color.fromARGB(255, 221, 221, 227);
   static const Color kBlack = Color.fromARGB(255, 15, 15, 15);
-
-
-  //static const Color kAccent = Color.fromARGB(255, 255, 121, 101);
-  //static const Color kFrontColor = Color.fromARGB(255, 80, 35, 20);
-  //static const Color kBGColor = Color.fromARGB(255, 255, 237, 230);
-  // static const Color kAccent2 = Color.fromARGB(255, 100, 55, 50);
-
   /// неплохое решение
   static const Color kFrontColor = Color(0xff553b3e); //0xff553b3e 0xff442c2e
   static const Color kBGColor = Color(0xffFedbd0);
-
   static const Color kAccent2 = Color.fromARGB(255, 113, 80, 84);
   static const Color grey = Color.fromARGB(255, 160, 113, 118);
   static const Color kAccent = Colors.pink;
-  // static const Color kAccent2 = Color.fromARGB(255, 47, 46, 64);
-  // static const Color kFrontColor = Color.fromARGB(255, 42, 45, 61);
-  // static const Color kBGColor = Color.fromARGB(255, 32, 35, 51);
-  // static const Color kAccent = Color(0xffF7C701);
-  /////////////////////////////////////////////////////
 
 }
 
@@ -74,24 +61,4 @@ abstract class ThemeAppFun {
 }
 abstract class ThemeAppImgURL {
   static const String imgURLPromo1 = 'assets/imgs/food6.jpg';
-  static const String imgURLPromo2 = 'assets/imgs/food7.jpg';
-  static const String imgURLPromo3 = 'assets/imgs/food8.jpeg';
-  static const String imgURLPromo4 = 'assets/imgs/food9.jpg';
-  static const String imgURL1 = 'assets/imgs/food1.png';
-  static const String imgURL2 = 'assets/imgs/food2.png';
-  static const String imgURL3 = 'assets/imgs/food3.png';
-  static const String imgURL4 = 'assets/imgs/food4.png';
-  static const String imgURL5 = 'assets/imgs/food5.png';
-  static const String imgURLlogo = 'assets/imgs/logo.png';
-  static const String imgURLuserImg = 'assets/imgs/userImg.png';
-}
-
-abstract class ThemeAppIconURL {
-  static const String iconUrlDessert = 'assets/icons/dessert.png';
-  static const String iconUrlDrink = 'assets/icons/iconDrink.png';
-  static const String iconUrlReset = 'assets/icons/reset.png';
-  static const String iconUrlIceCream = 'assets/icons/ice-cream.png';
-  static const String iconUrlMainCourse = 'assets/icons/main_course.png';
-
-
 }

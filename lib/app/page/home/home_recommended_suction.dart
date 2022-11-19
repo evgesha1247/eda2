@@ -50,11 +50,9 @@ class _RecommendedTitleWidget extends StatelessWidget {
 
 class _RecommendedListBuilderWidget extends StatelessWidget {
   _RecommendedListBuilderWidget({Key? key}) : super(key: key);
-  final recommendedProduct = Get.find<RecommendedProductController>();
   @override
   Widget build(BuildContext context) {
     Widget itemPopular(ProductModel item) {
-
       var selected = false.obs;
       final imgUrl = "${AppConstansts.BASE_URL}/uploads/${item.img!}";
       return GestureDetector(

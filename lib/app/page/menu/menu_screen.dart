@@ -207,7 +207,7 @@ class _CardItem extends StatelessWidget {
               image: const DecorationImage(
                 fit: BoxFit.cover,
                 opacity: 0.7,
-                image: AssetImage(ThemeAppImgURL.imgURL1),
+                image: AssetImage(ThemeAppImgURL.imgURLPromo1),
               ),
             ),
 

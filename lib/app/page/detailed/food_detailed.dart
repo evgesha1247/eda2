@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/controllers/popular_product_controller.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/theme/theme_app.dart';
@@ -9,15 +10,17 @@ import '../../../utils/app_constants.dart';
 import '../../widgets/text/expandable_text.dart';
 
 class FoodDetailedPage extends StatelessWidget {
+
   late final ProductModel item;
   FoodDetailedPage({super.key}) {
     item = Get.arguments;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _DetailedPageBody(item: item),
-      bottomNavigationBar: const _BottomWidget(),
+      bottomNavigationBar: _BottomWidget(item: item),
     );
   }
 }
@@ -108,9 +111,12 @@ class _DetailedPageBody extends StatelessWidget {
 }
 
 class _BottomWidget extends StatelessWidget {
-  const _BottomWidget();
+  const _BottomWidget({required this.item});
+
+  final ProductModel item;
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: ThemeAppSize.kDetaildButtomContainer,
       padding: EdgeInsets.all(ThemeAppSize.kInterval24),
@@ -122,9 +128,9 @@ class _BottomWidget extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          _AddAndSubDishWidget(),
-          _TotalPriceWidget(),
+        children: [
+          const _AddAndSubDishWidget(),
+          _TotalPriceWidget(item: item),
         ],
       ),
     );
@@ -132,11 +138,15 @@ class _BottomWidget extends StatelessWidget {
 }
 
 class _TotalPriceWidget extends StatelessWidget {
-  const _TotalPriceWidget();
+  _TotalPriceWidget({required this.item});
+  final ProductModel item;
+  final controller = Get.find<PopularProductController>();
   @override
+
   Widget build(BuildContext context) {
+
     return GestureDetector(
-      onTap: () => {},
+      onTap: () => controller.addProduct(item),
       child: Container(
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         decoration: BoxDecoration(
@@ -146,9 +156,10 @@ class _TotalPriceWidget extends StatelessWidget {
           ),
         ),
         child: BigText(
-          text: '0 | Go to cart',
+          text: '\$ ${item.price} | Go to cart',
           color: ThemeAppColor.kWhite,
           size: ThemeAppSize.kFontSize20,
+
         ),
       ),
     );
@@ -157,8 +168,10 @@ class _TotalPriceWidget extends StatelessWidget {
 
 class _AddAndSubDishWidget extends StatelessWidget {
   const _AddAndSubDishWidget();
+
   @override
   Widget build(BuildContext context) {
+    Get.find<PopularProductController>().initCount(Get.find<CartController>());
     return Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(

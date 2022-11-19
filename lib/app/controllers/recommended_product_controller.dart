@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 
-import '../data/repository/recommended_product_repo.dart';
+import '../data/repository/product_repo.dart';
 
 //Recommended
 class RecommendedProductController extends GetxController {
   static final to = Get.find<RecommendedProductController>();
-  final RecommendedProductRepo recommendedProductRepo;
+  final ProductRepo recommendedProductRepo;
   RecommendedProductController({required this.recommendedProductRepo});
   List<dynamic> _recommendedProductList = [];
   List<dynamic> get recommendedProductList => _recommendedProductList;
