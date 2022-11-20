@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/controllers/cart_controller.dart';
+import 'package:text/app/models/cart_model.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/theme/theme_app.dart';
-
 import '../data/repository/product_repo.dart';
 
 class PopularProductController extends GetxController {
@@ -12,15 +12,17 @@ class PopularProductController extends GetxController {
   late CartController _cart;
   List<dynamic> _popularProductList = [];
   List<dynamic> get popularProductList => _popularProductList;
+  List<CartModel> get cartList => _cart.getCartItems;
 
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
 
   int _countProduct = 0;
-  int get countProduct => _countProduct;
   int _inCartItems = 0;
-  int get inCartItems => _inCartItems + _countProduct;
 
+  int get countProduct => _countProduct;
+  int get inCartItems => _inCartItems + _countProduct;
+  int get totalItems => _cart.totalItems;
 
   Future<void> getPopularProductList() async {
     Response response = await popularProductRepo.getPopularProductList();
@@ -34,18 +36,10 @@ class PopularProductController extends GetxController {
       debugPrint('response.statusCode popular ---   ${response.statusCode}');
     }
   }
-
-
-  void setCountProduct(bool isIncroment) {
-    isIncroment
-        ? _countProduct = _checkCount(_countProduct + 1)
-        : _countProduct = _checkCount(_countProduct - 1);
-    update();
-  }
-
   int _checkCount(int countProduct) {
-    if ((_inCartItems + countProduct) < 0) {
+    if ((_inCartItems + countProduct) < -1) {
       ThemeAppFun.printSnackBar('You can\'t reduce more !');
+
       return 0;
     } else if ((_inCartItems + countProduct) > 20) {
       ThemeAppFun.printSnackBar('You can\'t add more !');
@@ -55,28 +49,29 @@ class PopularProductController extends GetxController {
     }
   }
 
-  void initCount({
-    required ProductModel product,
-    required CartController cartController,
-  }) {
+void initCount(ProductModel product, CartController cartController) {
     _countProduct = 0;
     _inCartItems = 0;
     _cart = cartController;
-    if (_cart.existInCart(product)) {
-      _inCartItems = _cart.getCount(product);
-    }
+    _cart.existInCart(product) ? _inCartItems = _cart.getCount(product) : null;
   }
-
-  int get totalItems => _cart.totalItems;
-
+void setCountProduct(bool isIncroment, ProductModel product) {
+    if (isIncroment) {
+      _countProduct = _checkCount(_countProduct + 1);
+      addProduct(product);
+    } else {
+      _countProduct = _checkCount(_countProduct - 1);
+      addProduct(product);
+    }
+    update();
+  }
 
   void addProduct(ProductModel product) {
     _cart.addItem(product, _countProduct);
-
     _countProduct = 0;
     _inCartItems = _cart.getCount(product);
-
     update();
-
   }
+
+
 }

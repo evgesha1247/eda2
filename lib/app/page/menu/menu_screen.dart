@@ -204,11 +204,7 @@ class _CardItem extends StatelessWidget {
             decoration: BoxDecoration(
               color: ThemeAppColor.kFrontColor,
               borderRadius: ThemeAppFun.decoration(),
-              image: const DecorationImage(
-                fit: BoxFit.cover,
-                opacity: 0.7,
-                image: AssetImage(ThemeAppImgURL.imgURLPromo1),
-              ),
+
             ),
 
             /// content cart

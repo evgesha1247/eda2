@@ -19,7 +19,7 @@ class RecommendedSuction extends StatelessWidget {
         children: [
           const _RecommendedTitleWidget(),
           SizedBox(height: ThemeAppSize.kInterval12),
-          _RecommendedListBuilderWidget(),
+          const _RecommendedListBuilderWidget(),
         ],
       ),
     );
@@ -49,7 +49,7 @@ class _RecommendedTitleWidget extends StatelessWidget {
 }
 
 class _RecommendedListBuilderWidget extends StatelessWidget {
-  _RecommendedListBuilderWidget({Key? key}) : super(key: key);
+  const _RecommendedListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Widget itemPopular(ProductModel item) {

@@ -9,6 +9,11 @@ class CartController extends GetxController {
   CartController({required this.cartRepo});
 
   final Map<int, CartModel> _items = {};
+  List<CartModel> get getCartItems {
+    return _items.entries.map((e) => e.value).toList();
+  }
+
+
   Map<int, CartModel> get items => _items;
 
   void addItem(ProductModel product, int count) {

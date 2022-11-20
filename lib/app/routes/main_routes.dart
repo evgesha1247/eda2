@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:text/app/page/auth/auth_screen.dart';
-import 'package:text/app/page/cart/cart_screen.dart';
+import 'package:text/app/page/cart/cart_page.dart';
 import 'package:text/app/page/detailed/food_detailed.dart';
 import 'package:text/app/page/splash/splash_screen.dart';
 import '../page/guiding/guiding_screen.dart';
@@ -32,7 +32,7 @@ class MainRoutes {
     GetPage(name: _auth, page: () => const AuthScreen()),
     //
     GetPage(name: _main, page: () => const GuidingScreen()),
-    GetPage(name: _cart, page: () => const CartScreen()),
+    GetPage(name: _cart, page: () => const CartPage()),
 
     GetPage(name: _detailed, page: () => FoodDetailedPage()),
   ];

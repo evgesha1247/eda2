@@ -27,6 +27,7 @@ class HomeHeaderWidget extends StatelessWidget {
                         Icons.person_outline,
                         color: ThemeAppColor.kFrontColor,
                       ),
+
                       colorBorder: ThemeAppColor.kFrontColor,
                       statusBorder: true,
                     )),
