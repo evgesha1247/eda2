@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/cart_controller.dart';
-import '../../controllers/popular_product_controller.dart';
+import '../../controllers/product_controller.dart';
 import '../../models/products_model.dart';
 import '../../routes/main_routes.dart';
 import '../../theme/theme_app.dart';
@@ -24,7 +24,7 @@ class BottomDetailed extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _AddAndSubDishWidget(item: item),
+          _AddAndSubProductWidget(item: item),
           _TotalPriceWidget(item: item),
         ],
       ),
@@ -35,12 +35,12 @@ class BottomDetailed extends StatelessWidget {
 class _TotalPriceWidget extends StatelessWidget {
   _TotalPriceWidget({required this.item});
   final ProductModel item;
-  final controller = Get.find<PopularProductController>();
+  final controller = Get.find<ProductController>();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.toNamed(MainRoutes.getCart()),
-      child: GetBuilder<PopularProductController>(
+      child: GetBuilder<ProductController>(
         builder: (_) {
           return Container(
             padding: EdgeInsets.all(ThemeAppSize.kInterval12),
@@ -64,12 +64,12 @@ class _TotalPriceWidget extends StatelessWidget {
   }
 }
 
-class _AddAndSubDishWidget extends StatelessWidget {
-  const _AddAndSubDishWidget({required this.item});
+class _AddAndSubProductWidget extends StatelessWidget {
+  const _AddAndSubProductWidget({required this.item});
   final ProductModel item;
   @override
   Widget build(BuildContext context) {
-    Get.find<PopularProductController>()
+    Get.find<ProductController>()
         .initCount(item, Get.find<CartController>());
     return Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
@@ -81,7 +81,7 @@ class _AddAndSubDishWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          GetBuilder<PopularProductController>(
+          GetBuilder<ProductController>(
             builder: (_) => GestureDetector(
               onTap: () => _.setCountProduct(false, item),
               child: const Icon(
@@ -91,14 +91,14 @@ class _AddAndSubDishWidget extends StatelessWidget {
             ),
           ),
           SizedBox(width: ThemeAppSize.kInterval5),
-          GetBuilder<PopularProductController>(
+          GetBuilder<ProductController>(
             builder: (_) => SmallText(
               text: '${_.inCartItems}',
               color: ThemeAppColor.kFrontColor,
             ),
           ),
           SizedBox(width: ThemeAppSize.kInterval5),
-          GetBuilder<PopularProductController>(
+          GetBuilder<ProductController>(
             builder: (_) => GestureDetector(
               onTap: () => _.setCountProduct(true, item),
               child: const Icon(

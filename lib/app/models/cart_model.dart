@@ -1,3 +1,5 @@
+import 'package:text/app/models/products_model.dart';
+
 class CartModel {
   int? id;
   String? name;
@@ -6,10 +8,12 @@ class CartModel {
   int? count;
   String? time;
   bool? isExit;
+  ProductModel? product;
 
   CartModel({
     this.id,
     this.name,
+    this.product,
     this.price,
     this.img,
     this.count,
@@ -25,5 +29,6 @@ class CartModel {
     img = json['img'];
     time = json['time'];
     isExit = json['isExit'];
+    product = ProductModel.fromJson(json['product']);
   }
 }

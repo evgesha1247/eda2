@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:flutter/services.dart';
-import '../../controllers/popular_product_controller.dart';
-import '../../controllers/recommended_product_controller.dart';
+import '../../controllers/product_controller.dart';
 import '../../routes/main_routes.dart';
 
 class MyAppWidget extends StatelessWidget {
@@ -11,8 +10,8 @@ class MyAppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    Get.find<PopularProductController>().getPopularProductList();
-    Get.find<RecommendedProductController>().getRecommendedProductList();
+    Get.find<ProductController>().getPopularProductList();
+    Get.find<ProductController>().getRecommendedProductList();
 
 
     return GetMaterialApp(

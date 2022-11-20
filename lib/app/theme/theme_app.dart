@@ -70,6 +70,3 @@ abstract class ThemeAppFun {
   }
 
 }
-abstract class ThemeAppImgURL {
-  static const String imgURLPromo1 = 'assets/imgs/food6.jpg';
-}

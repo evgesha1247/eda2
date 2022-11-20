@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/widgets/text/my_text.dart';
 import '../../../utils/app_constants.dart';
-import '../../controllers/popular_product_controller.dart';
+import '../../controllers/product_controller.dart';
 import '../../routes/main_routes.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/icon/menu_icon.dart';
 
 class HeaderDetailed extends StatelessWidget {
   const HeaderDetailed({super.key, required this.item});
-  final ProductModel item;
+  final item;
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -63,7 +63,7 @@ class _HeaderIcons extends StatelessWidget {
             bg: ThemeAppColor.kBGColor,
           ),
         ),
-        GetBuilder<PopularProductController>(
+        GetBuilder<ProductController>(
           builder: (_) {
             return GestureDetector(
               onTap: () => Get.toNamed(MainRoutes.getCart()),

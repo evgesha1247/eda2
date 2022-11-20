@@ -30,6 +30,7 @@ class CartController extends GetxController {
           count: value.count! + count,
           time: DateTime.now().toString(),
           isExit: true,
+          product: product,
         );
       });
 
@@ -48,12 +49,15 @@ class CartController extends GetxController {
             count: count,
             time: DateTime.now().toString(),
             isExit: true,
+            product: product,
+
           );
         },
       );
     } else {
       ThemeAppFun.printSnackBar('You can\'t add zero to carts !');
     }
+    update();
   }
 
   bool existInCart(ProductModel product) {

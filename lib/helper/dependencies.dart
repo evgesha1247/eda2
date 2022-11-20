@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
 import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/data/repository/cart_repo.dart';
-import '../app/controllers/popular_product_controller.dart';
-import '../app/controllers/recommended_product_controller.dart';
+import '../app/controllers/product_controller.dart';
 import '../app/data/api/ali_client.dart';
 import '../app/data/repository/product_repo.dart';
 import '../app/page/auth/auth_model.dart';
@@ -20,9 +19,11 @@ Future<void> init() async {
 
 //controller
 
-  Get.lazyPut(() => PopularProductController(popularProductRepo: Get.find()));
-  Get.lazyPut(
-      () => RecommendedProductController(recommendedProductRepo: Get.find()));
+  Get.lazyPut(() => ProductController(
+        popularProductRepo: Get.find(),
+        recommendedProductRepo: Get.find(),
+      ));
+
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
 
 //

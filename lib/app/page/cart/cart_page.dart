@@ -1,8 +1,14 @@
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/controllers/cart_controller.dart';
+import 'package:text/app/controllers/product_controller.dart';
+import 'package:text/app/models/cart_model.dart';
+import 'package:text/app/models/products_model.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:text/app/widgets/text/my_text.dart';
-
+import '../../../utils/app_constants.dart';
+import '../../routes/main_routes.dart';
 import '../../widgets/icon/menu_icon.dart';
 
 class CartPage extends StatelessWidget {
@@ -10,18 +16,12 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          child: Column(
-            children: [
-              const _HeaderCart(),
-              SizedBox(height: ThemeAppSize.kInterval12),
-              const _CartBody(),
-              SizedBox(height: ThemeAppSize.kInterval12),
-            ],
-          ),
-        ),
+      body: Stack(
+        children: const [
+          _HeaderCart(),
+          _CartBody(),
+          _Bottom(),
+        ],
       ),
     );
   }
@@ -31,25 +31,34 @@ class _HeaderCart extends StatelessWidget {
   const _HeaderCart();
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: GestureDetector(
-            onTap: () => Get.back(),
-            child: CustomButtonIcon(
-              sizePading: ThemeAppSize.kInterval12,
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: ThemeAppColor.kBGColor,
+    return Positioned(
+      top: ThemeAppSize.kInterval12,
+      left: ThemeAppSize.kInterval12,
+      right: ThemeAppSize.kInterval12,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: GestureDetector(
+              onTap: () => Get.back(),
+              child: CustomButtonIcon(
+                sizePading: ThemeAppSize.kInterval12,
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: ThemeAppColor.kBGColor,
+                ),
+                bg: ThemeAppColor.kFrontColor,
               ),
-              bg: ThemeAppColor.kFrontColor,
             ),
           ),
-        ),
-        const BigText(text: 'Cart', color: ThemeAppColor.kFrontColor),
-      ],
+          BigText(
+            text: 'Cart',
+            color: ThemeAppColor.kFrontColor,
+            size: ThemeAppSize.kFontSize25,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -58,12 +67,218 @@ class _CartBody extends StatelessWidget {
   const _CartBody();
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, index) {
-          return const Text('cart');
-        },
+    return Stack(
+      children: [
+        Positioned(
+          top: ThemeAppSize.kInterval12 * 6.2,
+          left: ThemeAppSize.kInterval12,
+          right: ThemeAppSize.kInterval12,
+          bottom: 0,
+          child: GetBuilder<CartController>(
+            builder: (constroller) {
+              return ListView.builder(
+                itemCount: constroller.getCartItems.length,
+                padding: EdgeInsets.zero,
+                itemBuilder: (context, index) {
+                  return _RowItem(controller: constroller, index: index);
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _RowItem extends StatelessWidget {
+  const _RowItem({required this.controller, required this.index});
+  final CartController controller;
+  final int index;
+  ActionPane _itemBack() => ActionPane(
+        motion: const StretchMotion(),
+        children: [
+          Flexible(
+            child: Center(
+              child: Container(
+                height: ThemeAppSize.kInterval24 * 9,
+                width: ThemeAppSize.kInterval24 * 5,
+                decoration: BoxDecoration(
+                  color: ThemeAppColor.kFrontColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(ThemeAppSize.kRadius20),
+                  ),
+                ),
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: ThemeAppColor.kAccent.withOpacity(0.3),
+                      child: const CustomButtonIcon(
+                        icon: Icon(
+                          Icons.delete_outline_outlined,
+                          color: ThemeAppColor.kBGColor,
+                          size: 25,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      );
+  Widget _item({required CartController controller, required CartModel item}) {
+    final String total = (item.price! * item.count!).toString();
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
+      child: Card(
+        clipBehavior: Clip.hardEdge,
+        elevation: 10,
+        color: ThemeAppColor.kBGColor,
+        surfaceTintColor: ThemeAppColor.kBGColor,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //// img
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(
+                  MainRoutes.getDetailedFood(item.product!.id),
+                  arguments: item.product!,
+                );
+              },
+              child: Container(
+                width: ThemeAppSize.kInterval24 * 7,
+                height: ThemeAppSize.kInterval24 * 10,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      "${AppConstansts.BASE_URL}/uploads/${item.img!}",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            /// info
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                height: ThemeAppSize.kInterval24 * 10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: BigText(
+                        text: item.name!,
+                        maxLines: 3,
+                        color: ThemeAppColor.kFrontColor,
+                        size: ThemeAppSize.kFontSize25,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        _AddAndSubProductWidget(
+                          item: item,
+                          controller: controller,
+                        ),
+                        SizedBox(width: ThemeAppSize.kInterval12),
+                        Text(total)
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+            Container(
+              decoration: const BoxDecoration(
+                color: ThemeAppColor.kFrontColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                ),
+              ),
+              padding: EdgeInsets.all(ThemeAppSize.kInterval5),
+              child: const Icon(Icons.close, color: ThemeAppColor.kBGColor),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final item = controller.getCartItems[index];
+    return Slidable(
+      key: const ValueKey(0),
+      endActionPane: _itemBack(),
+      child: _item(controller: controller, item: item),
+    );
+  }
+}
+
+class _AddAndSubProductWidget extends StatelessWidget {
+  const _AddAndSubProductWidget({required this.item, required this.controller});
+  final CartModel item;
+  final CartController controller;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+      decoration: BoxDecoration(
+        color: ThemeAppColor.kFrontColor,
+        borderRadius: ThemeAppFun.decoration(
+          radius: ThemeAppSize.kRadius12,
+        ),
+      ),
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: () => controller.addItem(item.product!, -1),
+            child: const Icon(
+              Icons.remove,
+              color: ThemeAppColor.kBGColor,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval5),
+            child: SmallText(
+              text: item.count.toString(),
+              color: ThemeAppColor.kBGColor,
+            ),
+          ),
+          GestureDetector(
+            onTap: () => controller.addItem(item.product!, 1),
+            child: const Icon(
+              Icons.add,
+              color: ThemeAppColor.kBGColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Bottom extends StatelessWidget {
+  const _Bottom({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 0,
+      left: ThemeAppSize.kInterval12,
+      right: ThemeAppSize.kInterval12,
+      child: Container(
+        color: Colors.red,
+        width: double.maxFinite,
+        height: 100,
       ),
     );
   }

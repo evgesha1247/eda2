@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:text/app/routes/main_routes.dart';
 import 'package:text/app/widgets/load/circular_widget.dart';
 import '../../../utils/app_constants.dart';
-import '../../controllers/popular_product_controller.dart';
+import '../../controllers/product_controller.dart';
 import '../../models/products_model.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/icon/anumated_icon_favorit.dart';
@@ -62,8 +62,8 @@ class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GetBuilder<PopularProductController>(
-          builder: (popularProduct) => popularProduct.isLoaded
+        GetBuilder<ProductController>(
+          builder: (popularProduct) => popularProduct.isLoadedPopular
               ? SizedBox(
                   height: ThemeAppSize.kPageView,
                   child: PageView.builder(
@@ -77,8 +77,8 @@ class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
                 )
               : const CircularWidget(),
         ),
-        GetBuilder<PopularProductController>(
-          builder: (popularProduct) => popularProduct.isLoaded
+        GetBuilder<ProductController>(
+          builder: (popularProduct) => popularProduct.isLoadedPopular
               ? DotsIndicator(
                   dotsCount: popularProduct.popularProductList.isEmpty
                       ? 1

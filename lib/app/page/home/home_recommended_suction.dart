@@ -4,7 +4,7 @@ import 'package:text/app/models/products_model.dart';
 import 'package:text/app/routes/main_routes.dart';
 
 import '../../../utils/app_constants.dart';
-import '../../controllers/recommended_product_controller.dart';
+import '../../controllers/product_controller.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/load/circular_widget.dart';
 import '../../widgets/text/my_text.dart';
@@ -131,9 +131,9 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
               constraints: BoxConstraints(
                 minHeight: viewportConstraints.maxHeight,
               ),
-              child: GetBuilder<RecommendedProductController>(
+              child: GetBuilder<ProductController>(
                 builder: (recommendedProduct) {
-                  return recommendedProduct.isLoaded
+                  return recommendedProduct.isLoadedRecommended
                       ? ListView.separated(
                           itemCount:
                               recommendedProduct.recommendedProductList.length,
