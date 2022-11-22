@@ -31,7 +31,11 @@ class _UserTitle extends StatelessWidget {
       children: [
         _UserIcon(),
         SizedBox(width: ThemeAppSize.kInterval12),
-        const BigText(text: 'titleText', color: ThemeAppColor.kFrontColor),
+        BigText(
+          text: 'Welcom {name}',
+          color: ThemeAppColor.kFrontColor,
+          size: ThemeAppSize.kFontSize18,
+        ),
       ],
     );
   }
@@ -50,7 +54,7 @@ class _UserIcon extends StatelessWidget {
         child: CustomButtonIcon(
           icon: Icon(
             Icons.person_outline,
-            color: ThemeAppColor.kFrontColor,
+            color: ThemeAppColor.kFrontColor
           ),
           colorBorder: ThemeAppColor.kFrontColor,
           statusBorder: true,

@@ -23,7 +23,7 @@ class MainRoutes {
   static String getMain() => _main;
   static String getCart() => _cart;
 
-  static String getDetailedFood(pageID) => '$_detailed?pageID=$pageID';
+  static String getDetailed(pageID) => '$_detailed?pageID=$pageID';
 
   static final List<GetPage> getPages = [
     /// загрузка

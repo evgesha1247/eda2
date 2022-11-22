@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class ThemeAppColor {
-  static const Color kWhite = Color.fromARGB(255, 221, 221, 227);
-  static const Color kBlack = Color.fromARGB(255, 15, 15, 15);
+
   /// неплохое решение
-  static const Color kFrontColor = Color(0xff553b3e); //0xff553b3e 0xff442c2e
-  static const Color kBGColor = Color(0xffFedbd0);
-  static const Color kAccent2 = Color.fromARGB(255, 113, 80, 84);
+  // static const Color kFrontColor = Color(0xff553b3e);
+  // static const Color kBGColor = Color(0xffFedbd0);
+  // static const Color kAccent2 = Color.fromARGB(255, 113, 80, 84);
+  // static const Color grey = Color.fromARGB(255, 160, 113, 118);
+  // static const Color kAccent = Colors.pink;
+  static const Color kFrontColor = Color.fromARGB(255, 75, 53, 56);
+  static const Color kBGColor = Color.fromARGB(255, 246, 206, 195);
+  static const Color kAccent2 = Color.fromARGB(255, 72, 51, 54);
   static const Color grey = Color.fromARGB(255, 160, 113, 118);
   static const Color kAccent = Colors.pink;
 
@@ -19,37 +23,35 @@ abstract class ThemeAppSize {
   static double kScreensHeight = Get.context!.height;
   static double kScreensWidth = Get.context!.width;
 
-// отступы
+// радиус
   static double kRadius12 = kScreensHeight / (height / 12);
   static double kRadius20 = kScreensHeight / (height / 20);
+// отступы
   static double kInterval5 = kScreensHeight / (height / 5);
   static double kInterval12 = kScreensHeight / (height / 12);
   static double kInterval24 = kScreensHeight / (height / 24);
+
 // home screen
   // page view
-  static double kPageView = kScreensHeight / (height / 275);
-  static double kPageViewContainer = kScreensHeight / (height / 190);
-  static double kPageViewTextContainer = kScreensHeight / (height / 165);
+  static double kPageView = kScreensHeight / (height / 230);
+  static double kPageViewImg = kScreensHeight / (height / 170);
+  static double kPageViewInfo = kScreensHeight / (height / 120);
   // list view
-  static double kListViewImgSize = kScreensHeight / (height / 150);
-  static double kListViewTextContainer = kScreensHeight / (height / 120);
+  static double kListViewImg = kScreensHeight / (height / 130);
+  static double kListViewInfo = kScreensHeight / (height / 110);
+
+
+
   // ditalit
   static double kDetaildImgContainer = kScreensHeight / (height / 350);
   static double kDetaildButtomContainer = kScreensHeight / (height / 120);
-  // menu filter
-  static double kMenuFilter = kScreensHeight / (height / 80);
-  static double kMenuFilterItemWidth = kScreensWidth / (width / 4);
-  static double kNebuFilterItemContaiter = (kScreensWidth / 4);
-
-
 
 /// fonts
-  static double kFontSize14 = kScreensHeight / (height / 14);
-  static double kFontSize16 = kScreensHeight / (height / 16);
+
   static double kFontSize18 = kScreensHeight / (height / 18);
   static double kFontSize20 = kScreensHeight / (height / 20);
   static double kFontSize22 = kScreensHeight / (height / 22);
-  static double kFontSize25 = kScreensHeight / (height / 25);
+
 }
 
 abstract class ThemeAppFun {

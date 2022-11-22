@@ -59,11 +59,17 @@ class _HeaderIcons extends StatelessWidget {
           //  Get.toNamed(MainRoutes.getMain()),
           child: CustomButtonIcon(
             sizePading: ThemeAppSize.kInterval12,
-            icon: const Icon(Icons.arrow_back_ios_new),
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: ThemeAppColor.kFrontColor,
+            ),
             bg: ThemeAppColor.kBGColor,
           ),
         ),
-        const CartIcon(),
+        CartIcon(
+          statusBorder: false,
+          size: ThemeAppSize.kInterval12,
+        ),
       ],
     );
   }
@@ -88,7 +94,7 @@ class _BodyTitle extends StatelessWidget {
           child: BigText(
             text: name,
             color: ThemeAppColor.kFrontColor,
-            size: ThemeAppSize.kFontSize25,
+            size: ThemeAppSize.kFontSize22,
           ),
         ),
       ),

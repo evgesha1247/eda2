@@ -9,7 +9,7 @@ class ExpandableTextWidgetModel extends ChangeNotifier {
   late String secondText;
   bool hiddeText = true;
   initText(String text) {
-    double heightText = ThemeAppSize.kListViewTextContainer;
+    double heightText = ThemeAppSize.kListViewInfo;
     if (text.length > heightText) {
       firstText = text.substring(0, heightText.toInt());
       secondText = text.substring(heightText.toInt() - 1, text.length);

@@ -21,7 +21,7 @@ class HomePopularSection extends StatelessWidget {
         child: BigText(
           text: 'Popular product',
           color: ThemeAppColor.kFrontColor,
-          size: ThemeAppSize.kFontSize22,
+          size: ThemeAppSize.kFontSize20,
         ),
       ),
       SizedBox(height: ThemeAppSize.kInterval12),
@@ -39,7 +39,7 @@ class _ItemsProductWidget extends StatefulWidget {
 class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
   var _currPageValue = 0.0;
   final double _scaleFactore = 0.8;
-  final double _height = ThemeAppSize.kPageViewContainer;
+  final double _height = ThemeAppSize.kPageViewImg;
   final pageController = PageController(viewportFraction: .8, initialPage: 0);
 
   @override
@@ -125,17 +125,18 @@ class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
       matrix = Matrix4.diagonal3Values(1, currScale, 1)
         ..setTranslationRaw(0, _height * (1 - _scaleFactore) / 2, 1);
     }
-    final imgUrl = "${AppConstansts.BASE_URL}/uploads/${item.img!}";
+
     return Transform(
       transform: matrix,
       child: GestureDetector(
         onTap: () => Get.toNamed(
-          MainRoutes.getDetailedFood(item.id),
-          arguments: item,
+          MainRoutes.getDetailed(item.id), arguments: item
         ),
         child: Stack(
           children: [
-            _ItemImgWidget(imgUrl: imgUrl),
+            _ItemImgWidget(
+              imgUrl: "${AppConstansts.BASE_URL}/uploads/${item.img!}",
+            ),
             _ItemInfoBlok(product: item),
           ],
         ),
@@ -151,18 +152,15 @@ class _ItemImgWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.topCenter,
-      child: ConstrainedBox(
+      child: Container(
         constraints: BoxConstraints(maxWidth: ThemeAppSize.width),
-        child: Container(
-          height: ThemeAppSize.kPageViewContainer,
+        height: ThemeAppSize.kPageViewImg,
           margin: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
-          decoration: BoxDecoration(
-            color: ThemeAppColor.kFrontColor,
-            borderRadius: ThemeAppFun.decoration(),
+        decoration: BoxDecoration(
+          borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius20),
             image: DecorationImage(
               fit: BoxFit.cover,
               image: NetworkImage(imgUrl),
-            ),
           ),
         ),
       ),
@@ -173,14 +171,13 @@ class _ItemImgWidget extends StatelessWidget {
 class _ItemInfoBlok extends StatelessWidget {
   const _ItemInfoBlok({Key? key, required this.product}) : super(key: key);
   final ProductModel product;
-
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-        height: ThemeAppSize.kPageViewTextContainer,
+        height: ThemeAppSize.kPageViewInfo,
         margin: EdgeInsets.only(
           left: ThemeAppSize.kInterval24,
           right: ThemeAppSize.kInterval24,
@@ -188,22 +185,17 @@ class _ItemInfoBlok extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: ThemeAppColor.kFrontColor,
-          borderRadius: ThemeAppFun.decoration(),
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 3.0,
-              color: ThemeAppColor.kBlack,
-              offset: Offset(0, 2),
-            ),
-          ],
+          borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius12),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BigText(text: product.name!),
-            SizedBox(height: ThemeAppSize.kInterval5),
-            SmallText(text: product.description!),
-            SizedBox(height: ThemeAppSize.kInterval12),
+            BigText(
+              text: product.name!,
+              size: ThemeAppSize.kFontSize20,
+              maxLines: 2,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -245,7 +237,10 @@ class _ItemInfoBlok extends StatelessWidget {
                 //MenuButtonIcon(icon: Icons.favorite, statusBorder: true),
                 GestureDetector(
                   onTap: () => {},
-                  child: const SmallText(text: 'see more'),
+                  child: const SmallText(
+                    text: 'see more',
+                    color: ThemeAppColor.grey,
+                  ),
                 ),
               ],
             ),

@@ -47,7 +47,7 @@ class _BottomBarWidget extends StatelessWidget {
         onTap: model.setCurrentIndexTab,
         currentIndex: model.currentIndexTab,
         selectedItemColor: ThemeAppColor.kAccent,
-        unselectedItemColor: ThemeAppColor.kAccent2,
+        unselectedItemColor: ThemeAppColor.kFrontColor,
         type: BottomNavigationBarType.fixed,
         backgroundColor: ThemeAppColor.kBGColor,
         elevation: 5,

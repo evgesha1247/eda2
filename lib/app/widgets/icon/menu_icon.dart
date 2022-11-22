@@ -8,6 +8,7 @@ class CustomButtonIcon extends StatelessWidget {
   final Color bg;
   final bool statusBorder;
   final double sizePading;
+  final double radius;
   const CustomButtonIcon({
     required this.icon,
     super.key,
@@ -15,6 +16,7 @@ class CustomButtonIcon extends StatelessWidget {
     this.bg = Colors.transparent,
     this.statusBorder = false,
     this.sizePading = 0,
+    this.radius = 0,
   });
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class CustomButtonIcon extends StatelessWidget {
         color: bg,
         borderRadius: BorderRadius.all(
           Radius.circular(
-            sizePading == 0 ? ThemeAppSize.kRadius12 : sizePading,
+            radius == 0 ? ThemeAppSize.kRadius12 : sizePading,
           ),
         ),
         border:

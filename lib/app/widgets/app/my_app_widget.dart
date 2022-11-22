@@ -17,7 +17,7 @@ class MyAppWidget extends StatelessWidget {
           theme: ThemeData(
             fontFamily: 'Mariupol',
             scaffoldBackgroundColor: ThemeAppColor.kBGColor,
-            useMaterial3: true,
+
           ),
           debugShowCheckedModeBanner: false,
           getPages: MainRoutes.getPages,

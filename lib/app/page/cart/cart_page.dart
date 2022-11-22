@@ -54,7 +54,7 @@ class _HeaderCart extends StatelessWidget {
           BigText(
             text: 'Cart',
             color: ThemeAppColor.kFrontColor,
-            size: ThemeAppSize.kFontSize25,
+            size: ThemeAppSize.kFontSize22,
           ),
         ],
       ),
@@ -146,7 +146,7 @@ class _RowItem extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Get.toNamed(
-                  MainRoutes.getDetailedFood(item.product!.id),
+                  MainRoutes.getDetailed(item.product!.id),
                   arguments: item.product!,
                 );
               },
@@ -177,7 +177,7 @@ class _RowItem extends StatelessWidget {
                         text: item.name!,
                         maxLines: 3,
                         color: ThemeAppColor.kFrontColor,
-                        size: ThemeAppSize.kFontSize25,
+                        size: ThemeAppSize.kFontSize22,
                       ),
                     ),
                     Row(

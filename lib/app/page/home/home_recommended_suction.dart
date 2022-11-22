@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/routes/main_routes.dart';
-
 import '../../../utils/app_constants.dart';
 import '../../controllers/product_controller.dart';
 import '../../theme/theme_app.dart';
@@ -32,15 +31,15 @@ class _RecommendedTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const BigText(
+        BigText(
           text: 'Recommended',
           color: ThemeAppColor.kFrontColor,
-          size: 25,
+          size: ThemeAppSize.kFontSize20,
         ),
         SizedBox(width: ThemeAppSize.kInterval5),
         SmallText(
           text: '• Food pairing',
-          size: ThemeAppSize.kFontSize22,
+          size: ThemeAppSize.kFontSize18,
           color: ThemeAppColor.kFrontColor.withOpacity(0.5),
         ),
       ],
@@ -54,13 +53,13 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget itemPopular(ProductModel item) {
       var selected = false.obs;
-      final imgUrl = "${AppConstansts.BASE_URL}/uploads/${item.img!}";
       return GestureDetector(
         onTap: () => selected.value = !selected.value,
         onDoubleTap: () => Get.toNamed(
-          MainRoutes.getDetailedFood(item.id),
+          MainRoutes.getDetailed(item.id),
           arguments: item,
         ),
+
         child: Obx(
           () => Stack(
             children: [
@@ -70,22 +69,26 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                 left: selected.value ? null : 0,
                 right: selected.value ? null : 30,
                 child: Container(
-                  height: ThemeAppSize.kListViewImgSize,
+                  height: ThemeAppSize.kListViewImg,
                   padding: EdgeInsets.only(
-                      left: ThemeAppSize.kListViewImgSize +
-                          ThemeAppSize.kInterval12),
+                    left: ThemeAppSize.kListViewImg,
+                  ),
                   decoration: BoxDecoration(
                     color: ThemeAppColor.kFrontColor,
                     borderRadius: BorderRadius.all(
-                      Radius.circular(ThemeAppSize.kRadius20),
+                      Radius.circular(ThemeAppSize.kRadius12),
                     ),
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(ThemeAppSize.kInterval12),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        BigText(text: item.name!),
+                        BigText(
+                          text: item.name!,
+                          maxLines: 2,
+                        ),
                         SizedBox(height: ThemeAppSize.kInterval12),
                         SmallText(
                           maxLines: 3,
@@ -104,14 +107,17 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                 bottom: selected.value ? ThemeAppSize.kInterval12 : null,
                 left: selected.value ? ThemeAppSize.kInterval12 : null,
                 child: Container(
-                  width: ThemeAppSize.kListViewImgSize,
-                  height: ThemeAppSize.kListViewImgSize,
+                  width: ThemeAppSize.kListViewImg,
+                  height: ThemeAppSize.kListViewImg,
                   decoration: BoxDecoration(
-                    color: ThemeAppColor.kAccent2,
-                    borderRadius: ThemeAppFun.decoration(),
+                    borderRadius: ThemeAppFun.decoration(
+                      radius: ThemeAppSize.kRadius20,
+                    ),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(imgUrl),
+                      image: NetworkImage(
+                        "${AppConstansts.BASE_URL}/uploads/${item.img!}",
+                      ),
                     ),
                   ),
                 ),
