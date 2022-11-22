@@ -10,20 +10,20 @@ class MyAppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    Get.find<ProductController>().getPopularProductList();
-    Get.find<ProductController>().getRecommendedProductList();
-
-
-    return GetMaterialApp(
-      title: 'Restaurant',
-      theme: ThemeData(
-        fontFamily: 'Mariupol',
-        scaffoldBackgroundColor: ThemeAppColor.kBGColor,
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      getPages: MainRoutes.getPages,
-      initialRoute: MainRoutes.getInitial(),
+    return GetBuilder<ProductController>(
+      builder: (_) {
+        return GetMaterialApp(
+          title: 'Restaurant',
+          theme: ThemeData(
+            fontFamily: 'Mariupol',
+            scaffoldBackgroundColor: ThemeAppColor.kBGColor,
+            useMaterial3: true,
+          ),
+          debugShowCheckedModeBanner: false,
+          getPages: MainRoutes.getPages,
+          initialRoute: MainRoutes.getInitial(),
+        );
+      },
     );
   }
 }

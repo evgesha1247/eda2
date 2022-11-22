@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:text/app/page/splash/splash_model.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/text/my_text.dart';
@@ -15,11 +14,18 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
+  late final dynamic user;
+
   @override
   void initState() {
     super.initState();
-    Get.find<SplashModel>();
     _controller = AnimationController(vsync: this);
+    try {
+      user = FirebaseAuth.instance.currentUser;
+    } catch (e) {
+      user = null;
+    }
+    Get.put(SplashModel());
   }
 
   @override
@@ -30,7 +36,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       body: Center(
         child: Column(
@@ -39,15 +44,15 @@ class _SplashScreenState extends State<SplashScreen>
               text: 'Good day ${user?.displayName ?? ' '}',
               color: ThemeAppColor.kFrontColor,
             ),
-            Lottie.network(
-              'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json',
-              controller: _controller,
-              onLoaded: (composition) {
-                _controller
-                  ..duration = composition.duration
-                  ..forward();
-              },
-            ),
+            // Lottie.network(
+            //   'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json',
+            //   controller: _controller,
+            //   onLoaded: (composition) {
+            //     _controller
+            //       ..duration = composition.duration
+            //       ..forward();
+            //   },
+            // ),
           ],
         ),
       ),

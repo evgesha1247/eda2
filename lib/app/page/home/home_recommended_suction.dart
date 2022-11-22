@@ -6,7 +6,7 @@ import 'package:text/app/routes/main_routes.dart';
 import '../../../utils/app_constants.dart';
 import '../../controllers/product_controller.dart';
 import '../../theme/theme_app.dart';
-import '../../widgets/load/circular_widget.dart';
+import '../../widgets/load/circular.dart';
 import '../../widgets/text/my_text.dart';
 
 class RecommendedSuction extends StatelessWidget {

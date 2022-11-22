@@ -2,13 +2,13 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/routes/main_routes.dart';
-import 'package:text/app/widgets/load/circular_widget.dart';
 import '../../../utils/app_constants.dart';
 import '../../controllers/product_controller.dart';
 import '../../models/products_model.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/icon/anumated_icon_favorit.dart';
 import '../../widgets/icon/menu_icon.dart';
+import '../../widgets/load/circular.dart';
 import '../../widgets/text/my_text.dart';
 
 class HomePopularSection extends StatelessWidget {
@@ -18,10 +18,10 @@ class HomePopularSection extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
         padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
-        child: const BigText(
-          text: 'Hot Promo',
+        child: BigText(
+          text: 'Popular product',
           color: ThemeAppColor.kFrontColor,
-          size: 25,
+          size: ThemeAppSize.kFontSize22,
         ),
       ),
       SizedBox(height: ThemeAppSize.kInterval12),

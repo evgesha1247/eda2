@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HomeHeaderWidget(),
+            const HomeHeaderWidget(),
             const HomePopularSection(),
             SizedBox(height: ThemeAppSize.kInterval24),
             const RecommendedSuction()

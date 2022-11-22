@@ -31,4 +31,6 @@ class CartModel {
     isExit = json['isExit'];
     product = ProductModel.fromJson(json['product']);
   }
+
+
 }

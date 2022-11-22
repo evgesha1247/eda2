@@ -12,21 +12,18 @@ import '../utils/app_constants.dart';
 Future<void> init() async {
   //api
   Get.lazyPut(() => ApiClient(appBaseUrl: AppConstansts.BASE_URL));
-
   // repo
   Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
   Get.lazyPut(() => CartRepo());
-
-//controller
-
+  //controller
   Get.lazyPut(() => ProductController(
         popularProductRepo: Get.find(),
         recommendedProductRepo: Get.find(),
       ));
-
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
+}
 
-//
+Future<void> initPageModel() async {
   Get.lazyPut(() => GuidingScreenModel());
   Get.lazyPut(() => SplashModel());
   Get.lazyPut(() => AuthModel());

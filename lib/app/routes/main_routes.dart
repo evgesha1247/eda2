@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/page/auth/auth_screen.dart';
 import 'package:text/app/page/cart/cart_page.dart';
 import 'package:text/app/page/detailed/food_detailed.dart';
 import 'package:text/app/page/splash/splash_screen.dart';
 import '../page/guiding/guiding_screen.dart';
-import '../widgets/load/circular_widget.dart';
+import '../widgets/load/circular.dart';
 
 class MainRoutes {
   MainRoutes._();
@@ -26,7 +27,8 @@ class MainRoutes {
 
   static final List<GetPage> getPages = [
     /// загрузка
-    GetPage(name: _initial, page: () => const CircularWidget()),
+    GetPage(name: _initial, page: () => const Scaffold(body: CircularWidget())),
+
     GetPage(name: _splash, page: () => const SplashScreen()),
     //
     GetPage(name: _auth, page: () => const AuthScreen()),

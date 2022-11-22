@@ -26,7 +26,7 @@ class AuthScreen extends StatelessWidget {
 }
 
 class _AuthBody extends StatelessWidget {
-  final AuthModel controller = Get.find();
+  final controller = Get.put(AuthModel());
   _AuthBody();
   @override
   Widget build(BuildContext context) {
