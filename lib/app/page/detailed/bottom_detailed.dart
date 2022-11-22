@@ -40,12 +40,13 @@ class _TotalPriceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.toNamed(MainRoutes.getCart()),
-      child: GetBuilder<ProductController>(
+      child: GetBuilder<CartController>(
         builder: (_) {
           return Container(
             padding: EdgeInsets.all(ThemeAppSize.kInterval12),
             decoration: BoxDecoration(
-              color: _.inCartItems > 0
+              color:
+                  _.totalItems > 0
                   ? ThemeAppColor.kAccent
                   : ThemeAppColor.grey,
               borderRadius: ThemeAppFun.decoration(
@@ -53,7 +54,7 @@ class _TotalPriceWidget extends StatelessWidget {
               ),
             ),
             child: BigText(
-              text: '\$ ${_.inCartItems * item.price!} | Go to cart',
+              text: '\$ ${_.totalAmount} | Go to cart',
               color: ThemeAppColor.kBGColor,
               size: ThemeAppSize.kFontSize20,
             ),
@@ -83,7 +84,9 @@ class _AddAndSubProductWidget extends StatelessWidget {
         children: [
           GetBuilder<ProductController>(
             builder: (_) => GestureDetector(
-              onTap: () => _.setCountProduct(false, item),
+              onTap: () {
+                _.upDataCountProductInCart(false, item);
+              },
               child: const Icon(
                 Icons.remove,
                 color: ThemeAppColor.kFrontColor,
@@ -91,16 +94,16 @@ class _AddAndSubProductWidget extends StatelessWidget {
             ),
           ),
           SizedBox(width: ThemeAppSize.kInterval5),
-          GetBuilder<ProductController>(
+          GetBuilder<CartController>(
             builder: (_) => SmallText(
-              text: '${_.inCartItems}',
+              text: '${_.getCountProduct(item)}',
               color: ThemeAppColor.kFrontColor,
             ),
           ),
           SizedBox(width: ThemeAppSize.kInterval5),
           GetBuilder<ProductController>(
             builder: (_) => GestureDetector(
-              onTap: () => _.setCountProduct(true, item),
+              onTap: () => _.upDataCountProductInCart(true, item),
               child: const Icon(
                 Icons.add,
                 color: ThemeAppColor.kFrontColor,

@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/models/products_model.dart';
-
 import '../data/repository/product_repo.dart';
-import '../models/cart_model.dart';
 import '../theme/theme_app.dart';
 
 class ProductController extends GetxController {
@@ -34,12 +31,8 @@ class ProductController extends GetxController {
     if (response.statusCode == 200) {
       _recommendedProductList = [];
       _recommendedProductList.addAll(Product.fromJson(response.body).products);
-      debugPrint('recommended product list in Load good');
       _isLoadedRecommended = true;
       update();
-    } else {
-      _isLoadedRecommended = false;
-      debugPrint("response.statusCode recommended --- ${response.statusCode}");
     }
   }
 
@@ -52,24 +45,35 @@ class ProductController extends GetxController {
     if (response.statusCode == 200) {
       _popularProductList = [];
       _popularProductList.addAll(Product.fromJson(response.body).products);
-      debugPrint('popular product list in Load good');
       _isLoadedPopular = true;
       update();
-    } else {
-      debugPrint('response.statusCode popular ---   ${response.statusCode}');
     }
   }
   //////////////////////////////////////////////////////
 
-  late CartController _cart;
-  List<CartModel> get cartList => _cart.getCartItems;
-
-  int _countProduct = 0;
+  CartController? _cart;
+  int _countForAdding = 0;
   int _inCartItems = 0;
 
-  int get countProduct => _countProduct;
-  int get inCartItems => _inCartItems + _countProduct;
-  int get totalItems => _cart.totalItems;
+  //  создание контролера корзины и чтение количесвта элементов в ней
+  void initCount(ProductModel product, CartController cartController) {
+    _cart = cartController;
+    _cart!.existInCart(product)
+        ? _inCartItems = _cart!.getCountProduct(product)
+        : null;
+  }
+
+// дабавлени / удаление с корзины c проверкой
+  void upDataCountProductInCart(bool isIncroment, ProductModel product) {
+    if (isIncroment) {
+      _countForAdding = _checkCount(_countForAdding + 1);
+      _addProduct(product);
+    } else {
+      _countForAdding = _checkCount(_countForAdding - 1);
+      _addProduct(product);
+    }
+    update();
+  }
 
   int _checkCount(int countProduct) {
     if ((_inCartItems + countProduct) < -1) {
@@ -80,28 +84,10 @@ class ProductController extends GetxController {
     }
   }
 
-  void initCount(ProductModel product, CartController cartController) {
-    _countProduct = 0;
-    _inCartItems = 0;
-    _cart = cartController;
-    _cart.existInCart(product) ? _inCartItems = _cart.getCount(product) : null;
-  }
-
-  void setCountProduct(bool isIncroment, ProductModel product) {
-    if (isIncroment) {
-      _countProduct = _checkCount(_countProduct + 1);
-      addProduct(product);
-    } else {
-      _countProduct = _checkCount(_countProduct - 1);
-      addProduct(product);
-    }
-    update();
-  }
-
-  void addProduct(ProductModel product) {
-    _cart.addItem(product, _countProduct);
-    _countProduct = 0;
-    _inCartItems = _cart.getCount(product);
+  void _addProduct(ProductModel product) {
+    _cart!.addItem(product, _countForAdding);
+    _countForAdding = 0;
+    _inCartItems = _cart!.getCountProduct(product);
     update();
   }
 }

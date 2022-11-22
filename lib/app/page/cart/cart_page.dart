@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/controllers/product_controller.dart';
 import 'package:text/app/models/cart_model.dart';
-import 'package:text/app/models/products_model.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:text/app/widgets/text/my_text.dart';
 import '../../../utils/app_constants.dart';
@@ -20,9 +19,9 @@ class CartPage extends StatelessWidget {
         children: const [
           _HeaderCart(),
           _CartBody(),
-          _Bottom(),
         ],
       ),
+      bottomNavigationBar: const _Bottom(),
     );
   }
 }
@@ -77,7 +76,8 @@ class _CartBody extends StatelessWidget {
           child: GetBuilder<CartController>(
             builder: (constroller) {
               return ListView.builder(
-                itemCount: constroller.getCartItems.length,
+                physics: const BouncingScrollPhysics(),
+                itemCount: constroller.getItemsList.length,
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, index) {
                   return _RowItem(controller: constroller, index: index);
@@ -95,7 +95,7 @@ class _RowItem extends StatelessWidget {
   const _RowItem({required this.controller, required this.index});
   final CartController controller;
   final int index;
-  ActionPane _itemBack() => ActionPane(
+  ActionPane _itemBack({required CartModel item}) => ActionPane(
         motion: const StretchMotion(),
         children: [
           Flexible(
@@ -111,7 +111,7 @@ class _RowItem extends StatelessWidget {
                 ),
                 child: Center(
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () => controller.delite(item.product!),
                     child: CircleAvatar(
                       radius: 30,
                       backgroundColor: ThemeAppColor.kAccent.withOpacity(0.3),
@@ -197,6 +197,7 @@ class _RowItem extends StatelessWidget {
               ),
             ),
 
+            /// close / delite
             Container(
               decoration: const BoxDecoration(
                 color: ThemeAppColor.kFrontColor,
@@ -215,19 +216,20 @@ class _RowItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final item = controller.getCartItems[index];
+    final item = controller.getItemsList[index];
     return Slidable(
       key: const ValueKey(0),
-      endActionPane: _itemBack(),
+      endActionPane: _itemBack(item: item),
       child: _item(controller: controller, item: item),
     );
   }
 }
 
 class _AddAndSubProductWidget extends StatelessWidget {
-  const _AddAndSubProductWidget({required this.item, required this.controller});
+  _AddAndSubProductWidget({required this.item, required this.controller});
   final CartModel item;
   final CartController controller;
+  final productController = Get.find<ProductController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -241,7 +243,9 @@ class _AddAndSubProductWidget extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => controller.addItem(item.product!, -1),
+            onTap: () {
+              productController.upDataCountProductInCart(false, item.product!);
+            },
             child: const Icon(
               Icons.remove,
               color: ThemeAppColor.kBGColor,
@@ -255,7 +259,9 @@ class _AddAndSubProductWidget extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => controller.addItem(item.product!, 1),
+            onTap: () =>
+                productController.upDataCountProductInCart(true, item.product!),
+
             child: const Icon(
               Icons.add,
               color: ThemeAppColor.kBGColor,
@@ -268,17 +274,21 @@ class _AddAndSubProductWidget extends StatelessWidget {
 }
 
 class _Bottom extends StatelessWidget {
-  const _Bottom({super.key});
+  const _Bottom();
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 0,
-      left: ThemeAppSize.kInterval12,
-      right: ThemeAppSize.kInterval12,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      color: Colors.red,
+      width: double.maxFinite,
+      height: 100,
       child: Container(
-        color: Colors.red,
-        width: double.maxFinite,
-        height: 100,
+        color: Colors.teal,
+        child: GetBuilder<CartController>(
+          builder: (_) {
+            return Text('${_.totalAmount}');
+          },
+        ),
       ),
     );
   }

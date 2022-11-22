@@ -3,14 +3,13 @@ import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/widgets/text/my_text.dart';
 import '../../../utils/app_constants.dart';
-import '../../controllers/product_controller.dart';
-import '../../routes/main_routes.dart';
 import '../../theme/theme_app.dart';
+import '../../widgets/icon/cart_icon.dart';
 import '../../widgets/icon/menu_icon.dart';
 
 class HeaderDetailed extends StatelessWidget {
   const HeaderDetailed({super.key, required this.item});
-  final item;
+  final ProductModel item;
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -57,31 +56,14 @@ class _HeaderIcons extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () => Get.back(),
+          //  Get.toNamed(MainRoutes.getMain()),
           child: CustomButtonIcon(
             sizePading: ThemeAppSize.kInterval12,
             icon: const Icon(Icons.arrow_back_ios_new),
             bg: ThemeAppColor.kBGColor,
           ),
         ),
-        GetBuilder<ProductController>(
-          builder: (_) {
-            return GestureDetector(
-              onTap: () => Get.toNamed(MainRoutes.getCart()),
-              child: CustomButtonIcon(
-                sizePading: ThemeAppSize.kInterval12,
-                icon: _.totalItems >= 1
-                    ? Row(children: [
-                        const Icon(Icons.shopping_bag_rounded),
-                        SmallText(
-                            text: '${_.totalItems}',
-                            color: ThemeAppColor.kFrontColor)
-                      ])
-                    : const Icon(Icons.shopping_bag_outlined),
-                bg: ThemeAppColor.kBGColor,
-              ),
-            );
-          },
-        )
+        const CartIcon(),
       ],
     );
   }

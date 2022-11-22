@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:text/app/controllers/product_controller.dart';
 import 'package:text/app/models/products_model.dart';
 import '../data/repository/cart_repo.dart';
 import '../models/cart_model.dart';
@@ -9,19 +10,18 @@ class CartController extends GetxController {
   CartController({required this.cartRepo});
 
   final Map<int, CartModel> _items = {};
-  List<CartModel> get getCartItems {
-    return _items.entries.map((e) => e.value).toList();
-  }
+
+  List<CartModel> get getItemsList =>
+      _items.entries.map((e) => e.value).toList();
 
 
-  Map<int, CartModel> get items => _items;
 
-  void addItem(ProductModel product, int count) {
+/// обновление элементов корзина на -1 или 1
+void addItem(ProductModel product, int count) {
     var totalCount = 0;
     if (_items.containsKey(product.id)) {
       _items.update(product.id!, (value) {
         totalCount = value.count! + count;
-
         return CartModel(
           id: value.id,
           name: value.name,
@@ -35,7 +35,7 @@ class CartController extends GetxController {
       });
 
       if (totalCount <= 0) {
-        items.remove(product.id);
+        _items.remove(product.id);
       }
     } else if (count > 0) {
       _items.putIfAbsent(
@@ -50,7 +50,6 @@ class CartController extends GetxController {
             time: DateTime.now().toString(),
             isExit: true,
             product: product,
-
           );
         },
       );
@@ -60,7 +59,8 @@ class CartController extends GetxController {
     update();
   }
 
-  bool existInCart(ProductModel product) {
+///тупейшая проверка на присудствие элемента в корзине
+bool existInCart(ProductModel product) {
     if (_items.containsKey(product.id)) {
       return true;
     } else {
@@ -68,7 +68,9 @@ class CartController extends GetxController {
     }
   }
 
-  int getCount(ProductModel product) {
+
+/// количество одного элемента в корзине
+  int getCountProduct(ProductModel product) {
     var count = 0;
     if (_items.containsKey(product.id)) {
       _items.forEach(
@@ -82,14 +84,30 @@ class CartController extends GetxController {
     return count;
   }
 
+/// всего элементов в корзине
   int get totalItems {
     var totalCount = 0;
     _items.forEach((key, value) {
       totalCount += value.count!;
     });
-
     return totalCount;
   }
 
+  /// общая цена в корзине
+  int get totalAmount {
+    var total = 0;
+    _items.forEach((key, value) {
+      total += (value.price! * value.count!);
+    });
+    return total;
+  }
 
+
+/// удаляет из корзины
+  void delite(ProductModel product) {
+    _items.remove(product.id);
+    Get.find<ProductController>()
+        .initCount(product, Get.find<CartController>());
+    update();
+  }
 }
