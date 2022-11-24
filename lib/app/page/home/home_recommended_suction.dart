@@ -93,7 +93,7 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                         ),
                         SizedBox(height: ThemeAppSize.kInterval12),
                         SmallText(
-                          maxLines: 3,
+                          maxLines: 2,
                           text: !selected.value
                               ? '${item.price!}\$'
                               : item.description!,
