@@ -71,7 +71,9 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                 child: Container(
                   height: ThemeAppSize.kListViewImg,
                   padding: EdgeInsets.only(
-                    left: ThemeAppSize.kListViewImg,
+                    left: selected.value
+                        ? ThemeAppSize.kListViewImg + ThemeAppSize.kInterval12
+                        : ThemeAppSize.kListViewImg,
                   ),
                   decoration: BoxDecoration(
                     color: ThemeAppColor.kFrontColor,
@@ -129,7 +131,7 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
     }
 
     return SizedBox(
-      height: context.height / 1.8,
+      height: context.height / 1.15,
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
           return SingleChildScrollView(

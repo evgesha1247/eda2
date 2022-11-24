@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/controllers/product_controller.dart';
 import 'package:text/app/models/products_model.dart';
@@ -68,9 +69,8 @@ bool existInCart(ProductModel product) {
     }
   }
 
-
 /// количество одного элемента в корзине
-  int getCountProduct(ProductModel product) {
+int getCountProduct(ProductModel product) {
     var count = 0;
     if (_items.containsKey(product.id)) {
       _items.forEach(
@@ -85,7 +85,7 @@ bool existInCart(ProductModel product) {
   }
 
 /// всего элементов в корзине
-  int get totalItems {
+int get totalItems {
     var totalCount = 0;
     _items.forEach((key, value) {
       totalCount += value.count!;
@@ -93,21 +93,41 @@ bool existInCart(ProductModel product) {
     return totalCount;
   }
 
-  /// общая цена в корзине
-  int get totalAmount {
-    var total = 0;
+/// общая цена в корзине
+int discount = 15;
+
+  double totalAndDiscount = 0;
+  double total = 0;
+
+  double get totalAmount {
+    total = 0;
     _items.forEach((key, value) {
       total += (value.price! * value.count!);
     });
-    return total;
+    totalAndDiscount = total - (total / 100 * discount);
+    return total > 200 ? totalAndDiscount : total;
   }
 
 
 /// удаляет из корзины
-  void delite(ProductModel product) {
+void delite(ProductModel product) {
     _items.remove(product.id);
     Get.find<ProductController>()
         .initCount(product, Get.find<CartController>());
     update();
   }
+// clear
+  void clearCart() {
+    _items.clear();
+    Get.snackbar(
+      'pay',
+      '',
+      backgroundColor: ThemeAppColor.kAccent.withOpacity(0.7),
+      colorText: ThemeAppColor.kBGColor,
+      duration: const Duration(milliseconds: 1200),
+      margin: EdgeInsets.all(ThemeAppSize.kInterval12),
+    );
+    update();
+  }
+
 }

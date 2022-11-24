@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/theme/theme_app.dart';
 import '../../routes/main_routes.dart';
