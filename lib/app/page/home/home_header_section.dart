@@ -56,7 +56,7 @@ class _UserIcon extends StatelessWidget {
             Icons.person_outline,
             color: ThemeAppColor.kFrontColor
           ),
-          colorBorder: ThemeAppColor.kFrontColor,
+          bg: ThemeAppColor.kFrontColor,
           statusBorder: true,
         ),
       ),

@@ -14,13 +14,23 @@ class CartController extends GetxController {
 
   List<CartModel> get getItemsList =>
       _items.entries.map((e) => e.value).toList();
+  /// общая цена в корзине
+  int discount = 15;
+  double totalAndDiscount = 0;
+  double total = 0;
+  double get totalAmount {
+    total = 0;
+    _items.forEach((key, value) {
+      total += (value.price! * value.count!);
+    });
+    totalAndDiscount = total - (total / 100 * discount);
+    return total > 200 ? totalAndDiscount : total;
+  }
 
-
-
-/// обновление элементов корзина на -1 или 1
-void addItem(ProductModel product, int count) {
+  /// обновление элементов корзина на -1 или 1
+  void addItem(ProductModel product, int count) {
     var totalCount = 0;
-    if (_items.containsKey(product.id)) {
+    if (existInCart(product)) {
       _items.update(product.id!, (value) {
         totalCount = value.count! + count;
         return CartModel(
@@ -38,6 +48,7 @@ void addItem(ProductModel product, int count) {
       if (totalCount <= 0) {
         _items.remove(product.id);
       }
+
     } else if (count > 0) {
       _items.putIfAbsent(
         product.id!,
@@ -60,8 +71,8 @@ void addItem(ProductModel product, int count) {
     update();
   }
 
-///тупейшая проверка на присудствие элемента в корзине
-bool existInCart(ProductModel product) {
+  ///тупейшая проверка на присудствие элемента в корзине
+  bool existInCart(ProductModel product) {
     if (_items.containsKey(product.id)) {
       return true;
     } else {
@@ -69,10 +80,10 @@ bool existInCart(ProductModel product) {
     }
   }
 
-/// количество одного элемента в корзине
-int getCountProduct(ProductModel product) {
+  /// количество одного элемента в корзине
+  int getCountProduct(ProductModel product) {
     var count = 0;
-    if (_items.containsKey(product.id)) {
+    if (existInCart(product)) {
       _items.forEach(
         (key, value) {
           if (key == product.id) {
@@ -84,8 +95,8 @@ int getCountProduct(ProductModel product) {
     return count;
   }
 
-/// всего элементов в корзине
-int get totalItems {
+  /// всего элементов в корзине
+  int get totalItems {
     var totalCount = 0;
     _items.forEach((key, value) {
       totalCount += value.count!;
@@ -93,29 +104,14 @@ int get totalItems {
     return totalCount;
   }
 
-/// общая цена в корзине
-int discount = 15;
-
-  double totalAndDiscount = 0;
-  double total = 0;
-
-  double get totalAmount {
-    total = 0;
-    _items.forEach((key, value) {
-      total += (value.price! * value.count!);
-    });
-    totalAndDiscount = total - (total / 100 * discount);
-    return total > 200 ? totalAndDiscount : total;
-  }
-
-
-/// удаляет из корзины
-void delite(ProductModel product) {
+  /// удаляет из корзины
+  void delite(ProductModel product) {
     _items.remove(product.id);
     Get.find<ProductController>()
-        .initCount(product, Get.find<CartController>());
+        .initCountToCart(product, Get.find<CartController>());
     update();
   }
+
 // clear
   void clearCart() {
     _items.clear();
@@ -129,5 +125,29 @@ void delite(ProductModel product) {
     );
     update();
   }
+
+  void addOneInCart(ProductModel product) {
+    if (existInCart(product)) {
+      _items.remove(product.id);
+    } else {
+      _items.putIfAbsent(
+        product.id!,
+        () {
+          return CartModel(
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            img: product.img,
+            count: 1,
+            time: DateTime.now().toString(),
+            isExit: true,
+            product: product,
+          );
+        },
+      );
+    }
+    update();
+  }
+
 
 }

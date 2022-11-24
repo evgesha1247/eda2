@@ -3,6 +3,7 @@ import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/models/products_model.dart';
 import '../data/repository/product_repo.dart';
 import '../theme/theme_app.dart';
+import 'favorite_controller.dart';
 
 class ProductController extends GetxController {
   final ProductRepo recommendedProductRepo;
@@ -20,10 +21,9 @@ class ProductController extends GetxController {
   List<ProductModel> get productList =>
       _popularProductList + _recommendedProductList;
 
-//// load Recommended ////////////////////////////////////////
+  /// load Recommended ///
   bool _isLoadedRecommended = false;
   bool get isLoadedRecommended => _isLoadedRecommended;
-
   Future<void> getRecommendedProductList() async {
     Response response =
         await recommendedProductRepo.getRecommendedProductList();
@@ -35,10 +35,9 @@ class ProductController extends GetxController {
     }
   }
 
-  //// load Popular ////////////////////////////////////////
+  /// load Popular ///
   bool _isLoadedPopular = false;
   bool get isLoadedPopular => _isLoadedPopular;
-
   Future<void> getPopularProductList() async {
     Response response = await popularProductRepo.getPopularProductList();
     if (response.statusCode == 200) {
@@ -48,32 +47,34 @@ class ProductController extends GetxController {
       update();
     }
   }
-  //////////////////////////////////////////////////////
 
+
+  /////////////////////////// _cart //////////////////////
   CartController? _cart;
   int _countForAdding = 0;
   int _inCartItems = 0;
 
   //  создание контролера корзины и чтение количесвта элементов в ней
-  void initCount(ProductModel product, CartController cartController) {
+  void initCountToCart(ProductModel product, CartController cartController) {
     _cart = cartController;
     _cart!.existInCart(product)
         ? _inCartItems = _cart!.getCountProduct(product)
         : null;
   }
 
-// дабавлени / удаление с корзины c проверкой
+  // вкид количества элемеентов
   void upDataCountProductInCart(bool isIncroment, ProductModel product) {
     if (isIncroment) {
       _countForAdding = _checkCount(_countForAdding + 1);
-      _addProduct(product);
+      _addProductToCart(product);
     } else {
       _countForAdding = _checkCount(_countForAdding - 1);
-      _addProduct(product);
+      _addProductToCart(product);
     }
     update();
   }
 
+  // проверка на возможность add/sub данного количества
   int _checkCount(int countProduct) {
     if ((_inCartItems + countProduct) < -1) {
       ThemeAppFun.printSnackBar('You can\'t reduce more !');
@@ -83,10 +84,21 @@ class ProductController extends GetxController {
     }
   }
 
-  void _addProduct(ProductModel product) {
+  // дабавлени / удаление для  корзины
+  void _addProductToCart(ProductModel product) {
     _cart!.addItem(product, _countForAdding);
     _countForAdding = 0;
     _inCartItems = _cart!.getCountProduct(product);
     update();
   }
+
+
+  ////////////////////////// _favorite ////////////////////////
+  //  создание контролера фаворитов и чтение количесвта элементов в ней
+  FavoriteController? favorite;
+  void initFavoriteController(FavoriteController favoriteController) {
+    favorite = favoriteController;
+  }
+
+
 }

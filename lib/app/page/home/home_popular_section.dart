@@ -1,8 +1,10 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/routes/main_routes.dart';
 import '../../../utils/app_constants.dart';
+import '../../controllers/favorite_controller.dart';
 import '../../controllers/product_controller.dart';
 import '../../models/products_model.dart';
 import '../../theme/theme_app.dart';
@@ -129,9 +131,8 @@ class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
     return Transform(
       transform: matrix,
       child: GestureDetector(
-        onTap: () => Get.toNamed(
-          MainRoutes.getDetailed(item.id), arguments: item
-        ),
+        onTap: () =>
+            Get.toNamed(MainRoutes.getDetailed(item.id), arguments: item),
         child: Stack(
           children: [
             _ItemImgWidget(
@@ -155,12 +156,12 @@ class _ItemImgWidget extends StatelessWidget {
       child: Container(
         constraints: BoxConstraints(maxWidth: ThemeAppSize.width),
         height: ThemeAppSize.kPageViewImg,
-          margin: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
+        margin: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
         decoration: BoxDecoration(
           borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius20),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(imgUrl),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(imgUrl),
           ),
         ),
       ),
@@ -173,6 +174,8 @@ class _ItemInfoBlok extends StatelessWidget {
   final ProductModel product;
   @override
   Widget build(BuildContext context) {
+    Get.find<ProductController>()
+        .initFavoriteController(Get.find<FavoriteController>());
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -199,49 +202,45 @@ class _ItemInfoBlok extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                AnimatedIconWidget(
-                  currIndex: 1.obs,
-                  fun: () {},
-                  widget1: const CustomButtonIcon(
-                    icon: Icon(
-                      Icons.done,
-                      color: Colors.green,
-                    ),
-                    statusBorder: true,
-                    colorBorder: Colors.green,
-                  ),
-                  widget2: const Icon(
-                    Icons.add,
-                    color: ThemeAppColor.grey,
-                  ),
+
+                GetBuilder<CartController>(
+                  builder: (controller) {
+                    return AnimatedIconWidget(
+                      currIndex: (controller.existInCart(product) ? 0 : 1).obs,
+                      fun: () => controller.addOneInCart(product),
+                      widget1: const CustomButtonIcon(
+                          icon: Icon(Icons.done, color: Colors.green),
+                          statusBorder: true,
+                          colorBorder: Colors.green),
+                      widget2: const Icon(Icons.add, color: ThemeAppColor.grey),
+                    );
+                  },
                 ),
-                AnimatedIconWidget(
-                  currIndex: 1.obs,
-                  fun: () => {},
-                  widget1: const CustomButtonIcon(
-                    icon: Icon(
-                      Icons.favorite,
-                      color: ThemeAppColor.kAccent,
-                    ),
-                    statusBorder: true,
-                    colorBorder: ThemeAppColor.kAccent,
-                  ),
-                  widget2: const CustomButtonIcon(
-                    icon: Icon(
-                      Icons.favorite_outline,
-                      color: ThemeAppColor.grey,
-                    ),
-                  ),
+
+                GetBuilder<FavoriteController>(
+                  builder: (controller) {
+                    return AnimatedIconWidget(
+                      currIndex:
+                          (controller.existInFavorites(product) ? 0 : 1).obs,
+                      fun: () => controller.upDataFavoriteList(product),
+                      widget1: const CustomButtonIcon(
+                        icon: Icon(
+                          Icons.favorite,
+                          color: ThemeAppColor.kAccent,
+                        ),
+                        statusBorder: true,
+                        colorBorder: ThemeAppColor.kAccent,
+                      ),
+                      widget2: const CustomButtonIcon(
+                        icon: Icon(
+                          Icons.favorite_outline,
+                          color: ThemeAppColor.grey,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-                // MenuButtonIcon(icon: Icons.add, statusBorder: true),
-                //MenuButtonIcon(icon: Icons.favorite, statusBorder: true),
-                GestureDetector(
-                  onTap: () => {},
-                  child: const SmallText(
-                    text: 'see more',
-                    color: ThemeAppColor.grey,
-                  ),
-                ),
+
               ],
             ),
           ],

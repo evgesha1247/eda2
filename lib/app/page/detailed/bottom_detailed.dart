@@ -71,7 +71,7 @@ class _AddAndSubProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.find<ProductController>()
-        .initCount(item, Get.find<CartController>());
+        .initCountToCart(item, Get.find<CartController>());
     return Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(

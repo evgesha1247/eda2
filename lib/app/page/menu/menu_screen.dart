@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/routes/main_routes.dart';
 import 'package:text/app/widgets/text/my_text.dart';

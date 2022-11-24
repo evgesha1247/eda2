@@ -18,7 +18,7 @@ class AnimatedIconWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => fun != null ? fun!() : null,
-      child: Obx(() => AnimatedSwitcher(
+      child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 320),
           transitionBuilder: (child, anim) => ScaleTransition(
                 scale: child.key == const ValueKey('1')
@@ -28,7 +28,8 @@ class AnimatedIconWidget extends StatelessWidget {
               ),
           child: currIndex.value == 0
               ? SizedBox(key: const ValueKey('1'), child: widget1)
-              : SizedBox(key: const ValueKey('2'), child: widget2))),
+            : SizedBox(key: const ValueKey('2'), child: widget2),
+      ),
     );
   }
 }

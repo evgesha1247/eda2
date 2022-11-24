@@ -44,6 +44,7 @@ class ProductModel {
   int? typeId;
 
 
+
   ProductModel(
       {this.id,
       this.name,
