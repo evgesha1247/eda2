@@ -26,7 +26,7 @@ class CartBody extends StatelessWidget {
               return ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemCount: constroller.getItemsList.length,
-                padding: EdgeInsets.only(bottom: 100),
+                padding: const EdgeInsets.only(bottom: 100),
                 itemBuilder: (context, index) {
                   return _RowItem(controller: constroller, index: index);
                 },

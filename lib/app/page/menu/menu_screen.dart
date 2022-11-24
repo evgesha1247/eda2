@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/controllers/cart_controller.dart';
+import 'package:text/app/models/products_model.dart';
 import 'package:text/app/routes/main_routes.dart';
 import 'package:text/app/widgets/text/my_text.dart';
+import '../../../utils/app_constants.dart';
+import '../../controllers/product_controller.dart';
 import '../../theme/theme_app.dart';
 import '../../widgets/icon/anumated_icon_favorit.dart';
 
@@ -15,9 +19,9 @@ class MenuScreen extends StatelessWidget {
             ? [
                 const _HederWidget(),
                 // const _FilterMenuWidget(),
-                const _MenuBodyWidget(),
+                _MenuBodyWidget(),
               ]
-            : [const _MenuBodyWidget()],
+            : [_MenuBodyWidget()],
       ),
     );
   }
@@ -166,7 +170,8 @@ class _ButtonToCartWidget extends StatelessWidget {
 // }
 
 class _MenuBodyWidget extends StatelessWidget {
-  const _MenuBodyWidget({Key? key}) : super(key: key);
+  _MenuBodyWidget({Key? key}) : super(key: key);
+  final productList = Get.find<ProductController>().productList;
   @override
   Widget build(BuildContext context) {
     return SliverGrid(
@@ -175,14 +180,14 @@ class _MenuBodyWidget extends StatelessWidget {
         mainAxisExtent: 200,
       ),
       delegate: SliverChildBuilderDelegate(
-        childCount: 1,
+        childCount: productList.length,
         (_, int index) => Padding(
           padding: EdgeInsets.only(
             left: ThemeAppSize.kInterval12,
             bottom: ThemeAppSize.kInterval24,
             right: ThemeAppSize.kInterval12,
           ),
-          child: _CardItem(index: index),
+          child: _CardItem(product: productList[index]),
         ),
       ),
     );
@@ -190,8 +195,8 @@ class _MenuBodyWidget extends StatelessWidget {
 }
 
 class _CardItem extends StatelessWidget {
-  const _CardItem({required this.index});
-  final int index;
+  const _CardItem({required this.product});
+  final ProductModel product;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -205,6 +210,11 @@ class _CardItem extends StatelessWidget {
               color: ThemeAppColor.kFrontColor,
               borderRadius: ThemeAppFun.decoration(),
 
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    "${AppConstansts.BASE_URL}/uploads/${product.img!}"),
+              ),
             ),
 
             /// content cart
@@ -221,8 +231,8 @@ class _CardItem extends StatelessWidget {
                       bottomLeft: Radius.circular(ThemeAppSize.kRadius20),
                     ),
                   ),
-                  child: const BigText(
-                    text: '\$price',
+                  child: BigText(
+                    text: '\$${product.price}',
                     color: ThemeAppColor.kBGColor,
                   ),
                 ),

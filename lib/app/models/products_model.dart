@@ -43,6 +43,7 @@ class ProductModel {
   String? updatedAt;
   int? typeId;
 
+
   ProductModel(
       {this.id,
       this.name,

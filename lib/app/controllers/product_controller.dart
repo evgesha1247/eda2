@@ -12,14 +12,13 @@ class ProductController extends GetxController {
     required this.popularProductRepo,
   });
 
-  List<dynamic> _popularProductList = [];
-  List<dynamic> _recommendedProductList = [];
+  List<ProductModel> _popularProductList = [];
+  List<ProductModel> _recommendedProductList = [];
 
-  List<dynamic> get productList =>
+  List<ProductModel> get popularProductList => _popularProductList;
+  List<ProductModel> get recommendedProductList => _recommendedProductList;
+  List<ProductModel> get productList =>
       _popularProductList + _recommendedProductList;
-
-  List<dynamic> get popularProductList => _popularProductList;
-  List<dynamic> get recommendedProductList => _recommendedProductList;
 
 //// load Recommended ////////////////////////////////////////
   bool _isLoadedRecommended = false;
