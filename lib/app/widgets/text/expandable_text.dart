@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 
 import 'my_text.dart';
 
-class ExpandableTextWidgetModel extends ChangeNotifier {
+class ExpandableController extends GetxController {
   late String firstText;
   late String secondText;
   bool hiddeText = true;
+
   initText(String text) {
     double heightText = ThemeAppSize.kListViewInfo;
     if (text.length > heightText) {
@@ -21,7 +22,7 @@ class ExpandableTextWidgetModel extends ChangeNotifier {
 
   tog() {
     hiddeText = !hiddeText;
-    notifyListeners();
+    update();
   }
 }
 
@@ -30,52 +31,36 @@ class ExpandableTextWidget extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ExpandableTextWidgetModel(),
-      child: _TextWidget(text: text),
-    );
-  }
-}
-
-class _TextWidget extends StatelessWidget {
-  const _TextWidget({required this.text});
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    final model = context.watch<ExpandableTextWidgetModel>();
-    model.initText(text);
-    return SingleChildScrollView(
-      child: model.secondText == ''
-          ? SmallText(text: model.firstText, color: ThemeAppColor.kFrontColor)
-          : Column(
-              children: [
-                SmallText(
-                  height: 1.6,
-                  size: ThemeAppSize.kFontSize18,
-                  text: model.hiddeText
-                      ? ('${model.firstText}. . .')
-                      : (model.firstText + model.secondText),
-                  color: ThemeAppColor.kFrontColor,
-                  maxLines: 99,
-                ),
-                InkWell(
-                  onTap: () => model.tog(),
-                  child: Row(
-                    children: [
-                      const SmallText(
-                        text: 'show more',
-                        color: ThemeAppColor.kFrontColor,
-                      ),
-                      Icon(
-                        color: ThemeAppColor.kFrontColor,
-                        model.hiddeText
-                            ? Icons.arrow_drop_down
-                            : Icons.arrow_drop_up,
-                      ),
-                    ],
+    Get.put(ExpandableController()).initText(text);
+    return GetBuilder<ExpandableController>(
+      builder: (_) => _.secondText != ''
+          ? SmallText(text: _.firstText, color: ThemeAppColor.kFrontColor)
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  SmallText(
+                    height: 1.6,
+                    size: ThemeAppSize.kFontSize18,
+                    text: _.hiddeText
+                        ? ('${_.firstText}. . .')
+                        : _.firstText + _.secondText,
+                    color: ThemeAppColor.kFrontColor,
+                    maxLines: 99,
                   ),
-                )
-              ],
+                  InkWell(
+                    onTap: () => _.tog(),
+                    child: Row(
+                      children: [
+                        BigText(
+                          text: _.hiddeText ? 'show' : 'close',
+                          color: ThemeAppColor.kFrontColor,
+                          size: ThemeAppSize.kFontSize20,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
     );
   }
