@@ -13,13 +13,11 @@ class ProductController extends GetxController {
     required this.popularProductRepo,
   });
 
-  List<ProductModel> _popularProductList = [];
-  List<ProductModel> _recommendedProductList = [];
+  var _popularProductList = <ProductModel>[];
+  var _recommendedProductList = <ProductModel>[];
 
   List<ProductModel> get popularProductList => _popularProductList;
   List<ProductModel> get recommendedProductList => _recommendedProductList;
-  List<ProductModel> get productList =>
-      _popularProductList + _recommendedProductList;
 
   /// load Recommended ///
   bool _isLoadedRecommended = false;
@@ -32,6 +30,8 @@ class ProductController extends GetxController {
       _recommendedProductList.addAll(Product.fromJson(response.body).products);
       _isLoadedRecommended = true;
       update();
+    } else {
+      print(response.statusCode);
     }
   }
 
@@ -45,11 +45,15 @@ class ProductController extends GetxController {
       _popularProductList.addAll(Product.fromJson(response.body).products);
       _isLoadedPopular = true;
       update();
+    } else {
+      print(response.statusCode);
     }
   }
 
 
-  /////////////////////////// _cart //////////////////////
+
+
+//////////////////////////// _cart //////////////////////
   CartController? _cart;
   int _countForAdding = 0;
   int _inCartItems = 0;
@@ -79,6 +83,9 @@ class ProductController extends GetxController {
     if ((_inCartItems + countProduct) < -1) {
       ThemeAppFun.printSnackBar('You can\'t reduce more !');
       return 0;
+    } else if ((_inCartItems + countProduct) > 10) {
+      ThemeAppFun.printSnackBar('You can\'t add more !');
+      return 0;
     } else {
       return countProduct;
     }
@@ -93,8 +100,8 @@ class ProductController extends GetxController {
   }
 
 
-  ////////////////////////// _favorite ////////////////////////
-  //  создание контролера фаворитов и чтение количесвта элементов в ней
+////////////////////////// _favorite /////////////////////////////////
+  ///  создание контролера фаворитов и чтение количесвта элементов в ней
   FavoriteController? favorite;
   void initFavoriteController(FavoriteController favoriteController) {
     favorite = favoriteController;

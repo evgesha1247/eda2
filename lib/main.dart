@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:text/app/widgets/app/my_app_widget.dart';
 import 'package:text/firebase_options.dart';
 import 'app/data/repository/auth_repo.dart';
-import 'app/page/splash/splash_model.dart';
+import 'app/pages/indirect_pages/splash/splash_model.dart';
 import '../../../helper/dependencies.dart' as dep;
 
 Future<void> main() async {
