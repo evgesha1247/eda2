@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
-import 'package:text/app/pages/primary_pages/menu/menu_controller.dart';
+import 'package:text/app/controllers/menu_controller.dart';
 import 'package:text/app/widgets/icon/custom_icon.dart';
 import 'package:text/app/widgets/text/my_text.dart';
 import '../../../../utils/app_constants.dart';
@@ -10,17 +10,19 @@ import '../../../controllers/favorite_controller.dart';
 import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
+import 'menu_filter.dart';
+import 'menu_header.dart';
 
-class MenuScreen extends StatelessWidget {
-  const MenuScreen({Key? key}) : super(key: key);
+class MenuPage extends StatelessWidget {
+  const MenuPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         slivers: MediaQuery.of(context).size.width >= 370
             ? [
-                _HederWidget(),
-                _FilterMenuWidget(),
+                MenuHeader(),
+                FilterWidget(),
                 _MenuBodyWidget(),
               ]
             : [_MenuBodyWidget()],
@@ -29,159 +31,9 @@ class MenuScreen extends StatelessWidget {
   }
 }
 
-class _HederWidget extends StatelessWidget {
-  _HederWidget({Key? key}) : super(key: key);
-  final controller = Get.find<MenuController>();
-  Widget _searchWidget() {
-    InputBorder styleSearch = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
-      borderSide: const BorderSide(
-        color: ThemeAppColor.kFrontColor,
-        width: 1.5,
-        style: BorderStyle.solid,
-      ),
-    );
-    return Expanded(
-      child: TextField(
-        cursorColor: ThemeAppColor.kFrontColor,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
-          isDense: true,
-          filled: true,
-          fillColor: ThemeAppColor.kBGColor,
-          prefixIcon: const Icon(
-            Icons.search,
-            color: ThemeAppColor.kFrontColor,
-          ),
-          hintText: 'Search',
-          enabledBorder: styleSearch,
-          focusedBorder: styleSearch,
-        ),
-        onChanged: (text) => controller.searchFilter(text),
-      ),
-    );
-  }
-
-  Widget _buttonTogListWidget() {
-    return GestureDetector(
-      onTap: () => controller.togStatusList(),
-      child: const Icon(
-        Icons.grid_view,
-        size: 30,
-        color: ThemeAppColor.kFrontColor,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverAppBar(
-      floating: true,
-      pinned: false,
-      snap: true,
-      backgroundColor: ThemeAppColor.kBGColor,
-      toolbarHeight: 50,
-      flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.symmetric(
-          horizontal: ThemeAppSize.kInterval12,
-        ),
-        title: Row(
-          children: [
-            _searchWidget(),
-            SizedBox(width: ThemeAppSize.kInterval12),
-            _buttonTogListWidget(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _FilterMenuWidget extends StatelessWidget {
-  _FilterMenuWidget();
-  final controller = Get.find<MenuController>();
-  static const _icon = [Icons.swap_horiz_rounded, Icons.filter_list_outlined];
-  static const _text = ['sortBy', 'filter'];
-
-  Widget titleSortItem({required SortMethod value, required String text}) {
-    return ListTile(
-      title: Text(text),
-      leading: Radio(
-        value: value,
-        groupValue: controller.method,
-        onChanged: (SortMethod? valueMethod) =>
-            controller.setMethod(valueMethod),
-      ),
-    );
-  }
-
-  void mass() {
-    Get.defaultDialog(
-        title: 'Sort',
-        backgroundColor: ThemeAppColor.kBGColor,
-        titleStyle: const TextStyle(color: ThemeAppColor.kFrontColor),
-        radius: ThemeAppSize.kRadius12,
-        content: GetBuilder<MenuController>(
-          builder: (_) {
-            return Column(
-              children: [
-                titleSortItem(text: 'low to high', value: SortMethod.lowToHigh),
-                titleSortItem(text: 'high to low', value: SortMethod.highToLow),
-                titleSortItem(text: 'reset', value: SortMethod.reset),
-              ],
-            );
-          },
-        ));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-        child: Wrap(
-          spacing: ThemeAppSize.kInterval12,
-          children: List.generate(
-            _text.length,
-            (index) {
-              return Container(
-                  decoration: BoxDecoration(
-                    color: ThemeAppColor.kFrontColor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        ThemeAppSize.kRadius12,
-                      ),
-                    ),
-                  ),
-                  child: CustomButtonIcon(
-                    child: GestureDetector(
-                      onTap: () => mass(),
-                      child: Wrap(
-                        children: [
-                          SmallText(
-                            text: _text[index],
-                            color: ThemeAppColor.kBGColor,
-                          ),
-                          Icon(
-                            _icon[index],
-                            color: ThemeAppColor.kBGColor,
-                          )
-                        ],
-                      ),
-                    ),
-                  ));
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _MenuBodyWidget extends StatelessWidget {
   _MenuBodyWidget({Key? key}) : super(key: key);
   final controller = Get.find<MenuController>();
-
   SliverChildBuilderDelegate _delegat({required child}) {
     return SliverChildBuilderDelegate(
       childCount: controller.filterList.length,

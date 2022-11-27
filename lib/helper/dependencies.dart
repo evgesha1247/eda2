@@ -10,7 +10,7 @@ import '../app/data/repository/product_repo.dart';
 import '../app/pages/indirect_pages/auth/auth_model.dart';
 import '../app/pages/indirect_pages/splash/splash_model.dart';
 import '../app/pages/primary_pages/guiding/guiding_model.dart';
-import '../app/pages/primary_pages/menu/menu_controller.dart';
+import '../app/controllers/menu_controller.dart';
 import '../utils/app_constants.dart';
 
 Future<void> init() async {

@@ -10,7 +10,7 @@ class ExpandableController extends GetxController {
   bool hiddeText = true;
 
   initText(String text) {
-    double heightText = ThemeAppSize.kListViewInfo;
+    double heightText = ThemeAppSize.kHomeListViewInfo;
     if (text.length > heightText) {
       firstText = text.substring(0, heightText.toInt());
       secondText = text.substring(heightText.toInt() - 1, text.length);

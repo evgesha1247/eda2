@@ -23,34 +23,35 @@ abstract class ThemeAppSize {
   static double kScreensHeight = Get.context!.height;
   static double kScreensWidth = Get.context!.width;
 
-// радиус
+  // радиус
   static double kRadius12 = kScreensHeight / (height / 12);
   static double kRadius20 = kScreensHeight / (height / 20);
-// отступы
+  // отступы
   static double kInterval5 = kScreensHeight / (height / 5);
   static double kInterval12 = kScreensHeight / (height / 12);
   static double kInterval24 = kScreensHeight / (height / 24);
-
-// home screen
-  // page view
-  static double kPageView = kScreensHeight / (height / 230);
-  static double kPageViewImg = kScreensHeight / (height / 170);
-  static double kPageViewInfo = kScreensHeight / (height / 120);
-  // list view
-  static double kListViewImg = kScreensHeight / (height / 130);
-  static double kListViewInfo = kScreensHeight / (height / 110);
-
-
-
-  // ditalit
-  static double kDetaildImgContainer = kScreensHeight / (height / 350);
-  static double kDetaildButtomContainer = kScreensHeight / (height / 120);
-
-/// fonts
-
+  // fonts
   static double kFontSize18 = kScreensHeight / (height / 18);
   static double kFontSize20 = kScreensHeight / (height / 20);
   static double kFontSize22 = kScreensHeight / (height / 22);
+
+// home page
+  // page view
+  static double kHomePageView = kScreensHeight / (height / 230);
+  static double kHomePageViewImg = kScreensHeight / (height / 170);
+  static double kHomePageViewInfo = kScreensHeight / (height / 120);
+  // list view
+  static double kHomeListViewImg = kScreensHeight / (height / 130);
+  static double kHomeListViewInfo = kScreensHeight / (height / 110);
+
+// ditalit page
+  static double kDetaildHeaderImg = kScreensHeight / (height / 280);
+  static double kDetaildHeaderImgToolbar = kScreensHeight / (height / 100);
+  static double kDetaildButtomContainer = kScreensHeight / (height / 120);
+
+// home menu
+  static double kMenuHeaderSearch = kScreensHeight / (height / 70);
+
 
 }
 

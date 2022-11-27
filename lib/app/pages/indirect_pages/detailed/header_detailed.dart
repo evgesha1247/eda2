@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/widgets/text/my_text.dart';
 import '../../../../utils/app_constants.dart';
@@ -16,15 +15,16 @@ class HeaderDetailed extends StatelessWidget {
       pinned: true,
       backgroundColor: ThemeAppColor.kFrontColor,
       surfaceTintColor: ThemeAppColor.kFrontColor,
-      expandedHeight: 280,
-      collapsedHeight: 120,
-      toolbarHeight: 100,
+      expandedHeight: ThemeAppSize.kDetaildHeaderImg,
+      toolbarHeight: ThemeAppSize.kDetaildHeaderImgToolbar,
       excludeHeaderSemantics: true,
       titleSpacing: ThemeAppSize.kInterval24,
       title: const _HeaderIcons(),
-      flexibleSpace: _HeaderImg(img: item.img!),
+      flexibleSpace: _HeaderImg(
+        img: "${AppConstansts.BASE_URL}/uploads/${item.img}",
+      ),
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(-5),
+        preferredSize: const Size.fromHeight(0),
         child: _BodyTitle(name: item.name!),
       ),
     );
@@ -38,9 +38,9 @@ class _HeaderImg extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlexibleSpaceBar(
       background: Image.network(
-        "${AppConstansts.BASE_URL}/uploads/$img",
+        img,
         width: double.maxFinite,
-        fit: BoxFit.cover,
+        fit: BoxFit.cover
       ),
     );
   }
@@ -52,14 +52,12 @@ class _HeaderIcons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-            onTap: () => Get.back(),
-            child: const ButtonIconBack(
-              iconColor: ThemeAppColor.kFrontColor,
-              bg: ThemeAppColor.kBGColor,
-            )),
-        const ButtonIconCart(borderColor: ThemeAppColor.kBGColor),
+      children: const [
+        ButtonIconBack(
+          iconColor: ThemeAppColor.kFrontColor,
+          bg: ThemeAppColor.kBGColor,
+        ),
+        ButtonIconCart(borderColor: ThemeAppColor.kBGColor),
       ],
     );
   }
@@ -71,7 +69,6 @@ class _BodyTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       decoration: BoxDecoration(
         color: ThemeAppColor.kBGColor,
         borderRadius: BorderRadius.vertical(
@@ -80,7 +77,9 @@ class _BodyTitle extends StatelessWidget {
       ),
       child: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
+          padding: EdgeInsets.symmetric(
+            vertical: ThemeAppSize.kInterval12 * 1.5,
+          ),
           child: BigText(
             text: name,
             color: ThemeAppColor.kFrontColor,

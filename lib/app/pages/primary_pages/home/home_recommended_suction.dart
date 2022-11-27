@@ -68,11 +68,12 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                 left: selected.value ? null : 0,
                 right: selected.value ? null : 30,
                 child: Container(
-                  height: ThemeAppSize.kListViewImg,
+                  height: ThemeAppSize.kHomeListViewImg,
                   padding: EdgeInsets.only(
                     left: selected.value
-                        ? ThemeAppSize.kListViewImg + ThemeAppSize.kInterval12
-                        : ThemeAppSize.kListViewImg,
+                        ? ThemeAppSize.kHomeListViewImg +
+                            ThemeAppSize.kInterval12
+                        : ThemeAppSize.kHomeListViewImg,
                   ),
                   decoration: BoxDecoration(
                     color: ThemeAppColor.kFrontColor,
@@ -107,8 +108,8 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                 bottom: selected.value ? ThemeAppSize.kInterval12 : null,
                 left: selected.value ? ThemeAppSize.kInterval12 : null,
                 child: Container(
-                  width: ThemeAppSize.kListViewImg,
-                  height: ThemeAppSize.kListViewImg,
+                  width: ThemeAppSize.kHomeListViewImg,
+                  height: ThemeAppSize.kHomeListViewImg,
                   decoration: BoxDecoration(
                     borderRadius: ThemeAppFun.decoration(
                       radius: ThemeAppSize.kRadius20,

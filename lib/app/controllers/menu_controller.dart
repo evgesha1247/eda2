@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../../../controllers/product_controller.dart';
-import '../../../models/products_model.dart';
+import 'product_controller.dart';
+import '../models/products_model.dart';
 
 enum SortMethod { lowToHigh, highToLow, reset }
 
@@ -18,21 +18,21 @@ class MenuController extends GetxController {
 
   ProductController? productsController;
 
-  void initProductControllerr(ProductController productController) async {
+  void initProductControllerr(ProductController productController) {
     productsController = productController;
     _productList.addAll(
       productsController!.popularProductList +
           productsController!.recommendedProductList,
     );
     _filterList = _productList;
-    print(_filterList);
-    print(productsController!.popularProductList);
-    print(productsController!.recommendedProductList);
   }
 
-  MenuController() {
+  @override
+  void onInit() {
+    super.onInit();
     initProductControllerr(Get.find<ProductController>());
   }
+
 ///////////////////////////// Sort ///////////////////////
 
   searchFilter(String text) {
@@ -51,8 +51,22 @@ class MenuController extends GetxController {
     update();
   }
 
+  sortBy() {
+    switch (method) {
+      case SortMethod.lowToHigh:
+        _filterList.sort((a, b) => a.price!.compareTo(b.price!));
+        break;
+      case SortMethod.highToLow:
+        _filterList.sort((a, b) => b.price!.compareTo(a.price!));
+        break;
+      default:
+        _filterList;
+    }
+  }
+
   void setMethod(SortMethod? valueMethod) {
     method = valueMethod;
+    sortBy();
     update();
   }
 

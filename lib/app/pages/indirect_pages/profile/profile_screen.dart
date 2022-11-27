@@ -91,7 +91,7 @@ class _ExampleState extends State<_Example> {
     return Column(
       children: [
         SizedBox(
-          height: ThemeAppSize.kPageView,
+          height: ThemeAppSize.kHomePageView,
           child: PageView(
             scrollDirection: Axis.vertical,
             controller: pageController,

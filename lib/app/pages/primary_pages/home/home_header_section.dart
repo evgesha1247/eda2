@@ -32,7 +32,13 @@ class _UserTitle extends StatelessWidget {
         _UserIcon(),
         SizedBox(width: ThemeAppSize.kInterval12),
         BigText(
-          text: 'Welcom {name}',
+          text: 'Welcom',
+          color: ThemeAppColor.kFrontColor,
+          size: ThemeAppSize.kFontSize20,
+        ),
+        Icon(Icons.grid_3x3, size: ThemeAppSize.kFontSize18),
+        BigText(
+          text: 'name',
           color: ThemeAppColor.kFrontColor,
           size: ThemeAppSize.kFontSize18,
         ),

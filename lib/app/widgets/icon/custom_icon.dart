@@ -51,7 +51,11 @@ class ButtonIconBack extends StatelessWidget {
       onTap: () => Get.back(),
       child: CustomButtonIcon(
         bg: bg,
-        child: Icon(Icons.arrow_back_ios_new, color: iconColor),
+        child: Icon(
+          Icons.arrow_back_ios_new,
+          color: iconColor,
+          size: ThemeAppSize.kFontSize22,
+        ),
       ),
     );
   }
@@ -84,8 +88,10 @@ class ButtonIconCart extends StatelessWidget {
                     _.totalItems >= 1
                         ? Icons.shopping_bag_rounded
                         : Icons.shopping_bag_outlined,
+                    // Icons.local_mall_rounded
+                    //Icons.local_mall_outlined,
                     color: iconColor,
-                    size: ThemeAppSize.kFontSize20,
+                    size: ThemeAppSize.kFontSize22,
                   ),
                   SizedBox(
                     width: _.totalItems >= 1 ? ThemeAppSize.kInterval12 : 0,

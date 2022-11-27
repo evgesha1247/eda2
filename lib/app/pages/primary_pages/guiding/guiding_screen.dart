@@ -4,7 +4,7 @@ import 'package:text/app/theme/theme_app.dart';
 import '../cart_history/cart_history.dart';
 import '../favorite/favorite_screen.dart';
 import '../home/home_page.dart';
-import '../menu/menu_screen.dart';
+import '../menu/menu_page.dart';
 import 'guiding_model.dart';
 
 class GuidingScreen extends StatelessWidget {
@@ -29,7 +29,7 @@ class _GuidingBodyWidget extends StatelessWidget {
         index: model.currentIndexTab,
         children: const [
           HomeScreen(),
-          MenuScreen(),
+          MenuPage(),
           FavoriteScreen(),
           CartHistory(),
         ],

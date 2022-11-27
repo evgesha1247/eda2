@@ -42,7 +42,7 @@ class _ItemsProductWidget extends StatefulWidget {
 class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
   var _currPageValue = 0.0;
   final double _scaleFactore = 0.8;
-  final double _height = ThemeAppSize.kPageViewImg;
+  final double _height = ThemeAppSize.kHomePageViewImg;
   final pageController = PageController(viewportFraction: .8, initialPage: 0);
 
   @override
@@ -68,7 +68,7 @@ class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
         GetBuilder<ProductController>(
           builder: (popularProduct) => popularProduct.isLoadedPopular
               ? SizedBox(
-                  height: ThemeAppSize.kPageView,
+                  height: ThemeAppSize.kHomePageView,
                   child: PageView.builder(
                     controller: pageController,
                     itemCount: popularProduct.popularProductList.length,
@@ -156,7 +156,7 @@ class _ItemImgWidget extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: Container(
         constraints: BoxConstraints(maxWidth: ThemeAppSize.width),
-        height: ThemeAppSize.kPageViewImg,
+        height: ThemeAppSize.kHomePageViewImg,
         margin: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
         decoration: BoxDecoration(
           borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius20),
@@ -181,7 +181,7 @@ class _ItemInfoBlok extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-        height: ThemeAppSize.kPageViewInfo,
+        height: ThemeAppSize.kHomePageViewInfo,
         margin: EdgeInsets.only(
           left: ThemeAppSize.kInterval24,
           right: ThemeAppSize.kInterval24,
