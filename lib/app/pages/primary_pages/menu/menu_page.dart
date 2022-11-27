@@ -30,7 +30,6 @@ class MenuPage extends StatelessWidget {
     );
   }
 }
-
 class _MenuBodyWidget extends StatelessWidget {
   _MenuBodyWidget({Key? key}) : super(key: key);
   final controller = Get.find<MenuController>();
@@ -54,8 +53,8 @@ class _MenuBodyWidget extends StatelessWidget {
       builder: (_) => Container(
         child: _.isListGrid
             ? SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 370,
                 ),
                 delegate: _delegat(child: _cardItem))
             : SliverList(delegate: _delegat(child: _cardItem)),

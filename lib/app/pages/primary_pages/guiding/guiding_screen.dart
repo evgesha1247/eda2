@@ -28,16 +28,52 @@ class _GuidingBodyWidget extends StatelessWidget {
       builder: (model) => IndexedStack(
         index: model.currentIndexTab,
         children: const [
-          HomeScreen(),
+          HomePage(),
           MenuPage(),
           FavoriteScreen(),
-          CartHistory(),
+          //    CartHistory(),
+          Example(),
         ],
       ),
     );
   }
 }
+class Example extends StatelessWidget {
+  const Example({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned(
+          top: 100,
+          left: 100,
+          child: Container(
+            color: Colors.amber,
+            width: 100,
+            height: 90,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        'werwerwere',
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                              color: Colors.teal,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
 class _BottomBarWidget extends StatelessWidget {
   const _BottomBarWidget({Key? key}) : super(key: key);
   @override

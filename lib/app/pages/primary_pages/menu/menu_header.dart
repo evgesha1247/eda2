@@ -11,6 +11,7 @@ class MenuHeader extends StatelessWidget {
   final controller = Get.find<MenuController>();
   Widget _searchWidget() {
     InputBorder styleSearch = OutlineInputBorder(
+
       borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
       borderSide: const BorderSide(
         color: ThemeAppColor.kFrontColor,
@@ -20,6 +21,7 @@ class MenuHeader extends StatelessWidget {
     );
     return Expanded(
       child: TextField(
+
         cursorColor: ThemeAppColor.kFrontColor,
         decoration: InputDecoration(
           isDense: true,
@@ -39,18 +41,6 @@ class MenuHeader extends StatelessWidget {
     );
   }
 
-  Widget _buttonTogListWidget() {
-    return GetBuilder<MenuController>(
-      builder: (controller) {
-        return AnimatedIconWidget(
-          currIndex: (controller.isListGrid ? 0 : 1).obs,
-          fun: () => controller.togStatusList(),
-          widget1: const CustomButtonIcon(child: Icon(Icons.grid_view)),
-          widget2: const CustomButtonIcon(child: Icon(Icons.list)),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,25 +51,21 @@ class MenuHeader extends StatelessWidget {
       backgroundColor: ThemeAppColor.kBGColor,
       toolbarHeight: ThemeAppSize.kMenuHeaderSearch,
       flexibleSpace: Padding(
-        padding: EdgeInsets.all(ThemeAppSize.kInterval5),
-        child: Row(
-          children: [
-            _searchWidget(),
-            _buttonTogListWidget(),
-          ],
+        padding: EdgeInsets.only(
+          bottom: ThemeAppSize.kInterval12,
+        ),
+        child: FlexibleSpaceBar(
+          titlePadding: EdgeInsets.symmetric(
+            horizontal: ThemeAppSize.kInterval12,
+          ),
+          title: Row(
+            children: [
+              _searchWidget(),
+              //    _buttonTogListWidget(),
+            ],
+          ),
         ),
       ),
-      // FlexibleSpaceBar(
-      //   // titlePadding: EdgeInsets.symmetric(
-      //   //   horizontal: ThemeAppSize.kInterval12,
-      //   // ),
-      //   title: Row(
-      //     children: [
-      //       _searchWidget(),
-      //       _buttonTogListWidget(),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

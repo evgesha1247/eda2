@@ -50,7 +50,7 @@ abstract class ThemeAppSize {
   static double kDetaildButtomContainer = kScreensHeight / (height / 120);
 
 // home menu
-  static double kMenuHeaderSearch = kScreensHeight / (height / 70);
+  static double kMenuHeaderSearch = kScreensHeight / (height / 75);
 
 
 }

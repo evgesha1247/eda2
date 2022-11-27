@@ -16,6 +16,7 @@ class RecommendedSuction extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
       child: Column(
         children: [
+          SizedBox(height: ThemeAppSize.kInterval24),
           const _RecommendedTitleWidget(),
           SizedBox(height: ThemeAppSize.kInterval12),
           const _RecommendedListBuilderWidget(),
@@ -31,6 +32,7 @@ class _RecommendedTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+
         BigText(
           text: 'Recommended',
           color: ThemeAppColor.kFrontColor,
