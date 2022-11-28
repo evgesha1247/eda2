@@ -6,16 +6,16 @@ import '../../../widgets/icon/custom_icon.dart';
 import '../../../widgets/text/my_text.dart';
 import '../guiding/guiding_model.dart';
 
-class HomeHeaderWidget extends StatelessWidget {
-  const HomeHeaderWidget({super.key});
+class HomeHeader extends StatelessWidget {
+  const HomeHeader({super.key});
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           _UserTitle(),
-          Spacer(),
           ButtonIconCart(),
         ],
       ),
@@ -31,10 +31,9 @@ class _UserTitle extends StatelessWidget {
       children: [
         _UserIcon(),
         SizedBox(width: ThemeAppSize.kInterval12),
-        BigText(
+        const BigText(
           text: 'Welcom',
-          color: ThemeAppColor.kFrontColor,
-          size: ThemeAppSize.kFontSize20,
+          color: ThemeAppColor.kFrontColor
         ),
         Icon(Icons.grid_3x3, size: ThemeAppSize.kFontSize18),
         BigText(

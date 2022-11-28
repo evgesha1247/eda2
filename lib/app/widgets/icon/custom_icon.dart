@@ -73,11 +73,11 @@ class ButtonIconCart extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CartController>(
-      builder: (_) {
-        return GestureDetector(
-          onTap: () => Get.toNamed(MainRoutes.getCart()),
-          child: Stack(
+    return GestureDetector(
+      onTap: () => Get.toNamed(MainRoutes.getCart()),
+      child: GetBuilder<CartController>(
+        builder: (_) {
+          return Stack(
             children: [
               CustomButtonIcon(
                 bg: ThemeAppColor.kBGColor,
@@ -111,9 +111,9 @@ class ButtonIconCart extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

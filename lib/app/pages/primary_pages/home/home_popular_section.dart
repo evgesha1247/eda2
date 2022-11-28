@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,32 +16,42 @@ import '../../../widgets/icon/custom_icon.dart';
 import '../../../widgets/load/circular.dart';
 import '../../../widgets/text/my_text.dart';
 
-class HomePopularSection extends StatelessWidget {
-  const HomePopularSection({Key? key}) : super(key: key);
+class HomePopular extends StatelessWidget {
+  const HomePopular({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: ThemeAppSize.kInterval12),
+        const _PopularTitle(),
+        SizedBox(height: ThemeAppSize.kInterval12),
+        const _ProductBody(),
+      ],
+    );
+  }
+}
+
+class _PopularTitle extends StatelessWidget {
+  const _PopularTitle();
+  @override
+  Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
         child: BigText(
           text: 'Popular product',
           color: ThemeAppColor.kFrontColor,
           size: ThemeAppSize.kFontSize20,
         ),
-      ),
-      SizedBox(height: ThemeAppSize.kInterval12),
-      const _ItemsProductWidget(),
-    ]);
-  }
+      );
 }
 
-class _ItemsProductWidget extends StatefulWidget {
-  const _ItemsProductWidget({Key? key}) : super(key: key);
+class _ProductBody extends StatefulWidget {
+  const _ProductBody({Key? key}) : super(key: key);
   @override
-  State<_ItemsProductWidget> createState() => _ItemsProductWidgetState();
+  State<_ProductBody> createState() => _ProductBodyState();
 }
 
-class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
+class _ProductBodyState extends State<_ProductBody> {
   var _currPageValue = 0.0;
   final double _scaleFactore = 0.8;
   final double _height = ThemeAppSize.kHomePageViewImg;
@@ -50,61 +62,126 @@ class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
     super.initState();
     pageController.addListener(() {
       setState(() {
+        Get.find<ProductController>()
+            .initFavoriteController(Get.find<FavoriteController>());
         _currPageValue = pageController.page!;
       });
     });
   }
-
   @override
   void dispose() {
     super.dispose();
     pageController.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GetBuilder<ProductController>(
-          builder: (popularProduct) => popularProduct.isLoadedPopular
-              ? SizedBox(
-                  height: ThemeAppSize.kHomePageView,
-                  child: PageView.builder(
-                    controller: pageController,
-                    itemCount: popularProduct.popularProductList.length,
-                    itemBuilder: (context, index) => _itemPopularWidget(
-                      index,
-                      popularProduct.popularProductList[index],
+  Widget _itemImg(ProductModel product) => Padding(
+        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius:
+                    ThemeAppFun.decoration(radius: ThemeAppSize.kRadius20),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      "${AppConstansts.BASE_URL}/uploads/${product.img!}"),
+                ),
+              ),
+            ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: FractionalOffset.topCenter,
+                  end: FractionalOffset.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    Colors.black54,
+                  ],
+                  stops: [0.3, .9],
+                ),
+                borderRadius: ThemeAppFun.decoration(
+                  radius: ThemeAppSize.kRadius20,
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          BigText(
+                            rightToLeft: true,
+                            text: product.name!,
+                            size: ThemeAppSize.kFontSize20 * 1.3,
+                            maxLines: 2,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              : const CircularWidget(),
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
-        GetBuilder<ProductController>(
-          builder: (popularProduct) => popularProduct.isLoadedPopular
-              ? DotsIndicator(
-                  dotsCount: popularProduct.popularProductList.isEmpty
-                      ? 1
-                      : popularProduct.popularProductList.length,
-                  position: _currPageValue,
-                  decorator: DotsDecorator(
-                    size: const Size.square(9.0),
-                    spacing:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    activeColor: ThemeAppColor.kAccent,
-                    color: ThemeAppColor.kFrontColor,
-                    activeSize: const Size(25.0, 9.0),
-                    activeShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                  ),
-                )
-              : const SizedBox.shrink(),
-        ),
-      ],
-    );
-  }
+      );
 
-  Widget _itemPopularWidget(int index, ProductModel item) {
+
+
+
+
+
+  //             //   добавить
+  //             GetBuilder<CartController>(
+  //               builder: (controller) {
+  //                 return AnimatedIconWidget(
+  //                   currIndex:
+  //                       (controller.existInCart(product) ? 0 : 1).obs,
+  //                   fun: () => controller.addOneInCart(product),
+  //                   widget1: CustomButtonIcon(
+  //                     statusBorder: true,
+  //                     colorBorder: Colors.green,
+  //                     size: ThemeAppSize.kInterval5,
+  //                     child: const Icon(Icons.done, color: Colors.green),
+  //                   ),
+  //                   widget2: CustomButtonIcon(
+  //                     size: ThemeAppSize.kInterval5,
+  //                     child:
+  //                         const Icon(Icons.add, color: ThemeAppColor.grey),
+  //                   ),
+  //                 );
+  //               },
+  //             ),
+
+  //             // добавть
+  //             GetBuilder<FavoriteController>(
+  //               builder: (controller) {
+  //                 return AnimatedIconWidget(
+  //                   currIndex:
+  //                       (controller.existInFavorites(product) ? 0 : 1).obs,
+  //                   fun: () => controller.upDataFavoriteList(product),
+  //                   widget1: CustomButtonIcon(
+  //                     statusBorder: true,
+  //                     colorBorder: ThemeAppColor.kAccent,
+  //                     size: ThemeAppSize.kInterval5,
+  //                     child: const Icon(Icons.favorite,
+  //                         color: ThemeAppColor.kAccent),
+  //                   ),
+  //                   widget2: CustomButtonIcon(
+  //                     size: ThemeAppSize.kInterval5,
+  //                     child: const Icon(Icons.favorite_outline,
+  //                         color: ThemeAppColor.grey),
+  //                   ),
+  //                 );
+  //               },
+  //             ),
+
+
+  Widget _builderItem(int index, ProductModel product) {
     Matrix4 matrix = Matrix4.identity();
     if (index == _currPageValue.floor()) {
       var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactore);
@@ -133,120 +210,64 @@ class _ItemsProductWidgetState extends State<_ItemsProductWidget> {
       transform: matrix,
       child: GestureDetector(
         onTap: () =>
-            Get.toNamed(MainRoutes.getDetailed(item.id), arguments: item),
+            Get.toNamed(MainRoutes.getDetailed(product.id), arguments: product),
         child: Stack(
           children: [
-            _ItemImgWidget(
-              imgUrl: "${AppConstansts.BASE_URL}/uploads/${item.img!}",
-            ),
-            _ItemInfoBlok(product: item),
+            _itemImg(product),
+
+            //  _itemInfoBlok(product),
           ],
         ),
       ),
     );
   }
-}
 
-class _ItemImgWidget extends StatelessWidget {
-  const _ItemImgWidget({Key? key, required this.imgUrl}) : super(key: key);
-  final String imgUrl;
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Container(
-        constraints: BoxConstraints(maxWidth: ThemeAppSize.width),
-        height: ThemeAppSize.kHomePageViewImg,
-        margin: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
-        decoration: BoxDecoration(
-          borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius20),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(imgUrl),
-          ),
-        ),
-      ),
+  Widget _botsIndicator() {
+    return GetBuilder<ProductController>(
+      builder: (popularProduct) => popularProduct.isLoadedPopular
+          ? DotsIndicator(
+              dotsCount: popularProduct.popularProductList.isEmpty
+                  ? 1
+                  : popularProduct.popularProductList.length,
+              position: _currPageValue,
+              decorator: DotsDecorator(
+                size: const Size.square(9.0),
+                spacing: EdgeInsets.symmetric(
+                  horizontal: ThemeAppSize.kInterval12,
+                  vertical: ThemeAppSize.kInterval5,
+                ),
+                activeColor: ThemeAppColor.kAccent,
+                color: ThemeAppColor.kFrontColor,
+                activeSize: const Size(25.0, 9.0),
+                activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0)),
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
-}
 
-class _ItemInfoBlok extends StatelessWidget {
-  const _ItemInfoBlok({Key? key, required this.product}) : super(key: key);
-  final ProductModel product;
   @override
   Widget build(BuildContext context) {
-    Get.find<ProductController>()
-        .initFavoriteController(Get.find<FavoriteController>());
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-        height: ThemeAppSize.kHomePageViewInfo,
-        margin: EdgeInsets.only(
-          left: ThemeAppSize.kInterval24,
-          right: ThemeAppSize.kInterval24,
-          bottom: ThemeAppSize.kInterval12,
+    return Column(
+      children: [
+        GetBuilder<ProductController>(
+          builder: (popularProduct) => popularProduct.isLoadedPopular
+              ? SizedBox(
+                  height: ThemeAppSize.kHomePageView,
+                  child: PageView.builder(
+                    controller: pageController,
+                    itemCount: popularProduct.popularProductList.length,
+                    itemBuilder: (context, index) => _builderItem(
+                      index,
+                      popularProduct.popularProductList[index],
+                    ),
+                  ),
+                )
+              : const CircularWidget(),
         ),
-        decoration: BoxDecoration(
-          color: ThemeAppColor.kFrontColor,
-          borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            BigText(
-              text: product.name!,
-              size: ThemeAppSize.kFontSize20,
-              maxLines: 2,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GetBuilder<CartController>(
-                  builder: (controller) {
-                    return AnimatedIconWidget(
-                      currIndex: (controller.existInCart(product) ? 0 : 1).obs,
-                      fun: () => controller.addOneInCart(product),
-                      widget1: CustomButtonIcon(
-                        statusBorder: true,
-                        colorBorder: Colors.green,
-                        size: ThemeAppSize.kInterval5,
-                        child: const Icon(Icons.done, color: Colors.green),
-                      ),
-                      widget2: CustomButtonIcon(
-                        size: ThemeAppSize.kInterval5,
-                        child: const Icon(Icons.add, color: ThemeAppColor.grey),
-                      ),
-                    );
-                  },
-                ),
-                GetBuilder<FavoriteController>(
-                  builder: (controller) {
-                    return AnimatedIconWidget(
-                      currIndex:
-                          (controller.existInFavorites(product) ? 0 : 1).obs,
-                      fun: () => controller.upDataFavoriteList(product),
-                      widget1: CustomButtonIcon(
-                        statusBorder: true,
-                        colorBorder: ThemeAppColor.kAccent,
-                        size: ThemeAppSize.kInterval5,
-                        child: const Icon(Icons.favorite,
-                            color: ThemeAppColor.kAccent),
-                      ),
-                      widget2: CustomButtonIcon(
-                        size: ThemeAppSize.kInterval5,
-                        child: const Icon(Icons.favorite_outline,
-                            color: ThemeAppColor.grey),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+        _botsIndicator(),
+      ],
     );
   }
 }

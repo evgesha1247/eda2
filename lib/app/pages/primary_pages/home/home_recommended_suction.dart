@@ -8,15 +8,15 @@ import '../../../theme/theme_app.dart';
 import '../../../widgets/load/circular.dart';
 import '../../../widgets/text/my_text.dart';
 
-class RecommendedSuction extends StatelessWidget {
-  const RecommendedSuction({Key? key}) : super(key: key);
+class HomeRecommended extends StatelessWidget {
+  const HomeRecommended({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
       child: Column(
         children: [
-          SizedBox(height: ThemeAppSize.kInterval24),
+          SizedBox(height: ThemeAppSize.kInterval12),
           const _RecommendedTitleWidget(),
           SizedBox(height: ThemeAppSize.kInterval12),
           const _RecommendedListBuilderWidget(),
@@ -32,7 +32,6 @@ class _RecommendedTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-
         BigText(
           text: 'Recommended',
           color: ThemeAppColor.kFrontColor,

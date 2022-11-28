@@ -10,6 +10,7 @@ class BigText extends StatelessWidget {
   final TextDecoration decoration;
   final double decorationThickness;
   final FontWeight fontWeight;
+  final bool rightToLeft;
 
   const BigText({
     Key? key,
@@ -21,10 +22,13 @@ class BigText extends StatelessWidget {
     this.fontWeight = FontWeight.w500,
     this.decoration = TextDecoration.none,
     this.decorationThickness = 2,
+    this.rightToLeft = false,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Text(
+      textDirection: rightToLeft ? TextDirection.rtl : TextDirection.ltr,
+
       text,
       softWrap: true,
       maxLines: maxLines,
