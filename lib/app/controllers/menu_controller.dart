@@ -1,14 +1,38 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../pages/primary_pages/menu/menu_filter.dart';
 import 'product_controller.dart';
 import '../models/products_model.dart';
 
 enum SortMethod { lowToHigh, highToLow, reset }
+class Filter {
+  final String text;
+  final IconData icon;
+  const Filter({
+    required this.text,
+    required this.icon,
+  });
+}
 
 class MenuController extends GetxController {
   bool _isListGrid = true;
   bool get isListGrid => _isListGrid;
   SortMethod? method = SortMethod.reset;
+
+
+  List<Filter> filterModel = const [
+    Filter(text: 'Sort by', icon: Icons.sort),
+    Filter(text: 'Filter', icon: Icons.filter_alt_rounded),
+  ];
+
+  List<Widget> get listFilterItems {
+    return filterModel
+        .map((Filter e) => FilterItem(text: e.text, icon: e.icon))
+        .toList();
+  }
+
+
 
   final List<ProductModel> _productList = [];
   List<ProductModel> get prosuct => _productList;
@@ -25,6 +49,7 @@ class MenuController extends GetxController {
           productsController!.recommendedProductList,
     );
     _filterList = _productList;
+    print(_filterList);
   }
 
   @override

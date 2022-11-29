@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../controllers/menu_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
@@ -10,14 +9,41 @@ import '../../../widgets/text/my_text.dart';
 class FilterWidget extends StatelessWidget {
   FilterWidget({super.key});
   final controller = Get.find<MenuController>();
-  final List _icon = <IconData>[Icons.height_sharp, Icons.filter_list_outlined];
-  final List _text = <String>['Sort by', 'Filter'];
+  @override
 
-  Widget titleSortItem({
-    required SortMethod value,
-    required String text,
-    required IconData icon,
-  }) {
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: ThemeAppSize.kInterval12,
+          bottom: ThemeAppSize.kInterval12,
+        ),
+        child: Row(
+          children: [
+            const _ButtonTogList(),
+            Wrap(
+              spacing: ThemeAppSize.kInterval12,
+              children: controller.listFilterItems,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TitleSort extends StatelessWidget {
+  final SortMethod value;
+  final String text;
+  final IconData icon;
+  _TitleSort({
+    required this.value,
+    required this.text,
+    required this.icon,
+  });
+  final controller = Get.find<MenuController>();
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
       title: SmallText(
         text: text,
@@ -39,8 +65,15 @@ class FilterWidget extends StatelessWidget {
       ),
     );
   }
+}
 
-  void mass() {
+class FilterItem extends StatelessWidget {
+  final String text;
+  final IconData icon;
+  const FilterItem({super.key, required this.text, required this.icon});
+
+
+  void sortByMass() {
     Get.defaultDialog(
       title: 'Sort by',
       titlePadding: EdgeInsets.only(top: ThemeAppSize.kInterval24),
@@ -51,12 +84,12 @@ class FilterWidget extends StatelessWidget {
         builder: (_) {
           return Column(
             children: [
-              titleSortItem(
+              _TitleSort(
                 text: 'low to high',
                 value: SortMethod.lowToHigh,
                 icon: Icons.arrow_circle_up,
               ),
-              titleSortItem(
+              _TitleSort(
                 text: 'high to low',
                 value: SortMethod.highToLow,
                 icon: Icons.arrow_circle_down,
@@ -79,9 +112,35 @@ class FilterWidget extends StatelessWidget {
       ),
     );
   }
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => text == 'Sort by' ? sortByMass() : {},
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: ThemeAppColor.kFrontColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(ThemeAppSize.kRadius12),
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+          child: Wrap(
+            children: [
+              SmallText(text: text, color: ThemeAppColor.kBGColor),
+              Icon(icon, color: ThemeAppColor.kBGColor),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-
-  Widget _buttonTogListWidget() {
+class _ButtonTogList extends StatelessWidget {
+  const _ButtonTogList();
+  @override
+  Widget build(BuildContext context) {
     return GetBuilder<MenuController>(
       builder: (controller) {
         return AnimatedIconWidget(
@@ -91,64 +150,6 @@ class FilterWidget extends StatelessWidget {
           widget2: const CustomButtonIcon(child: Icon(Icons.list)),
         );
       },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: ThemeAppSize.kInterval12,
-          bottom: ThemeAppSize.kInterval12,
-        ),
-        child: Row(
-          children: [
-            _buttonTogListWidget(),
-            Wrap(
-              spacing: ThemeAppSize.kInterval12,
-              children: List.generate(
-                _text.length,
-                (index) {
-                  return GestureDetector(
-                    onTap: () => mass(),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: ThemeAppColor.kFrontColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            ThemeAppSize.kRadius12,
-                          ),
-                        ),
-                      ),
-                      child: CustomButtonIcon(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: ThemeAppSize.kInterval12,
-                          ),
-                          child: Wrap(
-                            children: [
-                              SmallText(
-                                text: _text[index],
-                                color: ThemeAppColor.kBGColor,
-                              ),
-                              Icon(
-                                _icon[index],
-                                color: ThemeAppColor.kBGColor,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

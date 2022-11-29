@@ -52,14 +52,12 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
   const _RecommendedListBuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Widget itemPopular(ProductModel item) {
+    Widget itemBilder(ProductModel item) {
       var selected = false.obs;
       return GestureDetector(
         onTap: () => selected.value = !selected.value,
-        onDoubleTap: () => Get.toNamed(
-          MainRoutes.getDetailed(item.id),
-          arguments: item,
-        ),
+        onDoubleTap: () =>
+            Get.toNamed(MainRoutes.getDetailed(item.id), arguments: item),
         child: Obx(
           () => Stack(
             children: [
@@ -148,7 +146,7 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int index) =>
-                              itemPopular(
+                              itemBilder(
                             recommendedProduct.recommendedProductList[index],
                           ),
                           separatorBuilder: (BuildContext context, int index) =>

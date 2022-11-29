@@ -1,46 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../controllers/menu_controller.dart';
 import '../../../theme/theme_app.dart';
-import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/icon/custom_icon.dart';
 
 class MenuHeader extends StatelessWidget {
   MenuHeader({super.key});
   final controller = Get.find<MenuController>();
-  Widget _searchWidget() {
-    InputBorder styleSearch = OutlineInputBorder(
-
+  final InputBorder styleSearch = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
       borderSide: const BorderSide(
         color: ThemeAppColor.kFrontColor,
         width: 1.5,
         style: BorderStyle.solid,
       ),
-    );
-    return Expanded(
-      child: TextField(
-
-        cursorColor: ThemeAppColor.kFrontColor,
-        decoration: InputDecoration(
-          isDense: true,
-          fillColor: ThemeAppColor.kBGColor,
-          prefixIcon: const CustomButtonIcon(
-            child: Icon(
-              Icons.search,
-              color: ThemeAppColor.kFrontColor,
-            ),
-          ),
-          hintText: 'Search',
-          enabledBorder: styleSearch,
-          focusedBorder: styleSearch,
-        ),
-        onChanged: (text) => controller.searchFilter(text),
-      ),
-    );
-  }
-
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +34,25 @@ class MenuHeader extends StatelessWidget {
           ),
           title: Row(
             children: [
-              _searchWidget(),
-              //    _buttonTogListWidget(),
+              Expanded(
+                child: TextField(
+                  cursorColor: ThemeAppColor.kFrontColor,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    fillColor: ThemeAppColor.kBGColor,
+                    prefixIcon: const CustomButtonIcon(
+                      child: Icon(
+                        Icons.search,
+                        color: ThemeAppColor.kFrontColor,
+                      ),
+                    ),
+                    hintText: 'Search',
+                    enabledBorder: styleSearch,
+                    focusedBorder: styleSearch,
+                  ),
+                  onChanged: (text) => controller.searchFilter(text),
+                ),
+              ),
             ],
           ),
         ),

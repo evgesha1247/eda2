@@ -1,16 +1,13 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/routes/main_routes.dart';
-
 import '../../../../utils/app_constants.dart';
 import '../../../controllers/favorite_controller.dart';
 import '../../../controllers/product_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
-import '../../../widgets/icon/custom_icon.dart';
 import '../../../widgets/load/circular.dart';
 import '../../../widgets/text/my_text.dart';
 
@@ -73,7 +70,58 @@ class _ProductBodyState extends State<_ProductBody> {
     pageController.dispose();
   }
 
+  Widget _itemImg(img) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius20),
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(img),
+        ),
+      ),
+    );
+  }
 
+  Widget _itemTitle(product) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+            begin: FractionalOffset.topCenter,
+            end: FractionalOffset.bottomCenter,
+            colors: [Colors.transparent, Color.fromARGB(225, 51, 45, 31)],
+            stops: [0.3, 0.9]),
+        borderRadius: ThemeAppFun.decoration(
+          radius: ThemeAppSize.kRadius20,
+        ),
+      ),
+      child: Row(
+        children: [
+          CartAddIcon(
+            statusBorder: true,
+            product: product,
+            bg: Colors.transparent,
+          ),
+          SizedBox(width: ThemeAppSize.kInterval24),
+          FavoritIcon(
+            statusBorder: true,
+            product: product,
+            bg: Colors.transparent,
+          ),
+          Expanded(
+            flex: 2,
+            child: BigText(
+              rightToLeft: true,
+              text: product.name!,
+              size: ThemeAppSize.kFontSize22 * 1.3,
+              maxLines: 2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _builderItem(int index, ProductModel product) {
     Matrix4 matrix = Matrix4.identity();
@@ -107,79 +155,17 @@ class _ProductBodyState extends State<_ProductBody> {
             Get.toNamed(MainRoutes.getDetailed(product.id), arguments: product),
         child: Padding(
           padding: EdgeInsets.all(ThemeAppSize.kInterval5),
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius:
-                    ThemeAppFun.decoration(radius: ThemeAppSize.kRadius20),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      "${AppConstansts.BASE_URL}/uploads/${product.img!}"),
-                ),
-              ),
-            ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: FractionalOffset.topCenter,
-                  end: FractionalOffset.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                      Color.fromARGB(225, 51, 45, 31),
-                  ],
-                    stops: [0.3, 0.9],
-                ),
-                borderRadius: ThemeAppFun.decoration(
-                  radius: ThemeAppSize.kRadius20,
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(ThemeAppSize.kInterval24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                            Row(
-                              children: [
-                                CartAddIcon(
-                                  statusBorder: true,
-                                  product: product,
-                                  bg: Colors.transparent,
-                                ),
-                                SizedBox(width: ThemeAppSize.kInterval24),
-                                FavoritIcon(
-                                  statusBorder: true,
-                                  product: product,
-                                  bg: Colors.transparent,
-                                ),
-                                Expanded(
-                                  child: BigText(
-                                    rightToLeft: true,
-                                    text: product.name!,
-                                    size: ThemeAppSize.kFontSize20 * 1.3,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            )
-          ],
+          child: Stack(
+            children: [
+              _itemImg("${AppConstansts.BASE_URL}/uploads/${product.img!}"),
+              _itemTitle(product),
+            ],
           ),
         ),
       ),
     );
   }
+
   Widget _botsIndicator() {
     return GetBuilder<ProductController>(
       builder: (popularProduct) => popularProduct.isLoadedPopular
@@ -204,7 +190,6 @@ class _ProductBodyState extends State<_ProductBody> {
           : const SizedBox.shrink(),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
