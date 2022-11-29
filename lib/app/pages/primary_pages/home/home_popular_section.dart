@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,117 +66,13 @@ class _ProductBodyState extends State<_ProductBody> {
       });
     });
   }
+
   @override
   void dispose() {
     super.dispose();
     pageController.dispose();
   }
 
-  Widget _itemImg(ProductModel product) => Padding(
-        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius:
-                    ThemeAppFun.decoration(radius: ThemeAppSize.kRadius20),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      "${AppConstansts.BASE_URL}/uploads/${product.img!}"),
-                ),
-              ),
-            ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: FractionalOffset.topCenter,
-                  end: FractionalOffset.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black54,
-                  ],
-                  stops: [0.3, .9],
-                ),
-                borderRadius: ThemeAppFun.decoration(
-                  radius: ThemeAppSize.kRadius20,
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(ThemeAppSize.kInterval24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          BigText(
-                            rightToLeft: true,
-                            text: product.name!,
-                            size: ThemeAppSize.kFontSize20 * 1.3,
-                            maxLines: 2,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-
-
-
-
-
-
-  //             //   добавить
-  //             GetBuilder<CartController>(
-  //               builder: (controller) {
-  //                 return AnimatedIconWidget(
-  //                   currIndex:
-  //                       (controller.existInCart(product) ? 0 : 1).obs,
-  //                   fun: () => controller.addOneInCart(product),
-  //                   widget1: CustomButtonIcon(
-  //                     statusBorder: true,
-  //                     colorBorder: Colors.green,
-  //                     size: ThemeAppSize.kInterval5,
-  //                     child: const Icon(Icons.done, color: Colors.green),
-  //                   ),
-  //                   widget2: CustomButtonIcon(
-  //                     size: ThemeAppSize.kInterval5,
-  //                     child:
-  //                         const Icon(Icons.add, color: ThemeAppColor.grey),
-  //                   ),
-  //                 );
-  //               },
-  //             ),
-
-  //             // добавть
-  //             GetBuilder<FavoriteController>(
-  //               builder: (controller) {
-  //                 return AnimatedIconWidget(
-  //                   currIndex:
-  //                       (controller.existInFavorites(product) ? 0 : 1).obs,
-  //                   fun: () => controller.upDataFavoriteList(product),
-  //                   widget1: CustomButtonIcon(
-  //                     statusBorder: true,
-  //                     colorBorder: ThemeAppColor.kAccent,
-  //                     size: ThemeAppSize.kInterval5,
-  //                     child: const Icon(Icons.favorite,
-  //                         color: ThemeAppColor.kAccent),
-  //                   ),
-  //                   widget2: CustomButtonIcon(
-  //                     size: ThemeAppSize.kInterval5,
-  //                     child: const Icon(Icons.favorite_outline,
-  //                         color: ThemeAppColor.grey),
-  //                   ),
-  //                 );
-  //               },
-  //             ),
 
 
   Widget _builderItem(int index, ProductModel product) {
@@ -211,17 +105,81 @@ class _ProductBodyState extends State<_ProductBody> {
       child: GestureDetector(
         onTap: () =>
             Get.toNamed(MainRoutes.getDetailed(product.id), arguments: product),
+        child: Padding(
+          padding: EdgeInsets.all(ThemeAppSize.kInterval5),
         child: Stack(
           children: [
-            _itemImg(product),
-
-            //  _itemInfoBlok(product),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius:
+                    ThemeAppFun.decoration(radius: ThemeAppSize.kRadius20),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      "${AppConstansts.BASE_URL}/uploads/${product.img!}"),
+                ),
+              ),
+            ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: FractionalOffset.topCenter,
+                  end: FractionalOffset.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                      Color.fromARGB(225, 51, 45, 31),
+                  ],
+                    stops: [0.3, 0.9],
+                ),
+                borderRadius: ThemeAppFun.decoration(
+                  radius: ThemeAppSize.kRadius20,
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                            Row(
+                              children: [
+                                CartAddIcon(
+                                  statusBorder: true,
+                                  product: product,
+                                  bg: Colors.transparent,
+                                ),
+                                SizedBox(width: ThemeAppSize.kInterval24),
+                                FavoritIcon(
+                                  statusBorder: true,
+                                  product: product,
+                                  bg: Colors.transparent,
+                                ),
+                                Expanded(
+                                  child: BigText(
+                                    rightToLeft: true,
+                                    text: product.name!,
+                                    size: ThemeAppSize.kFontSize20 * 1.3,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            )
           ],
+          ),
         ),
       ),
     );
   }
-
   Widget _botsIndicator() {
     return GetBuilder<ProductController>(
       builder: (popularProduct) => popularProduct.isLoadedPopular
@@ -246,6 +204,7 @@ class _ProductBodyState extends State<_ProductBody> {
           : const SizedBox.shrink(),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

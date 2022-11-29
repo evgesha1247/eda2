@@ -37,9 +37,9 @@ abstract class ThemeAppSize {
 
 // home page
   // page view
-  static double kHomePageView = kScreensHeight / (height / 230);
-  static double kHomePageViewImg = kScreensHeight / (height / 170);
-  static double kHomePageViewInfo = kScreensHeight / (height / 120);
+  static double kHomePageView = kScreensHeight / (height / 220);
+  static double kHomePageViewImg = kScreensHeight / (height / 160);
+  static double kHomePageViewInfo = kScreensHeight / (height / 110);
   // list view
   static double kHomeListViewImg = kScreensHeight / (height / 130);
   static double kHomeListViewInfo = kScreensHeight / (height / 110);

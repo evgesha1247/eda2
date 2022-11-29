@@ -79,52 +79,8 @@ Widget _cardItem({required ProductModel product}) {
 class _ItemControlElements extends StatelessWidget {
   const _ItemControlElements({required this.product});
   final ProductModel product;
-  Widget _iconAdd() {
-    return GetBuilder<CartController>(
-      builder: (controller) {
-        return AnimatedIconWidget(
-          currIndex: (controller.existInCart(product) ? 0 : 1).obs,
-          fun: () => controller.addOneInCart(product),
-          widget1: CustomButtonIcon(
-            colorBorder: Colors.green,
-            bg: ThemeAppColor.kFrontColor,
-            size: ThemeAppSize.kInterval5,
-            child: const Icon(Icons.done, color: Colors.green),
-          ),
-          widget2: CustomButtonIcon(
-            size: ThemeAppSize.kInterval5,
-            bg: ThemeAppColor.kFrontColor,
-            child: const Icon(Icons.add, color: ThemeAppColor.kBGColor),
-          ),
-        );
-      },
-    );
-  }
 
-  Widget _iconFavorit() {
-    return GetBuilder<FavoriteController>(
-      builder: (controller) {
-        return AnimatedIconWidget(
-          currIndex: (controller.existInFavorites(product) ? 0 : 1).obs,
-          fun: () => controller.upDataFavoriteList(product),
-          widget1: CustomButtonIcon(
-            bg: ThemeAppColor.kFrontColor,
-            colorBorder: ThemeAppColor.kAccent,
-            size: ThemeAppSize.kInterval5,
-            child: const Icon(Icons.favorite, color: ThemeAppColor.kAccent),
-          ),
-          widget2: CustomButtonIcon(
-            bg: ThemeAppColor.kFrontColor,
-            size: ThemeAppSize.kInterval5,
-            child: const Icon(
-              Icons.favorite_outline,
-              color: ThemeAppColor.kBGColor,
-            ),
-          ),
-        );
-      },
-    );
-  }
+
 
   Widget _price() {
     return Container(
@@ -155,8 +111,8 @@ class _ItemControlElements extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _iconAdd(),
-                _iconFavorit(),
+                CartAddIcon(product: product),
+                FavoritIcon(product: product)
               ],
             ),
           )
