@@ -26,11 +26,10 @@ class MenuController extends GetxController {
     Filter(text: 'Filter', icon: Icons.filter_alt_rounded),
   ];
 
-  List<Widget> get listFilterItems {
-    return filterModel
+  List<Widget> get listFilterItems => filterModel
         .map((Filter e) => FilterItem(text: e.text, icon: e.icon))
         .toList();
-  }
+
 
 
 
@@ -49,7 +48,6 @@ class MenuController extends GetxController {
           productsController!.recommendedProductList,
     );
     _filterList = _productList;
-    print(_filterList);
   }
 
   @override

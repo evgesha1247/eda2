@@ -71,8 +71,6 @@ class FilterItem extends StatelessWidget {
   final String text;
   final IconData icon;
   const FilterItem({super.key, required this.text, required this.icon});
-
-
   void sortByMass() {
     Get.defaultDialog(
       title: 'Sort by',

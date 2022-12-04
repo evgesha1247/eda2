@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 import '../cart_history/cart_history.dart';
-import '../favorite/favorite_screen.dart';
+import '../favorite/favorite_page.dart';
 import '../home/home_page.dart';
 import '../menu/menu_page.dart';
 import 'guiding_model.dart';
@@ -30,50 +30,14 @@ class _GuidingBodyWidget extends StatelessWidget {
         children: const [
           HomePage(),
           MenuPage(),
-          FavoriteScreen(),
-          //    CartHistory(),
-          Example(),
+          FavoritePage(),
+          CartHistory(),
         ],
       ),
     );
   }
 }
-class Example extends StatelessWidget {
-  const Example({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          top: 100,
-          left: 100,
-          child: Container(
-            color: Colors.amber,
-            width: 100,
-            height: 90,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        'werwerwere',
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                              color: Colors.teal,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
 class _BottomBarWidget extends StatelessWidget {
   const _BottomBarWidget({Key? key}) : super(key: key);
   @override
@@ -98,6 +62,15 @@ class _BottomBarWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+class Bottom {
+  final String text;
+  final IconData icon;
+  const Bottom({
+    required this.text,
+    required this.icon,
+  });
 }
 
 BottomNavigationBarItem bottomItem(String text, IconData icon) {

@@ -30,8 +30,6 @@ class ProductController extends GetxController {
       _recommendedProductList.addAll(Product.fromJson(response.body).products);
       _isLoadedRecommended = true;
       update();
-    } else {
-      print(response.statusCode);
     }
   }
 
@@ -45,8 +43,6 @@ class ProductController extends GetxController {
       _popularProductList.addAll(Product.fromJson(response.body).products);
       _isLoadedPopular = true;
       update();
-    } else {
-      print(response.statusCode);
     }
   }
 

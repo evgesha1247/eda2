@@ -17,7 +17,6 @@ class MyAppWidget extends StatelessWidget {
           theme: ThemeData(
             fontFamily: 'Mariupol',
             scaffoldBackgroundColor: ThemeAppColor.kBGColor,
-              textTheme: stText()
           ),
           debugShowCheckedModeBanner: false,
           getPages: MainRoutes.getPages,
@@ -26,14 +25,4 @@ class MyAppWidget extends StatelessWidget {
       },
     );
   }
-}
-
-
-
-TextTheme? stText() {
-  return const TextTheme(
-    headline6: TextStyle(
-      fontSize: 33,
-    ),
-  );
 }

@@ -46,7 +46,7 @@ class _TotalPrice extends StatelessWidget {
         return Column(
           //  crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            _.total > 200
+            _.totalAmount > 200
                 ? Row(
                     children: [
                       const SmallText(text: 'discount'),

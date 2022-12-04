@@ -13,7 +13,7 @@ class HomeRecommended extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
+      padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
       child: Column(
         children: [
           SizedBox(height: ThemeAppSize.kInterval12),
@@ -56,7 +56,7 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
       var selected = false.obs;
       return GestureDetector(
         onTap: () => selected.value = !selected.value,
-        onDoubleTap: () =>
+        onLongPress: () =>
             Get.toNamed(MainRoutes.getDetailed(item.id), arguments: item),
         child: Obx(
           () => Stack(

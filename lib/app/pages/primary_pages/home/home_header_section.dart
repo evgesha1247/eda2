@@ -4,7 +4,6 @@ import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/custom_icon.dart';
 import '../../../widgets/text/my_text.dart';
-import '../guiding/guiding_model.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -29,15 +28,16 @@ class _UserTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _UserIcon(),
+        const _UserIcon(),
         SizedBox(width: ThemeAppSize.kInterval12),
         const BigText(
           text: 'Welcom',
           color: ThemeAppColor.kFrontColor
         ),
+        SizedBox(width: ThemeAppSize.kInterval5),
         Icon(Icons.grid_3x3, size: ThemeAppSize.kFontSize18),
         BigText(
-          text: 'name',
+          text: '{name}',
           color: ThemeAppColor.kFrontColor,
           size: ThemeAppSize.kFontSize18,
         ),
@@ -47,8 +47,7 @@ class _UserTitle extends StatelessWidget {
 }
 
 class _UserIcon extends StatelessWidget {
-  _UserIcon();
-  final pageController = Get.find<GuidingScreenModel>();
+  const _UserIcon();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

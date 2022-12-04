@@ -14,31 +14,31 @@ import '../app/controllers/menu_controller.dart';
 import '../utils/app_constants.dart';
 
 Future<void> init() async {
+  //api
+  Get.lazyPut(() => ApiClient(appBaseUrl: AppConstansts.BASE_URL));
+}
 
+Future<void> initPageConfig() async {
   // db local
   final sharedStore = await SharedPreferences.getInstance();
   Get.lazyPut(() => sharedStore);
-  //api
-  Get.lazyPut(() => ApiClient(appBaseUrl: AppConstansts.BASE_URL));
+
+  // pageModel
+  Get.lazyPut(() => GuidingScreenModel());
+  Get.lazyPut(() => SplashModel());
+  Get.lazyPut(() => AuthModel());
+
   // repo
   Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
   Get.lazyPut(() => CartRepo(sharedStore: Get.find()));
   Get.lazyPut(() => FavoriteRepo());
+
   //controller
   Get.lazyPut(() => ProductController(
         popularProductRepo: Get.find(),
         recommendedProductRepo: Get.find(),
       ));
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
-
-  ///
   Get.lazyPut(() => FavoriteController(favoriteRepo: Get.find()));
   Get.lazyPut(() => MenuController());
-
-}
-
-Future<void> initPageModel() async {
-  Get.lazyPut(() => GuidingScreenModel());
-  Get.lazyPut(() => SplashModel());
-  Get.lazyPut(() => AuthModel());
 }

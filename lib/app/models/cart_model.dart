@@ -32,5 +32,16 @@ class CartModel {
     product = ProductModel.fromJson(json['product']);
   }
 
-
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
+      "price": price,
+      "count": count,
+      "img": img,
+      "time": time,
+      "isExit": isExit,
+      "product": product!.toJson(),
+    };
+  }
 }

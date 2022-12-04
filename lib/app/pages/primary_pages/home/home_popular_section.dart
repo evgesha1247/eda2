@@ -18,7 +18,7 @@ class HomePopular extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: ThemeAppSize.kInterval12),
+        // SizedBox(height: ThemeAppSize.kInterval12),
         const _PopularTitle(),
         SizedBox(height: ThemeAppSize.kInterval12),
         const _ProductBody(),
@@ -31,7 +31,7 @@ class _PopularTitle extends StatelessWidget {
   const _PopularTitle();
   @override
   Widget build(BuildContext context) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
+        padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
         child: BigText(
           text: 'Popular product',
           color: ThemeAppColor.kFrontColor,
@@ -81,7 +81,6 @@ class _ProductBodyState extends State<_ProductBody> {
       ),
     );
   }
-
   Widget _itemTitle(product) {
     return Container(
       alignment: Alignment.bottomCenter,
@@ -103,12 +102,13 @@ class _ProductBodyState extends State<_ProductBody> {
             product: product,
             bg: Colors.transparent,
           ),
-          SizedBox(width: ThemeAppSize.kInterval24),
+          SizedBox(width: ThemeAppSize.kInterval12),
           FavoritIcon(
             statusBorder: true,
             product: product,
             bg: Colors.transparent,
           ),
+          SizedBox(width: ThemeAppSize.kInterval12),
           Expanded(
             flex: 2,
             child: BigText(
@@ -122,7 +122,6 @@ class _ProductBodyState extends State<_ProductBody> {
       ),
     );
   }
-
   Widget _builderItem(int index, ProductModel product) {
     Matrix4 matrix = Matrix4.identity();
     if (index == _currPageValue.floor()) {
@@ -165,7 +164,6 @@ class _ProductBodyState extends State<_ProductBody> {
       ),
     );
   }
-
   Widget _botsIndicator() {
     return GetBuilder<ProductController>(
       builder: (popularProduct) => popularProduct.isLoadedPopular
