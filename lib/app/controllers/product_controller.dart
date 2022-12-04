@@ -89,6 +89,7 @@ class ProductController extends GetxController {
 
   // дабавлени / удаление для  корзины
   void _addProductToCart(ProductModel product) {
+    print(_countForAdding);
     _cart!.addItem(product, _countForAdding);
     _countForAdding = 0;
     _inCartItems = _cart!.getCountProduct(product);

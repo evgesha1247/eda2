@@ -16,29 +16,31 @@ import '../utils/app_constants.dart';
 Future<void> init() async {
   //api
   Get.lazyPut(() => ApiClient(appBaseUrl: AppConstansts.BASE_URL));
+
+  Get.lazyPut(() => ProductController(
+        popularProductRepo: Get.find(),
+        recommendedProductRepo: Get.find(),
+      ));
+  Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
 }
 
 Future<void> initPageConfig() async {
   // db local
   final sharedStore = await SharedPreferences.getInstance();
-  Get.lazyPut(() => sharedStore);
+  Get.lazyPut(() => sharedStore, fenix: true);
 
   // pageModel
   Get.lazyPut(() => GuidingScreenModel());
   Get.lazyPut(() => SplashModel());
   Get.lazyPut(() => AuthModel());
 
-  // repo
-  Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
-  Get.lazyPut(() => CartRepo(sharedStore: Get.find()));
-  Get.lazyPut(() => FavoriteRepo());
-
   //controller
-  Get.lazyPut(() => ProductController(
-        popularProductRepo: Get.find(),
-        recommendedProductRepo: Get.find(),
-      ));
-  Get.lazyPut(() => CartController(cartRepo: Get.find()));
+  Get.lazyPut(() => CartController(cartRepo: Get.find()), fenix: true);
   Get.lazyPut(() => FavoriteController(favoriteRepo: Get.find()));
   Get.lazyPut(() => MenuController());
+
+  // repo
+  Get.lazyPut(() => CartRepo(sharedStore: Get.find()), fenix: true);
+  Get.lazyPut(() => FavoriteRepo());
+
 }

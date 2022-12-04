@@ -23,10 +23,10 @@ class CartController extends GetxController {
 
   set setCartLocal(List<CartModel> items) {
     _itemsLocal = items;
-    print('количество локально сохраненных элементов : ${_itemsLocal.length}');
     for (var i = 0; i < _itemsLocal.length; i++) {
       _items.putIfAbsent(_itemsLocal[i].product!.id!, () => _itemsLocal[i]);
     }
+    update();
   }
 
   ///

@@ -16,7 +16,7 @@ class SplashModel extends GetxController {
     await dep.initPageConfig();
     await Get.find<ProductController>().getPopularProductList();
     await Get.find<ProductController>().getRecommendedProductList();
-    //   Get.find<CartController>().getItemsListLocal();
+    Get.find<CartController>().getItemsListLocal();
   }
 
   void _showHome() {
