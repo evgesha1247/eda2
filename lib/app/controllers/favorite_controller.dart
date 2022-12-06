@@ -2,29 +2,28 @@ import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 
 import '../data/repository/favorite_repo.dart';
+import '../models/favorite_model.dart';
 
 class FavoriteController extends GetxController {
   final FavoriteRepo favoriteRepo;
   FavoriteController({required this.favoriteRepo});
 
-  final List _favoriteList = [];
-  List get favoriteList => _favoriteList.toList();
+  final Map<int, FavoriteModel> _favoriteList = {};
+  List<FavoriteModel> get getFavoriteList =>
+      _favoriteList.entries.map((e) => e.value).toList();
 
-  bool existInFavorites(ProductModel product) {
-    if (_favoriteList.contains(product)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  bool existInFavorites(ProductModel product) =>
+      (_favoriteList.containsKey(product.id));
 
-  void upDataFavoriteList(ProductModel product) {
-    if (!existInFavorites(product)) {
-      _favoriteList.add(product);
-    } else {
-      _favoriteList.remove(product);
-    }
 
-    update();
-  }
+
+  // void upDataFavoriteList(ProductModel product) {
+  //   if (!existInFavorites(product)) {
+  //     _favoriteList.add(product);
+  //   } else {
+  //     _favoriteList.remove(product);
+  //   }
+
+  //   update();
+  // }
 }

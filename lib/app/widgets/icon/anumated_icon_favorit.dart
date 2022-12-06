@@ -93,7 +93,7 @@ class FavoritIcon extends StatelessWidget {
       builder: (controller) {
         return AnimatedIconWidget(
           currIndex: (controller.existInFavorites(product) ? 0 : 1).obs,
-          fun: () => controller.upDataFavoriteList(product),
+          fun: () => {}, //controller.upDataFavoriteList(product),
           widget1: CustomButtonIcon(
             bg: bg,
             colorBorder: ThemeAppColor.kAccent,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../../utils/app_constants.dart';
-import '../../../controllers/favorite_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/text/my_text.dart';
@@ -23,18 +21,18 @@ class FavoriteBody extends StatelessWidget {
             top: Radius.circular(20),
           ),
         ),
-        child: GetBuilder<FavoriteController>(
-          builder: (_) {
-            return ListView.separated(
-              itemCount: _.favoriteList.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  _BuilderItem(item: _.favoriteList[index]),
-              separatorBuilder: (BuildContext context, int index) => SizedBox(
-                height: ThemeAppSize.kInterval12,
-              ),
-            );
-          },
-        ),
+        // child: GetBuilder<FavoriteController>(
+        //   builder: (_) {
+        //     return ListView.separated(
+        //       itemCount: _.favoriteList.length,
+        //       itemBuilder: (BuildContext context, int index) =>
+        //           _BuilderItem(item: _.favoriteList[index]),
+        //       separatorBuilder: (BuildContext context, int index) => SizedBox(
+        //         height: ThemeAppSize.kInterval12,
+        //       ),
+        //     );
+        //   },
+        // ),
       ),
     );
   }

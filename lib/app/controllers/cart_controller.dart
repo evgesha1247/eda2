@@ -103,6 +103,7 @@ class CartController extends GetxController {
         ),
       );
     }
+    cartRepo.addToCartList(getItemsList);
     update();
   }
   /// проверка на наличие элемента в корзине по id

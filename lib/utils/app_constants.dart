@@ -9,5 +9,9 @@ class AppConstansts {
   static const String RECOMMENDED_PRODUCT_URL = "/api/v1/products/recommended/";
 
   static const String TOKEN = "DBtoken";
-  static const String CART_LIST = "Cart_List_histori";
+
+
+  static const String CART_LIST = "Cart_List";
+  static const String FAVORITE_LIST = "favorite_list";
+
 }

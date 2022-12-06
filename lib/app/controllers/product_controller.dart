@@ -23,12 +23,14 @@ class ProductController extends GetxController {
   bool _isLoadedRecommended = false;
   bool get isLoadedRecommended => _isLoadedRecommended;
   Future<void> getRecommendedProductList() async {
+
     Response response =
         await recommendedProductRepo.getRecommendedProductList();
     if (response.statusCode == 200) {
       _recommendedProductList = [];
       _recommendedProductList.addAll(Product.fromJson(response.body).products);
       _isLoadedRecommended = true;
+
       update();
     }
   }
@@ -37,6 +39,7 @@ class ProductController extends GetxController {
   bool _isLoadedPopular = false;
   bool get isLoadedPopular => _isLoadedPopular;
   Future<void> getPopularProductList() async {
+
     Response response = await popularProductRepo.getPopularProductList();
     if (response.statusCode == 200) {
       _popularProductList = [];
@@ -89,7 +92,6 @@ class ProductController extends GetxController {
 
   // дабавлени / удаление для  корзины
   void _addProductToCart(ProductModel product) {
-    print(_countForAdding);
     _cart!.addItem(product, _countForAdding);
     _countForAdding = 0;
     _inCartItems = _cart!.getCountProduct(product);

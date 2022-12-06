@@ -12,6 +12,7 @@ class CartRepo {
   List<String> _cart = [];
 
   List<CartModel> getCartList() {
+    print('object 1');
     if (sharedStore.containsKey(AppConstansts.CART_LIST)) {
       List<CartModel> cartList = [];
       sharedStore.getStringList(AppConstansts.CART_LIST)!.forEach(
@@ -24,6 +25,7 @@ class CartRepo {
   }
 
   void addToCartList(List<CartModel> cartList) {
+    print('object 2');
     _cart = [];
     cartList.forEach((element) => _cart.add(jsonEncode(element)));
     sharedStore.setStringList(AppConstansts.CART_LIST, _cart);
