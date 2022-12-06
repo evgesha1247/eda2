@@ -12,12 +12,11 @@ class CartRepo {
   List<String> _cart = [];
 
   List<CartModel> getCartList() {
-    print('object 1');
     if (sharedStore.containsKey(AppConstansts.CART_LIST)) {
       List<CartModel> cartList = [];
-      sharedStore.getStringList(AppConstansts.CART_LIST)!.forEach(
-            (element) => cartList.add(CartModel.fromJson(jsonDecode(element))),
-          );
+      for (var element in sharedStore.getStringList(AppConstansts.CART_LIST)!) {
+        cartList.add(CartModel.fromJson(jsonDecode(element)));
+      }
 
       return cartList;
     }
@@ -25,9 +24,10 @@ class CartRepo {
   }
 
   void addToCartList(List<CartModel> cartList) {
-    print('object 2');
     _cart = [];
-    cartList.forEach((element) => _cart.add(jsonEncode(element)));
+    for (var element in cartList) {
+      _cart.add(jsonEncode(element));
+    }
     sharedStore.setStringList(AppConstansts.CART_LIST, _cart);
     getCartList();
   }

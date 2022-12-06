@@ -167,6 +167,7 @@ class _RowItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = controller.getItemsList[index];
+
     return Slidable(
       key: const ValueKey(0),
       endActionPane: _itemBack(item: item),
@@ -182,6 +183,8 @@ class _AddAndSubProductWidget extends StatelessWidget {
   final productController = Get.find<ProductController>();
   @override
   Widget build(BuildContext context) {
+    Get.find<ProductController>()
+        .initCountToCart(item.product!, Get.find<CartController>());
     return Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(

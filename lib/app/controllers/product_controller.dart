@@ -52,13 +52,13 @@ class ProductController extends GetxController {
 
 
 
-//////////////////////////// _cart //////////////////////
+//////////////////////////////// _cart ////////////////////////////
+  /// создание контролера корзины и чтение количесвта элементов в ней
   CartController? _cart;
   int _countForAdding = 0;
   int _inCartItems = 0;
-
-  //  создание контролера корзины и чтение количесвта элементов в ней
   void initCountToCart(ProductModel product, CartController cartController) {
+
     _cart = cartController;
     _cart!.existInCart(product)
         ? _inCartItems = _cart!.getCountProduct(product)
@@ -67,23 +67,18 @@ class ProductController extends GetxController {
 
   // вкид количества элемеентов
   void upDataCountProductInCart(bool isIncroment, ProductModel product) {
-    if (isIncroment) {
-      _countForAdding = _checkCount(_countForAdding + 1);
-      _addProductToCart(product);
-    } else {
-      _countForAdding = _checkCount(_countForAdding - 1);
-      _addProductToCart(product);
-    }
+    _countForAdding = _checkCount(_countForAdding + (isIncroment ? 1 : -1));
+    _addProductToCart(product);
     update();
   }
 
   // проверка на возможность add/sub данного количества
   int _checkCount(int countProduct) {
-    if ((_inCartItems + countProduct) < -1) {
+    if ((_inCartItems + countProduct) <= 0) {
       ThemeAppFun.printSnackBar('You can\'t reduce more !');
       return 0;
-    } else if ((_inCartItems + countProduct) > 10) {
-      ThemeAppFun.printSnackBar('You can\'t add more !');
+    } else if ((_inCartItems + countProduct) > 20) {
+      ThemeAppFun.printSnackBar('You can\'t add more ! ( max count 20 ) ');
       return 0;
     } else {
       return countProduct;
@@ -99,7 +94,7 @@ class ProductController extends GetxController {
   }
 
 
-////////////////////////// _favorite /////////////////////////////////
+////////////////////////// _favorite //////////////////////////////////
   ///  создание контролера фаворитов и чтение количесвта элементов в ней
   FavoriteController? favorite;
   void initFavoriteController(FavoriteController favoriteController) {

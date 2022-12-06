@@ -22,6 +22,7 @@ Future<void> init() async {
     ),
   );
   Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
+
   final sharedStore = await SharedPreferences.getInstance();
   Get.lazyPut(() => sharedStore, fenix: true);
   // pageModel
@@ -30,12 +31,12 @@ Future<void> init() async {
   Get.lazyPut(() => AuthModel());
 
   //cart
-  Get.lazyPut(() => CartController(cartRepo: Get.find()), fenix: true);
-  Get.lazyPut(() => CartRepo(sharedStore: Get.find()), fenix: true);
+  Get.lazyPut(() => CartController(cartRepo: Get.find()));
+  Get.lazyPut(() => CartRepo(sharedStore: Get.find()));
 
   // favorite
-  Get.lazyPut(() => FavoriteController(favoriteRepo: Get.find()), fenix: true);
-  Get.lazyPut(() => FavoriteRepo(sharedStore: Get.find()), fenix: true);
+  Get.lazyPut(() => FavoriteController(favoriteRepo: Get.find()));
+  Get.lazyPut(() => FavoriteRepo(sharedStore: Get.find()));
 
   Get.lazyPut(() => MenuController());
 }

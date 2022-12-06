@@ -20,12 +20,17 @@ class FavoriteRepo {
       return favoriteList;
     }
     return [];
+
+
   }
 
   void addToFavoriteList(List<FavoriteModel> favoriteList) {
     _favorite = [];
-    favoriteList.forEach((element) => _favorite.add(jsonEncode(element)));
+    for (var element in favoriteList) {
+      _favorite.add(jsonEncode(element));
+    }
     sharedStore.setStringList(AppConstansts.FAVORITE_LIST, _favorite);
     getFavoriteList();
   }
+
 }
