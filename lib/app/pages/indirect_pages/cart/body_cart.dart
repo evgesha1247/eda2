@@ -51,7 +51,7 @@ class _RowItem extends StatelessWidget {
                 height: ThemeAppSize.kInterval24 * 5,
                 width: ThemeAppSize.kInterval24 * 4,
                 decoration: BoxDecoration(
-                  color: ThemeAppColor.kFrontColor,
+                  color: Get.theme.backgroundColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(ThemeAppSize.kRadius20),
                   ),
@@ -65,7 +65,7 @@ class _RowItem extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       child: Icon(
                         Icons.delete_outline_outlined,
-                        color: ThemeAppColor.kBGColor,
+                        color: Get.theme.cardColor,
                         size: ThemeAppSize.kFontSize22,
                       ),
                     ),
@@ -87,8 +87,8 @@ class _RowItem extends StatelessWidget {
         ),
         clipBehavior: Clip.hardEdge,
         elevation: 10,
-        color: ThemeAppColor.kBGColor,
-        surfaceTintColor: ThemeAppColor.kBGColor,
+        color: Get.theme.cardColor,
+        surfaceTintColor: Get.theme.cardColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -126,7 +126,7 @@ class _RowItem extends StatelessWidget {
                       child: BigText(
                         text: item.name!,
                         maxLines: 3,
-                        color: ThemeAppColor.kFrontColor,
+                        color: Get.theme.backgroundColor,
                         size: ThemeAppSize.kFontSize22,
                       ),
                     ),
@@ -149,14 +149,14 @@ class _RowItem extends StatelessWidget {
 
             /// close / delite
             Container(
-              decoration: const BoxDecoration(
-                color: ThemeAppColor.kFrontColor,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: Get.theme.backgroundColor,
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                 ),
               ),
               padding: EdgeInsets.all(ThemeAppSize.kInterval5),
-              child: const Icon(Icons.close, color: ThemeAppColor.kBGColor),
+              child: Icon(Icons.close, color: Get.theme.cardColor),
             ),
           ],
         ),
@@ -188,7 +188,7 @@ class _AddAndSubProductWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(
-        color: ThemeAppColor.kFrontColor,
+        color: Theme.of(context).backgroundColor,
         borderRadius: ThemeAppFun.decoration(
           radius: ThemeAppSize.kRadius12,
         ),
@@ -199,24 +199,24 @@ class _AddAndSubProductWidget extends StatelessWidget {
             onTap: () {
               productController.upDataCountProductInCart(false, item.product!);
             },
-            child: const Icon(
+            child: Icon(
               Icons.remove,
-              color: ThemeAppColor.kBGColor,
+              color: Theme.of(context).cardColor,
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval5),
             child: SmallText(
               text: item.count.toString(),
-              color: ThemeAppColor.kBGColor,
+              color: Theme.of(context).cardColor,
             ),
           ),
           GestureDetector(
             onTap: () =>
                 productController.upDataCountProductInCart(true, item.product!),
-            child: const Icon(
+            child: Icon(
               Icons.add,
-              color: ThemeAppColor.kBGColor,
+              color: Theme.of(context).cardColor,
             ),
           ),
         ],

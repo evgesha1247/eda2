@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../theme/theme_app.dart';
 class MyTextField extends StatelessWidget {
   const MyTextField({
@@ -34,17 +35,17 @@ class MyTextField extends StatelessWidget {
         textInputAction: textInputAction,
         keyboardType: keyboardType,
         obscureText: obscureText,
-        cursorColor: ThemeAppColor.kFrontColor,
+        cursorColor: Get.theme.backgroundColor,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(10),
           labelText: text,
-          labelStyle: const TextStyle(
-            color: ThemeAppColor.kFrontColor,
+          labelStyle: TextStyle(
+            color: Get.theme.backgroundColor,
           ),
           isDense: true,
-          fillColor: ThemeAppColor.kBGColor,
+          fillColor: Get.theme.cardColor,
           prefixIcon: icon != null
-              ? Icon(icon, color: ThemeAppColor.kFrontColor)
+              ? Icon(icon, color: Get.theme.backgroundColor)
               : null,
           hintText: hintText,
           border: InputBorder.none,

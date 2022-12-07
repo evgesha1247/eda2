@@ -47,17 +47,17 @@ class _TitleSort extends StatelessWidget {
     return ListTile(
       title: SmallText(
         text: text,
-        color: ThemeAppColor.kFrontColor,
+        color: Get.theme.backgroundColor,
         size: ThemeAppSize.kFontSize20,
       ),
-      subtitle: const SmallText(
+      subtitle: SmallText(
         text: 'Price',
-        color: ThemeAppColor.kFrontColor,
+        color: Get.theme.backgroundColor,
         size: 14,
       ),
       trailing: Icon(icon),
       leading: Radio(
-        activeColor: ThemeAppColor.kAccent,
+        activeColor: Get.theme.primaryColor,
         value: value,
         groupValue: controller.method,
         onChanged: (SortMethod? valueMethod) =>
@@ -75,8 +75,8 @@ class FilterItem extends StatelessWidget {
     Get.defaultDialog(
       title: 'Sort by',
       titlePadding: EdgeInsets.only(top: ThemeAppSize.kInterval24),
-      titleStyle: const TextStyle(color: ThemeAppColor.kFrontColor),
-      backgroundColor: ThemeAppColor.kBGColor,
+      titleStyle: TextStyle(color: Get.theme.backgroundColor),
+      backgroundColor: Get.theme.cardColor,
       radius: ThemeAppSize.kRadius12,
       content: GetBuilder<MenuController>(
         builder: (_) {
@@ -100,7 +100,7 @@ class FilterItem extends StatelessWidget {
         width: 100,
         height: 4,
         decoration: BoxDecoration(
-          color: ThemeAppColor.kFrontColor,
+          color: Get.theme.backgroundColor,
           borderRadius: BorderRadius.all(
             Radius.circular(
               ThemeAppSize.kRadius12,
@@ -116,7 +116,7 @@ class FilterItem extends StatelessWidget {
       onTap: () => text == 'Sort by' ? sortByMass() : {},
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: ThemeAppColor.kFrontColor,
+          color: Get.theme.backgroundColor,
           borderRadius: BorderRadius.all(
             Radius.circular(ThemeAppSize.kRadius12),
           ),
@@ -125,8 +125,8 @@ class FilterItem extends StatelessWidget {
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: Wrap(
             children: [
-              SmallText(text: text, color: ThemeAppColor.kBGColor),
-              Icon(icon, color: ThemeAppColor.kBGColor),
+              SmallText(text: text, color: Get.theme.cardColor),
+              Icon(icon, color: Get.theme.cardColor),
             ],
           ),
         ),

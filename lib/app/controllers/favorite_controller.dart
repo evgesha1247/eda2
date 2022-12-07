@@ -21,7 +21,6 @@ class FavoriteController extends GetxController {
 
   List<FavoriteModel> getItemsListLocal() {
     setFavoritLocal = favoriteRepo.getFavoriteList();
-    print(_itemsLocal);
     return _itemsLocal;
   }
 
@@ -48,7 +47,7 @@ class FavoriteController extends GetxController {
         ),
       );
     }
-    print(_favoriteList);
+
     favoriteRepo.addToFavoriteList(getFavoriteList);
     update();
   }

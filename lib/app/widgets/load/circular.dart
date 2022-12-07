@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../theme/theme_app.dart';
 
 class CircularWidget extends StatelessWidget {
   const CircularWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: CircularProgressIndicator(
-        color: ThemeAppColor.kAccent,
+        color: Get.theme.primaryColor,
         strokeWidth: 3,
       ),
     );

@@ -34,7 +34,7 @@ class _PopularTitle extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
         child: BigText(
           text: 'Popular product',
-          color: ThemeAppColor.kFrontColor,
+          color: Get.theme.backgroundColor,
           size: ThemeAppSize.kFontSize20,
         ),
       );
@@ -178,8 +178,8 @@ class _ProductBodyState extends State<_ProductBody> {
                   horizontal: ThemeAppSize.kInterval12,
                   vertical: ThemeAppSize.kInterval5,
                 ),
-                activeColor: ThemeAppColor.kAccent,
-                color: ThemeAppColor.kFrontColor,
+                activeColor: Get.theme.primaryColor,
+                color: Get.theme.backgroundColor,
                 activeSize: const Size(25.0, 9.0),
                 activeShape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),

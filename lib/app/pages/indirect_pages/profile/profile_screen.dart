@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:text/app/widgets/icon/custom_icon.dart';
 import '../../../data/repository/auth_repo.dart';
 import '../../../theme/theme_app.dart';
 
@@ -24,21 +26,10 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: user != null ? _ProfileBody(user: user!) : const _Example(),
     );
   }
 }
-
-// class _ErrorWidget extends StatelessWidget {
-//   const _ErrorWidget();
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Center(
-//       child: Text('// попробуйти зайти с другова устройсва'),
-//     );
-//   }
-// }
 
 class _ProfileBody extends StatelessWidget {
   _ProfileBody({required this.user});
@@ -63,6 +54,9 @@ class _ProfileBody extends StatelessWidget {
   }
 }
 
+
+
+
 class _Example extends StatefulWidget {
   const _Example();
   @override
@@ -79,7 +73,16 @@ class _ExampleState extends State<_Example> {
       setState(() {});
     });
   }
-
+  final controller = Get.find<ThemeAppController>();
+  onChanged(val) {
+    print('val - $val');
+    print('isLightTheme - ${controller.isLightTheme.value}');
+    controller.isLightTheme.value = val;
+    Get.changeThemeMode(
+      controller.isLightTheme.value ? ThemeMode.light : ThemeMode.dark,
+    );
+    controller.saveThemeStatus();
+  }
   @override
   void dispose() {
     super.dispose();
@@ -88,20 +91,45 @@ class _ExampleState extends State<_Example> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: ThemeAppSize.kHomePageView,
-          child: PageView(
-            scrollDirection: Axis.vertical,
-            controller: pageController,
-            children: const [
-              Text('data'),
-              Text('data'),
+    return Padding(
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              const ButtonIconBack(),
+              GetBuilder<ThemeAppController>(builder: (_) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ObxValue(
+                        (data) => Switch(
+                          value: _.isLightTheme.value,
+                          onChanged: (val) => onChanged(val),
+                        ),
+                        false.obs,
+                      ),
+                    ],
+                  ),
+                );
+              }),
             ],
           ),
-        ),
-      ],
+          SizedBox(
+            height: ThemeAppSize.kHomePageView,
+            child: PageView(
+              scrollDirection: Axis.vertical,
+              controller: pageController,
+              children: const [
+                Text(' выподающие '),
+                Text(' основное '),
+              ],
+            ),
+          ),
+
+        ],
+      ),
     );
   }
 }

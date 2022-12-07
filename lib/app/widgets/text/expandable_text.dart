@@ -10,7 +10,7 @@ class ExpandableController extends GetxController {
   bool hiddeText = true;
 
   initText(String text) {
-    double heightText = ThemeAppSize.kHomeListViewInfo;
+    double heightText = 100;
     if (text.length > heightText) {
       firstText = text.substring(0, heightText.toInt());
       secondText = text.substring(heightText.toInt() - 1, text.length);
@@ -33,35 +33,28 @@ class ExpandableTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(ExpandableController()).initText(text);
     return GetBuilder<ExpandableController>(
-      builder: (_) => _.secondText != ''
-          ? SmallText(text: _.firstText, color: ThemeAppColor.kFrontColor)
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  SmallText(
-                    height: 1.6,
-                    size: ThemeAppSize.kFontSize18,
-                    text: _.hiddeText
-                        ? ('${_.firstText}. . .')
-                        : _.firstText + _.secondText,
-                    color: ThemeAppColor.kFrontColor,
-                    maxLines: 99,
-                  ),
-                  InkWell(
-                    onTap: () => _.tog(),
-                    child: Row(
-                      children: [
-                        BigText(
-                          text: _.hiddeText ? 'show' : 'close',
-                          color: ThemeAppColor.kFrontColor,
-                          size: ThemeAppSize.kFontSize20,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+      builder: (_) => SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SmallText(
+              height: 1.4,
+              size: ThemeAppSize.kFontSize18,
+              text: (_.firstText + (_.hiddeText ? _.secondText : '...')),
+              color: Get.theme.backgroundColor,
+              maxLines: 99,
             ),
+            InkWell(
+              onTap: () => _.tog(),
+              child: BigText(
+                text: _.hiddeText ? 'show' : 'close',
+                color: Get.theme.backgroundColor,
+                size: ThemeAppSize.kFontSize20,
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

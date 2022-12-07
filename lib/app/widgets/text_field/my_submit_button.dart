@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../theme/theme_app.dart';
 import '../text/my_text.dart';
@@ -14,7 +15,7 @@ class MySubmitButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         decoration: BoxDecoration(
-          color: ThemeAppColor.kFrontColor,
+          color: Get.theme.backgroundColor,
           borderRadius: BorderRadius.all(
             Radius.circular(ThemeAppSize.kRadius12),
           ),
@@ -22,8 +23,8 @@ class MySubmitButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BigText(text: text, color: ThemeAppColor.kBGColor),
-            const Icon(Icons.chevron_right, color: ThemeAppColor.kBGColor),
+            BigText(text: text, color: Get.theme.cardColor),
+            Icon(Icons.chevron_right, color: Get.theme.cardColor),
           ],
         ),
       ),
@@ -37,7 +38,8 @@ mySubmitButton(fun, String text) {
     child: Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(
-        color: ThemeAppColor.kFrontColor,
+
+        color: Get.theme.backgroundColor,
         borderRadius: BorderRadius.all(
           Radius.circular(ThemeAppSize.kRadius12),
         ),
@@ -45,8 +47,8 @@ mySubmitButton(fun, String text) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BigText(text: text, color: ThemeAppColor.kBGColor),
-          const Icon(Icons.chevron_right, color: ThemeAppColor.kBGColor),
+          BigText(text: text, color: Get.theme.cardColor),
+          Icon(Icons.chevron_right, color: Get.theme.cardColor),
         ],
       ),
     ),

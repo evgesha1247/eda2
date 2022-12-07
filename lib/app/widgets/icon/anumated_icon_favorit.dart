@@ -48,7 +48,7 @@ class CartAddIcon extends StatelessWidget {
     super.key,
     required this.product,
     this.statusBorder = false,
-    this.bg = ThemeAppColor.kFrontColor,
+    this.bg = const Color.fromARGB(255, 246, 206, 195),
   });
 
   @override
@@ -68,7 +68,7 @@ class CartAddIcon extends StatelessWidget {
           widget2: CustomButtonIcon(
             size: ThemeAppSize.kInterval5,
             bg: bg,
-            child: const Icon(Icons.add, color: ThemeAppColor.kBGColor),
+            child: Icon(Icons.add, color: Get.theme.cardColor),
           ),
         );
       },
@@ -84,7 +84,7 @@ class FavoritIcon extends StatelessWidget {
     super.key,
     required this.product,
     this.statusBorder = false,
-    this.bg = ThemeAppColor.kFrontColor,
+    this.bg = const Color.fromARGB(255, 246, 206, 195),
   });
 
   @override
@@ -96,17 +96,17 @@ class FavoritIcon extends StatelessWidget {
           fun: () => controller.upDataFavoriteList(product),
           widget1: CustomButtonIcon(
             bg: bg,
-            colorBorder: ThemeAppColor.kAccent,
+            colorBorder: Get.theme.primaryColor,
             size: ThemeAppSize.kInterval5,
             statusBorder: statusBorder,
-            child: const Icon(Icons.favorite, color: ThemeAppColor.kAccent),
+            child: Icon(Icons.favorite, color: Get.theme.primaryColor),
           ),
           widget2: CustomButtonIcon(
             bg: bg,
             size: ThemeAppSize.kInterval5,
-            child: const Icon(
+            child: Icon(
               Icons.favorite_outline,
-              color: ThemeAppColor.kBGColor,
+              color: Get.theme.cardColor,
             ),
           ),
         );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:text/app/theme/theme_app.dart';
+import 'package:get/get.dart';
 import 'favorite_body.dart';
 import 'favorite_header.dart';
 
@@ -8,7 +8,7 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ThemeAppColor.kFrontColor,
+      backgroundColor: Get.theme.backgroundColor,
       body: Column(
         children: const [
           FavoritHeader(),

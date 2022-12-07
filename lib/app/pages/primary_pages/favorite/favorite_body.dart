@@ -17,9 +17,9 @@ class FavoriteBody extends StatelessWidget {
           left: ThemeAppSize.kInterval24,
           right: ThemeAppSize.kInterval24,
         ),
-        decoration: const BoxDecoration(
-          color: ThemeAppColor.kBGColor,
-          borderRadius: BorderRadius.vertical(
+        decoration: BoxDecoration(
+          color: Get.theme.cardColor,
+          borderRadius: const BorderRadius.vertical(
             top: Radius.circular(20),
           ),
         ),
@@ -48,7 +48,7 @@ class _BuilderItem extends StatelessWidget {
     return Container(
       height: ThemeAppSize.kInterval24 * 7,
       decoration: BoxDecoration(
-        color: ThemeAppColor.kFrontColor,
+        color: Get.theme.backgroundColor,
         borderRadius: BorderRadius.all(
           Radius.circular(ThemeAppSize.kInterval12),
         ),

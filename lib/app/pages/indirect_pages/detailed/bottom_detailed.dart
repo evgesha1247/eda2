@@ -16,7 +16,7 @@ class BottomDetailed extends StatelessWidget {
       height: ThemeAppSize.kDetaildButtomContainer,
       padding: EdgeInsets.all(ThemeAppSize.kInterval24),
       decoration: BoxDecoration(
-        color: ThemeAppColor.kFrontColor,
+        color: Get.theme.backgroundColor,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(ThemeAppSize.kRadius20 * 2),
         ),
@@ -46,14 +46,16 @@ class _TotalPriceWidget extends StatelessWidget {
             padding: EdgeInsets.all(ThemeAppSize.kInterval12),
             decoration: BoxDecoration(
               color:
-                  _.totalItems > 0 ? ThemeAppColor.kAccent : ThemeAppColor.grey,
+                  _.totalItems > 0
+                  ? Get.theme.primaryColor
+                  : Get.theme.hintColor,
               borderRadius: ThemeAppFun.decoration(
                 radius: ThemeAppSize.kRadius12,
               ),
             ),
             child: BigText(
               text: '\$ ${_.totalAmount} | Go to cart',
-              color: ThemeAppColor.kBGColor,
+              color: Get.theme.cardColor,
               size: ThemeAppSize.kFontSize20,
             ),
           );
@@ -73,7 +75,7 @@ class _AddAndSubProductWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(
-        color: ThemeAppColor.kBGColor,
+        color: Get.theme.cardColor,
         borderRadius: ThemeAppFun.decoration(
           radius: ThemeAppSize.kRadius12,
         ),
@@ -85,9 +87,9 @@ class _AddAndSubProductWidget extends StatelessWidget {
               onTap: () {
                 _.upDataCountProductInCart(false, item);
               },
-              child: const Icon(
+              child: Icon(
                 Icons.remove,
-                color: ThemeAppColor.kFrontColor,
+                color: Get.theme.backgroundColor,
               ),
             ),
           ),
@@ -95,16 +97,16 @@ class _AddAndSubProductWidget extends StatelessWidget {
           GetBuilder<CartController>(
             builder: (_) => SmallText(
               text: '${_.getCountProduct(item)}',
-              color: ThemeAppColor.kFrontColor,
+              color: Get.theme.backgroundColor,
             ),
           ),
           SizedBox(width: ThemeAppSize.kInterval5),
           GetBuilder<ProductController>(
             builder: (_) => GestureDetector(
               onTap: () => _.upDataCountProductInCart(true, item),
-              child: const Icon(
+              child: Icon(
                 Icons.add,
-                color: ThemeAppColor.kFrontColor,
+                color: Get.theme.backgroundColor,
               ),
             ),
           ),

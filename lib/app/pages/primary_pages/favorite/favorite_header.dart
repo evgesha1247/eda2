@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/text/my_text.dart';
 
@@ -11,14 +12,14 @@ class FavoritHeader extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          child: const BigText(
+          child: BigText(
             text: 'Favorites',
-            color: ThemeAppColor.kBGColor,
+            color: Get.theme.cardColor,
           ),
         ),
         Icon(
           Icons.favorite_border_outlined,
-          color: ThemeAppColor.kBGColor,
+          color: Get.theme.cardColor,
           size: ThemeAppSize.kFontSize22,
         )
       ],

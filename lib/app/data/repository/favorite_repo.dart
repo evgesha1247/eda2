@@ -13,10 +13,10 @@ class FavoriteRepo {
   List<FavoriteModel> getFavoriteList() {
     if (sharedStore.containsKey(AppConstansts.FAVORITE_LIST)) {
       List<FavoriteModel> favoriteList = [];
-      sharedStore.getStringList(AppConstansts.FAVORITE_LIST)!.forEach(
-            (element) =>
-                favoriteList.add(FavoriteModel.fromJson(jsonDecode(element))),
-          );
+      for (var element
+          in sharedStore.getStringList(AppConstansts.FAVORITE_LIST)!) {
+        favoriteList.add(FavoriteModel.fromJson(jsonDecode(element)));
+      }
       return favoriteList;
     }
     return [];

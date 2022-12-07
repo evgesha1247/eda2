@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/controllers/favorite_controller.dart';
 import 'package:text/app/data/repository/cart_repo.dart';
+import 'package:text/app/theme/theme_app.dart';
 import '../app/controllers/product_controller.dart';
 import '../app/data/api/ali_client.dart';
 import '../app/data/repository/favorite_repo.dart';
@@ -16,11 +17,14 @@ import '../utils/app_constants.dart';
 Future<void> init() async {
   //api
   Get.lazyPut(() => ApiClient(appBaseUrl: AppConstansts.BASE_URL));
+  Get.lazyPut(() => ThemeAppController());
+
   Get.lazyPut(() => ProductController(
         popularProductRepo: Get.find(),
         recommendedProductRepo: Get.find(),
     ),
   );
+
   Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
 
   final sharedStore = await SharedPreferences.getInstance();
@@ -39,9 +43,4 @@ Future<void> init() async {
   Get.lazyPut(() => FavoriteRepo(sharedStore: Get.find()));
 
   Get.lazyPut(() => MenuController());
-}
-
-Future<void> initPageConfig() async {
-  // db local
-
 }

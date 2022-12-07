@@ -15,7 +15,7 @@ class CustomButtonIcon extends StatelessWidget {
   const CustomButtonIcon({
     required this.child,
     super.key,
-    this.colorBorder = ThemeAppColor.kBGColor,
+    this.colorBorder = const Color.fromARGB(255, 75, 53, 56),
     this.bg = Colors.transparent,
     this.size = 0.0,
     this.statusBorder = false,
@@ -42,8 +42,8 @@ class ButtonIconBack extends StatelessWidget {
   final Color bg;
   const ButtonIconBack({
     super.key,
-    this.iconColor = ThemeAppColor.kBGColor,
-    this.bg = ThemeAppColor.kFrontColor,
+    this.iconColor = const Color.fromARGB(255, 75, 53, 56),
+    this.bg = const Color.fromARGB(255, 246, 206, 195),
   });
   @override
   Widget build(BuildContext context) {
@@ -67,8 +67,8 @@ class ButtonIconCart extends StatelessWidget {
   final bool statusBorder;
   const ButtonIconCart({
     super.key,
-    this.iconColor = ThemeAppColor.kFrontColor,
-    this.borderColor = ThemeAppColor.kFrontColor,
+    this.iconColor = const Color.fromARGB(255, 246, 206, 195),
+    this.borderColor = const Color.fromARGB(255, 246, 206, 195),
     this.statusBorder = true,
   });
   @override
@@ -80,7 +80,7 @@ class ButtonIconCart extends StatelessWidget {
           return Stack(
             children: [
               CustomButtonIcon(
-                bg: ThemeAppColor.kBGColor,
+                bg: Get.theme.cardColor,
                 colorBorder: borderColor,
                 statusBorder: statusBorder,
                 child: Row(children: [

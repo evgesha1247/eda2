@@ -79,9 +79,10 @@ class _ToggScreenTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => controller.togScreenAuth(),
-      child: const BigText(
+      child: BigText(
         text: 'adafadf',
-        color: ThemeAppColor.kFrontColor,
+
+        color: Get.theme.backgroundColor,
       ),
     );
   }

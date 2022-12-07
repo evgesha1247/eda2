@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/theme/theme_app.dart';
 import '../cart_history/cart_history.dart';
 import '../favorite/favorite_page.dart';
 import '../home/home_page.dart';
@@ -46,10 +45,10 @@ class _BottomBarWidget extends StatelessWidget {
       builder: (model) => BottomNavigationBar(
         onTap: model.setCurrentIndexTab,
         currentIndex: model.currentIndexTab,
-        selectedItemColor: ThemeAppColor.kAccent,
-        unselectedItemColor: ThemeAppColor.kFrontColor,
+        selectedItemColor: Get.theme.primaryColor,
+        unselectedItemColor: Get.theme.backgroundColor,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: ThemeAppColor.kBGColor,
+        backgroundColor: Get.theme.cardColor,
         elevation: 5,
         showUnselectedLabels: false,
         showSelectedLabels: true,
@@ -84,11 +83,11 @@ class _FlotingButtom extends StatelessWidget {
   const _FlotingButtom({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const FloatingActionButton(
+    return FloatingActionButton(
       elevation: 0,
       onPressed: null,
-      backgroundColor: ThemeAppColor.kAccent,
-      child: Icon(Icons.menu_sharp),
+      backgroundColor: Get.theme.primaryColor,
+      child: const Icon(Icons.menu_sharp),
     );
   }
 }

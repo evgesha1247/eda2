@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 
 class BigText extends StatelessWidget {
   final String text;
   final double size;
   final int maxLines;
-  final Color? color;
   final TextOverflow overflow;
   final TextDecoration decoration;
   final double decorationThickness;
   final FontWeight fontWeight;
   final bool rightToLeft;
+  final Color color;
 
   const BigText({
     Key? key,
     required this.text,
-    this.color = const Color.fromARGB(255, 222, 222, 222),
+    this.color = Colors.transparent,
     this.overflow = TextOverflow.ellipsis,
     this.size = 0,
     this.maxLines = 1,
@@ -28,17 +29,24 @@ class BigText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       textDirection: rightToLeft ? TextDirection.rtl : TextDirection.ltr,
-
       text,
       softWrap: true,
       maxLines: maxLines,
       overflow: overflow,
       style: TextStyle(
-        decorationColor: color,
+        decorationColor: color == Colors.transparent
+            ? Get.isDarkMode
+                ? Colors.teal
+                : Colors.red
+            : color,
         decorationThickness: decorationThickness,
         decoration: decoration,
         fontSize: size == 0 ? ThemeAppSize.kFontSize22 : size,
-        color: color,
+        color: color == Colors.transparent
+            ? Get.isDarkMode
+                ? Colors.teal
+                : Colors.red
+            : color,
         fontWeight: fontWeight,
       ),
     );
@@ -50,12 +58,12 @@ class SmallText extends StatelessWidget {
   final double size;
   final double height;
   final int? maxLines;
-  final Color? color;
+  final Color color;
   final TextOverflow overflow;
   const SmallText({
     Key? key,
     required this.text,
-    this.color = const Color.fromARGB(255, 195, 195, 195),
+    this.color = Colors.transparent,
     this.overflow = TextOverflow.ellipsis,
     this.height = 1.2,
     this.size = 0,
@@ -69,7 +77,11 @@ class SmallText extends StatelessWidget {
       overflow: overflow,
       style: TextStyle(
         fontSize: size == 0 ? ThemeAppSize.kFontSize20 : size,
-        color: color,
+        color: color == Colors.transparent
+            ? Get.isDarkMode
+                ? Colors.teal
+                : Colors.red
+            : color,
         height: height,
         fontWeight: FontWeight.w300,
       ),

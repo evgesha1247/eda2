@@ -135,8 +135,8 @@ class CartController extends GetxController {
     Get.snackbar(
       'pay',
       '',
-      backgroundColor: ThemeAppColor.kAccent.withOpacity(0.7),
-      colorText: ThemeAppColor.kBGColor,
+      backgroundColor: Get.theme.primaryColor.withOpacity(0.7),
+      colorText: Get.theme.cardColor,
       duration: const Duration(milliseconds: 1200),
       margin: EdgeInsets.all(ThemeAppSize.kInterval12),
     );

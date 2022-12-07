@@ -25,7 +25,7 @@ class CartHeader extends StatelessWidget {
           ),
           BigText(
             text: 'Cart',
-            color: ThemeAppColor.kFrontColor,
+            color: Get.theme.backgroundColor,
             size: ThemeAppSize.kFontSize22,
           ),
         ],

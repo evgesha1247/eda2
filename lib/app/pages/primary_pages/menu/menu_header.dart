@@ -9,8 +9,8 @@ class MenuHeader extends StatelessWidget {
   final controller = Get.find<MenuController>();
   final InputBorder styleSearch = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
-      borderSide: const BorderSide(
-        color: ThemeAppColor.kFrontColor,
+    borderSide: BorderSide(
+      color: Get.theme.backgroundColor,
         width: 1.5,
         style: BorderStyle.solid,
       ),
@@ -22,7 +22,7 @@ class MenuHeader extends StatelessWidget {
       floating: true,
       pinned: false,
       snap: true,
-      backgroundColor: ThemeAppColor.kBGColor,
+      backgroundColor: Get.theme.cardColor,
       toolbarHeight: ThemeAppSize.kMenuHeaderSearch,
       flexibleSpace: Padding(
         padding: EdgeInsets.only(
@@ -36,14 +36,14 @@ class MenuHeader extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
-                  cursorColor: ThemeAppColor.kFrontColor,
+                  cursorColor: Get.theme.backgroundColor,
                   decoration: InputDecoration(
                     isDense: true,
-                    fillColor: ThemeAppColor.kBGColor,
-                    prefixIcon: const CustomButtonIcon(
+                    fillColor: Get.theme.cardColor,
+                    prefixIcon: CustomButtonIcon(
                       child: Icon(
                         Icons.search,
-                        color: ThemeAppColor.kFrontColor,
+                        color: Get.theme.backgroundColor,
                       ),
                     ),
                     hintText: 'Search',

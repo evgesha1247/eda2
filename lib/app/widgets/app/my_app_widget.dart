@@ -17,17 +17,20 @@ class MyAppWidget extends StatelessWidget {
         return GetBuilder<CartController>(
           builder: (_) {
             return GetBuilder<FavoriteController>(
-
               builder: (_) {
-                return GetMaterialApp(
-                  title: 'Restaurant',
-                  theme: ThemeData(
-                    fontFamily: 'Mariupol',
-                    scaffoldBackgroundColor: ThemeAppColor.kBGColor,
-                  ),
-                  debugShowCheckedModeBanner: false,
-                  getPages: MainRoutes.getPages,
-                  initialRoute: MainRoutes.getInitial(),
+                return GetBuilder<ThemeAppController>(
+
+                  builder: (_) {
+                    return GetMaterialApp(
+                      title: 'Restaurant',
+                      theme: ThemeApp.myLightTheme(),
+                      darkTheme: ThemeApp.myDarkThemes(),
+                      themeMode: ThemeMode.system,
+                      debugShowCheckedModeBanner: false,
+                      getPages: MainRoutes.getPages,
+                      initialRoute: MainRoutes.getInitial(),
+                    );
+                  },
                 );
               },
             );

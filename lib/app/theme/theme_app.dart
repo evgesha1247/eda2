@@ -1,21 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class ThemeAppColor {
+class ThemeAppController extends GetxController {
+  RxBool isLightTheme = false.obs;
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  /// неплохое решение
-  // static const Color kFrontColor = Color(0xff553b3e);
-  // static const Color kBGColor = Color(0xffFedbd0);
-  // static const Color kAccent2 = Color.fromARGB(255, 113, 80, 84);
-  // static const Color grey = Color.fromARGB(255, 160, 113, 118);
-  // static const Color kAccent = Colors.pink;
-  static const Color kFrontColor = Color.fromARGB(255, 75, 53, 56);
-  static const Color kBGColor = Color.fromARGB(255, 246, 206, 195);
-  static const Color kAccent2 = Color.fromARGB(255, 72, 51, 54);
-  static const Color grey = Color.fromARGB(255, 160, 113, 118);
-  static const Color kAccent = Colors.pink;
+  saveThemeStatus() async {
+    (await _prefs).setBool('theme', isLightTheme.value);
+  }
 
+  getThemeStatus() async {
+    var isLight = _prefs.then((SharedPreferences prefs) {
+      return prefs.getBool('theme') ?? true;
+    }).obs;
+    isLightTheme.value = await isLight.value;
+    Get.changeThemeMode(isLightTheme.value ? ThemeMode.light : ThemeMode.dark);
+    update();
+  }
 }
+
+class ThemeApp {
+  static const String fontFamily = 'Mariupol';
+
+  static ThemeData myLightTheme() {
+    return ThemeData(
+      fontFamily: fontFamily, // custom color
+
+      scaffoldBackgroundColor: const Color.fromARGB(255, 246, 206, 195),
+
+      backgroundColor: const Color.fromARGB(255, 246, 206, 195), // kFrontColor
+      primaryColor: Colors.pink, // kAccent
+      cardColor: const Color.fromARGB(255, 75, 53, 56), // db
+      hintColor: const Color.fromARGB(255, 160, 113, 118), //grey
+      focusColor: const Color.fromARGB(255, 72, 51, 54), // kAccent2
+    );
+  }
+
+  static ThemeData myDarkThemes() {
+    return ThemeData(
+      fontFamily: fontFamily,
+      scaffoldBackgroundColor: Get.theme.cardColor,
+
+    );
+  }
+}
+
+
 
 abstract class ThemeAppSize {
   static double height = 780.0;
@@ -39,7 +70,6 @@ abstract class ThemeAppSize {
   // page view
   static double kHomePageView = kScreensHeight / (height / 220);
   static double kHomePageViewImg = kScreensHeight / (height / 160);
-  static double kHomePageViewInfo = kScreensHeight / (height / 110);
   // list view
   static double kHomeListViewImg = kScreensHeight / (height / 130);
   static double kHomeListViewInfo = kScreensHeight / (height / 110);
@@ -65,8 +95,8 @@ abstract class ThemeAppFun {
     Get.snackbar(
       'Item count',
       message,
-      backgroundColor: ThemeAppColor.kAccent.withOpacity(0.7),
-      colorText: ThemeAppColor.kBGColor,
+      backgroundColor: Get.theme.primaryColor.withOpacity(0.7),
+      colorText: Get.theme.cardColor,
       duration: const Duration(milliseconds: 1200),
       margin: EdgeInsets.all(ThemeAppSize.kInterval12),
     );

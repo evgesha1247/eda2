@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/pages/indirect_pages/splash/splash_model.dart';
-import '../../../theme/theme_app.dart';
 import '../../../widgets/text/my_text.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -42,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen>
           children: [
             BigText(
               text: 'Good day ${user?.displayName ?? ' '}',
-              color: ThemeAppColor.kFrontColor,
+              color: Get.theme.backgroundColor,
             ),
             // Lottie.network(
             //   'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/widgets/text/my_text.dart';
 import '../../../../utils/app_constants.dart';
@@ -13,8 +14,8 @@ class HeaderDetailed extends StatelessWidget {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       pinned: true,
-      backgroundColor: ThemeAppColor.kFrontColor,
-      surfaceTintColor: ThemeAppColor.kFrontColor,
+      backgroundColor: Get.theme.backgroundColor,
+      surfaceTintColor: Get.theme.backgroundColor,
       expandedHeight: ThemeAppSize.kDetaildHeaderImg,
       toolbarHeight: ThemeAppSize.kDetaildHeaderImgToolbar,
       excludeHeaderSemantics: true,
@@ -52,12 +53,12 @@ class _HeaderIcons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const [
+      children: [
         ButtonIconBack(
-          iconColor: ThemeAppColor.kFrontColor,
-          bg: ThemeAppColor.kBGColor,
+          iconColor: Get.theme.backgroundColor,
+          bg: Get.theme.cardColor,
         ),
-        ButtonIconCart(borderColor: ThemeAppColor.kBGColor),
+        ButtonIconCart(borderColor: Get.theme.cardColor),
       ],
     );
   }
@@ -70,7 +71,7 @@ class _BodyTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: ThemeAppColor.kBGColor,
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(ThemeAppSize.kRadius20 * 2),
         ),
@@ -82,7 +83,7 @@ class _BodyTitle extends StatelessWidget {
           ),
           child: BigText(
             text: name,
-            color: ThemeAppColor.kFrontColor,
+            color: Get.theme.backgroundColor,
             size: ThemeAppSize.kFontSize22,
           ),
         ),
