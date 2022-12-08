@@ -23,7 +23,7 @@ class _ContaiterCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Get.theme.backgroundColor,
+        //color: Get.theme.backgroundColor,
         borderRadius: BorderRadius.all(
           Radius.circular(ThemeAppSize.kRadius20),
         ),
@@ -85,14 +85,14 @@ class _ButtonCart extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         decoration: BoxDecoration(
-          color: Get.theme.primaryColor,
+          //color: Get.theme.primaryColor,
           borderRadius: ThemeAppFun.decoration(
             radius: ThemeAppSize.kRadius12,
           ),
         ),
         child: BigText(
           text: ' Pay ',
-          color: Get.theme.cardColor,
+          //color: Get.theme.cardColor,
           size: ThemeAppSize.kFontSize20,
         ),
       ),

@@ -32,13 +32,13 @@ class _UserTitle extends StatelessWidget {
         SizedBox(width: ThemeAppSize.kInterval12),
         BigText(
           text: 'Welcom',
-          color: Get.theme.backgroundColor
+          //color: Get.theme.backgroundColor
         ),
         SizedBox(width: ThemeAppSize.kInterval5),
         Icon(Icons.grid_3x3, size: ThemeAppSize.kFontSize18),
         BigText(
           text: '{name}',
-          color: Get.theme.backgroundColor,
+          //color: Get.theme.backgroundColor,
           size: ThemeAppSize.kFontSize18,
         ),
       ],
@@ -52,13 +52,12 @@ class _UserIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.toNamed(MainRoutes.getProfile()),
-      child: CustomButtonIcon(
-        bg: Get.theme.cardColor,
+      child: WrapperIcon(
         statusBorder: true,
-        colorBorder: Get.theme.backgroundColor,
+        colorBorder: Get.theme.textTheme.bodyMedium?.color,
         child: Icon(
           Icons.person_outline,
-          color: Get.theme.backgroundColor,
+          color: Get.theme.textTheme.bodyMedium?.color,
           size: ThemeAppSize.kFontSize20,
         ),
       ),

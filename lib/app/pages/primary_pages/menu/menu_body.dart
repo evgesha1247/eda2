@@ -66,7 +66,7 @@ class _ItemImg extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Get.theme.hintColor,
+        //color: Get.theme.hintColor,
         borderRadius: ThemeAppFun.decoration(),
         image: DecorationImage(
           fit: BoxFit.cover,
@@ -89,7 +89,7 @@ class _ItemControlElements extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           decoration: BoxDecoration(
-            color: Get.theme.backgroundColor,
+            //color: Get.theme.backgroundColor,
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(ThemeAppSize.kRadius12),
               bottomLeft: Radius.circular(ThemeAppSize.kRadius20),
@@ -97,7 +97,7 @@ class _ItemControlElements extends StatelessWidget {
           ),
           child: BigText(
             text: '\$${product.price}',
-            color: Get.theme.cardColor,
+            //color: Get.theme.cardColor,
           ),
         ),
         Padding(

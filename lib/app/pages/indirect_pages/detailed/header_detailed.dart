@@ -58,7 +58,7 @@ class _HeaderIcons extends StatelessWidget {
           iconColor: Get.theme.backgroundColor,
           bg: Get.theme.cardColor,
         ),
-        ButtonIconCart(borderColor: Get.theme.cardColor),
+        ButtonIconCart(),
       ],
     );
   }

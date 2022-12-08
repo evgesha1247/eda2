@@ -16,6 +16,7 @@ class Filter {
 }
 
 class MenuController extends GetxController {
+
   bool _isListGrid = true;
   bool get isListGrid => _isListGrid;
   SortMethod? method = SortMethod.reset;

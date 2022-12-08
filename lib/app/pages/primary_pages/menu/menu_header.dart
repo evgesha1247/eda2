@@ -10,7 +10,7 @@ class MenuHeader extends StatelessWidget {
   final InputBorder styleSearch = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
     borderSide: BorderSide(
-      color: Get.theme.backgroundColor,
+      //color: Get.theme.backgroundColor,
         width: 1.5,
         style: BorderStyle.solid,
       ),
@@ -40,10 +40,10 @@ class MenuHeader extends StatelessWidget {
                   decoration: InputDecoration(
                     isDense: true,
                     fillColor: Get.theme.cardColor,
-                    prefixIcon: CustomButtonIcon(
+                    prefixIcon: WrapperIcon(
                       child: Icon(
                         Icons.search,
-                        color: Get.theme.backgroundColor,
+                        //color: Get.theme.backgroundColor,
                       ),
                     ),
                     hintText: 'Search',

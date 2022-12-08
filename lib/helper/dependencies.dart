@@ -9,7 +9,7 @@ import '../app/data/api/ali_client.dart';
 import '../app/data/repository/favorite_repo.dart';
 import '../app/data/repository/product_repo.dart';
 import '../app/pages/indirect_pages/auth/auth_model.dart';
-import '../app/pages/indirect_pages/splash/splash_model.dart';
+import '../app/pages/indirect_pages/splash/splash_controller.dart';
 import '../app/pages/primary_pages/guiding/guiding_model.dart';
 import '../app/controllers/menu_controller.dart';
 import '../utils/app_constants.dart';
@@ -18,12 +18,10 @@ Future<void> init() async {
   //api
   Get.lazyPut(() => ApiClient(appBaseUrl: AppConstansts.BASE_URL));
   Get.lazyPut(() => ThemeAppController());
-
   Get.lazyPut(() => ProductController(
         popularProductRepo: Get.find(),
         recommendedProductRepo: Get.find(),
-    ),
-  );
+      ));
 
   Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
 
@@ -31,7 +29,7 @@ Future<void> init() async {
   Get.lazyPut(() => sharedStore, fenix: true);
   // pageModel
   Get.lazyPut(() => GuidingScreenModel());
-  Get.lazyPut(() => SplashModel());
+  Get.lazyPut(() => SplashController());
   Get.lazyPut(() => AuthModel());
 
   //cart

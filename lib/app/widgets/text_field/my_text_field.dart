@@ -9,6 +9,7 @@ class MyTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.icon,
     this.hintText = '',
+
     required this.controller,
     required this.text,
   });
@@ -19,12 +20,12 @@ class MyTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final dynamic icon;
   final String hintText;
+
   @override
   Widget build(BuildContext context) {
     return Material(
       elevation: 2,
-      shadowColor: Colors.black,
-      color: Colors.white,
+
       borderRadius: BorderRadius.all(
         Radius.circular(ThemeAppSize.kInterval12),
       ),
@@ -36,19 +37,23 @@ class MyTextField extends StatelessWidget {
         keyboardType: keyboardType,
         obscureText: obscureText,
         cursorColor: Get.theme.backgroundColor,
+
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(10),
           labelText: text,
           labelStyle: TextStyle(
-            color: Get.theme.backgroundColor,
+              //color: Get.theme.backgroundColor,
           ),
           isDense: true,
           fillColor: Get.theme.cardColor,
           prefixIcon: icon != null
-              ? Icon(icon, color: Get.theme.backgroundColor)
+              ? Icon(
+                  icon, //color: Get.theme.backgroundColor
+                )
               : null,
           hintText: hintText,
           border: InputBorder.none,
+
           // enabledBorder: styleInput,
           // focusedBorder: styleInput,
         ),

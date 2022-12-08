@@ -44,11 +44,14 @@ class CartAddIcon extends StatelessWidget {
   final ProductModel product;
   final bool statusBorder;
   final Color bg;
+  final Color iconColor;
   const CartAddIcon({
     super.key,
     required this.product,
     this.statusBorder = false,
-    this.bg = const Color.fromARGB(255, 246, 206, 195),
+    this.iconColor = Colors.green,
+    this.bg = Colors.transparent,
+
   });
 
   @override
@@ -58,17 +61,19 @@ class CartAddIcon extends StatelessWidget {
         return AnimatedIconWidget(
           currIndex: (controller.existInCart(product) ? 0 : 1).obs,
           fun: () => controller.addOneInCart(product),
-          widget1: CustomButtonIcon(
-            colorBorder: Colors.green,
+          widget1: WrapperIcon(
+            colorBorder: iconColor,
             bg: bg,
             size: ThemeAppSize.kInterval5,
             statusBorder: statusBorder,
-            child: const Icon(Icons.done, color: Colors.green),
+            child: Icon(Icons.done, color: iconColor),
           ),
-          widget2: CustomButtonIcon(
+          widget2: WrapperIcon(
             size: ThemeAppSize.kInterval5,
             bg: bg,
-            child: Icon(Icons.add, color: Get.theme.cardColor),
+            child: Icon(
+              Icons.add, //color: Get.theme.cardColor
+            ),
           ),
         );
       },
@@ -80,10 +85,12 @@ class FavoritIcon extends StatelessWidget {
   final ProductModel product;
   final bool statusBorder;
   final Color bg;
+  final Color iconColor;
   const FavoritIcon({
     super.key,
     required this.product,
     this.statusBorder = false,
+    this.iconColor = Colors.pink,
     this.bg = const Color.fromARGB(255, 246, 206, 195),
   });
 
@@ -94,19 +101,22 @@ class FavoritIcon extends StatelessWidget {
         return AnimatedIconWidget(
           currIndex: (controller.existInFavorites(product) ? 0 : 1).obs,
           fun: () => controller.upDataFavoriteList(product),
-          widget1: CustomButtonIcon(
+          widget1: WrapperIcon(
             bg: bg,
-            colorBorder: Get.theme.primaryColor,
+            colorBorder: iconColor,
             size: ThemeAppSize.kInterval5,
             statusBorder: statusBorder,
-            child: Icon(Icons.favorite, color: Get.theme.primaryColor),
+            child: Icon(
+              Icons.favorite,
+              color: iconColor,
+            ),
           ),
-          widget2: CustomButtonIcon(
+          widget2: WrapperIcon(
             bg: bg,
             size: ThemeAppSize.kInterval5,
             child: Icon(
               Icons.favorite_outline,
-              color: Get.theme.cardColor,
+              //color: Get.theme.cardColor,
             ),
           ),
         );

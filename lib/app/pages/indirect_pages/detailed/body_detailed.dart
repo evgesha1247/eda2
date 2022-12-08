@@ -17,7 +17,7 @@ class BodyDetailed extends StatelessWidget {
           children: [
             BigText(
               text: 'Introduce',
-              color: Get.theme.backgroundColor,
+              //color: Get.theme.backgroundColor,
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height / 1.7,

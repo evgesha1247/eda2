@@ -3,47 +3,60 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeAppController extends GetxController {
-  RxBool isLightTheme = false.obs;
+  bool isLightTheme = false;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  ThemeAppController() {
 
+getThemeStatus();
+  }
   saveThemeStatus() async {
-    (await _prefs).setBool('theme', isLightTheme.value);
+    (await _prefs).setBool('theme', isLightTheme);
+
   }
 
-  getThemeStatus() async {
+getThemeStatus() async {
     var isLight = _prefs.then((SharedPreferences prefs) {
       return prefs.getBool('theme') ?? true;
-    }).obs;
-    isLightTheme.value = await isLight.value;
-    Get.changeThemeMode(isLightTheme.value ? ThemeMode.light : ThemeMode.dark);
+    });
+    isLightTheme = await isLight;
+    Get.changeThemeMode(isLightTheme ? ThemeMode.light : ThemeMode.dark);
     update();
   }
+
+  tooggTheme() {
+    isLightTheme = !isLightTheme;
+    Get.changeThemeMode(
+      isLightTheme ? ThemeMode.light : ThemeMode.dark,
+    );
+    saveThemeStatus();
+    print(isLightTheme);
+    update();
+  }
+
+
 }
 
 class ThemeApp {
   static const String fontFamily = 'Mariupol';
 
-  static ThemeData myLightTheme() {
-    return ThemeData(
-      fontFamily: fontFamily, // custom color
+  static final ThemeData myLightTheme = ThemeData.light().copyWith(
 
-      scaffoldBackgroundColor: const Color.fromARGB(255, 246, 206, 195),
 
-      backgroundColor: const Color.fromARGB(255, 246, 206, 195), // kFrontColor
-      primaryColor: Colors.pink, // kAccent
-      cardColor: const Color.fromARGB(255, 75, 53, 56), // db
-      hintColor: const Color.fromARGB(255, 160, 113, 118), //grey
-      focusColor: const Color.fromARGB(255, 72, 51, 54), // kAccent2
-    );
-  }
+  );
 
-  static ThemeData myDarkThemes() {
-    return ThemeData(
-      fontFamily: fontFamily,
-      scaffoldBackgroundColor: Get.theme.cardColor,
 
-    );
-  }
+  static final ThemeData myDarkThemes = ThemeData.dark().copyWith(
+
+  );
+
+
+  //  scaffoldBackgroundColor: const Color.fromARGB(255, 246, 206, 195),
+  //   backgroundColor: const Color.fromARGB(255, 246, 206, 195), // kFrontColor
+  //   primaryColor: Colors.pink, // kAccent
+  //   cardColor: const Color.fromARGB(255, 75, 53, 56), // db
+  //   hintColor: const Color.fromARGB(255, 160, 113, 118), //grey
+  //   focusColor: const Color.fromARGB(255, 72, 51, 54), // kAccent2
+
 }
 
 

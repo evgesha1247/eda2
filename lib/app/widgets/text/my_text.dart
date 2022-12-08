@@ -7,7 +7,6 @@ class BigText extends StatelessWidget {
   final double size;
   final int maxLines;
   final TextOverflow overflow;
-  final TextDecoration decoration;
   final double decorationThickness;
   final FontWeight fontWeight;
   final bool rightToLeft;
@@ -21,12 +20,12 @@ class BigText extends StatelessWidget {
     this.size = 0,
     this.maxLines = 1,
     this.fontWeight = FontWeight.w500,
-    this.decoration = TextDecoration.none,
     this.decorationThickness = 2,
     this.rightToLeft = false,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+
     return Text(
       textDirection: rightToLeft ? TextDirection.rtl : TextDirection.ltr,
       text,
@@ -34,22 +33,15 @@ class BigText extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow,
       style: TextStyle(
-        decorationColor: color == Colors.transparent
-            ? Get.isDarkMode
-                ? Colors.teal
-                : Colors.red
-            : color,
         decorationThickness: decorationThickness,
-        decoration: decoration,
         fontSize: size == 0 ? ThemeAppSize.kFontSize22 : size,
-        color: color == Colors.transparent
-            ? Get.isDarkMode
-                ? Colors.teal
-                : Colors.red
-            : color,
+        // color: color == Colors.transparent
+        //     ? Get.theme.textTheme.bodyMedium?.color
+        //     : color,
         fontWeight: fontWeight,
       ),
     );
+
   }
 }
 
@@ -77,11 +69,9 @@ class SmallText extends StatelessWidget {
       overflow: overflow,
       style: TextStyle(
         fontSize: size == 0 ? ThemeAppSize.kFontSize20 : size,
-        color: color == Colors.transparent
-            ? Get.isDarkMode
-                ? Colors.teal
-                : Colors.red
-            : color,
+        // color: color == Colors.transparent
+        //     ? Get.theme.textTheme.bodyMedium?.color
+        //     : color,
         height: height,
         fontWeight: FontWeight.w300,
       ),

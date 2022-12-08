@@ -63,14 +63,7 @@ class _BottomBarWidget extends StatelessWidget {
   }
 }
 
-class Bottom {
-  final String text;
-  final IconData icon;
-  const Bottom({
-    required this.text,
-    required this.icon,
-  });
-}
+
 
 BottomNavigationBarItem bottomItem(String text, IconData icon) {
   return BottomNavigationBarItem(

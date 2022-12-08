@@ -51,7 +51,7 @@ class _RowItem extends StatelessWidget {
                 height: ThemeAppSize.kInterval24 * 5,
                 width: ThemeAppSize.kInterval24 * 4,
                 decoration: BoxDecoration(
-                  color: Get.theme.backgroundColor,
+                  //color: Get.theme.backgroundColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(ThemeAppSize.kRadius20),
                   ),
@@ -65,7 +65,7 @@ class _RowItem extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       child: Icon(
                         Icons.delete_outline_outlined,
-                        color: Get.theme.cardColor,
+                        //color: Get.theme.cardColor,
                         size: ThemeAppSize.kFontSize22,
                       ),
                     ),
@@ -87,7 +87,7 @@ class _RowItem extends StatelessWidget {
         ),
         clipBehavior: Clip.hardEdge,
         elevation: 10,
-        color: Get.theme.cardColor,
+        //color: Get.theme.cardColor,
         surfaceTintColor: Get.theme.cardColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +126,7 @@ class _RowItem extends StatelessWidget {
                       child: BigText(
                         text: item.name!,
                         maxLines: 3,
-                        color: Get.theme.backgroundColor,
+                        //color: Get.theme.backgroundColor,
                         size: ThemeAppSize.kFontSize22,
                       ),
                     ),
@@ -150,13 +150,15 @@ class _RowItem extends StatelessWidget {
             /// close / delite
             Container(
               decoration: BoxDecoration(
-                color: Get.theme.backgroundColor,
+                //color: Get.theme.backgroundColor,
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                 ),
               ),
               padding: EdgeInsets.all(ThemeAppSize.kInterval5),
-              child: Icon(Icons.close, color: Get.theme.cardColor),
+              child: Icon(
+                Icons.close, //color: Get.theme.cardColor
+              ),
             ),
           ],
         ),

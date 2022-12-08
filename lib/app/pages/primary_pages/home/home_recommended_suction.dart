@@ -34,14 +34,14 @@ class _RecommendedTitleWidget extends StatelessWidget {
       children: [
         BigText(
           text: 'Recommended',
-          color: Get.theme.backgroundColor,
+          //color: Get.theme.backgroundColor,
           size: ThemeAppSize.kFontSize20,
         ),
         SizedBox(width: ThemeAppSize.kInterval5),
         SmallText(
           text: '• Food pairing',
           size: ThemeAppSize.kFontSize18,
-          color: Get.theme.backgroundColor.withOpacity(0.5),
+          //color: Get.theme.backgroundColor.withOpacity(0.5),
         ),
       ],
     );

@@ -8,7 +8,7 @@ class CircularWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator(
-        color: Get.theme.primaryColor,
+        //color: Get.theme.primaryColor,
         strokeWidth: 3,
       ),
     );

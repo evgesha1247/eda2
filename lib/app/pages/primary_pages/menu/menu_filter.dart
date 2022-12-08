@@ -47,12 +47,12 @@ class _TitleSort extends StatelessWidget {
     return ListTile(
       title: SmallText(
         text: text,
-        color: Get.theme.backgroundColor,
+        //color: Get.theme.backgroundColor,
         size: ThemeAppSize.kFontSize20,
       ),
       subtitle: SmallText(
         text: 'Price',
-        color: Get.theme.backgroundColor,
+        //color: Get.theme.backgroundColor,
         size: 14,
       ),
       trailing: Icon(icon),
@@ -75,7 +75,8 @@ class FilterItem extends StatelessWidget {
     Get.defaultDialog(
       title: 'Sort by',
       titlePadding: EdgeInsets.only(top: ThemeAppSize.kInterval24),
-      titleStyle: TextStyle(color: Get.theme.backgroundColor),
+      titleStyle: TextStyle(//color: Get.theme.backgroundColor
+          ),
       backgroundColor: Get.theme.cardColor,
       radius: ThemeAppSize.kRadius12,
       content: GetBuilder<MenuController>(
@@ -100,7 +101,7 @@ class FilterItem extends StatelessWidget {
         width: 100,
         height: 4,
         decoration: BoxDecoration(
-          color: Get.theme.backgroundColor,
+          //color: Get.theme.backgroundColor,
           borderRadius: BorderRadius.all(
             Radius.circular(
               ThemeAppSize.kRadius12,
@@ -116,7 +117,7 @@ class FilterItem extends StatelessWidget {
       onTap: () => text == 'Sort by' ? sortByMass() : {},
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: Get.theme.backgroundColor,
+          //color: Get.theme.backgroundColor,
           borderRadius: BorderRadius.all(
             Radius.circular(ThemeAppSize.kRadius12),
           ),
@@ -125,8 +126,12 @@ class FilterItem extends StatelessWidget {
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: Wrap(
             children: [
-              SmallText(text: text, color: Get.theme.cardColor),
-              Icon(icon, color: Get.theme.cardColor),
+              SmallText(
+                text: text, //color: Get.theme.cardColor
+              ),
+              Icon(
+                icon, //color: Get.theme.cardColor
+              ),
             ],
           ),
         ),
@@ -144,8 +149,8 @@ class _ButtonTogList extends StatelessWidget {
         return AnimatedIconWidget(
           currIndex: (controller.isListGrid ? 0 : 1).obs,
           fun: () => controller.togStatusList(),
-          widget1: const CustomButtonIcon(child: Icon(Icons.grid_view)),
-          widget2: const CustomButtonIcon(child: Icon(Icons.list)),
+          widget1: const WrapperIcon(child: Icon(Icons.grid_view)),
+          widget2: const WrapperIcon(child: Icon(Icons.list)),
         );
       },
     );

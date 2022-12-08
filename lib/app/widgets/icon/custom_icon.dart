@@ -6,28 +6,32 @@ import '../../routes/main_routes.dart';
 import '../../theme/theme_app.dart';
 import '../text/my_text.dart';
 
-class CustomButtonIcon extends StatelessWidget {
+class WrapperIcon extends StatelessWidget {
   final Widget child;
   final bool statusBorder;
-  final Color colorBorder;
-  final Color bg;
+  final Color? colorBorder;
+  final Color? bg;
   final double size;
-  const CustomButtonIcon({
+  const WrapperIcon({
     required this.child,
     super.key,
-    this.colorBorder = const Color.fromARGB(255, 75, 53, 56),
+    this.statusBorder = false,
+    this.colorBorder = Colors.transparent,
     this.bg = Colors.transparent,
     this.size = 0.0,
-    this.statusBorder = false,
   });
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: bg,
-        borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(ThemeAppSize.kRadius12),
+        ),
         border:
-            statusBorder ? Border.all(color: colorBorder, width: 0.8) : null,
+            statusBorder
+            ? Border.all(color: colorBorder as Color, width: 0.8)
+            : null,
       ),
       child: Padding(
         padding: EdgeInsets.all(size == 0 ? ThemeAppSize.kInterval12 : size),
@@ -42,18 +46,20 @@ class ButtonIconBack extends StatelessWidget {
   final Color bg;
   const ButtonIconBack({
     super.key,
-    this.iconColor = const Color.fromARGB(255, 75, 53, 56),
-    this.bg = const Color.fromARGB(255, 246, 206, 195),
+    this.iconColor = Colors.transparent,
+    this.bg = Colors.transparent,
   });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.back(),
-      child: CustomButtonIcon(
+      child: WrapperIcon(
         bg: bg,
         child: Icon(
           Icons.arrow_back_ios_new,
-          color: iconColor,
+          color: iconColor == Colors.transparent
+              ? Get.theme.textTheme.bodyMedium?.color
+              : iconColor,
           size: ThemeAppSize.kFontSize22,
         ),
       ),
@@ -63,13 +69,13 @@ class ButtonIconBack extends StatelessWidget {
 
 class ButtonIconCart extends StatelessWidget {
   final Color iconColor;
-  final Color borderColor;
   final bool statusBorder;
+  final Color bg;
   const ButtonIconCart({
     super.key,
-    this.iconColor = const Color.fromARGB(255, 246, 206, 195),
-    this.borderColor = const Color.fromARGB(255, 246, 206, 195),
+    this.iconColor = Colors.transparent,
     this.statusBorder = true,
+    this.bg = Colors.transparent,
   });
   @override
   Widget build(BuildContext context) {
@@ -79,9 +85,11 @@ class ButtonIconCart extends StatelessWidget {
         builder: (_) {
           return Stack(
             children: [
-              CustomButtonIcon(
-                bg: Get.theme.cardColor,
-                colorBorder: borderColor,
+              WrapperIcon(
+                bg: bg,
+                colorBorder: iconColor == Colors.transparent
+                    ? Get.theme.textTheme.bodyMedium?.color
+                    : iconColor,
                 statusBorder: statusBorder,
                 child: Row(children: [
                   Icon(
@@ -90,7 +98,9 @@ class ButtonIconCart extends StatelessWidget {
                         : Icons.shopping_bag_outlined,
                     // Icons.local_mall_rounded
                     //Icons.local_mall_outlined,
-                    color: iconColor,
+                    color: iconColor == Colors.transparent
+                        ? Get.theme.textTheme.bodyMedium?.color
+                        : iconColor,
                     size: ThemeAppSize.kFontSize22,
                   ),
                   SizedBox(
