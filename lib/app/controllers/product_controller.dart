@@ -74,7 +74,7 @@ class ProductController extends GetxController {
 
   // проверка на возможность add/sub данного количества
   int _checkCount(int countProduct) {
-    if ((_inCartItems + countProduct) <= 0) {
+    if ((_inCartItems + countProduct) < -1) {
       ThemeAppFun.printSnackBar('You can\'t reduce more !');
       return 0;
     } else if ((_inCartItems + countProduct) > 20) {

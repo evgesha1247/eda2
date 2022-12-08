@@ -6,15 +6,13 @@ class ThemeAppController extends GetxController {
   bool isLightTheme = false;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   ThemeAppController() {
-
-getThemeStatus();
+    getThemeStatus();
   }
   saveThemeStatus() async {
     (await _prefs).setBool('theme', isLightTheme);
-
   }
 
-getThemeStatus() async {
+  getThemeStatus() async {
     var isLight = _prefs.then((SharedPreferences prefs) {
       return prefs.getBool('theme') ?? true;
     });
@@ -29,37 +27,46 @@ getThemeStatus() async {
       isLightTheme ? ThemeMode.light : ThemeMode.dark,
     );
     saveThemeStatus();
-    print(isLightTheme);
     update();
   }
-
-
 }
 
-class ThemeApp {
-  static const String fontFamily = 'Mariupol';
+class Themes {
+  final String fontFamily = 'Mariupol';
 
-  static final ThemeData myLightTheme = ThemeData.light().copyWith(
-
-
+  static final light = ThemeData.light().copyWith(
+    //main
+    scaffoldBackgroundColor: ThemeAppColor.kBGColor,
+    cardColor: ThemeAppColor.kFrontColor,
+    primaryColor: ThemeAppColor.kAccent,
+    // text
+    hintColor: ThemeAppColor.kFrontColor,
+    // static
+    accentColor: ThemeAppColor.kBGColor,
   );
 
 
-  static final ThemeData myDarkThemes = ThemeData.dark().copyWith(
-
+  static final dark = ThemeData.dark().copyWith(
+    //main
+    scaffoldBackgroundColor: ThemeAppColor.kFrontColor,
+    cardColor: Color.fromARGB(255, 106, 76, 80),
+    primaryColor: ThemeAppColor.kAccent,
+    // text
+    hintColor: Color.fromARGB(255, 189, 159, 151),
+    // static
+    accentColor: ThemeAppColor.kBGColor,
   );
-
-
-  //  scaffoldBackgroundColor: const Color.fromARGB(255, 246, 206, 195),
-  //   backgroundColor: const Color.fromARGB(255, 246, 206, 195), // kFrontColor
-  //   primaryColor: Colors.pink, // kAccent
-  //   cardColor: const Color.fromARGB(255, 75, 53, 56), // db
-  //   hintColor: const Color.fromARGB(255, 160, 113, 118), //grey
-  //   focusColor: const Color.fromARGB(255, 72, 51, 54), // kAccent2
-
 }
 
-
+abstract class ThemeAppColor {
+  static const Color kFrontColor = Color.fromARGB(255, 75, 53, 56);
+  static const Color kBGColor = Color.fromARGB(255, 246, 206, 195);
+  static const Color kAccent = Colors.pink;
+  static const Color kAccent2 = Color.fromARGB(255, 72, 51, 54);
+  static const Color grey = Color.fromARGB(255, 160, 113, 118);
+  static const Color darkTextColor = Color.fromARGB(255, 0, 0, 0);
+  static const Color lightTextColor = Color.fromARGB(255, 255, 255, 255);
+}
 
 abstract class ThemeAppSize {
   static double height = 780.0;
@@ -94,8 +101,6 @@ abstract class ThemeAppSize {
 
 // home menu
   static double kMenuHeaderSearch = kScreensHeight / (height / 75);
-
-
 }
 
 abstract class ThemeAppFun {
@@ -104,15 +109,15 @@ abstract class ThemeAppFun {
       Radius.circular(radius == 0 ? ThemeAppSize.kRadius20 : radius),
     );
   }
+
   static void printSnackBar(String message) {
     Get.snackbar(
       'Item count',
       message,
-      backgroundColor: Get.theme.primaryColor.withOpacity(0.7),
-      colorText: Get.theme.cardColor,
+      backgroundColor: Get.context?.theme.primaryColor.withOpacity(0.7),
+      colorText: Get.context?.theme.cardColor,
       duration: const Duration(milliseconds: 1200),
       margin: EdgeInsets.all(ThemeAppSize.kInterval12),
     );
   }
-
 }

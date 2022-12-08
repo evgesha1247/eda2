@@ -82,7 +82,7 @@ class _ToggScreenTextWidget extends StatelessWidget {
       child: BigText(
         text: 'adafadf',
 
-        //color: Get.theme.backgroundColor,
+        //color: context.theme.backgroundColor,
       ),
     );
   }

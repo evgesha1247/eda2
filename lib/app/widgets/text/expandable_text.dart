@@ -7,7 +7,7 @@ import 'my_text.dart';
 class ExpandableController extends GetxController {
   late String firstText;
   late String secondText;
-  bool hiddeText = true;
+  bool hiddeText = false;
 
   initText(String text) {
     double heightText = 100;
@@ -41,14 +41,14 @@ class ExpandableTextWidget extends StatelessWidget {
               height: 1.4,
               size: ThemeAppSize.kFontSize18,
               text: (_.firstText + (_.hiddeText ? _.secondText : '...')),
-              //color: Get.theme.backgroundColor,
+              color: context.theme.hintColor,
               maxLines: 99,
             ),
             InkWell(
               onTap: () => _.tog(),
               child: BigText(
-                text: _.hiddeText ? 'show' : 'close',
-                //color: Get.theme.backgroundColor,
+                text: _.hiddeText ? 'close' : 'show',
+                color: context.theme.hintColor,
                 size: ThemeAppSize.kFontSize20,
               ),
             )

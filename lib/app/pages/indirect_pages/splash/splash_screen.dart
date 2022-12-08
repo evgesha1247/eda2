@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen>
           children: [
             BigText(
               text: 'Good day ${user?.displayName ?? ' '}',
-              //color: Get.theme.backgroundColor,
+              //color: context.theme.backgroundColor,
             ),
             // Lottie.network(
             //   'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json',

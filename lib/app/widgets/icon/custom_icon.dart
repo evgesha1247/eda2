@@ -28,8 +28,7 @@ class WrapperIcon extends StatelessWidget {
         borderRadius: BorderRadius.all(
           Radius.circular(ThemeAppSize.kRadius12),
         ),
-        border:
-            statusBorder
+        border: statusBorder
             ? Border.all(color: colorBorder as Color, width: 0.8)
             : null,
       ),
@@ -51,18 +50,22 @@ class ButtonIconBack extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Get.back(),
-      child: WrapperIcon(
-        bg: bg,
-        child: Icon(
-          Icons.arrow_back_ios_new,
-          color: iconColor == Colors.transparent
-              ? Get.theme.textTheme.bodyMedium?.color
-              : iconColor,
-          size: ThemeAppSize.kFontSize22,
-        ),
-      ),
+    return GetBuilder<ThemeAppController>(
+      builder: (_) {
+        return GestureDetector(
+          onTap: () => Get.back(),
+          child: WrapperIcon(
+            bg: bg,
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: iconColor == Colors.transparent
+                  ? context.theme.textTheme.bodyMedium?.color
+                  : iconColor,
+              size: ThemeAppSize.kFontSize22,
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -88,7 +91,7 @@ class ButtonIconCart extends StatelessWidget {
               WrapperIcon(
                 bg: bg,
                 colorBorder: iconColor == Colors.transparent
-                    ? Get.theme.textTheme.bodyMedium?.color
+                    ? context.theme.hintColor
                     : iconColor,
                 statusBorder: statusBorder,
                 child: Row(children: [
@@ -99,7 +102,7 @@ class ButtonIconCart extends StatelessWidget {
                     // Icons.local_mall_rounded
                     //Icons.local_mall_outlined,
                     color: iconColor == Colors.transparent
-                        ? Get.theme.textTheme.bodyMedium?.color
+                        ? context.theme.hintColor
                         : iconColor,
                     size: ThemeAppSize.kFontSize22,
                   ),

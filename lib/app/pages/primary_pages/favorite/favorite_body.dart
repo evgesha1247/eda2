@@ -18,7 +18,7 @@ class FavoriteBody extends StatelessWidget {
           right: ThemeAppSize.kInterval24,
         ),
         decoration: BoxDecoration(
-          //color: Get.theme.cardColor,
+          color: context.theme.scaffoldBackgroundColor,
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(20),
           ),
@@ -46,13 +46,16 @@ class _BuilderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       height: ThemeAppSize.kInterval24 * 7,
       decoration: BoxDecoration(
-        //color: Get.theme.backgroundColor,
+        color: context.theme.cardColor,
         borderRadius: BorderRadius.all(
           Radius.circular(ThemeAppSize.kInterval12),
         ),
+
       ),
+      clipBehavior: Clip.hardEdge,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -73,7 +76,11 @@ class _ItemInfo extends StatelessWidget {
       child: Center(
         child: Padding(
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          child: BigText(text: item.name!, maxLines: 2),
+          child: BigText(
+            text: item.name!,
+            maxLines: 2,
+            color: context.theme.accentColor,
+          ),
         ),
       ),
     );

@@ -23,7 +23,7 @@ class _ContaiterCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        //color: Get.theme.backgroundColor,
+        color: context.theme.cardColor,
         borderRadius: BorderRadius.all(
           Radius.circular(ThemeAppSize.kRadius20),
         ),
@@ -40,30 +40,27 @@ class _TotalPrice extends StatelessWidget {
   const _TotalPrice();
   @override
   Widget build(BuildContext context) {
+    final color = ThemeMode.system == ThemeMode.dark
+        ? context.theme.scaffoldBackgroundColor
+        : context.theme.accentColor;
     return GetBuilder<CartController>(
       builder: (_) {
         final totalAmount = _.totalAmount.toString();
         return Column(
-          //  crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            _.totalAmount > 200
-                ? Row(
-                    children: [
-                      const SmallText(text: 'discount'),
-                      SizedBox(width: ThemeAppSize.kInterval12),
-                      BigText(
-                        text: '-${_.discount} % ',
-                      ),
-                      SizedBox(height: ThemeAppSize.kInterval12),
-                    ],
-                  )
-                : const SizedBox.shrink(),
             Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: _.totalAmount > 200
+                    ? [
+                        SmallText(text: 'discount ', color: color),
+                        SizedBox(width: ThemeAppSize.kInterval12),
+                        BigText(text: '-${_.discount} % ', color: Colors.green),
+                      ]
+                    : []),
+            Row(
               children: [
-                const SmallText(text: 'total'),
+                SmallText(text: 'total', color: color),
                 SizedBox(width: ThemeAppSize.kInterval12),
-                BigText(text: totalAmount),
+                BigText(text: totalAmount, color: color),
                 const Spacer(),
                 _ButtonCart(),
               ],
@@ -85,14 +82,14 @@ class _ButtonCart extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         decoration: BoxDecoration(
-          //color: Get.theme.primaryColor,
+          color: context.theme.primaryColor,
           borderRadius: ThemeAppFun.decoration(
             radius: ThemeAppSize.kRadius12,
           ),
         ),
         child: BigText(
           text: ' Pay ',
-          //color: Get.theme.cardColor,
+          color: context.theme.accentColor,
           size: ThemeAppSize.kFontSize20,
         ),
       ),

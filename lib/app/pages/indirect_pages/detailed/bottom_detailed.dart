@@ -16,7 +16,7 @@ class BottomDetailed extends StatelessWidget {
       height: ThemeAppSize.kDetaildButtomContainer,
       padding: EdgeInsets.all(ThemeAppSize.kInterval24),
       decoration: BoxDecoration(
-        //color: Get.theme.backgroundColor,
+        color: context.theme.cardColor,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(ThemeAppSize.kRadius20 * 2),
         ),
@@ -47,15 +47,15 @@ class _TotalPriceWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color:
                   _.totalItems > 0
-                  ? Get.theme.primaryColor
-                  : Get.theme.hintColor,
+                  ? context.theme.primaryColor
+                  : context.theme.hintColor,
               borderRadius: ThemeAppFun.decoration(
                 radius: ThemeAppSize.kRadius12,
               ),
             ),
             child: BigText(
               text: '\$ ${_.totalAmount} | Go to cart',
-              //color: Get.theme.cardColor,
+              color: context.theme.accentColor,
               size: ThemeAppSize.kFontSize20,
             ),
           );
@@ -75,7 +75,7 @@ class _AddAndSubProductWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(
-        //color: Get.theme.cardColor,
+        color: context.theme.scaffoldBackgroundColor,
         borderRadius: ThemeAppFun.decoration(
           radius: ThemeAppSize.kRadius12,
         ),
@@ -89,7 +89,7 @@ class _AddAndSubProductWidget extends StatelessWidget {
               },
               child: Icon(
                 Icons.remove,
-                //color: Get.theme.backgroundColor,
+                color: context.theme.hintColor,
               ),
             ),
           ),
@@ -97,7 +97,7 @@ class _AddAndSubProductWidget extends StatelessWidget {
           GetBuilder<CartController>(
             builder: (_) => SmallText(
               text: '${_.getCountProduct(item)}',
-              //color: Get.theme.backgroundColor,
+              color: context.theme.hintColor,
             ),
           ),
           SizedBox(width: ThemeAppSize.kInterval5),
@@ -106,7 +106,7 @@ class _AddAndSubProductWidget extends StatelessWidget {
               onTap: () => _.upDataCountProductInCart(true, item),
               child: Icon(
                 Icons.add,
-                //color: Get.theme.backgroundColor,
+                color: context.theme.hintColor,
               ),
             ),
           ),

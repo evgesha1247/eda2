@@ -135,11 +135,12 @@ class CartController extends GetxController {
     Get.snackbar(
       'pay',
       '',
-      backgroundColor: Get.theme.primaryColor.withOpacity(0.7),
-      colorText: Get.theme.cardColor,
+      backgroundColor: Get.context?.theme.primaryColor.withOpacity(0.7),
+      colorText: Get.context?.theme.cardColor,
       duration: const Duration(milliseconds: 1200),
       margin: EdgeInsets.all(ThemeAppSize.kInterval12),
     );
+    cartRepo.addToCartList(getItemsList);
     update();
   }
 

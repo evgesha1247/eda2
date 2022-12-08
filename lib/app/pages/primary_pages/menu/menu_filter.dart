@@ -9,9 +9,15 @@ import '../../../widgets/text/my_text.dart';
 class FilterWidget extends StatelessWidget {
   FilterWidget({super.key});
   final controller = Get.find<MenuController>();
+  final List<Filter> filterModel = const [
+    Filter(text: 'Sort by', icon: Icons.short_text_outlined),
+    Filter(text: 'Filter', icon: Icons.filter_alt_outlined),
+  ];
   @override
-
   Widget build(BuildContext context) {
+    final listFilter = filterModel
+        .map((Filter e) => FilterItem(text: e.text, icon: e.icon))
+        .toList();
     return SliverToBoxAdapter(
       child: Padding(
         padding: EdgeInsets.only(
@@ -23,7 +29,7 @@ class FilterWidget extends StatelessWidget {
             const _ButtonTogList(),
             Wrap(
               spacing: ThemeAppSize.kInterval12,
-              children: controller.listFilterItems,
+              children: listFilter,
             ),
           ],
         ),
@@ -42,22 +48,25 @@ class _TitleSort extends StatelessWidget {
     required this.icon,
   });
   final controller = Get.find<MenuController>();
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: SmallText(
+      title: BigText(
         text: text,
-        //color: Get.theme.backgroundColor,
         size: ThemeAppSize.kFontSize20,
+        fontWeight: FontWeight.w400,
       ),
       subtitle: SmallText(
         text: 'Price',
-        //color: Get.theme.backgroundColor,
-        size: 14,
+        size: ThemeAppSize.kFontSize18 - 3,
       ),
-      trailing: Icon(icon),
+      trailing: Icon(
+        icon,
+        color: context.theme.hintColor,
+      ),
       leading: Radio(
-        activeColor: Get.theme.primaryColor,
+        activeColor: context.theme.primaryColor,
         value: value,
         groupValue: controller.method,
         onChanged: (SortMethod? valueMethod) =>
@@ -75,9 +84,8 @@ class FilterItem extends StatelessWidget {
     Get.defaultDialog(
       title: 'Sort by',
       titlePadding: EdgeInsets.only(top: ThemeAppSize.kInterval24),
-      titleStyle: TextStyle(//color: Get.theme.backgroundColor
-          ),
-      backgroundColor: Get.theme.cardColor,
+      titleStyle: TextStyle(color: Get.context?.theme.hintColor),
+      backgroundColor: Get.context?.theme.scaffoldBackgroundColor,
       radius: ThemeAppSize.kRadius12,
       content: GetBuilder<MenuController>(
         builder: (_) {
@@ -101,7 +109,7 @@ class FilterItem extends StatelessWidget {
         width: 100,
         height: 4,
         decoration: BoxDecoration(
-          //color: Get.theme.backgroundColor,
+          color: Get.context?.theme.cardColor,
           borderRadius: BorderRadius.all(
             Radius.circular(
               ThemeAppSize.kRadius12,
@@ -111,27 +119,24 @@ class FilterItem extends StatelessWidget {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => text == 'Sort by' ? sortByMass() : {},
       child: DecoratedBox(
         decoration: BoxDecoration(
-          //color: Get.theme.backgroundColor,
           borderRadius: BorderRadius.all(
             Radius.circular(ThemeAppSize.kRadius12),
           ),
+          border: Border.all(color: context.theme.hintColor),
         ),
         child: Padding(
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: Wrap(
             children: [
-              SmallText(
-                text: text, //color: Get.theme.cardColor
-              ),
-              Icon(
-                icon, //color: Get.theme.cardColor
-              ),
+              SmallText(text: text),
+              Icon(icon, color: context.theme.hintColor),
             ],
           ),
         ),
@@ -149,8 +154,17 @@ class _ButtonTogList extends StatelessWidget {
         return AnimatedIconWidget(
           currIndex: (controller.isListGrid ? 0 : 1).obs,
           fun: () => controller.togStatusList(),
-          widget1: const WrapperIcon(child: Icon(Icons.grid_view)),
-          widget2: const WrapperIcon(child: Icon(Icons.list)),
+          widget1: WrapperIcon(
+            child: Icon(
+              Icons.grid_view,
+              color: context.theme.hintColor,
+            ),
+          ),
+          widget2: WrapperIcon(
+              child: Icon(
+            Icons.list,
+            color: context.theme.hintColor,
+          )),
         );
       },
     );

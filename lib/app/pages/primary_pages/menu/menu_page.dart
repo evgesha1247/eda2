@@ -15,9 +15,7 @@ class MenuPage extends StatelessWidget {
                 FilterWidget(),
                 MenuBodyWidget(),
               ]
-            : [
-                MenuBodyWidget(),
-              ],
+            : [MenuBodyWidget()],
       ),
     );
   }

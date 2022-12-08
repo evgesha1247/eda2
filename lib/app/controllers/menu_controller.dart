@@ -22,14 +22,9 @@ class MenuController extends GetxController {
   SortMethod? method = SortMethod.reset;
 
 
-  List<Filter> filterModel = const [
-    Filter(text: 'Sort by', icon: Icons.sort),
-    Filter(text: 'Filter', icon: Icons.filter_alt_rounded),
-  ];
 
-  List<Widget> get listFilterItems => filterModel
-        .map((Filter e) => FilterItem(text: e.text, icon: e.icon))
-        .toList();
+
+
 
 
 

@@ -30,16 +30,16 @@ class _UserTitle extends StatelessWidget {
       children: [
         const _UserIcon(),
         SizedBox(width: ThemeAppSize.kInterval12),
-        BigText(
-          text: 'Welcom',
-          //color: Get.theme.backgroundColor
-        ),
+        const BigText(text: 'Welcom'),
         SizedBox(width: ThemeAppSize.kInterval5),
-        Icon(Icons.grid_3x3, size: ThemeAppSize.kFontSize18),
+        Icon(
+          Icons.grid_3x3,
+          size: ThemeAppSize.kFontSize18,
+          color: context.theme.hintColor,
+        ),
         BigText(
           text: '{name}',
-          //color: Get.theme.backgroundColor,
-          size: ThemeAppSize.kFontSize18,
+          size: ThemeAppSize.kFontSize18
         ),
       ],
     );
@@ -54,10 +54,10 @@ class _UserIcon extends StatelessWidget {
       onTap: () => Get.toNamed(MainRoutes.getProfile()),
       child: WrapperIcon(
         statusBorder: true,
-        colorBorder: Get.theme.textTheme.bodyMedium?.color,
+        colorBorder: context.theme.hintColor,
         child: Icon(
           Icons.person_outline,
-          color: Get.theme.textTheme.bodyMedium?.color,
+          color: context.theme.hintColor,
           size: ThemeAppSize.kFontSize20,
         ),
       ),

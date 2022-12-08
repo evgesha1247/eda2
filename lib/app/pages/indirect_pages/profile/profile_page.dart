@@ -51,7 +51,9 @@ class _Example extends StatelessWidget {
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: Row(
         children: [
-          const ButtonIconBack(),
+          ButtonIconBack(
+            iconColor: context.theme.cardColor,
+          ),
           GetBuilder<ThemeAppController>(
             builder: (_) {
               return AnimatedIconWidget(

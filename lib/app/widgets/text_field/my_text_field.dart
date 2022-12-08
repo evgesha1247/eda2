@@ -36,19 +36,19 @@ class MyTextField extends StatelessWidget {
         textInputAction: textInputAction,
         keyboardType: keyboardType,
         obscureText: obscureText,
-        cursorColor: Get.theme.backgroundColor,
+        cursorColor: context.theme.backgroundColor,
 
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(10),
           labelText: text,
           labelStyle: TextStyle(
-              //color: Get.theme.backgroundColor,
+              //color: context.theme.backgroundColor,
           ),
           isDense: true,
-          fillColor: Get.theme.cardColor,
+          fillColor: context.theme.cardColor,
           prefixIcon: icon != null
               ? Icon(
-                  icon, //color: Get.theme.backgroundColor
+                  icon, //color: context.theme.backgroundColor
                 )
               : null,
           hintText: hintText,

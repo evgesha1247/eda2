@@ -45,16 +45,16 @@ class _BottomBarWidget extends StatelessWidget {
       builder: (model) => BottomNavigationBar(
         onTap: model.setCurrentIndexTab,
         currentIndex: model.currentIndexTab,
-        selectedItemColor: Get.theme.primaryColor,
-        unselectedItemColor: Get.theme.backgroundColor,
+        selectedItemColor: context.theme.hintColor,
+        unselectedItemColor: context.theme.hintColor.withOpacity(0.5),
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Get.theme.cardColor,
+        backgroundColor: context.theme.scaffoldBackgroundColor,
         elevation: 5,
         showUnselectedLabels: false,
         showSelectedLabels: true,
         items: [
           bottomItem('Home', Icons.home),
-          bottomItem('Menu', Icons.restaurant_menu_rounded),
+          bottomItem('Menu', Icons.restaurant_menu),
           bottomItem('favorite', Icons.favorite),
           bottomItem('History', Icons.history),
         ],
@@ -79,7 +79,9 @@ class _FlotingButtom extends StatelessWidget {
     return FloatingActionButton(
       elevation: 0,
       onPressed: null,
-      backgroundColor: Get.theme.primaryColor,
+      backgroundColor: ThemeMode.system == ThemeMode.dark
+          ? context.theme.accentColor
+          : context.theme.primaryColor,
       child: const Icon(Icons.menu_sharp),
     );
   }

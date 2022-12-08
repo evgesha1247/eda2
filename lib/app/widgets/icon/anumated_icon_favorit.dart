@@ -49,7 +49,7 @@ class CartAddIcon extends StatelessWidget {
     super.key,
     required this.product,
     this.statusBorder = false,
-    this.iconColor = Colors.green,
+    this.iconColor = Colors.transparent,
     this.bg = Colors.transparent,
 
   });
@@ -62,17 +62,20 @@ class CartAddIcon extends StatelessWidget {
           currIndex: (controller.existInCart(product) ? 0 : 1).obs,
           fun: () => controller.addOneInCart(product),
           widget1: WrapperIcon(
-            colorBorder: iconColor,
+            colorBorder: Colors.green,
             bg: bg,
             size: ThemeAppSize.kInterval5,
             statusBorder: statusBorder,
-            child: Icon(Icons.done, color: iconColor),
+            child: const Icon(Icons.done, color: Colors.green),
           ),
           widget2: WrapperIcon(
             size: ThemeAppSize.kInterval5,
             bg: bg,
             child: Icon(
-              Icons.add, //color: Get.theme.cardColor
+              Icons.add,
+              color: iconColor == Colors.transparent
+                  ? context.theme.scaffoldBackgroundColor
+                  : iconColor,
             ),
           ),
         );
@@ -90,8 +93,8 @@ class FavoritIcon extends StatelessWidget {
     super.key,
     required this.product,
     this.statusBorder = false,
-    this.iconColor = Colors.pink,
-    this.bg = const Color.fromARGB(255, 246, 206, 195),
+    this.iconColor = Colors.transparent,
+    this.bg = Colors.transparent,
   });
 
   @override
@@ -103,12 +106,12 @@ class FavoritIcon extends StatelessWidget {
           fun: () => controller.upDataFavoriteList(product),
           widget1: WrapperIcon(
             bg: bg,
-            colorBorder: iconColor,
+            colorBorder: Colors.pink,
             size: ThemeAppSize.kInterval5,
             statusBorder: statusBorder,
             child: Icon(
               Icons.favorite,
-              color: iconColor,
+              color: Colors.pink,
             ),
           ),
           widget2: WrapperIcon(
@@ -116,7 +119,9 @@ class FavoritIcon extends StatelessWidget {
             size: ThemeAppSize.kInterval5,
             child: Icon(
               Icons.favorite_outline,
-              //color: Get.theme.cardColor,
+              color: iconColor == Colors.transparent
+                  ? context.theme.scaffoldBackgroundColor
+                  : iconColor,
             ),
           ),
         );

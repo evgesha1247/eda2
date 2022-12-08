@@ -8,7 +8,7 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Get.theme.backgroundColor,
+      backgroundColor: context.theme.cardColor,
       body: Column(
         children: const [
           FavoritHeader(),

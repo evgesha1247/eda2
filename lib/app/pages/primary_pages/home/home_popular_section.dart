@@ -33,7 +33,6 @@ class _PopularTitle extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
         child: BigText(
           text: 'Popular product',
-
           size: ThemeAppSize.kFontSize20,
         ),
       );
@@ -68,8 +67,6 @@ class _ProductBodyState extends State<_ProductBody> {
     super.dispose();
     pageController.dispose();
   }
-
-
 
   Widget _builderItem(int index, ProductModel product) {
     Matrix4 matrix = Matrix4.identity();
@@ -114,6 +111,7 @@ class _ProductBodyState extends State<_ProductBody> {
       ),
     );
   }
+
   Widget _botsIndicator() {
     return GetBuilder<ProductController>(
       builder: (popularProduct) => popularProduct.isLoadedPopular
@@ -128,8 +126,8 @@ class _ProductBodyState extends State<_ProductBody> {
                   horizontal: ThemeAppSize.kInterval12,
                   vertical: ThemeAppSize.kInterval5,
                 ),
-                activeColor: Get.theme.primaryColor,
-                //color: Get.theme.backgroundColor,
+                activeColor: context.theme.primaryColor,
+                color: context.theme.cardColor,
                 activeSize: const Size(25.0, 9.0),
                 activeShape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
@@ -164,9 +162,6 @@ class _ProductBodyState extends State<_ProductBody> {
   }
 }
 
-
-
-
 class _ItemTitle extends StatelessWidget {
   const _ItemTitle({required this.product});
   final ProductModel product;
@@ -174,13 +169,13 @@ class _ItemTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomCenter,
-      padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
             begin: FractionalOffset.topCenter,
             end: FractionalOffset.bottomCenter,
-            colors: [Colors.transparent, Color.fromARGB(225, 51, 45, 31)],
-            stops: [0.3, 0.9]),
+            colors: [Colors.transparent, Color.fromARGB(171, 33, 26, 22)],
+            stops: [0.4, .9]),
         borderRadius: ThemeAppFun.decoration(
           radius: ThemeAppSize.kRadius20,
         ),
@@ -190,13 +185,14 @@ class _ItemTitle extends StatelessWidget {
           CartAddIcon(
             statusBorder: true,
             product: product,
-            bg: Colors.transparent,
+            iconColor: context.theme.accentColor,
           ),
           SizedBox(width: ThemeAppSize.kInterval12),
           FavoritIcon(
             statusBorder: true,
             product: product,
             bg: Colors.transparent,
+            iconColor: context.theme.accentColor,
           ),
           SizedBox(width: ThemeAppSize.kInterval12),
           Expanded(
@@ -204,8 +200,9 @@ class _ItemTitle extends StatelessWidget {
             child: BigText(
               rightToLeft: true,
               text: product.name!,
-              size: ThemeAppSize.kFontSize22 * 1.3,
+              size: ThemeAppSize.kFontSize22,
               maxLines: 2,
+              color: context.theme.accentColor,
             ),
           ),
         ],

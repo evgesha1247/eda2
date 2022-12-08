@@ -10,6 +10,7 @@ class BodyDetailed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
+
       child: Padding(
         padding: EdgeInsets.all(ThemeAppSize.kInterval24),
         child: Column(
@@ -17,7 +18,7 @@ class BodyDetailed extends StatelessWidget {
           children: [
             BigText(
               text: 'Introduce',
-              //color: Get.theme.backgroundColor,
+              color: context.theme.hintColor,
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height / 1.7,

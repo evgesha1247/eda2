@@ -15,7 +15,7 @@ class MySubmitButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         decoration: BoxDecoration(
-          //color: Get.theme.backgroundColor,
+          //color: context.theme.backgroundColor,
           borderRadius: BorderRadius.all(
             Radius.circular(ThemeAppSize.kRadius12),
           ),
@@ -24,10 +24,10 @@ class MySubmitButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BigText(
-              text: text, //color: Get.theme.cardColor
+              text: text, //color: context.theme.cardColor
             ),
             Icon(
-              Icons.chevron_right, //color: Get.theme.cardColor
+              Icons.chevron_right, //color: context.theme.cardColor
             ),
           ],
         ),
@@ -43,7 +43,7 @@ mySubmitButton(fun, String text) {
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       decoration: BoxDecoration(
 
-        //color: Get.theme.backgroundColor,
+        //color: context.theme.backgroundColor,
         borderRadius: BorderRadius.all(
           Radius.circular(ThemeAppSize.kRadius12),
         ),
@@ -52,10 +52,10 @@ mySubmitButton(fun, String text) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BigText(
-            text: text, //color: Get.theme.cardColor
+            text: text, //color: context.theme.cardColor
           ),
           Icon(
-            Icons.chevron_right, //color: Get.theme.cardColor
+            Icons.chevron_right, //color: context.theme.cardColor
           ),
         ],
       ),

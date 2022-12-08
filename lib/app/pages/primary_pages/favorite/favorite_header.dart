@@ -14,12 +14,12 @@ class FavoritHeader extends StatelessWidget {
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: BigText(
             text: 'Favorites',
-            //color: Get.theme.cardColor,
+            color: context.theme.accentColor,
           ),
         ),
         Icon(
           Icons.favorite_border_outlined,
-          //color: Get.theme.cardColor,
+          color: context.theme.accentColor,
           size: ThemeAppSize.kFontSize22,
         )
       ],

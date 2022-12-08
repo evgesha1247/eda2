@@ -7,22 +7,21 @@ import '../../../widgets/icon/custom_icon.dart';
 class MenuHeader extends StatelessWidget {
   MenuHeader({super.key});
   final controller = Get.find<MenuController>();
-  final InputBorder styleSearch = OutlineInputBorder(
+  @override
+  Widget build(BuildContext context) {
+    final InputBorder styleSearch = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
     borderSide: BorderSide(
-      //color: Get.theme.backgroundColor,
+        color: context.theme.hintColor,
         width: 1.5,
         style: BorderStyle.solid,
       ),
-  );
-
-  @override
-  Widget build(BuildContext context) {
+    );
     return SliverAppBar(
       floating: true,
       pinned: false,
       snap: true,
-      backgroundColor: Get.theme.cardColor,
+      backgroundColor: context.theme.scaffoldBackgroundColor,
       toolbarHeight: ThemeAppSize.kMenuHeaderSearch,
       flexibleSpace: Padding(
         padding: EdgeInsets.only(
@@ -36,17 +35,19 @@ class MenuHeader extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
-                  cursorColor: Get.theme.backgroundColor,
+                  cursorColor: context.theme.hintColor,
+                  cursorWidth: 1.3,
                   decoration: InputDecoration(
                     isDense: true,
-                    fillColor: Get.theme.cardColor,
+                    fillColor: context.theme.hintColor,
                     prefixIcon: WrapperIcon(
                       child: Icon(
                         Icons.search,
-                        //color: Get.theme.backgroundColor,
+                        color: context.theme.hintColor,
                       ),
                     ),
                     hintText: 'Search',
+                    hintStyle: TextStyle(color: context.theme.hintColor),
                     enabledBorder: styleSearch,
                     focusedBorder: styleSearch,
                   ),

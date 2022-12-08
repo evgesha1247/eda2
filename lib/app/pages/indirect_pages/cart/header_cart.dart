@@ -20,12 +20,14 @@ class CartHeader extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             child: GestureDetector(
               onTap: () => Get.back(),
-              child: const ButtonIconBack(),
+              child: ButtonIconBack(
+                iconColor: context.theme.hintColor,
+              ),
             ),
           ),
           BigText(
             text: 'Cart',
-            //color: Get.theme.backgroundColor,
+            color: context.theme.hintColor,
             size: ThemeAppSize.kFontSize22,
           ),
         ],

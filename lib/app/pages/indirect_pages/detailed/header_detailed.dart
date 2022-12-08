@@ -14,8 +14,8 @@ class HeaderDetailed extends StatelessWidget {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       pinned: true,
-      backgroundColor: Get.theme.backgroundColor,
-      surfaceTintColor: Get.theme.backgroundColor,
+      backgroundColor: context.theme.cardColor,
+      surfaceTintColor: context.theme.cardColor,
       expandedHeight: ThemeAppSize.kDetaildHeaderImg,
       toolbarHeight: ThemeAppSize.kDetaildHeaderImgToolbar,
       excludeHeaderSemantics: true,
@@ -55,10 +55,14 @@ class _HeaderIcons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ButtonIconBack(
-          iconColor: Get.theme.backgroundColor,
-          bg: Get.theme.cardColor,
+          iconColor: context.theme.hintColor,
+          bg: context.theme.scaffoldBackgroundColor,
         ),
-        ButtonIconCart(),
+        ButtonIconCart(
+          iconColor: context.theme.hintColor,
+          bg: context.theme.scaffoldBackgroundColor,
+          statusBorder: false,
+        ),
       ],
     );
   }
@@ -71,7 +75,7 @@ class _BodyTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Get.theme.cardColor,
+        color: context.theme.scaffoldBackgroundColor,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(ThemeAppSize.kRadius20 * 2),
         ),
@@ -83,7 +87,7 @@ class _BodyTitle extends StatelessWidget {
           ),
           child: BigText(
             text: name,
-            color: Get.theme.backgroundColor,
+            color: context.theme.hintColor,
             size: ThemeAppSize.kFontSize22,
           ),
         ),

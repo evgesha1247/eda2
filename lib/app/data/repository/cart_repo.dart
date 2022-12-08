@@ -12,8 +12,9 @@ class CartRepo {
   List<String> _cart = [];
 
   List<CartModel> getCartList() {
+    List<CartModel> cartList = [];
     if (sharedStore.containsKey(AppConstansts.CART_LIST)) {
-      List<CartModel> cartList = [];
+
       for (var element in sharedStore.getStringList(AppConstansts.CART_LIST)!) {
         cartList.add(CartModel.fromJson(jsonDecode(element)));
       }

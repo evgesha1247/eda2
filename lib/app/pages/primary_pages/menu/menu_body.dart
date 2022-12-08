@@ -12,7 +12,7 @@ class MenuBodyWidget extends StatelessWidget {
   MenuBodyWidget({super.key});
   final controller = Get.find<MenuController>();
 
-  SliverChildBuilderDelegate _builderItem({required productList}) {
+  SliverChildBuilderDelegate _builderItem() {
     return SliverChildBuilderDelegate(
       childCount: controller.filterList.length,
       (_, int index) => Padding(
@@ -23,16 +23,16 @@ class MenuBodyWidget extends StatelessWidget {
         ),
         child: GestureDetector(
           onTap: () => Get.toNamed(
-            MainRoutes.getDetailed(productList[index].id),
-            arguments: productList[index],
+            MainRoutes.getDetailed(controller.filterList[index].id),
+            arguments: controller.filterList[index],
           ),
           child: Stack(
             children: [
               _ItemImg(
                 img:
-                    "${AppConstansts.BASE_URL}/uploads/${productList[index].img!}",
+                    "${AppConstansts.BASE_URL}/uploads/${controller.filterList[index].img!}",
               ),
-              _ItemControlElements(product: productList[index]),
+              _ItemControlElements(product: controller.filterList[index]),
             ],
           ),
         ),
@@ -49,11 +49,8 @@ class MenuBodyWidget extends StatelessWidget {
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 370,
                 ),
-                delegate: _builderItem(productList: controller.filterList),
-              )
-            : SliverList(
-                delegate: _builderItem(productList: controller.filterList),
-              ),
+                delegate: _builderItem())
+            : SliverList(delegate: _builderItem()),
       ),
     );
   }
@@ -66,7 +63,7 @@ class _ItemImg extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        //color: Get.theme.hintColor,
+        color: context.theme.cardColor,
         borderRadius: ThemeAppFun.decoration(),
         image: DecorationImage(
           fit: BoxFit.cover,
@@ -89,7 +86,7 @@ class _ItemControlElements extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           decoration: BoxDecoration(
-            //color: Get.theme.backgroundColor,
+            color: context.theme.cardColor,
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(ThemeAppSize.kRadius12),
               bottomLeft: Radius.circular(ThemeAppSize.kRadius20),
@@ -97,7 +94,9 @@ class _ItemControlElements extends StatelessWidget {
           ),
           child: BigText(
             text: '\$${product.price}',
-            //color: Get.theme.cardColor,
+            color: ThemeMode.system == ThemeMode.dark
+                ? context.theme.scaffoldBackgroundColor
+                : context.theme.accentColor,
           ),
         ),
         Padding(
@@ -105,8 +104,16 @@ class _ItemControlElements extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CartAddIcon(product: product),
-              FavoritIcon(product: product)
+              CartAddIcon(
+                product: product,
+                bg: context.theme.scaffoldBackgroundColor,
+                iconColor: context.theme.hintColor,
+              ),
+              FavoritIcon(
+                product: product,
+                bg: context.theme.scaffoldBackgroundColor,
+                iconColor: context.theme.hintColor,
+              )
             ],
           ),
         )

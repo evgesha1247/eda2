@@ -35,9 +35,7 @@ class BigText extends StatelessWidget {
       style: TextStyle(
         decorationThickness: decorationThickness,
         fontSize: size == 0 ? ThemeAppSize.kFontSize22 : size,
-        // color: color == Colors.transparent
-        //     ? Get.theme.textTheme.bodyMedium?.color
-        //     : color,
+        color: color == Colors.transparent ? context.theme.hintColor : color,
         fontWeight: fontWeight,
       ),
     );
@@ -69,9 +67,7 @@ class SmallText extends StatelessWidget {
       overflow: overflow,
       style: TextStyle(
         fontSize: size == 0 ? ThemeAppSize.kFontSize20 : size,
-        // color: color == Colors.transparent
-        //     ? Get.theme.textTheme.bodyMedium?.color
-        //     : color,
+        color: color == Colors.transparent ? context.theme.hintColor : color,
         height: height,
         fontWeight: FontWeight.w300,
       ),

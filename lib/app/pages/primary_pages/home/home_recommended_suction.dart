@@ -34,14 +34,12 @@ class _RecommendedTitleWidget extends StatelessWidget {
       children: [
         BigText(
           text: 'Recommended',
-          //color: Get.theme.backgroundColor,
           size: ThemeAppSize.kFontSize20,
         ),
         SizedBox(width: ThemeAppSize.kInterval5),
         SmallText(
           text: '• Food pairing',
           size: ThemeAppSize.kFontSize18,
-          //color: Get.theme.backgroundColor.withOpacity(0.5),
         ),
       ],
     );
@@ -57,7 +55,10 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
       return GestureDetector(
         onTap: () => selected.value = !selected.value,
         onLongPress: () =>
-            Get.toNamed(MainRoutes.getDetailed(item.id), arguments: item),
+            Get.toNamed(
+          MainRoutes.getDetailed(item.id),
+          arguments: item,
+        ),
         child: Obx(
           () => Stack(
             children: [
@@ -75,8 +76,7 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                         : ThemeAppSize.kHomeListViewImg,
                   ),
                   decoration: BoxDecoration(
-                    color:
-                        Get.theme.backgroundColor, // Get.theme.backgroundColor,
+                    color: context.theme.cardColor,
                     borderRadius: BorderRadius.all(
                       Radius.circular(ThemeAppSize.kRadius12),
                     ),
@@ -90,13 +90,15 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                         BigText(
                           text: item.name!,
                           maxLines: 2,
+                          color: context.theme.accentColor,
                         ),
-                        SizedBox(height: ThemeAppSize.kInterval12),
+                        SizedBox(height: ThemeAppSize.kInterval5),
                         SmallText(
                           maxLines: 2,
                           text: !selected.value
                               ? '${item.price!}\$'
                               : item.description!,
+                          color: context.theme.accentColor,
                         ),
                       ],
                     ),
