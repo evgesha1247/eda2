@@ -4,10 +4,10 @@ import '../../../theme/theme_app.dart';
 import '../../../widgets/text/my_text.dart';
 import '../../../widgets/text_field/my_submit_button.dart';
 import '../../../widgets/text_field/my_text_field.dart';
-import 'auth_model.dart';
+import '../../../controllers/auth_controller.dart';
 
-class AuthScreen extends StatelessWidget {
-  const AuthScreen({super.key});
+class AuthPage extends StatelessWidget {
+  const AuthPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +26,7 @@ class AuthScreen extends StatelessWidget {
 }
 
 class _AuthBody extends StatelessWidget {
-  final controller = Get.put(AuthModel());
+  final controller = Get.put(AuthController());
   _AuthBody();
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class _AuthBody extends StatelessWidget {
 }
 
 class _AuthButtonSubmit extends StatelessWidget {
-  final AuthModel controller = Get.find();
+  final AuthController controller = Get.find();
   _AuthButtonSubmit();
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _AuthButtonSubmit extends StatelessWidget {
 }
 
 class _ToggScreenTextWidget extends StatelessWidget {
-  final AuthModel controller = Get.find();
+  final AuthController controller = Get.find();
   _ToggScreenTextWidget();
   @override
   Widget build(BuildContext context) {

@@ -1,36 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/pages/primary_pages/guiding/guiding_controller.dart';
+import 'package:text/app/widgets/text/my_text.dart';
+import '../../../routes/main_routes.dart';
 import '../cart_history/cart_history.dart';
 import '../favorite/favorite_page.dart';
 import '../home/home_page.dart';
 import '../menu/menu_page.dart';
-import 'guiding_model.dart';
 
-class GuidingScreen extends StatelessWidget {
-  const GuidingScreen({Key? key}) : super(key: key);
+class GuidingPage extends StatelessWidget {
+  const GuidingPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: const _GuidingBodyWidget(),
+      body: const _GuidingBody(),
       bottomNavigationBar: (width >= 370) ? const _BottomBarWidget() : null,
       floatingActionButton: (width < 370) ? const _FlotingButtom() : null,
     );
   }
 }
 
-class _GuidingBodyWidget extends StatelessWidget {
-  const _GuidingBodyWidget({Key? key}) : super(key: key);
+class _GuidingBody extends StatelessWidget {
+  const _GuidingBody({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GuidingScreenModel>(
+    return GetBuilder<GuidingController>(
       builder: (model) => IndexedStack(
         index: model.currentIndexTab,
-        children: [
+        children: const [
           HomePage(),
-          MenuPage(),
-          FavoritePage(),
-          CartHistory(),
+
+          Text('data'),
+          Text('data'),
+          Text('data'),
+          //
+          // MenuPage(),
+          // FavoritePage(),
+          // CartHistory(),
         ],
       ),
     );
@@ -41,7 +49,7 @@ class _BottomBarWidget extends StatelessWidget {
   const _BottomBarWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GuidingScreenModel>(
+    return GetBuilder<GuidingController>(
       builder: (model) => BottomNavigationBar(
         onTap: model.setCurrentIndexTab,
         currentIndex: model.currentIndexTab,
@@ -62,8 +70,6 @@ class _BottomBarWidget extends StatelessWidget {
     );
   }
 }
-
-
 
 BottomNavigationBarItem bottomItem(String text, IconData icon) {
   return BottomNavigationBarItem(

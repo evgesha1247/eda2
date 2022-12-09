@@ -9,32 +9,31 @@ import 'menu_header.dart';
 
 class MenuPage extends StatelessWidget {
   MenuPage({Key? key}) : super(key: key);
+  ClassicFooter foot() => const ClassicFooter(
+        noMoreText: 'noMoreText',
+        failedText: 'failedText',
+      );
+  ClassicHeader head() => ClassicHeader(
+        spring: SpringDescription.withDampingRatio(
+          mass: 5,
+          stiffness: .9,
+          ratio: .9,
+        ),
+        armedText: 'armedText',
+        readyText: 'readyText',
+        processingText: 'processingText',
+        processedText: 'processedText',
+        noMoreText: 'noMoreText',
+        failedText: 'failedText',
+      );
+  final controller = Get.find<MenuController>();
   @override
-
-
   Widget build(BuildContext context) {
-    final controller = Get.find<MenuController>();
-
     return Scaffold(
       body: EasyRefresh(
         controller: controller.easyRefreshController,
-        header: ClassicHeader(
-          spring: SpringDescription.withDampingRatio(
-            mass: 5,
-            stiffness: .9,
-            ratio: .9,
-          ),
-          armedText: 'armedText',
-          readyText: 'readyText',
-          processingText: 'processingText',
-          processedText: 'processedText',
-          noMoreText: 'noMoreText',
-          failedText: 'failedText',
-        ),
-        footer: ClassicFooter(
-          noMoreText: 'noMoreText',
-          failedText: 'failedText',
-        ),
+        header: head(),
+        footer: foot(),
         onRefresh: () => controller.onRefresh(),
         onLoad: () => controller.onLoad(),
         child: CustomScrollView(

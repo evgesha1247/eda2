@@ -4,35 +4,8 @@ import 'package:get/get.dart';
 import 'package:text/app/pages/indirect_pages/splash/splash_controller.dart';
 import '../../../widgets/text/my_text.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final dynamic user;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-    try {
-      user = FirebaseAuth.instance.currentUser;
-    } catch (e) {
-      user = null;
-    }
-    Get.put(SplashController());
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class SplashPage extends StatelessWidget {
+  const SplashPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +13,7 @@ class _SplashScreenState extends State<SplashScreen>
         child: Column(
           children: [
             BigText(
-              text: 'Good day ${user?.displayName ?? ' '}',
+              text: 'Good day',
               //color: context.theme.backgroundColor,
             ),
             // Lottie.network(

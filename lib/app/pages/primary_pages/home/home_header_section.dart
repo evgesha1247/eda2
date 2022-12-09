@@ -51,7 +51,7 @@ class _UserIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(MainRoutes.getProfile()),
+      onTap: () => Get.toNamed(MainRoutes.getProfile),
       child: WrapperIcon(
         statusBorder: true,
         colorBorder: context.theme.hintColor,

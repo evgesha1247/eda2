@@ -12,8 +12,8 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: const [
             HomeHeader(),
-            HomePopular(),
-            HomeRecommended(),
+            // HomePopular(),
+            // HomeRecommended(),
           ],
         ),
       )

@@ -6,21 +6,22 @@ import 'package:text/app/widgets/app/my_app_widget.dart';
 import 'package:text/firebase_options.dart';
 import 'app/data/repository/auth_repo.dart';
 import 'app/pages/indirect_pages/splash/splash_controller.dart';
-import '../../../helper/dependencies.dart' as dep;
+import 'app/theme/theme_controller.dart';
+import 'helper/dependencies.dart';
 
 Future<void> main() async {
+  ThemeAppController.init;
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dep.init();
+  MainBindings().dependencies();
 
   try {
     await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-    ).then((value) => Get.put(AuthRepo()));
+      options: DefaultFirebaseOptions.currentPlatform,
+    ).then((value) => Get.find<AuthRepo>());
   } catch (e) {
-    debugPrint('no initialize Firebase !!!');
-    GetPlatform.isDesktop ? Get.put(SplashController()) : null;
+    GetPlatform.isDesktop ? SplashController().loadData() : null;
   }
 
-  runApp(const MyAppWidget());
+  runApp(MyAppWidget());
 }

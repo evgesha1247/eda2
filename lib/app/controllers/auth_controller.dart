@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../data/repository/auth_repo.dart';
+import '../data/repository/auth_repo.dart';
 
-class AuthModel extends GetxController {
+class AuthController extends GetxController {
   final cName = TextEditingController();
   final cEmail = TextEditingController();
   final cPassword = TextEditingController();
@@ -18,8 +18,9 @@ class AuthModel extends GetxController {
   }
 
   Future authUser({required email, required pass}) async {
+    final authRepo = Get.find<AuthRepo>();
     isLogScreen
-        ? AuthRepo.instance.loginUser(email: email, password: pass)
-        : AuthRepo.instance.createUser(email: email, password: pass);
+        ? authRepo.loginUser(email: email, password: pass)
+        : authRepo.createUser(email: email, password: pass);
   }
 }

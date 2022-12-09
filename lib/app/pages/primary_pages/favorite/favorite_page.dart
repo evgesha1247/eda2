@@ -12,7 +12,7 @@ class FavoritePage extends StatelessWidget {
       body: Column(
         children: const [
           FavoritHeader(),
-          FavoriteBody(),
+          // FavoriteBody(),
         ],
       ),
     );

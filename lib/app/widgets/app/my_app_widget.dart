@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:flutter/services.dart';
+import 'package:text/app/theme/theme_controller.dart';
 import '../../controllers/cart_controller.dart';
 import '../../controllers/favorite_controller.dart';
 import '../../controllers/product_controller.dart';
 import '../../routes/main_routes.dart';
-import '../../theme/theme_controller.dart';
 
 class MyAppWidget extends StatelessWidget {
   const MyAppWidget({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class MyAppWidget extends StatelessWidget {
                       darkTheme: Themes.dark,
                       debugShowCheckedModeBanner: false,
                       getPages: MainRoutes.getPages,
-                      initialRoute: MainRoutes.getInitial(),
+                      initialRoute: MainRoutes.getInitial,
                     );
                   },
                 );

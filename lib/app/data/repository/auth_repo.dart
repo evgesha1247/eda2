@@ -4,24 +4,22 @@ import 'package:get/get.dart';
 import 'package:text/app/routes/main_routes.dart';
 
 class AuthRepo extends GetxController {
-  static AuthRepo get instance => Get.find<AuthRepo>();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late final Rx<User?> firebaseUser;
-
   @override
   void onReady() {
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setScreen);
     super.onReady();
+    print('init auth repo ');
   }
 
   _setScreen(User? user) {
-
     user == null
-        ? Get.offNamed(MainRoutes.getAuth())
-        : Get.toNamed(MainRoutes.getSplash());
+        ? Get.offNamed(MainRoutes.getAuth)
+        : Get.toNamed(MainRoutes.getSplash);
   }
 
   Future<void> createUser({required email, required password}) async {

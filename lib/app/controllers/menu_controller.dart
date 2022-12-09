@@ -15,7 +15,11 @@ class Filter {
 }
 
 class MenuController extends GetxController {
-
+@override
+  void onInit() {
+    print('init main');
+    super.onInit();
+  }
   bool isListGrid = true;
   void togStatusList() {
     isListGrid = !isListGrid;

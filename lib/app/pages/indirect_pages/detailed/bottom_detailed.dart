@@ -39,7 +39,7 @@ class _TotalPriceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(MainRoutes.getCart()),
+      onTap: () => Get.toNamed(MainRoutes.getCart),
       child: GetBuilder<CartController>(
         builder: (_) {
           return Container(

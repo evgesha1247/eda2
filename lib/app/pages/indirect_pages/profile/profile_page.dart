@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/pages/indirect_pages/profile/profile_controller.dart';
 import 'package:text/app/widgets/icon/custom_icon.dart';
 import '../../../data/repository/auth_repo.dart';
 import '../../../theme/theme_app.dart';
@@ -10,22 +9,24 @@ import '../../../widgets/icon/anumated_icon_favorit.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
-  final controller = Get.put(ProfileController());
+  //final controller = Get.find<AuthRepo>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: controller.user != null
-          ? _ProfileBody(user: controller.user as User)
-          : _Example(),
+      body: _Example(),
+      // controller.firebaseUser.value != null
+      //     ? _ProfileBody(controller: controller)
+      //     :
     );
   }
 }
 
 class _ProfileBody extends StatelessWidget {
-  const _ProfileBody({required this.user});
-  final User user;
+  const _ProfileBody({required this.controller});
+  final AuthRepo controller;
   @override
   Widget build(BuildContext context) {
+    final User user = controller.firebaseUser.value as User;
     return Center(
       child: Column(
         children: [
@@ -34,7 +35,7 @@ class _ProfileBody extends StatelessWidget {
           Text('photo : ${user.photoURL}'),
           Text('email : ${user.email}'),
           ElevatedButton(
-            onPressed: () => AuthRepo.instance.logout(),
+            onPressed: () => controller.logout(),
             child: const Text('logout'),
           ),
         ],
