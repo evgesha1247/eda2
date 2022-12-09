@@ -1,7 +1,6 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../pages/primary_pages/menu/menu_filter.dart';
 import 'product_controller.dart';
 import '../models/products_model.dart';
 
@@ -17,39 +16,55 @@ class Filter {
 
 class MenuController extends GetxController {
 
-  bool _isListGrid = true;
-  bool get isListGrid => _isListGrid;
-  SortMethod? method = SortMethod.reset;
+  bool isListGrid = true;
+  void togStatusList() {
+    isListGrid = !isListGrid;
+    update();
+  }
 
+/////////////////////////////////////////////
+  final EasyRefreshController _easyRefreshController = EasyRefreshController(
+    controlFinishRefresh: true,
+    controlFinishLoad: true,
+  );
+  get easyRefreshController => _easyRefreshController;
 
+  Future<void> onRefresh() async {
 
+    _easyRefreshController.finishRefresh();
+    _easyRefreshController.resetFooter();
+    initProductControllerr(Get.find<ProductController>());
 
+  }
 
+  Future<void> onLoad() async {
+    _easyRefreshController.finishLoad(IndicatorResult.noMore);
+  }
 
-
-
-
+////// init all product/////////////////////
   final List<ProductModel> _productList = [];
-  List<ProductModel> get prosuct => _productList;
-
   List<ProductModel> _filterList = [];
   List<ProductModel> get filterList => _filterList;
 
-  ProductController? productsController;
 
-  void initProductControllerr(ProductController productController) {
-    productsController = productController;
-    _productList.addAll(
-      productsController!.popularProductList +
-          productsController!.recommendedProductList,
-    );
+  void initProductControllerr(ProductController controller) {
+    if (_productList == []) {
+      _productList.addAll(
+          controller.popularProductList + controller.recommendedProductList);
+    } else {
+      for (var element in controller.popularProductList) {
+        if (!_productList.contains(element)) {
+          _productList.add(element);
+        }
+      }
+      for (var element in controller.recommendedProductList) {
+        if (!_productList.contains(element)) {
+          _productList.add(element);
+        }
+      }
+    }
     _filterList = _productList;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    initProductControllerr(Get.find<ProductController>());
+    update();
   }
 
 ///////////////////////////// Sort ///////////////////////
@@ -69,7 +84,7 @@ class MenuController extends GetxController {
 
     update();
   }
-
+  SortMethod? method = SortMethod.reset;
   sortBy() {
     switch (method) {
       case SortMethod.lowToHigh:
@@ -89,8 +104,5 @@ class MenuController extends GetxController {
     update();
   }
 
-  void togStatusList() {
-    _isListGrid = !_isListGrid;
-    update();
-  }
+
 }

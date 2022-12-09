@@ -12,8 +12,21 @@ import '../app/pages/indirect_pages/auth/auth_model.dart';
 import '../app/pages/indirect_pages/splash/splash_controller.dart';
 import '../app/pages/primary_pages/guiding/guiding_model.dart';
 import '../app/controllers/menu_controller.dart';
+import '../app/theme/theme_controller.dart';
 import '../utils/app_constants.dart';
 
+
+class Init extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => ApiClient(appBaseUrl: AppConstansts.BASE_URL));
+    Get.lazyPut(() => ThemeAppController());
+    Get.lazyPut(() => ProductController(
+          popularProductRepo: Get.find(),
+          recommendedProductRepo: Get.find(),
+        ));
+  }
+}
 Future<void> init() async {
   //api
   Get.lazyPut(() => ApiClient(appBaseUrl: AppConstansts.BASE_URL));

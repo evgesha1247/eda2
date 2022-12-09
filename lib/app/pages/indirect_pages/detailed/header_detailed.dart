@@ -77,7 +77,7 @@ class _BodyTitle extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.theme.scaffoldBackgroundColor,
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(ThemeAppSize.kRadius20 * 2),
+          top: Radius.circular(ThemeAppSize.kRadius18 * 2),
         ),
       ),
       child: Center(

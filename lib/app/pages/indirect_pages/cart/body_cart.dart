@@ -51,7 +51,7 @@ class _ItemInside extends StatelessWidget {
           width: ThemeAppSize.kInterval24 * 4,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
-              Radius.circular(ThemeAppSize.kRadius20),
+              Radius.circular(ThemeAppSize.kRadius18),
             ),
             border: Border.all(color: context.theme.hintColor),
           ),

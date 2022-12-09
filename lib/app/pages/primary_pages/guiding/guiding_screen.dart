@@ -26,7 +26,7 @@ class _GuidingBodyWidget extends StatelessWidget {
     return GetBuilder<GuidingScreenModel>(
       builder: (model) => IndexedStack(
         index: model.currentIndexTab,
-        children: const [
+        children: [
           HomePage(),
           MenuPage(),
           FavoritePage(),

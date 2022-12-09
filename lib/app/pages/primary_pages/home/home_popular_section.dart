@@ -177,7 +177,7 @@ class _ItemTitle extends StatelessWidget {
             colors: [Colors.transparent, Color.fromARGB(171, 33, 26, 22)],
             stops: [0.4, .9]),
         borderRadius: ThemeAppFun.decoration(
-          radius: ThemeAppSize.kRadius20,
+          radius: ThemeAppSize.kRadius18,
         ),
       ),
       child: Row(
@@ -218,7 +218,7 @@ class _ItemImg extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius20),
+        borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius18),
         image: DecorationImage(
           fit: BoxFit.cover,
           image: NetworkImage(img),

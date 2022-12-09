@@ -5,18 +5,19 @@ import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/custom_icon.dart';
 
 class MenuHeader extends StatelessWidget {
-  MenuHeader({super.key});
-  final controller = Get.find<MenuController>();
+  const MenuHeader({super.key});
+
   @override
   Widget build(BuildContext context) {
     final InputBorder styleSearch = OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius20)),
+      borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
     borderSide: BorderSide(
         color: context.theme.hintColor,
         width: 1.5,
         style: BorderStyle.solid,
       ),
     );
+    final controller = Get.find<MenuController>();
     return SliverAppBar(
       floating: true,
       pinned: false,
@@ -24,14 +25,9 @@ class MenuHeader extends StatelessWidget {
       backgroundColor: context.theme.scaffoldBackgroundColor,
       toolbarHeight: ThemeAppSize.kMenuHeaderSearch,
       flexibleSpace: Padding(
-        padding: EdgeInsets.only(
-          bottom: ThemeAppSize.kInterval12,
+        padding: EdgeInsets.all(ThemeAppSize.kInterval12
         ),
-        child: FlexibleSpaceBar(
-          titlePadding: EdgeInsets.symmetric(
-            horizontal: ThemeAppSize.kInterval12,
-          ),
-          title: Row(
+        child: Row(
             children: [
               Expanded(
                 child: TextField(
@@ -56,7 +52,7 @@ class MenuHeader extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        //  ),
       ),
     );
   }

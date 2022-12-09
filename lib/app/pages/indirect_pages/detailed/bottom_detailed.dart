@@ -18,7 +18,7 @@ class BottomDetailed extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.theme.cardColor,
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(ThemeAppSize.kRadius20 * 2),
+          top: Radius.circular(ThemeAppSize.kRadius18 * 2),
         ),
       ),
       child: Row(

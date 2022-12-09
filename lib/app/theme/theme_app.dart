@@ -1,40 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+const String fontFamily = 'Mariupol';
 
-class ThemeAppController extends GetxController {
-  bool isLightTheme = false;
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  ThemeAppController() {
-    getThemeStatus();
-  }
-  saveThemeStatus() async {
-    (await _prefs).setBool('theme', isLightTheme);
-  }
-
-  getThemeStatus() async {
-    var isLight = _prefs.then((SharedPreferences prefs) {
-      return prefs.getBool('theme') ?? true;
-    });
-    isLightTheme = await isLight;
-    Get.changeThemeMode(isLightTheme ? ThemeMode.light : ThemeMode.dark);
-    update();
-  }
-
-  tooggTheme() {
-    isLightTheme = !isLightTheme;
-    Get.changeThemeMode(
-      isLightTheme ? ThemeMode.light : ThemeMode.dark,
-    );
-    saveThemeStatus();
-    update();
-  }
-}
+const _textStyleLight = TextStyle(
+  fontFamily: fontFamily,
+  color: ThemeAppColor.kFrontColor,
+  height: 1.2,
+  overflow: TextOverflow.ellipsis,
+  fontWeight: FontWeight.w400,
+  fontSize: 20,
+);
+const textThemeLight = TextTheme(
+  bodyMedium: _textStyleLight,
+);
+const _textStyleDark = TextStyle(color: ThemeAppColor.kFrontColor);
+const textThemeDark = TextTheme(
+  bodyMedium: _textStyleDark,
+);
 
 class Themes {
-  final String fontFamily = 'Mariupol';
+
+
 
   static final light = ThemeData.light().copyWith(
+    // text
+    textTheme: textThemeLight,
+    primaryTextTheme: textThemeLight,
     //main
     scaffoldBackgroundColor: ThemeAppColor.kBGColor,
     cardColor: ThemeAppColor.kFrontColor,
@@ -47,6 +38,9 @@ class Themes {
 
 
   static final dark = ThemeData.dark().copyWith(
+    // text
+    textTheme: textThemeDark,
+    primaryTextTheme: textThemeDark,
     //main
     scaffoldBackgroundColor: ThemeAppColor.kFrontColor,
     cardColor: Color.fromARGB(255, 106, 76, 80),
@@ -76,7 +70,7 @@ abstract class ThemeAppSize {
 
   // радиус
   static double kRadius12 = kScreensHeight / (height / 12);
-  static double kRadius20 = kScreensHeight / (height / 20);
+  static double kRadius18 = kScreensHeight / (height / 18);
   // отступы
   static double kInterval5 = kScreensHeight / (height / 5);
   static double kInterval12 = kScreensHeight / (height / 12);
@@ -101,12 +95,13 @@ abstract class ThemeAppSize {
 
 // home menu
   static double kMenuHeaderSearch = kScreensHeight / (height / 75);
+  static double kMenuHeaderFilter = kScreensHeight / (height / 75);
 }
 
 abstract class ThemeAppFun {
   static decoration({double radius = 0}) {
     return BorderRadius.all(
-      Radius.circular(radius == 0 ? ThemeAppSize.kRadius20 : radius),
+      Radius.circular(radius == 0 ? ThemeAppSize.kRadius18 : radius),
     );
   }
 

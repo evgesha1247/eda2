@@ -6,20 +6,22 @@ import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/icon/custom_icon.dart';
 import '../../../widgets/text/my_text.dart';
 
-class FilterWidget extends StatelessWidget {
-  FilterWidget({super.key});
-  final controller = Get.find<MenuController>();
+class MenuFilter extends StatelessWidget {
+  const MenuFilter({super.key});
   final List<Filter> filterModel = const [
     Filter(text: 'Sort by', icon: Icons.short_text_outlined),
     Filter(text: 'Filter', icon: Icons.filter_alt_outlined),
   ];
+
   @override
   Widget build(BuildContext context) {
     final listFilter = filterModel
         .map((Filter e) => FilterItem(text: e.text, icon: e.icon))
         .toList();
-    return SliverToBoxAdapter(
-      child: Padding(
+    return SliverAppBar(
+      backgroundColor: context.theme.scaffoldBackgroundColor,
+      toolbarHeight: ThemeAppSize.kMenuHeaderFilter,
+      flexibleSpace: Padding(
         padding: EdgeInsets.only(
           left: ThemeAppSize.kInterval12,
           bottom: ThemeAppSize.kInterval12,
@@ -135,7 +137,7 @@ class FilterItem extends StatelessWidget {
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: Wrap(
             children: [
-              SmallText(text: text),
+              SmallText(text: text, color: context.theme.hintColor),
               Icon(icon, color: context.theme.hintColor),
             ],
           ),

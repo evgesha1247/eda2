@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../controllers/cart_controller.dart';
 import '../../routes/main_routes.dart';
 import '../../theme/theme_app.dart';
+import '../../theme/theme_controller.dart';
 import '../text/my_text.dart';
 
 class WrapperIcon extends StatelessWidget {

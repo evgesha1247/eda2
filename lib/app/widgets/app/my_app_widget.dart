@@ -6,6 +6,7 @@ import '../../controllers/cart_controller.dart';
 import '../../controllers/favorite_controller.dart';
 import '../../controllers/product_controller.dart';
 import '../../routes/main_routes.dart';
+import '../../theme/theme_controller.dart';
 
 class MyAppWidget extends StatelessWidget {
   const MyAppWidget({Key? key}) : super(key: key);

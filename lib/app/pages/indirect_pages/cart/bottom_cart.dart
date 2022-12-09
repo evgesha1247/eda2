@@ -25,7 +25,7 @@ class _ContaiterCart extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.theme.cardColor,
         borderRadius: BorderRadius.all(
-          Radius.circular(ThemeAppSize.kRadius20),
+          Radius.circular(ThemeAppSize.kRadius18),
         ),
       ),
       child: Padding(

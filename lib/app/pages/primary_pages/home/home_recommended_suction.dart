@@ -114,7 +114,7 @@ class _RecommendedListBuilderWidget extends StatelessWidget {
                   height: ThemeAppSize.kHomeListViewImg,
                   decoration: BoxDecoration(
                     borderRadius: ThemeAppFun.decoration(
-                      radius: ThemeAppSize.kRadius20,
+                      radius: ThemeAppSize.kRadius18,
                     ),
                     image: DecorationImage(
                       fit: BoxFit.cover,

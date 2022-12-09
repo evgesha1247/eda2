@@ -5,6 +5,7 @@ import 'package:text/app/pages/indirect_pages/profile/profile_controller.dart';
 import 'package:text/app/widgets/icon/custom_icon.dart';
 import '../../../data/repository/auth_repo.dart';
 import '../../../theme/theme_app.dart';
+import '../../../theme/theme_controller.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
 
 class ProfilePage extends StatelessWidget {

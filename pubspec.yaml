@@ -11,13 +11,18 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
 
-  flutter_slidable: ^2.0.0  # слайд для корзины
-  dots_indicator: ^2.1.0    # точки-интикаторы страницы
+  flutter_slidable: ^2.0.0     # слайд для корзины
+  dots_indicator: ^2.1.0       # точки-интикаторы страницы
+  shared_preferences: ^2.0.15  # локальное хранилище
+  firebase_auth: ^4.0.2        # регистрация
 
-  get: ^4.1.4
-  shared_preferences: ^2.0.15
-  # регистрация
-  firebase_auth: ^4.0.2
+
+  pull_to_refresh: ^2.0.0        # обновление при скроле
+  easy_refresh: ^3.0.5           # обновление при скроле
+
+
+  get: ^4.1.4                  # поставщик
+
 
 dev_dependencies:
   analyzer: ^4.7.0
@@ -32,17 +37,17 @@ flutter:
     - assets/imgs/
     - assets/icons/
 
-
-
   fonts:
     - family: Insaniburger
       fonts:
         - asset: assets/fonts/Insaniburger.ttf
+
     - family: Mariupol
       fonts:
         - asset: assets/fonts/Mariupol-Bold.ttf
         - asset: assets/fonts/Mariupol-Medium.ttf
         - asset: assets/fonts/Mariupol-Regular.ttf
+
     - family: Tienne
       fonts:
         - asset: assets/fonts/Tienne-Black.ttf

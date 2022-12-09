@@ -127,6 +127,7 @@ class CartController extends GetxController {
     _items.remove(product.id);
     Get.find<ProductController>()
         .initCountToCart(product, Get.find<CartController>());
+    cartRepo.addToCartList(getItemsList);
     update();
   }
   /// clear

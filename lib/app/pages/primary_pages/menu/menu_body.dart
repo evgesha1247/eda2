@@ -8,11 +8,11 @@ import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/text/my_text.dart';
 
-class MenuBodyWidget extends StatelessWidget {
-  MenuBodyWidget({super.key});
-  final controller = Get.find<MenuController>();
+class MenuBody extends StatelessWidget {
+  const MenuBody({super.key});
 
   SliverChildBuilderDelegate _builderItem() {
+    final controller = Get.find<MenuController>();
     return SliverChildBuilderDelegate(
       childCount: controller.filterList.length,
       (_, int index) => Padding(
@@ -42,6 +42,7 @@ class MenuBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return GetBuilder<MenuController>(
       builder: (_) => Container(
         child: _.isListGrid
@@ -89,7 +90,7 @@ class _ItemControlElements extends StatelessWidget {
             color: context.theme.cardColor,
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(ThemeAppSize.kRadius12),
-              bottomLeft: Radius.circular(ThemeAppSize.kRadius20),
+              bottomLeft: Radius.circular(ThemeAppSize.kRadius18),
             ),
           ),
           child: BigText(
