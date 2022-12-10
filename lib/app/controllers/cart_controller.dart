@@ -28,9 +28,6 @@ class CartController extends GetxController {
     }
     update();
   }
-
-  ///
-
   /// общая цена в корзине
   int discount = 15;
   double get totalAmount {

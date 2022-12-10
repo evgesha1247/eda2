@@ -7,6 +7,11 @@ import '../models/favorite_model.dart';
 class FavoriteController extends GetxController {
   final FavoriteRepo favoriteRepo;
   FavoriteController({required this.favoriteRepo});
+  @override
+  void onInit() {
+    print(' init favorite ');
+    super.onInit();
+  }
 
   final Map<int, FavoriteModel> _favoriteList = {};
   List<FavoriteModel> get getFavoriteList =>

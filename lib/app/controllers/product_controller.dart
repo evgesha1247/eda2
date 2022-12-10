@@ -12,7 +12,11 @@ class ProductController extends GetxController {
     required this.recommendedProductRepo,
     required this.popularProductRepo,
   });
-
+  @override
+  void onInit() {
+    print('init Product');
+    super.onInit();
+  }
   var _popularProductList = <ProductModel>[];
   var _recommendedProductList = <ProductModel>[];
 

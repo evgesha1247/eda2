@@ -15,42 +15,61 @@ import '../app/pages/primary_pages/guiding/guiding_controller.dart';
 import '../app/theme/theme_controller.dart';
 import '../utils/app_constants.dart';
 
-
-class MainBindings implements Bindings {
+class ApiBindings implements Bindings {
   @override
   void dependencies() {
+    print('api client init  /  lazy auth');
     //api
-    Get.lazyPut(() => ApiClient(appBaseUrl: AppConstansts.BASE_URL));
+    Get.put(ApiClient(appBaseUrl: AppConstansts.BASE_URL));
     Get.lazyPut(() => AuthRepo());
   }
 }
 
-
-class GuidingBinding implements Bindings {
+class ControllersBindings implements Bindings {
   @override
-  void dependencies() async {
-    Get.lazyPut<GuidingController>(() => GuidingController());
-    final sharedStore = await SharedPreferences.getInstance();
-    Get.lazyPut(() => sharedStore);
-
-    // menu
-    Get.lazyPut(() => MenuController());
-
-    ///
-
-    Get.lazyPut(() => ThemeAppController.init);
-    Get.lazyPut(() => FavoriteController(favoriteRepo: Get.find()));
-    Get.lazyPut(() => FavoriteRepo(sharedStore: Get.find()));
-
-    Get.lazyPut(
-      () => ProductController(
-        popularProductRepo: Get.find(),
-        recommendedProductRepo: Get.find(),
-      ),
-    );
+  Future<void> dependencies() async {
+    /// product
+    Get.lazyPut(() => ProductController(
+        popularProductRepo: Get.find(), recommendedProductRepo: Get.find()));
     Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
 
+    /// cart
     Get.lazyPut(() => CartController(cartRepo: Get.find()));
     Get.lazyPut(() => CartRepo(sharedStore: Get.find()));
+
+    /// favorite
+    Get.lazyPut(() => FavoriteController(favoriteRepo: Get.find()),
+        fenix: true);
+    Get.lazyPut(() => FavoriteRepo(sharedStore: Get.find()));
+  }
+}
+
+class ThemeBindings implements Bindings {
+  @override
+
+  Future<void> dependencies() async {
+    final sharedStore = await SharedPreferences.getInstance();
+    Get.lazyPut(() => sharedStore);
+    Get.lazyPut(() => ThemeAppController(), fenix: true);
+  }
+
+}
+
+class DataBindings implements Bindings {
+  @override
+  Future<void> dependencies() async {
+    await Get.find<ProductController>().getPopularProductList();
+    await Get.find<ProductController>().getRecommendedProductList();
+    // // local
+    Get.find<CartController>().getItemsListLocal();
+    Get.find<FavoriteController>().getItemsListLocal();
+  }
+}
+
+class AllPageBindings implements Bindings {
+  @override
+  Future<void> dependencies() async {
+    Get.lazyPut<GuidingController>(() => GuidingController());
+    Get.lazyPut(() => MenuController());
   }
 }

@@ -9,8 +9,6 @@ class ApiClient extends GetConnect implements GetxService {
   late Map<String, String> _mainHeaders;
 
   ApiClient({required this.appBaseUrl}) {
-
-    print('api client init');
     baseUrl = appBaseUrl;
     timeout = const Duration(seconds: 30);
     token = AppConstansts.TOKEN;
@@ -31,4 +29,7 @@ class ApiClient extends GetConnect implements GetxService {
       );
     }
   }
+
+
+
 }

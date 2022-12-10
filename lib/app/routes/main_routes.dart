@@ -16,14 +16,12 @@ class MainRoutes {
   static const getAuth = '/auth';
   static const getSplash = '/splash';
 
-
   static const getGuiding = '/guiding';
   static const getCart = '/guiding/cart';
   static const getProfile = '/guiding/profile';
 
   static const _detailed = '/guiding/detailed-food';
   static String getDetailed(pageID) => '$_detailed?pageID=$pageID';
-
 
   static final List<GetPage> getPages = [
     /// загрузка
@@ -42,12 +40,6 @@ class MainRoutes {
     GetPage(name: _detailed, page: () => FoodDetailedPage()),
     GetPage(name: getProfile, page: () => ProfilePage()),
 
-    GetPage(
-      name: getGuiding,
-      page: () => const GuidingPage(),
-      binding: GuidingBinding(),
-    ),
-
-
+    GetPage(name: getGuiding, page: () => const GuidingPage()),
   ];
 }
