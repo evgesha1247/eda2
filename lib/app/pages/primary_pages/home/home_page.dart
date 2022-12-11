@@ -8,9 +8,7 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
   @override
   Widget build(context) {
-    return CustomScrollView(slivers: [
-      SliverFillRemaining(
-        hasScrollBody: false,
+    return SingleChildScrollView(
         child: Column(
           children: [
             const HomeHeader(),
@@ -20,6 +18,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
       )
-    ]);
+;
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
@@ -71,40 +69,32 @@ class _ItemBuilder extends StatelessWidget {
   const _ItemBuilder();
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: context.height / 1.5,
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-            child: GetBuilder<ProductController>(
-              builder: (recommendedProduct) {
-                return ListView.builder(
-                  itemCount: recommendedProduct.recommendedProductList.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    var selected = true.obs;
-                    final ProductModel item =
-                        recommendedProduct.recommendedProductList[index];
-                    return GestureDetector(
-                      onTap: () => selected(!selected.value),
-                      onLongPress: () => Get.toNamed(
-                        MainRoutes.getDetailed(item.id),
-                        arguments: item,
-                      ),
-                      child: Obx(
-                        () => selected.value
-                            ? _ItemOpen(item: item, index: index)
-                            : _ItemClos(item: item),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          );
-        },
-      ),
+    return GetBuilder<ProductController>(
+      builder: (recommendedProduct) {
+        return ListView.builder(
+          itemCount: recommendedProduct.recommendedProductList.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            var selected = true.obs;
+            final ProductModel item =
+                recommendedProduct.recommendedProductList[index];
+            return GestureDetector(
+              onTap: () => selected(!selected.value),
+              onLongPress: () => Get.toNamed(
+                MainRoutes.getDetailed(item.id),
+                arguments: item,
+              ),
+              child: Obx(
+                () => selected.value
+                    ? _ItemOpen(item: item, index: index)
+                    : _ItemClos(item: item),
+              ),
+            );
+          },
+        );
+      },
+
     );
   }
 }
@@ -115,10 +105,15 @@ class _ItemOpen extends StatelessWidget {
   const _ItemOpen({required this.item, required this.index});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: ThemeAppSize.kHomeListView,
+    return SizedBox(
+      height: ThemeAppSize.kHomeListView + ThemeAppSize.kInterval12,
       child: Row(
         children: [
+
+          ///
+          /// img
+          ///
+
           Container(
             width: ThemeAppSize.kHomeListView,
             height: ThemeAppSize.kHomeListView,
@@ -134,8 +129,14 @@ class _ItemOpen extends StatelessWidget {
               ),
             ),
           ),
+
+          ///
+          /// info
+          ///
+
           Expanded(
             child: Container(
+
               height: ThemeAppSize.kHomeListViewInfo,
               decoration: BoxDecoration(
                 color: Get.context?.theme.cardColor,
@@ -143,14 +144,22 @@ class _ItemOpen extends StatelessWidget {
                   right: Radius.circular(ThemeAppSize.kRadius12),
                 ),
               ),
-              child: BigText(
-                text: item.name!,
-                maxLines: 2,
-                color: Get.context!.theme.accentColor,
+              child: Padding(
+                padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                child: BigText(
+                  text: item.name!,
+                  maxLines: 2,
+                  color: Get.context!.theme.accentColor,
+                ),
               ),
             ),
           ),
-          SizedBox(width: ThemeAppSize.kInterval24),
+
+          ///
+          /// divider
+          ///
+
+          SizedBox(width: ThemeAppSize.kInterval12),
           Column(
             children: [
               Expanded(
@@ -180,7 +189,7 @@ class _ItemOpen extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(width: ThemeAppSize.kInterval24)
+          SizedBox(width: ThemeAppSize.kInterval12)
         ],
       ),
     );
@@ -192,68 +201,75 @@ class _ItemClos extends StatelessWidget {
   const _ItemClos({required this.item});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: ThemeAppSize.kHomeListView,
-      decoration: BoxDecoration(
-        color: Get.context?.theme.cardColor,
-        borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius18)),
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: Row(
-        children: [
-          Image(
-            width: ThemeAppSize.kHomeListView,
-            height: ThemeAppSize.kHomeListView,
-            fit: BoxFit.cover,
-            image: NetworkImage(
-              "${AppConstansts.BASE_URL}/uploads/${item.img!}",
-            ),
+    return Column(
+      children: [
+        SizedBox(height: ThemeAppSize.kInterval12),
+        Container(
+          height: ThemeAppSize.kHomeListView,
+          decoration: BoxDecoration(
+            color: Get.context?.theme.cardColor,
+            borderRadius:
+                BorderRadius.all(Radius.circular(ThemeAppSize.kRadius18)),
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  BigText(
-                    text: item.name!,
-                    maxLines: 2,
-                    color: Get.context!.theme.accentColor,
-                  ),
-                  SmallText(
-                    maxLines: 2,
-                    text: item.description!,
-                    color: Get.context!.theme.accentColor.withOpacity(0.8),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+          clipBehavior: Clip.hardEdge,
+          child: Row(
+            children: [
+              Image(
+                width: ThemeAppSize.kHomeListView,
+                height: ThemeAppSize.kHomeListView,
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                  "${AppConstansts.BASE_URL}/uploads/${item.img!}",
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       BigText(
-                        text: '${item.price!.toStringAsFixed(2)}\$',
+                        text: item.name!,
                         maxLines: 2,
                         color: Get.context!.theme.accentColor,
                       ),
-                      const Spacer(),
-                      CartAddIcon(
-                        product: item,
-                        statusBorder: true,
+                      SmallText(
+                        maxLines: 2,
+                        text: item.description!,
+                        color: Get.context!.theme.accentColor.withOpacity(0.8),
                       ),
-                      SizedBox(
-                        width: ThemeAppSize.kInterval12,
-                      ),
-                      FavoritIcon(
-                        product: item,
-                        statusBorder: true,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          BigText(
+                            text: '${item.price!.toStringAsFixed(2)}\$',
+                            maxLines: 2,
+                            color: Get.context!.theme.accentColor,
+                          ),
+                          const Spacer(),
+                          CartAddIcon(
+                            product: item,
+                            statusBorder: true,
+                          ),
+                          SizedBox(
+                            width: ThemeAppSize.kInterval12,
+                          ),
+                          FavoritIcon(
+                            product: item,
+                            statusBorder: true,
+                          )
+                        ],
                       )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+        SizedBox(height: ThemeAppSize.kInterval12),
+      ],
     );
   }
 }
