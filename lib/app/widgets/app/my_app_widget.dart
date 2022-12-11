@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:text/app/theme/theme_controller.dart';
 import 'package:text/helper/dependencies.dart';
 import '../../controllers/cart_controller.dart';
-import '../../controllers/favorite_controller.dart';
+import '../../controllers/page_controller/favorite_controller.dart';
 import '../../controllers/product_controller.dart';
 import '../../routes/main_routes.dart';
 
@@ -21,7 +21,6 @@ class MyAppWidget extends StatelessWidget {
         return GetBuilder<CartController>(
           builder: (_) {
             return GetBuilder<FavoriteController>(
-
               builder: (_) {
                 return GetMaterialApp(
                   title: 'Restaurant',

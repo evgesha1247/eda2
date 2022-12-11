@@ -83,10 +83,10 @@ abstract class ThemeAppSize {
 // home page
   // page view
   static double kHomePageView = kScreensHeight / (height / 220);
-  static double kHomePageViewImg = kScreensHeight / (height / 160);
+  static double kHomePageViewError = kScreensHeight / (height / 120);
   // list view
-  static double kHomeListViewImg = kScreensHeight / (height / 130);
-  static double kHomeListViewInfo = kScreensHeight / (height / 110);
+  static double kHomeListView = kScreensHeight / (height / 150);
+  static double kHomeListViewInfo = kScreensHeight / (height / 120);
 
 // ditalit page
   static double kDetaildHeaderImg = kScreensHeight / (height / 280);
@@ -105,9 +105,9 @@ abstract class ThemeAppFun {
     );
   }
 
-  static void printSnackBar(String message) {
+  static void printSnackBar(String message, {String title = 'Item count'}) {
     Get.snackbar(
-      'Item count',
+      title,
       message,
       backgroundColor: Get.context?.theme.primaryColor.withOpacity(0.7),
       colorText: Get.context?.theme.cardColor,

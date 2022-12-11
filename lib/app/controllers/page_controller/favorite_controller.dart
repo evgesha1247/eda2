@@ -1,17 +1,12 @@
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 
-import '../data/repository/favorite_repo.dart';
-import '../models/favorite_model.dart';
+import '../../data/repository/favorite_repo.dart';
+import '../../models/favorite_model.dart';
 
 class FavoriteController extends GetxController {
   final FavoriteRepo favoriteRepo;
   FavoriteController({required this.favoriteRepo});
-  @override
-  void onInit() {
-    print(' init favorite ');
-    super.onInit();
-  }
 
   final Map<int, FavoriteModel> _favoriteList = {};
   List<FavoriteModel> get getFavoriteList =>
@@ -56,18 +51,4 @@ class FavoriteController extends GetxController {
     favoriteRepo.addToFavoriteList(getFavoriteList);
     update();
   }
-
-
-
-
-
-  // void upDataFavoriteList(ProductModel product) {
-  //   if (!existInFavorites(product)) {
-  //     _favoriteList.add(product);
-  //   } else {
-  //     _favoriteList.remove(product);
-  //   }
-
-  //   update();
-  // }
 }

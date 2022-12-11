@@ -1,16 +1,14 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/app/controllers/cart_controller.dart';
-import 'package:text/app/controllers/favorite_controller.dart';
+import 'package:text/app/controllers/page_controller/favorite_controller.dart';
 import 'package:text/app/data/repository/cart_repo.dart';
 import '../app/controllers/product_controller.dart';
 import '../app/data/api/api_client.dart';
 import '../app/data/repository/auth_repo.dart';
 import '../app/data/repository/favorite_repo.dart';
 import '../app/data/repository/product_repo.dart';
-import '../app/controllers/auth_controller.dart';
-import '../app/pages/indirect_pages/splash/splash_controller.dart';
-import '../app/controllers/menu_controller.dart';
+import '../app/controllers/page_controller/menu_controller.dart';
 import '../app/pages/primary_pages/guiding/guiding_controller.dart';
 import '../app/theme/theme_controller.dart';
 import '../utils/app_constants.dart';
@@ -58,8 +56,8 @@ class ThemeBindings implements Bindings {
 class DataBindings implements Bindings {
   @override
   Future<void> dependencies() async {
-    await Get.find<ProductController>().getPopularProductList();
-    await Get.find<ProductController>().getRecommendedProductList();
+
+    await Get.find<ProductController>().getDataProduct();
     // // local
     Get.find<CartController>().getItemsListLocal();
     Get.find<FavoriteController>().getItemsListLocal();

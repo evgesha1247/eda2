@@ -1,9 +1,17 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/models/products_model.dart';
 import '../data/repository/product_repo.dart';
 import '../theme/theme_app.dart';
-import 'favorite_controller.dart';
+import 'page_controller/favorite_controller.dart';
+
+enum ProductStatusLoad {
+  loading,
+  error,
+  received,
+}
 
 class ProductController extends GetxController {
   final ProductRepo recommendedProductRepo;
@@ -12,11 +20,7 @@ class ProductController extends GetxController {
     required this.recommendedProductRepo,
     required this.popularProductRepo,
   });
-  @override
-  void onInit() {
-    print('init Product');
-    super.onInit();
-  }
+
   var _popularProductList = <ProductModel>[];
   var _recommendedProductList = <ProductModel>[];
 
@@ -24,37 +28,49 @@ class ProductController extends GetxController {
   List<ProductModel> get recommendedProductList => _recommendedProductList;
 
   /// load Recommended ///
-  bool _isLoadedRecommended = false;
-  bool get isLoadedRecommended => _isLoadedRecommended;
-  Future<void> getRecommendedProductList() async {
-
+  late ProductStatusLoad recommendedStatusLoad;
+  Future<void> _getRecommendedProductList() async {
     Response response =
         await recommendedProductRepo.getRecommendedProductList();
     if (response.statusCode == 200) {
       _recommendedProductList = [];
       _recommendedProductList.addAll(Product.fromJson(response.body).products);
-      _isLoadedRecommended = true;
-
+      recommendedStatusLoad = ProductStatusLoad.received;
       update();
+    } else {
+      recommendedStatusLoad = ProductStatusLoad.error;
     }
   }
 
-  /// load Popular ///
-  bool _isLoadedPopular = false;
-  bool get isLoadedPopular => _isLoadedPopular;
-  Future<void> getPopularProductList() async {
-
+  /// load Popular //
+  late ProductStatusLoad popularStatusLoad;
+  Future<void> _getPopularProductList() async {
     Response response = await popularProductRepo.getPopularProductList();
     if (response.statusCode == 200) {
       _popularProductList = [];
       _popularProductList.addAll(Product.fromJson(response.body).products);
-      _isLoadedPopular = true;
-      update();
+      popularStatusLoad = ProductStatusLoad.received;
+    } else {
+      Future.delayed(
+        Duration(seconds: 2),
+        () {
+          popularStatusLoad = ProductStatusLoad.error;
+          print(popularStatusLoad);
+          update();
+        },
+      );
     }
+    update();
   }
 
-
-
+  Future<void> getDataProduct() async {
+    recommendedStatusLoad = ProductStatusLoad.loading;
+    popularStatusLoad = ProductStatusLoad.loading;
+    await _getPopularProductList();
+    await _getRecommendedProductList();
+    print(popularStatusLoad);
+    update();
+  }
 
 //////////////////////////////// _cart ////////////////////////////
   /// создание контролера корзины и чтение количесвта элементов в ней
@@ -62,7 +78,6 @@ class ProductController extends GetxController {
   int _countForAdding = 0;
   int _inCartItems = 0;
   void initCountToCart(ProductModel product, CartController cartController) {
-
     _cart = cartController;
     _cart!.existInCart(product)
         ? _inCartItems = _cart!.getCountProduct(product)
@@ -95,14 +110,6 @@ class ProductController extends GetxController {
     _countForAdding = 0;
     _inCartItems = _cart!.getCountProduct(product);
     update();
-  }
-
-
-////////////////////////// _favorite //////////////////////////////////
-  ///  создание контролера фаворитов и чтение количесвта элементов в ней
-  FavoriteController? favorite;
-  void initFavoriteController(FavoriteController favoriteController) {
-    favorite = favoriteController;
   }
 
 

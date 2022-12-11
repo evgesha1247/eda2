@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/routes/main_routes.dart';
 import '../../../../utils/app_constants.dart';
-import '../../../controllers/favorite_controller.dart';
+import '../../../controllers/page_controller/favorite_controller.dart';
 import '../../../controllers/product_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../theme/theme_app.dart';
@@ -25,6 +25,30 @@ class HomePopular extends StatelessWidget {
     );
   }
 }
+class _ProductBody extends StatelessWidget {
+  const _ProductBody();
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: GetBuilder<ProductController>(
+        builder: (product) {
+          switch (product.popularStatusLoad) {
+            case ProductStatusLoad.loading:
+              return SizedBox(
+                height: ThemeAppSize.kHomePageViewError,
+                child: const CircularWidget(),
+              );
+            case ProductStatusLoad.error:
+              return const _ErrorLoadPopular();
+            case ProductStatusLoad.received:
+              return const _ProductPageList();
+          }
+        },
+      ),
+    );
+  }
+}
+
 
 class _PopularTitle extends StatelessWidget {
   const _PopularTitle();
@@ -37,17 +61,15 @@ class _PopularTitle extends StatelessWidget {
         ),
       );
 }
-
-class _ProductBody extends StatefulWidget {
-  const _ProductBody({Key? key}) : super(key: key);
+class _ProductPageList extends StatefulWidget {
+  const _ProductPageList({Key? key}) : super(key: key);
   @override
-  State<_ProductBody> createState() => _ProductBodyState();
+  State<_ProductPageList> createState() => _ProductPageListState();
 }
-
-class _ProductBodyState extends State<_ProductBody> {
+class _ProductPageListState extends State<_ProductPageList> {
   var _currPageValue = 0.0;
   final double _scaleFactore = 0.8;
-  final double _height = ThemeAppSize.kHomePageViewImg;
+  final double _height = ThemeAppSize.kHomePageView;
   final pageController = PageController(viewportFraction: .8, initialPage: 0);
 
   @override
@@ -55,8 +77,6 @@ class _ProductBodyState extends State<_ProductBody> {
     super.initState();
     pageController.addListener(() {
       setState(() {
-        Get.find<ProductController>()
-            .initFavoriteController(Get.find<FavoriteController>());
         _currPageValue = pageController.page!;
       });
     });
@@ -114,11 +134,9 @@ class _ProductBodyState extends State<_ProductBody> {
 
   Widget _botsIndicator() {
     return GetBuilder<ProductController>(
-      builder: (popularProduct) => popularProduct.isLoadedPopular
+      builder: (popularProduct) => popularProduct.popularProductList.isNotEmpty
           ? DotsIndicator(
-              dotsCount: popularProduct.popularProductList.isEmpty
-                  ? 1
-                  : popularProduct.popularProductList.length,
+              dotsCount: popularProduct.popularProductList.length,
               position: _currPageValue,
               decorator: DotsDecorator(
                 size: const Size.square(9.0),
@@ -142,8 +160,7 @@ class _ProductBodyState extends State<_ProductBody> {
     return Column(
       children: [
         GetBuilder<ProductController>(
-          builder: (popularProduct) => popularProduct.isLoadedPopular
-              ? SizedBox(
+            builder: (popularProduct) => SizedBox(
                   height: ThemeAppSize.kHomePageView,
                   child: PageView.builder(
                     controller: pageController,
@@ -154,14 +171,13 @@ class _ProductBodyState extends State<_ProductBody> {
                     ),
                   ),
                 )
-              : const CircularWidget(),
+
         ),
         _botsIndicator(),
       ],
     );
   }
 }
-
 class _ItemTitle extends StatelessWidget {
   const _ItemTitle({required this.product});
   final ProductModel product;
@@ -210,7 +226,6 @@ class _ItemTitle extends StatelessWidget {
     );
   }
 }
-
 class _ItemImg extends StatelessWidget {
   const _ItemImg({required this.img});
   final String img;
@@ -223,6 +238,43 @@ class _ItemImg extends StatelessWidget {
           fit: BoxFit.cover,
           image: NetworkImage(img),
         ),
+      ),
+    );
+  }
+}
+
+
+class _ErrorLoadPopular extends StatelessWidget {
+  const _ErrorLoadPopular();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ThemeAppSize.kHomePageViewError,
+      margin: EdgeInsets.only(
+        left: ThemeAppSize.kInterval12,
+        right: ThemeAppSize.kInterval12,
+      ),
+      decoration: BoxDecoration(
+        color: ThemeMode.system == ThemeMode.dark
+            ? context.theme.cardColor.withOpacity(0.5)
+            : context.theme.cardColor.withOpacity(.6),
+        borderRadius: BorderRadius.all(
+          Radius.circular(ThemeAppSize.kRadius12),
+        ),
+      ),
+      child: Row(
+        children: [
+          const Expanded(
+              child: Image(image: AssetImage('assets/imgs/error_dish.png'))),
+          Expanded(
+            child: BigText(
+              text: 'Check internet connection',
+              maxLines: 2,
+              size: ThemeAppSize.kFontSize22,
+              color: context.theme.accentColor,
+            ),
+          ),
+        ],
       ),
     );
   }

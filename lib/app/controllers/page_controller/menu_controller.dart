@@ -1,10 +1,11 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'product_controller.dart';
-import '../models/products_model.dart';
+import '../product_controller.dart';
+import '../../models/products_model.dart';
 
 enum SortMethod { lowToHigh, highToLow, reset }
+
 class Filter {
   final String text;
   final IconData icon;
@@ -15,11 +16,12 @@ class Filter {
 }
 
 class MenuController extends GetxController {
-@override
+  @override
   void onInit() {
-    print('init main');
     super.onInit();
+    initProductControllerr(Get.find<ProductController>());
   }
+
   bool isListGrid = true;
   void togStatusList() {
     isListGrid = !isListGrid;
@@ -34,11 +36,9 @@ class MenuController extends GetxController {
   get easyRefreshController => _easyRefreshController;
 
   Future<void> onRefresh() async {
-
     _easyRefreshController.finishRefresh();
     _easyRefreshController.resetFooter();
     initProductControllerr(Get.find<ProductController>());
-
   }
 
   Future<void> onLoad() async {
@@ -50,8 +50,8 @@ class MenuController extends GetxController {
   List<ProductModel> _filterList = [];
   List<ProductModel> get filterList => _filterList;
 
-
   void initProductControllerr(ProductController controller) {
+    print('qwe');
     if (_productList == []) {
       _productList.addAll(
           controller.popularProductList + controller.recommendedProductList);
@@ -88,6 +88,7 @@ class MenuController extends GetxController {
 
     update();
   }
+
   SortMethod? method = SortMethod.reset;
   sortBy() {
     switch (method) {
@@ -107,6 +108,4 @@ class MenuController extends GetxController {
     sortBy();
     update();
   }
-
-
 }

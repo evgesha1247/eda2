@@ -1,14 +1,13 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/controllers/menu_controller.dart';
-import '../../../controllers/product_controller.dart';
+import 'package:text/app/controllers/page_controller/menu_controller.dart';
 import 'menu_body.dart';
 import 'menu_filter.dart';
 import 'menu_header.dart';
 
 class MenuPage extends StatelessWidget {
-  MenuPage({Key? key}) : super(key: key);
+  const MenuPage({Key? key}) : super(key: key);
   ClassicFooter foot() => const ClassicFooter(
         noMoreText: 'noMoreText',
         failedText: 'failedText',
@@ -21,14 +20,12 @@ class MenuPage extends StatelessWidget {
         ),
         armedText: 'armedText',
         readyText: 'readyText',
-        processingText: 'processingText',
-        processedText: 'processedText',
-        noMoreText: 'noMoreText',
-        failedText: 'failedText',
+
       );
-  final controller = Get.find<MenuController>();
+
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<MenuController>();
     return Scaffold(
       body: EasyRefresh(
         controller: controller.easyRefreshController,

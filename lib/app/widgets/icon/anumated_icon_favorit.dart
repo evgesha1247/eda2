@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 
 import '../../controllers/cart_controller.dart';
-import '../../controllers/favorite_controller.dart';
+import '../../controllers/page_controller/favorite_controller.dart';
 import '../../theme/theme_app.dart';
 import 'custom_icon.dart';
 
