@@ -1,4 +1,4 @@
-import 'package:easy_refresh/easy_refresh.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../product_controller.dart';
@@ -29,20 +29,16 @@ class MenuController extends GetxController {
   }
 
 /////////////////////////////////////////////
-  final EasyRefreshController _easyRefreshController = EasyRefreshController(
-    controlFinishRefresh: true,
-    controlFinishLoad: true,
-  );
-  get easyRefreshController => _easyRefreshController;
+  //final _controller = StreamController<SwipeRefreshState>.broadcast();
 
+  // get easyRefreshController => _controller;
   Future<void> onRefresh() async {
-    _easyRefreshController.finishRefresh();
-    _easyRefreshController.resetFooter();
-    initProductControllerr(Get.find<ProductController>());
+    print('onRefresh');
+    //  _easyRefreshController.finishRefresh();
+    // initProductControllerr(Get.find<ProductController>());
   }
-
-  Future<void> onLoad() async {
-    _easyRefreshController.finishLoad(IndicatorResult.noMore);
+  onLoad() {
+    print('onLoad');
   }
 
 ////// init all product/////////////////////

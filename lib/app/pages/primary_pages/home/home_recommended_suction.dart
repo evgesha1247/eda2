@@ -94,7 +94,6 @@ class _ItemBuilder extends StatelessWidget {
           },
         );
       },
-
     );
   }
 }
@@ -109,7 +108,6 @@ class _ItemOpen extends StatelessWidget {
       height: ThemeAppSize.kHomeListView + ThemeAppSize.kInterval12,
       child: Row(
         children: [
-
           ///
           /// img
           ///
@@ -118,9 +116,9 @@ class _ItemOpen extends StatelessWidget {
             width: ThemeAppSize.kHomeListView,
             height: ThemeAppSize.kHomeListView,
             decoration: BoxDecoration(
-              borderRadius: ThemeAppFun.decoration(
-                radius: ThemeAppSize.kRadius18,
-              ),
+              color: context.theme.cardColor,
+              borderRadius:
+                  ThemeAppFun.decoration(radius: ThemeAppSize.kRadius18),
               image: DecorationImage(
                 image: NetworkImage(
                   "${AppConstansts.BASE_URL}/uploads/${item.img!}",
@@ -136,7 +134,6 @@ class _ItemOpen extends StatelessWidget {
 
           Expanded(
             child: Container(
-
               height: ThemeAppSize.kHomeListViewInfo,
               decoration: BoxDecoration(
                 color: Get.context?.theme.cardColor,
@@ -304,15 +301,13 @@ class _IconError extends StatelessWidget {
     final color = ThemeMode.system == ThemeMode.dark
         ? context.theme.cardColor.withOpacity(0.5)
         : context.theme.cardColor.withOpacity(.6);
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(icon, size: 100, color: color),
-          BigText(text: text, color: color)
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(icon, size: 100, color: color),
+        BigText(text: text, color: color)
+      ],
     );
   }
 }

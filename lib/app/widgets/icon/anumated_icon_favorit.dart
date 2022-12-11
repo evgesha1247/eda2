@@ -74,7 +74,7 @@ class CartAddIcon extends StatelessWidget {
             child: Icon(
               Icons.add,
               color: iconColor == Colors.transparent
-                  ? context.theme.scaffoldBackgroundColor
+                  ? context.theme.hintColor
                   : iconColor,
             ),
           ),
@@ -120,7 +120,7 @@ class FavoritIcon extends StatelessWidget {
             child: Icon(
               Icons.favorite_outline,
               color: iconColor == Colors.transparent
-                  ? context.theme.scaffoldBackgroundColor
+                  ? context.theme.hintColor
                   : iconColor,
             ),
           ),

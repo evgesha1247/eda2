@@ -16,10 +16,7 @@ dependencies:
   shared_preferences: ^2.0.15  # локальное хранилище
   firebase_auth: ^4.0.2        # регистрация
 
-
-  pull_to_refresh: ^2.0.0        # обновление при скроле
-  easy_refresh: ^3.0.5           # обновление при скроле
-
+  easy_refresh: ^3.0.5          # обновление при скроле
 
   get: ^4.1.4                  # поставщик
 

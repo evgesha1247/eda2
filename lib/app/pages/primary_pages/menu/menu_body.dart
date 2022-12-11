@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:get/get.dart';
 import '../../../../utils/app_constants.dart';
 import '../../../controllers/page_controller/menu_controller.dart';
@@ -9,13 +11,10 @@ import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/text/my_text.dart';
 
 class MenuBody extends StatelessWidget {
-  const MenuBody({super.key});
-
-  SliverChildBuilderDelegate _builderItem() {
+  MenuBody({super.key});
     final controller = Get.find<MenuController>();
-    return SliverChildBuilderDelegate(
-      childCount: controller.filterList.length,
-      (_, int index) => Padding(
+  Widget _builderItem(item) {
+    return Padding(
         padding: EdgeInsets.only(
           left: ThemeAppSize.kInterval12,
           bottom: ThemeAppSize.kInterval24,
@@ -23,36 +22,55 @@ class MenuBody extends StatelessWidget {
         ),
         child: GestureDetector(
           onTap: () => Get.toNamed(
-            MainRoutes.getDetailed(controller.filterList[index].id),
-            arguments: controller.filterList[index],
+          MainRoutes.getDetailed(item.id),
+          arguments: item,
           ),
           child: Stack(
             children: [
               _ItemImg(
                 img:
-                    "${AppConstansts.BASE_URL}/uploads/${controller.filterList[index].img!}",
+                    "${AppConstansts.BASE_URL}/uploads/${item.img!}",
               ),
-              _ItemControlElements(product: controller.filterList[index]),
+            _ItemControlElements(product: item),
             ],
           ),
         ),
-      ),
+
     );
   }
 
   @override
   Widget build(BuildContext context) {
-
     return GetBuilder<MenuController>(
-      builder: (_) => Container(
-        child: _.isListGrid
-            ? SliverGrid(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 370,
+      builder: (_) => _.isListGrid
+          ? SliverToBoxAdapter(
+              child: EasyRefresh(
+                header: const ClassicHeader(),
+                footer: const ClassicFooter(),
+                onRefresh: () async {},
+                onLoad: () async {},
+                child: SizedBox(
+                  height: 1000,
+                  child: GridView.builder(
+                    itemCount: controller.filterList.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 370,
+                    ),
+                    itemBuilder: (context, index) =>
+                        _builderItem(controller.filterList[index]),
+                  ),
                 ),
-                delegate: _builderItem())
-            : SliverList(delegate: _builderItem()),
-      ),
+              ),
+            )
+          : ListView.builder(
+              itemCount: controller.filterList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _builderItem(controller.filterList[index]);
+              },
+            ),
+
+
     );
   }
 }
