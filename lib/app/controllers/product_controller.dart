@@ -5,7 +5,6 @@ import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/models/products_model.dart';
 import '../data/repository/product_repo.dart';
 import '../theme/theme_app.dart';
-import 'page_controller/favorite_controller.dart';
 
 enum ProductStatusLoad {
   loading,
@@ -52,10 +51,10 @@ class ProductController extends GetxController {
       popularStatusLoad = ProductStatusLoad.received;
     } else {
       Future.delayed(
-        Duration(seconds: 2),
+        const Duration(seconds: 2),
         () {
           popularStatusLoad = ProductStatusLoad.error;
-          print(popularStatusLoad);
+
           update();
         },
       );
@@ -68,7 +67,7 @@ class ProductController extends GetxController {
     popularStatusLoad = ProductStatusLoad.loading;
     await _getPopularProductList();
     await _getRecommendedProductList();
-    print(popularStatusLoad);
+
     update();
   }
 

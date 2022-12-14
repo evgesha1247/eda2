@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import '../../../controllers/page_controller/menu_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/custom_icon.dart';
@@ -19,6 +20,7 @@ class MenuHeader extends StatelessWidget {
     );
     final controller = Get.find<MenuController>();
     return SliverAppBar(
+automaticallyImplyLeading: false,
       floating: true,
       pinned: false,
       snap: true,

@@ -26,7 +26,7 @@ class MySubmitButton extends StatelessWidget {
             BigText(
               text: text, //color: context.theme.cardColor
             ),
-            Icon(
+            const Icon(
               Icons.chevron_right, //color: context.theme.cardColor
             ),
           ],
@@ -55,7 +55,7 @@ mySubmitButton(fun, String text) {
             text: text, //color: context.theme.cardColor
           ),
           Icon(
-            Icons.chevron_right, //color: context.theme.cardColor
+            Icons.chevron_right, color: Get.context?.theme.cardColor
           ),
         ],
       ),

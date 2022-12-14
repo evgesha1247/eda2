@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 const String fontFamily = 'Mariupol';
@@ -43,10 +45,10 @@ class Themes {
     primaryTextTheme: textThemeDark,
     //main
     scaffoldBackgroundColor: ThemeAppColor.kFrontColor,
-    cardColor: Color.fromARGB(255, 106, 76, 80),
+    cardColor: const Color.fromARGB(255, 106, 76, 80),
     primaryColor: ThemeAppColor.kAccent,
     // text
-    hintColor: Color.fromARGB(255, 189, 159, 151),
+    hintColor: const Color.fromARGB(255, 189, 159, 151),
     // static
     accentColor: ThemeAppColor.kBGColor,
   );

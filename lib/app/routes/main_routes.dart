@@ -4,7 +4,6 @@ import 'package:text/app/pages/indirect_pages/auth/auth_screen.dart';
 import 'package:text/app/pages/indirect_pages/cart/cart_page.dart';
 import 'package:text/app/pages/indirect_pages/detailed/food_detailed.dart';
 import 'package:text/app/pages/indirect_pages/splash/splash_screen.dart';
-import '../../helper/dependencies.dart';
 import '../pages/indirect_pages/profile/profile_page.dart';
 import '../pages/primary_pages/guiding/guiding_screen.dart';
 import '../widgets/load/circular.dart';
@@ -27,18 +26,16 @@ class MainRoutes {
     /// загрузка
     GetPage(
       name: getInitial,
-      page: () => const Scaffold(
-        body: CircularWidget(),
-      ),
+      page: () => const Scaffold(body: CircularWidget()),
     ),
 
-    GetPage(name: getSplash, page: () => const SplashPage()),
+    GetPage(name: getSplash, page: () => SplashPage()),
 
     GetPage(name: getAuth, page: () => const AuthPage()),
 
     GetPage(name: getCart, page: () => const CartPage()),
     GetPage(name: _detailed, page: () => FoodDetailedPage()),
-    GetPage(name: getProfile, page: () => ProfilePage()),
+    GetPage(name: getProfile, page: () => const ProfilePage()),
 
     GetPage(name: getGuiding, page: () => const GuidingPage()),
   ];

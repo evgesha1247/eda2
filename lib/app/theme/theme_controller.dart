@@ -3,14 +3,10 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeAppController extends GetxController {
-
-  @override
-  void onInit() {
-    print('init theme');
+ThemeAppController() {
     getThemeStatus();
-
-    super.onInit();
   }
+
   bool isLightTheme = false;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 

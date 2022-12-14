@@ -109,7 +109,7 @@ class FavoritIcon extends StatelessWidget {
             colorBorder: Colors.pink,
             size: ThemeAppSize.kInterval5,
             statusBorder: statusBorder,
-            child: Icon(
+            child: const Icon(
               Icons.favorite,
               color: Colors.pink,
             ),

@@ -1,22 +1,25 @@
 // ignore_for_file: avoid_print, unused_import
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:text/app/pages/indirect_pages/splash/splash_controller.dart';
 import 'package:text/app/routes/main_routes.dart';
+import 'package:text/helper/dependencies.dart';
+
 
 class AuthRepo extends GetxController {
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  late final FirebaseAuth _auth;
   late final Rx<User?> firebaseUser;
   @override
-  void onReady() {
+  void onInit() async {
+    _auth = FirebaseAuth.instance;
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setScreen);
-    super.onReady();
-    print('init auth repo ');
+    print('auth repo');
+    super.onInit();
   }
 
-  _setScreen(User? user) {
+  _setScreen(User? user) async {
     user == null
         ? Get.offNamed(MainRoutes.getAuth)
         : Get.toNamed(MainRoutes.getSplash);

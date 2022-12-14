@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:easy_refresh/easy_refresh.dart';
 import 'package:get/get.dart';
 import '../../../../utils/app_constants.dart';
 import '../../../controllers/page_controller/menu_controller.dart';
@@ -10,10 +8,11 @@ import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/text/my_text.dart';
 
-class MenuBody extends StatelessWidget {
-  MenuBody({super.key});
-    final controller = Get.find<MenuController>();
-  Widget _builderItem(item) {
+class _ItemBuilderGrid extends StatelessWidget {
+  final ProductModel item;
+  const _ItemBuilderGrid({required this.item});
+  @override
+  Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.only(
           left: ThemeAppSize.kInterval12,
@@ -38,40 +37,45 @@ class MenuBody extends StatelessWidget {
 
     );
   }
+}
 
+class _ItemBuilderList extends StatelessWidget {
+  final ProductModel item;
+  const _ItemBuilderList({required this.item});
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MenuController>(
-      builder: (_) => _.isListGrid
-          ? SliverToBoxAdapter(
-              child: EasyRefresh(
-                header: const ClassicHeader(),
-                footer: const ClassicFooter(),
-                onRefresh: () async {},
-                onLoad: () async {},
-                child: SizedBox(
-                  height: 1000,
-                  child: GridView.builder(
-                    itemCount: controller.filterList.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 370,
-                    ),
-                    itemBuilder: (context, index) =>
-                        _builderItem(controller.filterList[index]),
-                  ),
-                ),
+    return Container(
+        margin: EdgeInsets.only(top: 10),
+        width: 100,
+        height: 100,
+        color: Colors.orange);
+  }
+}
+
+class MenuBody extends StatelessWidget {
+  MenuBody({super.key});
+  final controller = Get.find<MenuController>();
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<MenuController>(builder: (MenuController controller) {
+      return controller.listStatus == ListStatus.grid
+          ? SliverGrid(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 370,
               ),
-            )
-          : ListView.builder(
-              itemCount: controller.filterList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _builderItem(controller.filterList[index]);
-              },
-            ),
-
-
-    );
+              delegate: SliverChildBuilderDelegate(
+                childCount: controller.filterList.length,
+                (_, int index) =>
+                    _ItemBuilderGrid(item: controller.filterList[index]),
+              ))
+          : SliverList(
+              delegate: SliverChildBuilderDelegate(
+                childCount: controller.filterList.length,
+                (_, int index) =>
+                    _ItemBuilderList(item: controller.filterList[index]),
+              ),
+            );
+    });
   }
 }
 

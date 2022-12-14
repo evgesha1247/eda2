@@ -19,6 +19,7 @@ class MenuFilter extends StatelessWidget {
         .map((Filter e) => FilterItem(text: e.text, icon: e.icon))
         .toList();
     return SliverAppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: context.theme.scaffoldBackgroundColor,
       toolbarHeight: ThemeAppSize.kMenuHeaderFilter,
       flexibleSpace: Padding(
@@ -154,7 +155,7 @@ class _ButtonTogList extends StatelessWidget {
     return GetBuilder<MenuController>(
       builder: (controller) {
         return AnimatedIconWidget(
-          currIndex: (controller.isListGrid ? 0 : 1).obs,
+          currIndex: (controller.listStatus == ListStatus.grid ? 0 : 1).obs,
           fun: () => controller.togStatusList(),
           widget1: WrapperIcon(
             child: Icon(

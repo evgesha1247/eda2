@@ -1,14 +1,19 @@
+import 'dart:async';
+
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:text/helper/dependencies.dart';
-import '../../../theme/theme_controller.dart';
+import '../../../routes/main_routes.dart';
 
-class SplashController {
 
-  Future<void> loadData() async {
-    await ThemeBindings().dependencies();
-    Get.find<ThemeAppController>().getThemeStatus();
-    await ControllersBindings().dependencies();
-    await DataBindings().dependencies();
-    await AllPageBindings().dependencies();
+
+class SplashController extends GetxController {
+  @override
+  void onInit() {
+    Timer(const Duration(seconds: 2), () {
+      Get.offAndToNamed(MainRoutes.getGuiding);
+    });
+
+    super.onInit();
   }
 }

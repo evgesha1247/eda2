@@ -8,7 +8,7 @@ import '../../../theme/theme_controller.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
   //final controller = Get.find<AuthRepo>();
   @override
   Widget build(BuildContext context) {
@@ -21,6 +21,7 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _ProfileBody extends StatelessWidget {
   const _ProfileBody({required this.controller});
   final AuthRepo controller;
@@ -61,8 +62,8 @@ class _Example extends StatelessWidget {
               return AnimatedIconWidget(
                 currIndex: (_.isLightTheme ? 0 : 1).obs,
                 fun: () => _.tooggTheme(),
-                widget1: Icon(Icons.wallet),
-                widget2: Icon(Icons.qr_code),
+                widget1: const Icon(Icons.wallet),
+                widget2: const Icon(Icons.qr_code),
               );
             },
           ),

@@ -1,9 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/routes/main_routes.dart';
 import '../../../../utils/app_constants.dart';
-import '../../../controllers/page_controller/favorite_controller.dart';
 import '../../../controllers/product_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../theme/theme_app.dart';

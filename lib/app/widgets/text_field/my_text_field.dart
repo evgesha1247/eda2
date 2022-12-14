@@ -42,7 +42,7 @@ class MyTextField extends StatelessWidget {
           contentPadding: const EdgeInsets.all(10),
           labelText: text,
           labelStyle: TextStyle(
-              //color: context.theme.backgroundColor,
+            color: context.theme.backgroundColor,
           ),
           isDense: true,
           fillColor: context.theme.cardColor,

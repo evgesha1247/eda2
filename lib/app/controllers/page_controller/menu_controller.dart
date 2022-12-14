@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../product_controller.dart';
 import '../../models/products_model.dart';
 
 enum SortMethod { lowToHigh, highToLow, reset }
+enum ListStatus { list, grid }
 
 class Filter {
   final String text;
@@ -22,24 +24,30 @@ class MenuController extends GetxController {
     initProductControllerr(Get.find<ProductController>());
   }
 
-  bool isListGrid = true;
+ListStatus listStatus = ListStatus.grid;
   void togStatusList() {
-    isListGrid = !isListGrid;
+    listStatus =
+        (listStatus == ListStatus.list) ? ListStatus.grid : ListStatus.list;
     update();
   }
 
 /////////////////////////////////////////////
-  //final _controller = StreamController<SwipeRefreshState>.broadcast();
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: true);
 
   // get easyRefreshController => _controller;
   Future<void> onRefresh() async {
-    print('onRefresh');
-    //  _easyRefreshController.finishRefresh();
-    // initProductControllerr(Get.find<ProductController>());
+    try {
+      await Future.delayed(const Duration(seconds: 2));
+      initProductControllerr(Get.find<ProductController>());
+      refreshController.refreshCompleted();
+      refreshController.loadComplete();
+    } catch (e) {
+      refreshController.refreshFailed();
+    }
+    update();
   }
-  onLoad() {
-    print('onLoad');
-  }
+
 
 ////// init all product/////////////////////
   final List<ProductModel> _productList = [];
@@ -47,22 +55,19 @@ class MenuController extends GetxController {
   List<ProductModel> get filterList => _filterList;
 
   void initProductControllerr(ProductController controller) {
-    print('qwe');
-    if (_productList == []) {
-      _productList.addAll(
-          controller.popularProductList + controller.recommendedProductList);
-    } else {
+
       for (var element in controller.popularProductList) {
         if (!_productList.contains(element)) {
           _productList.add(element);
         }
       }
+
       for (var element in controller.recommendedProductList) {
         if (!_productList.contains(element)) {
           _productList.add(element);
-        }
       }
     }
+
     _filterList = _productList;
     update();
   }

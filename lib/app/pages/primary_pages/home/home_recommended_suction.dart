@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
@@ -248,6 +250,7 @@ class _ItemClos extends StatelessWidget {
                           CartAddIcon(
                             product: item,
                             statusBorder: true,
+                              iconColor: context.theme.accentColor
                           ),
                           SizedBox(
                             width: ThemeAppSize.kInterval12,
@@ -255,6 +258,8 @@ class _ItemClos extends StatelessWidget {
                           FavoritIcon(
                             product: item,
                             statusBorder: true,
+
+                              iconColor: context.theme.accentColor
                           )
                         ],
                       )

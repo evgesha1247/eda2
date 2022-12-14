@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/pages/primary_pages/guiding/guiding_controller.dart';
@@ -23,6 +25,7 @@ class _GuidingBody extends StatelessWidget {
   const _GuidingBody({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+
     return GetBuilder<GuidingController>(
       builder: (model) => IndexedStack(
         index: model.currentIndexTab,
@@ -34,6 +37,7 @@ class _GuidingBody extends StatelessWidget {
         ],
       ),
     );
+
   }
 }
 
