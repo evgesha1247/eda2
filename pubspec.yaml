@@ -19,6 +19,7 @@ dependencies:
   pull_to_refresh: ^2.0.0          # обновление при скроле
 
   get: ^4.6.5                   # поставщик
+  intl: ^0.17.0                 # норм время
 
 
 dev_dependencies:

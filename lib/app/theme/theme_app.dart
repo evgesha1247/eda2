@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 const String fontFamily = 'Mariupol';
 
-const _textStyleLight = TextStyle(
+const _textStyle = TextStyle(
   fontFamily: fontFamily,
   color: ThemeAppColor.kFrontColor,
   height: 1.2,
@@ -12,13 +12,11 @@ const _textStyleLight = TextStyle(
   fontWeight: FontWeight.w400,
   fontSize: 20,
 );
-const textThemeLight = TextTheme(
-  bodyMedium: _textStyleLight,
+
+const textTheme = TextTheme(
+  bodyMedium: _textStyle,
 );
-const _textStyleDark = TextStyle(color: ThemeAppColor.kFrontColor);
-const textThemeDark = TextTheme(
-  bodyMedium: _textStyleDark,
-);
+
 
 class Themes {
 
@@ -26,8 +24,8 @@ class Themes {
 
   static final light = ThemeData.light().copyWith(
     // text
-    textTheme: textThemeLight,
-    primaryTextTheme: textThemeLight,
+    textTheme: textTheme,
+    primaryTextTheme: textTheme,
     //main
     scaffoldBackgroundColor: ThemeAppColor.kBGColor,
     cardColor: ThemeAppColor.kFrontColor,
@@ -41,8 +39,8 @@ class Themes {
 
   static final dark = ThemeData.dark().copyWith(
     // text
-    textTheme: textThemeDark,
-    primaryTextTheme: textThemeDark,
+    textTheme: textTheme,
+    primaryTextTheme: textTheme,
     //main
     scaffoldBackgroundColor: ThemeAppColor.kFrontColor,
     cardColor: const Color.fromARGB(255, 106, 76, 80),

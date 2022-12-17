@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/pages/primary_pages/guiding/guiding_controller.dart';
 import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/custom_icon.dart';
@@ -51,7 +52,7 @@ class _UserIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(MainRoutes.getProfile),
+      onTap: () => Get.find<GuidingController>().setCurrentIndexTab(3),
       child: WrapperIcon(
         statusBorder: true,
         colorBorder: context.theme.hintColor,
