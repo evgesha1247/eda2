@@ -4,7 +4,7 @@ import 'package:text/app/pages/indirect_pages/auth/auth_screen.dart';
 import 'package:text/app/pages/indirect_pages/cart/cart_page.dart';
 import 'package:text/app/pages/indirect_pages/detailed/food_detailed.dart';
 import 'package:text/app/pages/indirect_pages/splash/splash_screen.dart';
-import '../pages/indirect_pages/profile/profile_page.dart';
+import '../pages/primary_pages/profile/profile_page.dart';
 import '../pages/primary_pages/guiding/guiding_screen.dart';
 import '../widgets/load/circular.dart';
 

@@ -25,20 +25,17 @@ import 'package:firebase_core/firebase_core.dart';
 class Dependencies {
   Future<void> init() => _constructor();
   Future<void> _constructor() async {
-    if (defaultTargetPlatform != TargetPlatform.linux) {
+
       try {
         await Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform,
         ).then((value) => Get.find<AuthRepo>());
       } catch (e) {
-        print('not init firebase $e');
-        GetPlatform.isDesktop
-            ? () => Get.offAllNamed(MainRoutes.getGuiding)
-            : null;
-      }
-    } else {
+      print('not init firebase');
+      print('$e');
       Get.offAllNamed(MainRoutes.getGuiding);
     }
+
   }
 }
 

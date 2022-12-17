@@ -10,26 +10,62 @@ class CartRepo {
   CartRepo({required this.sharedStore});
 
   List<String> _cart = [];
+  List<String> _cartHistory = [];
 
   List<CartModel> getCartList() {
-    List<CartModel> cartList = [];
+    List<String> carts = [];
     if (sharedStore.containsKey(AppConstansts.CART_LIST)) {
-
-      for (var element in sharedStore.getStringList(AppConstansts.CART_LIST)!) {
-        cartList.add(CartModel.fromJson(jsonDecode(element)));
-      }
-
-      return cartList;
+      carts = sharedStore.getStringList(AppConstansts.CART_LIST)!;
     }
-    return [];
-  }
+    List<CartModel> cartList = [];
+    for (var element in carts) {
+        cartList.add(CartModel.fromJson(jsonDecode(element)));
+    }
 
+    return cartList;
+  }
   void addToCartList(List<CartModel> cartList) {
+    sharedStore.remove(AppConstansts.CART_LIST);
+    sharedStore.remove(AppConstansts.CART_HISTORY_LIST);
+    var time = DateTime.now();
     _cart = [];
+
     for (var element in cartList) {
+      element.time = time.toString();
       _cart.add(jsonEncode(element));
     }
+
     sharedStore.setStringList(AppConstansts.CART_LIST, _cart);
-    getCartList();
+    //  getCartList();
+  }
+
+  List<CartModel> getCartHistoryList() {
+    if (sharedStore.containsKey(AppConstansts.CART_HISTORY_LIST)) {
+      _cartHistory = [];
+      _cartHistory =
+          sharedStore.getStringList(AppConstansts.CART_HISTORY_LIST)!;
+    }
+    List<CartModel> cartListHistory = [];
+    for (var element in _cartHistory) {
+      cartListHistory.add(CartModel.fromJson(jsonDecode(element)));
+    }
+    return cartListHistory;
+  }
+
+  void addToCartHistoryList() {
+    if (sharedStore.containsKey(AppConstansts.CART_HISTORY_LIST)) {
+      _cartHistory =
+          sharedStore.getStringList(AppConstansts.CART_HISTORY_LIST)!;
+    }
+    for (var i = 0; i < _cart.length; i++) {
+      _cartHistory.add(_cart[i]);
+    }
+    _cart = [];
+    sharedStore.remove(AppConstansts.CART_LIST);
+    sharedStore.setStringList(AppConstansts.CART_HISTORY_LIST, _cartHistory);
+    getCartHistoryList().toList().forEach((element) {
+      print("ID - ${element.id} time ${element.time}");
+    });
+
   }
 }

@@ -80,7 +80,9 @@ class _ButtonCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => controller.clearCart(),
+      onTap: () {
+        controller.buy();
+      },
       child: Container(
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         decoration: BoxDecoration(

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/controllers/product_controller.dart';
 import 'package:text/app/models/products_model.dart';
@@ -10,24 +9,40 @@ class CartController extends GetxController {
   final CartRepo cartRepo;
   CartController({required this.cartRepo});
 
-  final Map<int, CartModel> _items = {};
+  Map<int, CartModel> _items = {};
   List<CartModel> get getItemsList =>
       _items.entries.map((e) => e.value).toList();
 
-  //// LOCAL
+void buy() {
+    cartRepo.addToCartHistoryList();
+    _clearCart();
+  }
+
+  //// LOCAL ///////////////////////////
   List<CartModel> _itemsLocal = [];
   List<CartModel> getItemsListLocal() {
-    setCartLocal = cartRepo.getCartList();
+    _setCartLocal = cartRepo.getCartList();
     return _itemsLocal;
   }
 
-  set setCartLocal(List<CartModel> items) {
+  set _setCartLocal(List<CartModel> items) {
     _itemsLocal = items;
     for (var i = 0; i < _itemsLocal.length; i++) {
       _items.putIfAbsent(_itemsLocal[i].product!.id!, () => _itemsLocal[i]);
     }
-    update();
   }
+
+
+
+  List<CartModel> getCartHistoryList() {
+    return cartRepo.getCartHistoryList();
+  }
+
+///////////////////////////////////////////////
+
+
+
+
   /// общая цена в корзине
   int discount = 15;
   double get totalAmount {
@@ -103,6 +118,7 @@ class CartController extends GetxController {
     cartRepo.addToCartList(getItemsList);
     update();
   }
+
   /// проверка на наличие элемента в корзине по id
   bool existInCart(ProductModel product) => (_items.containsKey(product.id));
   /// количество одного элемента в корзине
@@ -119,7 +135,17 @@ class CartController extends GetxController {
     });
     return totalCount;
   }
-  /// удаляет из корзины
+
+
+  void _clearCart() {
+    _items.clear();
+
+    //  ThemeAppFun.printSnackBar('Thank you for your purchase');
+    cartRepo.addToCartList(getItemsList);
+    update();
+  }
+
+
   void delite(ProductModel product) {
     _items.remove(product.id);
     Get.find<ProductController>()
@@ -127,20 +153,5 @@ class CartController extends GetxController {
     cartRepo.addToCartList(getItemsList);
     update();
   }
-  /// clear
-  void clearCart() {
-    _items.clear();
-    Get.snackbar(
-      'pay',
-      '',
-      backgroundColor: Get.context?.theme.primaryColor.withOpacity(0.7),
-      colorText: Get.context?.theme.cardColor,
-      duration: const Duration(milliseconds: 1200),
-      margin: EdgeInsets.all(ThemeAppSize.kInterval12),
-    );
-    cartRepo.addToCartList(getItemsList);
-    update();
-  }
-
 
 }

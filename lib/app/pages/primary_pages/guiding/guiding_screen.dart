@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/pages/primary_pages/guiding/guiding_controller.dart';
-import '../cart_history/cart_history.dart';
 import '../favorite/favorite_page.dart';
 import '../home/home_page.dart';
 import '../menu/menu_page.dart';
+import '../profile/profile_page.dart';
 
 class GuidingPage extends StatelessWidget {
   const GuidingPage({super.key});
@@ -27,13 +27,13 @@ class _GuidingBody extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return GetBuilder<GuidingController>(
-      builder: (model) => IndexedStack(
-        index: model.currentIndexTab,
+      builder: (controller) => IndexedStack(
+        index: controller.currentIndexTab,
         children: const [
           HomePage(),
           MenuPage(),
           FavoritePage(),
-          CartHistory(),
+          ProfilePage(),
         ],
       ),
     );

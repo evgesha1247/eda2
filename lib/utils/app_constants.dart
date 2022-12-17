@@ -13,5 +13,5 @@ class AppConstansts {
 
   static const String CART_LIST = "Cart_List";
   static const String FAVORITE_LIST = "favorite_list";
-
+  static const String CART_HISTORY_LIST = "Cart_History_List";
 }
