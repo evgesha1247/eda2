@@ -14,27 +14,34 @@ class CartController extends GetxController {
       _items.entries.map((e) => e.value).toList();
 
 void buy() {
-    cartRepo.addToCartHistoryList();
+
+    cartRepo.addToLocalCartHistoryList();
+    _items = {};
+    cartRepo.addToLocalCartList(getItemsList);
     _clearCart();
   }
 
+  void _clearCart() {
+    //  ThemeAppFun.printSnackBar('Thank you for your purchase');
+    update();
+  }
+
   //// LOCAL ///////////////////////////
-  List<CartModel> _itemsLocal = [];
-  List<CartModel> getItemsListLocal() {
-    _setCartLocal = cartRepo.getCartList();
-    return _itemsLocal;
+  List<CartModel> _itemCartFromLocal = [];
+  List<CartModel> getCartListLocal() {
+    _setCartLocal = cartRepo.getCartListFromLocal();
+    return _itemCartFromLocal;
   }
 
   set _setCartLocal(List<CartModel> items) {
-    _itemsLocal = items;
-    for (var i = 0; i < _itemsLocal.length; i++) {
-      _items.putIfAbsent(_itemsLocal[i].product!.id!, () => _itemsLocal[i]);
+    _itemCartFromLocal = items;
+    for (var i = 0; i < _itemCartFromLocal.length; i++) {
+      _items.putIfAbsent(
+          _itemCartFromLocal[i].product!.id!, () => _itemCartFromLocal[i]);
     }
   }
-
-
   List<CartModel> getHistoryList() {
-    return cartRepo.getCartHistoryList();
+    return cartRepo.getCartHistoryListFromLocal();
   }
 
 ///////////////////////////////////////////////
@@ -92,7 +99,7 @@ void buy() {
     } else {
       ThemeAppFun.printSnackBar('You can\'t add zero to carts !');
     }
-    cartRepo.addToCartList(getItemsList);
+    cartRepo.addToLocalCartList(getItemsList);
     update();
   }
   /// добавить 1 либо удалить
@@ -114,7 +121,7 @@ void buy() {
         ),
       );
     }
-    cartRepo.addToCartList(getItemsList);
+    cartRepo.addToLocalCartList(getItemsList);
     update();
   }
 
@@ -136,19 +143,13 @@ void buy() {
   }
 
 
-  void _clearCart() {
-    _items = {};
-    ThemeAppFun.printSnackBar('Thank you for your purchase');
-    //  cartRepo.addToCartList(getItemsList);
-    update();
-  }
 
 
   void delite(ProductModel product) {
     _items.remove(product.id);
     Get.find<ProductController>()
         .initCountToCart(product, Get.find<CartController>());
-    cartRepo.addToCartList(getItemsList);
+    cartRepo.addToLocalCartList(getItemsList);
     update();
   }
 

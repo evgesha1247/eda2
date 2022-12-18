@@ -48,11 +48,13 @@ class _ProfileHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var history = Get.find<CartController>().getHistoryList().reversed.toList();
+
     Map<String, int> cartItemsPerOrder = {};
 
     for (int i = 0; i < history.length; i++) {
       if (cartItemsPerOrder.containsKey(history[i].time)) {
-        cartItemsPerOrder.update(history[i].time!, (value) => ++value);
+        cartItemsPerOrder.update(
+            history[i].time!, (countItems) => ++countItems);
       } else {
         cartItemsPerOrder.putIfAbsent(history[i].time!, () => 1);
       }
@@ -62,6 +64,10 @@ class _ProfileHistory extends StatelessWidget {
         cartItemsPerOrder.entries.map((e) => e.value).toList();
 
     List<int> itemsPerOrder = cartOrderTimeList();
+
+    print(itemsPerOrder);
+    print(cartItemsPerOrder);
+
     var listCount = 0;
 
 
@@ -70,7 +76,6 @@ class _ProfileHistory extends StatelessWidget {
 
         children: [
           for (int i = 0; i < cartItemsPerOrder.length; i++)
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -85,7 +90,6 @@ class _ProfileHistory extends StatelessWidget {
                           itemsPerOrder[i],
                           (index) {
                             if (listCount < history.length) {
-
                               listCount++;
                             }
                             return index <= 2

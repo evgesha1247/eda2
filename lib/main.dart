@@ -10,7 +10,8 @@ import 'helper/dependencies.dart';
 Future<void> loadData() async {
   Get.find<ThemeAppController>().getThemeStatus();
   await Get.find<ProductController>().getDataProduct();
-  Get.find<CartController>().getItemsListLocal();
+  Get.find<CartController>().getCartListLocal();
+  //Get.find<CartController>().getCartHistoryListLocal();
   Get.find<FavoriteController>().getItemsListLocal();
 }
 
