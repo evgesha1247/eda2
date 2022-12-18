@@ -23,7 +23,7 @@ class MenuPage extends StatelessWidget {
         enablePullUp: true,
         header: MaterialClassicHeader(
           color: context.theme.primaryColor,
-          //  backgroundColor: context.theme.cardColor.withOpacity(0.2),
+          backgroundColor: context.theme.accentColor,
         ),
         footer: const _FooterLoad(),
         child: CustomScrollView(

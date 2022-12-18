@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/pages/primary_pages/guiding/guiding_controller.dart';
-import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/custom_icon.dart';
 import '../../../widgets/text/my_text.dart';
@@ -35,12 +34,11 @@ class _UserTitle extends StatelessWidget {
         SizedBox(width: ThemeAppSize.kInterval5),
         Icon(
           Icons.grid_3x3,
-          size: ThemeAppSize.kFontSize18,
+          size: ThemeAppSize.kFontSize16,
           color: context.theme.hintColor,
         ),
         BigText(
-          text: '{name}',
-          size: ThemeAppSize.kFontSize18
+          text: 'Name', size: ThemeAppSize.kFontSize18
         ),
       ],
     );

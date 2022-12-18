@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/page_controller/menu_controller.dart';
@@ -8,6 +9,7 @@ import '../../../widgets/text/my_text.dart';
 
 class MenuFilter extends StatelessWidget {
   const MenuFilter({super.key});
+
   final List<Filter> filterModel = const [
     Filter(text: 'Sort by', icon: Icons.short_text_outlined),
     Filter(text: 'Filter', icon: Icons.filter_alt_outlined),
@@ -15,13 +17,15 @@ class MenuFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listFilter = filterModel
+
+    final List<FilterItem> listFilter = filterModel
         .map((Filter e) => FilterItem(text: e.text, icon: e.icon))
         .toList();
+
     return SliverAppBar(
       automaticallyImplyLeading: false,
       backgroundColor: context.theme.scaffoldBackgroundColor,
-      toolbarHeight: ThemeAppSize.kMenuHeaderFilter,
+      //toolbarHeight: ThemeAppSize.kMenuHeaderFilter,
       flexibleSpace: Padding(
         padding: EdgeInsets.only(
           left: ThemeAppSize.kInterval12,
@@ -30,9 +34,11 @@ class MenuFilter extends StatelessWidget {
         child: Row(
           children: [
             const _ButtonTogList(),
-            Wrap(
-              spacing: ThemeAppSize.kInterval12,
-              children: listFilter,
+            Expanded(
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: listFilter,
+              ),
             ),
           ],
         ),
@@ -61,7 +67,9 @@ class _TitleSort extends StatelessWidget {
         fontWeight: FontWeight.w400,
       ),
       subtitle: SmallText(
-        text: 'Price',
+        text: value == SortMethod.zToA || value == SortMethod.aToZ
+            ? 'Name'
+            : 'Price',
         size: ThemeAppSize.kFontSize18 - 3,
       ),
       trailing: Icon(
@@ -83,30 +91,49 @@ class FilterItem extends StatelessWidget {
   final String text;
   final IconData icon;
   const FilterItem({super.key, required this.text, required this.icon});
+
   void sortByMass() {
     Get.defaultDialog(
-      title: 'Sort by',
+      title: 'sort',
       titlePadding: EdgeInsets.only(top: ThemeAppSize.kInterval24),
       titleStyle: TextStyle(color: Get.context?.theme.hintColor),
       backgroundColor: Get.context?.theme.scaffoldBackgroundColor,
       radius: ThemeAppSize.kRadius12,
-      content: GetBuilder<MenuController>(
-        builder: (_) {
-          return Column(
-            children: [
-              _TitleSort(
-                text: 'low to high',
-                value: SortMethod.lowToHigh,
-                icon: Icons.arrow_circle_up,
-              ),
-              _TitleSort(
-                text: 'high to low',
-                value: SortMethod.highToLow,
-                icon: Icons.arrow_circle_down,
-              ),
-            ],
-          );
-        },
+      content: Container(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                SmallText(text: 'sort by price'),
+              ],
+            ),
+            _TitleSort(
+              text: 'low to high',
+              value: SortMethod.lowToHigh,
+              icon: Icons.arrow_circle_up,
+            ),
+            _TitleSort(
+              text: 'high to low',
+              value: SortMethod.highToLow,
+              icon: Icons.arrow_circle_down,
+            ),
+            Row(
+              children: [
+                SmallText(text: 'sort by name'),
+              ],
+            ),
+            _TitleSort(
+              text: 'a to z',
+              value: SortMethod.aToZ,
+              icon: Icons.arrow_circle_down,
+            ),
+            _TitleSort(
+              text: 'z to a',
+              value: SortMethod.zToA,
+              icon: Icons.arrow_circle_down,
+            ),
+          ],
+        ),
       ),
       confirm: Container(
         width: 100,
@@ -127,22 +154,31 @@ class FilterItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => text == 'Sort by' ? sortByMass() : {},
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(ThemeAppSize.kRadius12),
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(ThemeAppSize.kRadius12),
+              ),
+              border: Border.all(color: context.theme.hintColor),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+              child: Row(
+                children: [
+                  SmallText(
+                    text: text,
+                    color: context.theme.hintColor,
+                    size: ThemeAppSize.kFontSize16,
+                  ),
+                  Icon(icon, color: context.theme.hintColor),
+                ],
+              ),
+            ),
           ),
-          border: Border.all(color: context.theme.hintColor),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          child: Wrap(
-            children: [
-              SmallText(text: text, color: context.theme.hintColor),
-              Icon(icon, color: context.theme.hintColor),
-            ],
-          ),
-        ),
+          SizedBox(width: ThemeAppSize.kInterval12)
+        ],
       ),
     );
   }

@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
-import 'package:text/helper/dependencies.dart';
 import '../../../routes/main_routes.dart';
 
 

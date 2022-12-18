@@ -17,7 +17,7 @@ class HeaderDetailed extends StatelessWidget {
       backgroundColor: context.theme.cardColor,
       surfaceTintColor: context.theme.cardColor,
       expandedHeight: ThemeAppSize.kDetaildHeaderImg,
-      toolbarHeight: ThemeAppSize.kDetaildHeaderImgToolbar,
+      toolbarHeight: ThemeAppSize.kHeight100,
       excludeHeaderSemantics: true,
       titleSpacing: ThemeAppSize.kInterval24,
       title: const _HeaderIcons(),
@@ -61,7 +61,6 @@ class _HeaderIcons extends StatelessWidget {
         ButtonIconCart(
           iconColor: context.theme.hintColor,
           bg: context.theme.scaffoldBackgroundColor,
-          statusBorder: false,
         ),
       ],
     );
@@ -88,7 +87,7 @@ class _BodyTitle extends StatelessWidget {
           child: BigText(
             text: name,
             color: context.theme.hintColor,
-            size: ThemeAppSize.kFontSize22,
+            size: ThemeAppSize.kFontSize20,
           ),
         ),
       ),

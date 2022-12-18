@@ -33,8 +33,7 @@ void buy() {
   }
 
 
-
-  List<CartModel> getCartHistoryList() {
+  List<CartModel> getHistoryList() {
     return cartRepo.getCartHistoryList();
   }
 
@@ -138,10 +137,9 @@ void buy() {
 
 
   void _clearCart() {
-    _items.clear();
-
-    //  ThemeAppFun.printSnackBar('Thank you for your purchase');
-    cartRepo.addToCartList(getItemsList);
+    _items = {};
+    ThemeAppFun.printSnackBar('Thank you for your purchase');
+    //  cartRepo.addToCartList(getItemsList);
     update();
   }
 

@@ -36,7 +36,7 @@ class _ProductBody extends StatelessWidget {
           switch (product.popularStatusLoad) {
             case ProductStatusLoad.loading:
               return SizedBox(
-                height: ThemeAppSize.kHomePageViewError,
+                height: ThemeAppSize.kScreensHeight,
                 child: const CircularWidget(),
               );
             case ProductStatusLoad.error:
@@ -58,7 +58,7 @@ class _PopularTitle extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
         child: BigText(
           text: 'Popular product',
-          size: ThemeAppSize.kFontSize20,
+          size: ThemeAppSize.kFontSize18,
         ),
       );
 }
@@ -217,7 +217,7 @@ class _ItemTitle extends StatelessWidget {
             child: BigText(
               rightToLeft: true,
               text: product.name!,
-              size: ThemeAppSize.kFontSize22,
+              size: ThemeAppSize.kFontSize20,
               maxLines: 2,
               color: context.theme.accentColor,
             ),
@@ -250,7 +250,7 @@ class _ErrorLoadPopular extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ThemeAppSize.kHomePageViewError,
+      height: ThemeAppSize.kHomePageView,
       margin: EdgeInsets.only(
         left: ThemeAppSize.kInterval12,
         right: ThemeAppSize.kInterval12,
@@ -268,11 +268,35 @@ class _ErrorLoadPopular extends StatelessWidget {
           const Expanded(
               child: Image(image: AssetImage('assets/imgs/error_dish.png'))),
           Expanded(
-            child: BigText(
-              text: 'Check internet connection',
-              maxLines: 2,
-              size: ThemeAppSize.kFontSize22,
-              color: context.theme.accentColor,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BigText(
+                  text: 'Check internet connection',
+                  maxLines: 2,
+                  size: ThemeAppSize.kFontSize20,
+                  color: context.theme.accentColor,
+                ),
+                SizedBox(height: ThemeAppSize.kInterval24),
+                InkWell(
+                  onTap: () => Get.find<ProductController>().getDataProduct(),
+                  child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: ThemeAppSize.kInterval12,
+                        vertical: ThemeAppSize.kInterval5,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: context.theme.primaryColor,
+                        ),
+                      ),
+                      child: BigText(
+                        text: 'connect',
+                        color: context.theme.primaryColor,
+                      )),
+                )
+              ],
             ),
           ),
         ],

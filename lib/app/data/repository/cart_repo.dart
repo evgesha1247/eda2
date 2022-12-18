@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/utils/app_constants.dart';
 
@@ -11,6 +12,24 @@ class CartRepo {
 
   List<String> _cart = [];
   List<String> _cartHistory = [];
+
+
+  void addToCartList(List<CartModel> cartList) {
+    // sharedStore.remove(AppConstansts.CART_LIST);
+    // sharedStore.remove(AppConstansts.CART_HISTORY_LIST);
+    // return;
+    var time = DateTime.now().toString();
+    _cart = [];
+
+    for (var element in cartList) {
+      element.time = time;
+      _cart.add(jsonEncode(element));
+    }
+
+    sharedStore.setStringList(AppConstansts.CART_LIST, _cart);
+    //  sharedStore.remove(AppConstansts.CART_LIST);
+    getCartList();
+  }
 
   List<CartModel> getCartList() {
     List<String> carts = [];
@@ -25,22 +44,11 @@ class CartRepo {
     return cartList;
   }
 
-  void addToCartList(List<CartModel> cartList) {
-    // sharedStore.remove(AppConstansts.CART_LIST);
-    // sharedStore.remove(AppConstansts.CART_HISTORY_LIST);
-    var time = DateTime.now();
-    _cart = [];
-
-    for (var element in cartList) {
-      element.time = time.toString();
-      _cart.add(jsonEncode(element));
-    }
-    sharedStore.setStringList(AppConstansts.CART_LIST, _cart);
-  }
 
   List<CartModel> getCartHistoryList() {
+
     if (sharedStore.containsKey(AppConstansts.CART_HISTORY_LIST)) {
-      _cartHistory = [];
+
       _cartHistory =
           sharedStore.getStringList(AppConstansts.CART_HISTORY_LIST)!;
     }
@@ -48,6 +56,7 @@ class CartRepo {
     for (var element in _cartHistory) {
       cartListHistory.add(CartModel.fromJson(jsonDecode(element)));
     }
+
     return cartListHistory;
   }
 
@@ -62,5 +71,6 @@ class CartRepo {
     _cart = [];
     sharedStore.remove(AppConstansts.CART_LIST);
     sharedStore.setStringList(AppConstansts.CART_HISTORY_LIST, _cartHistory);
+    print('  count -------- ' + getCartHistoryList().length.toString());
   }
 }

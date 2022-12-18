@@ -22,7 +22,7 @@ class FavoritHeader extends StatelessWidget {
         Icon(
           Icons.favorite_border_outlined,
           color: context.theme.accentColor,
-          size: ThemeAppSize.kFontSize22,
+          size: ThemeAppSize.kFontSize20,
         )
       ],
     );

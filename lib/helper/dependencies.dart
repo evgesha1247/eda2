@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/controllers/page_controller/favorite_controller.dart';
 import 'package:text/app/data/repository/cart_repo.dart';
-import 'package:text/app/pages/primary_pages/guiding/guiding_screen.dart';
 import '../app/controllers/product_controller.dart';
 import '../app/data/api/api_client.dart';
 import '../app/data/repository/auth_repo.dart';
@@ -15,8 +14,6 @@ import '../app/pages/primary_pages/guiding/guiding_controller.dart';
 import '../app/routes/main_routes.dart';
 import '../app/theme/theme_controller.dart';
 import '../utils/app_constants.dart';
-import 'package:flutter/foundation.dart' show defaultTargetPlatform;
-
 import '../../../firebase_options.dart';
 
 // ignore: depend_on_referenced_packages
@@ -31,8 +28,10 @@ class Dependencies {
           options: DefaultFirebaseOptions.currentPlatform,
         ).then((value) => Get.find<AuthRepo>());
       } catch (e) {
-      print('not init firebase');
-      print('$e');
+
+
+      debugPrint('not init firebase');
+      debugPrint('$e');
       Get.offAllNamed(MainRoutes.getGuiding);
     }
 

@@ -27,14 +27,15 @@ class WrapperIcon extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.all(
-          Radius.circular(ThemeAppSize.kRadius12),
+          Radius.circular(ThemeAppSize.kInterval5 * 2),
         ),
         border: statusBorder
-            ? Border.all(color: colorBorder as Color, width: 0.8)
+            ? Border.all(color: colorBorder as Color, width: 1.1)
             : null,
       ),
       child: Padding(
-        padding: EdgeInsets.all(size == 0 ? ThemeAppSize.kInterval12 : size),
+        padding:
+            EdgeInsets.all(size == 0 ? ThemeAppSize.kInterval5 * 1.5 : size),
         child: child,
       ),
     );
@@ -44,10 +45,12 @@ class WrapperIcon extends StatelessWidget {
 class ButtonIconBack extends StatelessWidget {
   final Color iconColor;
   final Color bg;
+  final bool statusBorder;
   const ButtonIconBack({
     super.key,
     this.iconColor = Colors.transparent,
     this.bg = Colors.transparent,
+      this.statusBorder = true
   });
   @override
   Widget build(BuildContext context) {
@@ -57,12 +60,16 @@ class ButtonIconBack extends StatelessWidget {
           onTap: () => Get.back(),
           child: WrapperIcon(
             bg: bg,
+            statusBorder: statusBorder,
+            colorBorder: iconColor == Colors.transparent
+                ? context.theme.textTheme.bodyMedium?.color
+                : iconColor,
             child: Icon(
               Icons.arrow_back_ios_new,
               color: iconColor == Colors.transparent
                   ? context.theme.textTheme.bodyMedium?.color
                   : iconColor,
-              size: ThemeAppSize.kFontSize22,
+              size: ThemeAppSize.kFontSize20,
             ),
           ),
         );
@@ -100,30 +107,30 @@ class ButtonIconCart extends StatelessWidget {
                     _.totalItems >= 1
                         ? Icons.shopping_bag_rounded
                         : Icons.shopping_bag_outlined,
-                    // Icons.local_mall_rounded
-                    //Icons.local_mall_outlined,
                     color: iconColor == Colors.transparent
                         ? context.theme.hintColor
                         : iconColor,
-                    size: ThemeAppSize.kFontSize22,
+                    size: ThemeAppSize.kFontSize20,
                   ),
                   SizedBox(
-                    width: _.totalItems >= 1 ? ThemeAppSize.kInterval12 : 0,
+                    width: _.totalItems >= 1 ? ThemeAppSize.kInterval24 : 0,
                   )
                 ]),
               ),
-              Positioned(
-                left: ThemeAppSize.kInterval24,
-                top: 0,
-                right: 0,
-                bottom: 0,
-                child: Center(
-                  child: SmallText(
-                    text: _.totalItems >= 1 ? '${_.totalItems}' : '',
-                    color: iconColor,
-                  ),
-                ),
-              ),
+              _.totalItems >= 1
+                  ? Positioned(
+                      left: ThemeAppSize.kInterval24,
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Center(
+                        child: SmallText(
+                          text: '${_.totalItems}',
+                          color: iconColor,
+                        ),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
             ],
           );
         },

@@ -36,12 +36,12 @@ class _RecommendedTitle extends StatelessWidget {
       children: [
         BigText(
           text: 'Top recommended',
-          size: ThemeAppSize.kFontSize20,
-        ),
-        SizedBox(width: ThemeAppSize.kInterval5),
-        SmallText(
-          text: '• Food pairing',
           size: ThemeAppSize.kFontSize18,
+        ),
+        const BigText(text: '•'),
+        SmallText(
+          text: 'Food pairing',
+          size: ThemeAppSize.kFontSize16,
         ),
       ],
     );
@@ -78,7 +78,7 @@ class _ItemBuilder extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            var selected = true.obs;
+            var selected = false.obs;
             final ProductModel item =
                 recommendedProduct.recommendedProductList[index];
             return GestureDetector(
@@ -89,8 +89,8 @@ class _ItemBuilder extends StatelessWidget {
               ),
               child: Obx(
                 () => selected.value
-                    ? _ItemOpen(item: item, index: index)
-                    : _ItemClos(item: item),
+                    ? _ItemOpen(item: item)
+                    : _ItemClos(item: item, index: index),
               ),
             );
           },
@@ -100,14 +100,14 @@ class _ItemBuilder extends StatelessWidget {
   }
 }
 
-class _ItemOpen extends StatelessWidget {
+class _ItemClos extends StatelessWidget {
   final ProductModel item;
   final int index;
-  const _ItemOpen({required this.item, required this.index});
+  const _ItemClos({required this.item, required this.index});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: ThemeAppSize.kHomeListView + ThemeAppSize.kInterval12,
+      height: ThemeAppSize.kHeight100 + ThemeAppSize.kInterval12,
       child: Row(
         children: [
           ///
@@ -115,8 +115,8 @@ class _ItemOpen extends StatelessWidget {
           ///
 
           Container(
-            width: ThemeAppSize.kHomeListView,
-            height: ThemeAppSize.kHomeListView,
+            width: ThemeAppSize.kHeight100,
+            height: ThemeAppSize.kHeight100,
             decoration: BoxDecoration(
               color: context.theme.cardColor,
               borderRadius:
@@ -136,6 +136,8 @@ class _ItemOpen extends StatelessWidget {
 
           Expanded(
             child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: ThemeAppSize.kInterval24),
               height: ThemeAppSize.kHomeListViewInfo,
               decoration: BoxDecoration(
                 color: Get.context?.theme.cardColor,
@@ -143,13 +145,11 @@ class _ItemOpen extends StatelessWidget {
                   right: Radius.circular(ThemeAppSize.kRadius12),
                 ),
               ),
-              child: Padding(
-                padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-                child: BigText(
-                  text: item.name!,
-                  maxLines: 2,
-                  color: Get.context!.theme.accentColor,
-                ),
+              child: BigText(
+                size: ThemeAppSize.kFontSize18,
+                text: item.name!,
+                maxLines: 2,
+                color: Get.context!.theme.accentColor,
               ),
             ),
           ),
@@ -195,81 +195,106 @@ class _ItemOpen extends StatelessWidget {
   }
 }
 
-class _ItemClos extends StatelessWidget {
+class _ItemOpen extends StatelessWidget {
   final ProductModel item;
-  const _ItemClos({required this.item});
+  const _ItemOpen({required this.item});
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(height: ThemeAppSize.kInterval12),
         Container(
-          height: ThemeAppSize.kHomeListView,
           decoration: BoxDecoration(
             color: Get.context?.theme.cardColor,
-            borderRadius:
-                BorderRadius.all(Radius.circular(ThemeAppSize.kRadius18)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(ThemeAppSize.kRadius18),
+            ),
           ),
           clipBehavior: Clip.hardEdge,
-          child: Row(
+          child: Column(
             children: [
-              Image(
-                width: ThemeAppSize.kHomeListView,
-                height: ThemeAppSize.kHomeListView,
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                  "${AppConstansts.BASE_URL}/uploads/${item.img!}",
+              SizedBox(
+                height: ThemeAppSize.kHeight100,
+                child: Row(
+                  children: [
+                    Container(
+                      width: ThemeAppSize.kHeight100,
+                      height: ThemeAppSize.kHeight100,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            "${AppConstansts.BASE_URL}/uploads/${item.img!}",
+                          ),
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(ThemeAppSize.kRadius18),
+                        ),
+                      ),
+                    ),
+
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                        child: Column(
+
+                          children: [
+                            BigText(
+                              text: item.name!,
+                              maxLines: 1,
+                              color: Get.context!.theme.accentColor,
+                            ),
+                            SmallText(
+                              text: item.description!,
+                              color: Get.context!.theme.accentColor
+                                  .withOpacity(0.8),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BigText(
-                        text: item.name!,
-                        maxLines: 2,
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal:
+                      ThemeAppSize.kInterval5 + ThemeAppSize.kInterval5 * 1.7,
+                ),
+                height: ThemeAppSize.kHeight100 / 2,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: BigText(
+                        text: '${item.price!.toStringAsFixed(2)}\$',
                         color: Get.context!.theme.accentColor,
                       ),
-                      SmallText(
-                        maxLines: 2,
-                        text: item.description!,
-                        color: Get.context!.theme.accentColor.withOpacity(0.8),
-                      ),
-                      Row(
+                    ),
+                    Expanded(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          BigText(
-                            text: '${item.price!.toStringAsFixed(2)}\$',
-                            maxLines: 2,
-                            color: Get.context!.theme.accentColor,
-                          ),
-                          const Spacer(),
                           CartAddIcon(
-                            product: item,
-                            statusBorder: true,
-                              iconColor: context.theme.accentColor
-                          ),
-                          SizedBox(
-                            width: ThemeAppSize.kInterval12,
-                          ),
-                          FavoritIcon(
-                            product: item,
-                            statusBorder: true,
+                              product: item,
+                              // statusBorder: true,
+                              iconColor: context.theme.accentColor),
 
-                              iconColor: context.theme.accentColor
-                          )
+                          FavoritIcon(
+                              product: item,
+                              // statusBorder: true,
+                              iconColor: context.theme.accentColor)
                         ],
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
+
+
         SizedBox(height: ThemeAppSize.kInterval12),
       ],
     );

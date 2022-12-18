@@ -34,7 +34,7 @@ class BigText extends StatelessWidget {
       overflow: overflow,
       style: TextStyle(
         decorationThickness: decorationThickness,
-        fontSize: size == 0 ? ThemeAppSize.kFontSize22 : size,
+        fontSize: size == 0 ? ThemeAppSize.kFontSize20 : size,
         color: color == Colors.transparent ? context.theme.hintColor : color,
         fontWeight: fontWeight,
       ),

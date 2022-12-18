@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../utils/app_constants.dart';
@@ -7,50 +9,6 @@ import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/text/my_text.dart';
-
-class _ItemBuilderGrid extends StatelessWidget {
-  final ProductModel item;
-  const _ItemBuilderGrid({required this.item});
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(
-          left: ThemeAppSize.kInterval12,
-          bottom: ThemeAppSize.kInterval24,
-          right: ThemeAppSize.kInterval12,
-        ),
-        child: GestureDetector(
-          onTap: () => Get.toNamed(
-          MainRoutes.getDetailed(item.id),
-          arguments: item,
-          ),
-          child: Stack(
-            children: [
-              _ItemImg(
-                img:
-                    "${AppConstansts.BASE_URL}/uploads/${item.img!}",
-              ),
-            _ItemControlElements(product: item),
-            ],
-          ),
-        ),
-
-    );
-  }
-}
-
-class _ItemBuilderList extends StatelessWidget {
-  final ProductModel item;
-  const _ItemBuilderList({required this.item});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(top: 10),
-        width: 100,
-        height: 100,
-        color: Colors.orange);
-  }
-}
 
 class MenuBody extends StatelessWidget {
   MenuBody({super.key});
@@ -62,6 +20,7 @@ class MenuBody extends StatelessWidget {
           ? SliverGrid(
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 370,
+                childAspectRatio: 0.9,
               ),
               delegate: SliverChildBuilderDelegate(
                 childCount: controller.filterList.length,
@@ -79,20 +38,62 @@ class MenuBody extends StatelessWidget {
   }
 }
 
+class _ItemBuilderGrid extends StatelessWidget {
+  final ProductModel item;
+  const _ItemBuilderGrid({required this.item});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: ThemeAppSize.kInterval12,
+        bottom: ThemeAppSize.kInterval24,
+        right: ThemeAppSize.kInterval12,
+      ),
+      child: Material(
+        elevation: 8,
+        shadowColor: context.theme.cardColor,
+        borderRadius: BorderRadius.circular(ThemeAppSize.kRadius12),
+        clipBehavior: Clip.hardEdge,
+        child: GestureDetector(
+          onTap: () => Get.toNamed(
+            MainRoutes.getDetailed(item.id),
+            arguments: item,
+          ),
+          child: Stack(
+            children: [
+              _ItemImg(img: "${AppConstansts.BASE_URL}/uploads/${item.img!}"),
+              _ItemControlElements(product: item),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ItemBuilderList extends StatelessWidget {
+  final ProductModel item;
+  const _ItemBuilderList({required this.item});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: const EdgeInsets.only(top: 10),
+        width: 100,
+        height: 100,
+        color: Colors.orange);
+  }
+}
+
 class _ItemImg extends StatelessWidget {
   final String img;
   const _ItemImg({required this.img});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: context.theme.cardColor,
-        borderRadius: ThemeAppFun.decoration(),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(img),
-        ),
-      ),
+    return Image(
+      height: double.infinity,
+      width: double.infinity,
+      fit: BoxFit.cover,
+      image: NetworkImage(img),
     );
   }
 }

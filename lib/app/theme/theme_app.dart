@@ -69,6 +69,7 @@ abstract class ThemeAppSize {
   static double kScreensWidth = Get.context!.width;
 
   // радиус
+  static double kRadius5 = kScreensHeight / (height / 5);
   static double kRadius12 = kScreensHeight / (height / 12);
   static double kRadius18 = kScreensHeight / (height / 18);
   // отступы
@@ -76,26 +77,27 @@ abstract class ThemeAppSize {
   static double kInterval12 = kScreensHeight / (height / 12);
   static double kInterval24 = kScreensHeight / (height / 24);
   // fonts
+  static double kFontSize12 = kScreensHeight / (height / 12);
+  static double kFontSize14 = kScreensHeight / (height / 14);
+  static double kFontSize16 = kScreensHeight / (height / 16);
   static double kFontSize18 = kScreensHeight / (height / 18);
   static double kFontSize20 = kScreensHeight / (height / 20);
-  static double kFontSize22 = kScreensHeight / (height / 22);
 
-// home page
-  // page view
-  static double kHomePageView = kScreensHeight / (height / 220);
-  static double kHomePageViewError = kScreensHeight / (height / 120);
-  // list view
-  static double kHomeListView = kScreensHeight / (height / 150);
-  static double kHomeListViewInfo = kScreensHeight / (height / 120);
+  static double kHeight100 = kScreensHeight / (height / 100);
+  static double kHeight75 = kScreensHeight / (height / 75);
 
-// ditalit page
+  /// home page
+  static double kHomePageView = kScreensHeight / (height / 190);
+  static double kHomeListViewInfo = kScreensHeight / (height / 80);
+  static double kHomePageViewOpen = kScreensHeight / (height / 150);
+
+  /// ditalit page
   static double kDetaildHeaderImg = kScreensHeight / (height / 280);
-  static double kDetaildHeaderImgToolbar = kScreensHeight / (height / 100);
   static double kDetaildButtomContainer = kScreensHeight / (height / 120);
 
 // home menu
-  static double kMenuHeaderSearch = kScreensHeight / (height / 75);
-  static double kMenuHeaderFilter = kScreensHeight / (height / 75);
+  static double kMenuHeaderSearch = kHeight75;
+  static double kMenuHeaderFilter = kHeight75;
 }
 
 abstract class ThemeAppFun {

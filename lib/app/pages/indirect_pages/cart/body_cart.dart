@@ -24,14 +24,22 @@ class CartBody extends StatelessWidget {
           bottom: 0,
           child: GetBuilder<CartController>(
             builder: (constroller) {
-              return ListView.builder(
+              return constroller.getItemsList.isNotEmpty
+                  ? ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemCount: constroller.getItemsList.length,
                 padding: const EdgeInsets.only(bottom: 100),
-                itemBuilder: (context, index) {
-                  return _RowItem(controller: constroller, index: index);
-                },
-              );
+                      itemBuilder: (context, index) {
+                        return _RowItem(controller: constroller, index: index);
+                      })
+                  : Padding(
+                      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                      child: Column(
+                        children: [
+                          Image.asset('assets/icons/cart.png'),
+                        ],
+                      ),
+                    );
             },
           ),
         ),
@@ -66,7 +74,7 @@ class _ItemInside extends StatelessWidget {
                 child: Icon(
                   Icons.delete_outline_outlined,
                   color: context.theme.hintColor,
-                  size: ThemeAppSize.kFontSize22,
+                  size: ThemeAppSize.kFontSize20,
                 ),
               ),
             ),
@@ -120,7 +128,7 @@ class _Item extends StatelessWidget {
                 text: item.name!,
                 maxLines: 3,
                 color: Get.context!.theme.accentColor,
-                size: ThemeAppSize.kFontSize22,
+                size: ThemeAppSize.kFontSize20,
               ),
             ),
             Row(

@@ -75,28 +75,38 @@ class _TotalPrice extends StatelessWidget {
 }
 
 class _ButtonCart extends StatelessWidget {
-  _ButtonCart();
-  final controller = Get.find<CartController>();
+  const _ButtonCart();
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        controller.buy();
-      },
-      child: Container(
-        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-        decoration: BoxDecoration(
-          color: context.theme.primaryColor,
-          borderRadius: ThemeAppFun.decoration(
-            radius: ThemeAppSize.kRadius12,
+    return GetBuilder<CartController>(
+      builder: (controller) {
+        return GestureDetector(
+          onTap: controller.getItemsList.isEmpty
+              ? () {}
+              : () {
+                  controller.buy();
+                },
+          child: Container(
+            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+            decoration: BoxDecoration(
+              color: controller.getItemsList.isNotEmpty
+                  ? context.theme.primaryColor
+                  : context.theme.primaryColor.withOpacity(0.5),
+              borderRadius: ThemeAppFun.decoration(
+                radius: ThemeAppSize.kRadius12,
+              ),
+            ),
+            child: BigText(
+              text: ' Pay ',
+              color: controller.getItemsList.isNotEmpty
+                  ? context.theme.accentColor
+                  : context.theme.accentColor.withOpacity(0.5),
+              size: ThemeAppSize.kFontSize20,
+            ),
           ),
-        ),
-        child: BigText(
-          text: ' Pay ',
-          color: context.theme.accentColor,
-          size: ThemeAppSize.kFontSize20,
-        ),
-      ),
+        );
+      },
     );
   }
 }

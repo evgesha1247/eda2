@@ -47,8 +47,7 @@ class _ProfileHistory extends StatelessWidget {
   const _ProfileHistory();
   @override
   Widget build(BuildContext context) {
-    var history =
-        Get.find<CartController>().getCartHistoryList().reversed.toList();
+    var history = Get.find<CartController>().getHistoryList().reversed.toList();
     Map<String, int> cartItemsPerOrder = {};
 
     for (int i = 0; i < history.length; i++) {
@@ -64,15 +63,18 @@ class _ProfileHistory extends StatelessWidget {
 
     List<int> itemsPerOrder = cartOrderTimeList();
     var listCount = 0;
+
+
     return Expanded(
       child: ListView(
+
         children: [
           for (int i = 0; i < cartItemsPerOrder.length; i++)
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _HistoryData(data: history[listCount].time!),
-
+                //     _HistoryData(data: history[listCount].time!),
                 SizedBox(
                   height: 80,
                   child: Row(
@@ -83,6 +85,7 @@ class _ProfileHistory extends StatelessWidget {
                           itemsPerOrder[i],
                           (index) {
                             if (listCount < history.length) {
+
                               listCount++;
                             }
                             return index <= 2
@@ -112,31 +115,28 @@ class _ProfileHistory extends StatelessWidget {
                     ],
                   ),
                 ),
-                //  ),
               ],
             ),
         ],
       ),
-
     );
   }
 }
 
-class _HistoryData extends StatelessWidget {
-  final String data;
-  const _HistoryData({required this.data});
-
-  @override
-  Widget build(BuildContext context) {
-    return (() {
-      DateTime parseData = DateFormat("yyyy-MM-dd HH:mm:ss").parse(data);
-      var inputData = DateTime.parse(parseData.toString());
-      var outputFormat = DateFormat("M d yy hh:mm a");
-      var outputData = outputFormat.format(inputData);
-      return BigText(text: outputData);
-    }());
-  }
-}
+// class _HistoryData extends StatelessWidget {
+//   final String data;
+//   const _HistoryData({required this.data});
+//   @override
+//   Widget build(BuildContext context) {
+//     return (() {
+//       DateTime parseData = DateFormat("yyyy-MM-dd HH:mm:ss").parse(data);
+//       var inputData = DateTime.parse(parseData.toString());
+//       var outputFormat = DateFormat("M-d-yy, hh:mm a");
+//       var outputData = outputFormat.format(inputData);
+//       return BigText(text: outputData);
+//     }());
+//   }
+// }
 
 class _HistoryCount extends StatelessWidget {
   final int count;
@@ -144,7 +144,7 @@ class _HistoryCount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 80,
       //color: Colors.red,
       child: Column(

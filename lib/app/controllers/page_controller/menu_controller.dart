@@ -1,11 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../product_controller.dart';
 import '../../models/products_model.dart';
 
-enum SortMethod { lowToHigh, highToLow, reset }
+enum SortMethod { lowToHigh, highToLow, aToZ, zToA, reset }
+
 enum ListStatus { list, grid }
 
 class Filter {
@@ -24,7 +24,7 @@ class MenuController extends GetxController {
     initProductControllerr(Get.find<ProductController>());
   }
 
-ListStatus listStatus = ListStatus.grid;
+  ListStatus listStatus = ListStatus.grid;
   void togStatusList() {
     listStatus =
         (listStatus == ListStatus.list) ? ListStatus.grid : ListStatus.list;
@@ -48,23 +48,23 @@ ListStatus listStatus = ListStatus.grid;
     update();
   }
 
-
 ////// init all product/////////////////////
-  final List<ProductModel> _productList = [];
+  List<ProductModel> _productList = [];
   List<ProductModel> _filterList = [];
   List<ProductModel> get filterList => _filterList;
 
   void initProductControllerr(ProductController controller) {
 
-      for (var element in controller.popularProductList) {
-        if (!_productList.contains(element)) {
-          _productList.add(element);
-        }
+    _productList = [];
+    for (var element in controller.popularProductList) {
+      if (!_productList.contains(element)) {
+        _productList.add(element);
       }
+    }
 
-      for (var element in controller.recommendedProductList) {
-        if (!_productList.contains(element)) {
-          _productList.add(element);
+    for (var element in controller.recommendedProductList) {
+      if (!_productList.contains(element)) {
+        _productList.add(element);
       }
     }
 
@@ -91,13 +91,19 @@ ListStatus listStatus = ListStatus.grid;
   }
 
   SortMethod? method = SortMethod.reset;
-  sortBy() {
+  _sortBy() {
     switch (method) {
       case SortMethod.lowToHigh:
         _filterList.sort((a, b) => a.price!.compareTo(b.price!));
         break;
       case SortMethod.highToLow:
         _filterList.sort((a, b) => b.price!.compareTo(a.price!));
+        break;
+      case SortMethod.aToZ:
+        _filterList.sort((a, b) => a.name!.compareTo(b.name!));
+        break;
+      case SortMethod.zToA:
+        _filterList.sort((a, b) => b.name!.compareTo(a.name!));
         break;
       default:
         _filterList;
@@ -106,7 +112,7 @@ ListStatus listStatus = ListStatus.grid;
 
   void setMethod(SortMethod? valueMethod) {
     method = valueMethod;
-    sortBy();
+    _sortBy();
     update();
   }
 }
