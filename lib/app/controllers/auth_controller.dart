@@ -20,7 +20,21 @@ class AuthController extends GetxController {
   Future authUser({required email, required pass}) async {
     final authRepo = Get.find<AuthRepo>();
     isLogScreen
-        ? authRepo.loginUser(email: email, password: pass)
-        : authRepo.createUser(email: email, password: pass);
+        ? await authRepo.loginUser(email: email, password: pass)
+        : await authRepo.createUser(email: email, password: pass);
   }
+
+
+  getUser() {
+    return Get.find<AuthRepo>().firebaseUser;
+  }
+
+  Future logoutUser() async {
+    // final authRepo = Get.find<AuthRepo>();
+    // await authRepo.logout();
+    print('logoutUser');
+  }
+
+
+
 }

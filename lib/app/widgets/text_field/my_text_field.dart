@@ -26,9 +26,6 @@ class MyTextField extends StatelessWidget {
     return Material(
       elevation: 2,
 
-      borderRadius: BorderRadius.all(
-        Radius.circular(ThemeAppSize.kInterval12),
-      ),
       child: TextField(
         autofocus: false,
         onSubmitted: (_) => FocusScope.of(context).nextFocus(),
@@ -36,13 +33,13 @@ class MyTextField extends StatelessWidget {
         textInputAction: textInputAction,
         keyboardType: keyboardType,
         obscureText: obscureText,
-        cursorColor: context.theme.backgroundColor,
+        cursorColor: context.theme.cardColor,
 
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(10),
           labelText: text,
           labelStyle: TextStyle(
-            color: context.theme.backgroundColor,
+            color: context.theme.cardColor,
           ),
           isDense: true,
           fillColor: context.theme.cardColor,
@@ -54,7 +51,7 @@ class MyTextField extends StatelessWidget {
           hintText: hintText,
           border: InputBorder.none,
 
-          // enabledBorder: styleInput,
+          //enabledBorder: styleInput,
           // focusedBorder: styleInput,
         ),
       ),

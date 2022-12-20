@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:text/app/controllers/auth_controller.dart';
 import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/controllers/page_controller/favorite_controller.dart';
 import 'package:text/app/data/repository/cart_repo.dart';
@@ -81,5 +82,6 @@ class AllPageBindings implements Bindings {
   Future<void> dependencies() async {
     Get.lazyPut<GuidingController>(() => GuidingController());
     Get.lazyPut(() => MenuController(), fenix: true);
+    Get.lazyPut(() => AuthController(), fenix: true);
   }
 }

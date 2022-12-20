@@ -13,7 +13,7 @@ class CartRepo {
   void addToLocalCartList(List<CartModel> cartList) {
     // sharedStore.remove(AppConstansts.CART_LIST);
     // sharedStore.remove(AppConstansts.CART_HISTORY_LIST);
-
+    // return;
     _cart = [];
     var time = DateTime.now().toString();
     cartList.forEach((element) {
