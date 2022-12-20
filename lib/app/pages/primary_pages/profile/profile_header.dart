@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -49,7 +51,7 @@ class _BGCoverImg extends StatelessWidget {
             width: double.infinity,
             height: ThemeAppSize.kHeight100 * 2,
             fit: BoxFit.cover,
-            'https://sun9-88.userapi.com/impg/jTS8KhO9zKlRak-GhweWQkF6ZVVEcSRiRbi7TA/Br1eQOIe7l4.jpg?size=604x340&quality=95&sign=3c6928c27d1c115a36d16b2b2a597616&type=album',
+            'https://sun9-54.userapi.com/impg/RKV-UY7wK_wSFCKDc6Vl-oyWGTWTMt6mD2cV5w/kj6Inn-5HRQ.jpg?size=449x265&quality=96&sign=5a73688beef980c7cbe91bd22773f0ec&type=album',
           ),
         ),
         Padding(
@@ -117,9 +119,9 @@ class _SettingBody extends StatelessWidget {
           SizedBox(height: ThemeAppSize.kInterval12),
           const Center(child: BigText(text: 'Setting')),
           SizedBox(height: ThemeAppSize.kInterval12),
-          const _SettingTextFields(),
+          _SettingTextFields(),
           SizedBox(height: ThemeAppSize.kInterval12),
-          const _DialogButtons(),
+          _DialogButtons(),
         ],
       ),
     );
@@ -127,16 +129,18 @@ class _SettingBody extends StatelessWidget {
 }
 
 class _SettingTextFields extends StatelessWidget {
-  const _SettingTextFields();
+  _SettingTextFields();
+  final controller = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        const _TextFieldItem(text: 'name'),
+        _TextFieldItem(text: 'name', controller: controller.cSettingName),
         SizedBox(height: ThemeAppSize.kInterval12),
-        const _TextFieldItem(text: 'phone'),
+        _TextFieldItem(text: 'phone', controller: controller.cSettingPhone),
         SizedBox(height: ThemeAppSize.kInterval12),
-        const _TextFieldItem(text: 'addres'),
+        _TextFieldItem(
+            text: 'PhotoUrl', controller: controller.cSettingPhotoURL),
       ],
     );
   }
@@ -144,19 +148,25 @@ class _SettingTextFields extends StatelessWidget {
 
 class _TextFieldItem extends StatelessWidget {
   final String text;
-  const _TextFieldItem({required this.text});
+  final TextEditingController controller;
+  const _TextFieldItem({required this.text, required this.controller});
   @override
   Widget build(BuildContext context) {
     return Card(
       color: context.theme.scaffoldBackgroundColor,
       elevation: 3,
       child: TextField(
+        keyboardType: TextInputType.multiline,
+        minLines: 1,
+        maxLines: null,
+        controller: controller,
+
         decoration: InputDecoration(
           labelStyle: TextStyle(color: context.theme.cardColor),
           isDense: true,
           fillColor: context.theme.cardColor,
           prefixIcon: const Icon(Icons.edit),
-          label: SmallText(text: text),
+          hintText: controller.text,
           border: const OutlineInputBorder(),
           contentPadding: EdgeInsets.all(
             ThemeAppSize.kInterval12,
@@ -203,14 +213,15 @@ class _SettingThemeIcon extends StatelessWidget {
 }
 
 class _DialogButtons extends StatelessWidget {
-  const _DialogButtons();
+  _DialogButtons();
+  final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const InkWell(
-          child: MyButtonString(text: 'save'),
-          //  onTap: () => controller.setUserName(name : )
+        InkWell(
+          child: const MyButtonString(text: 'save'),
+          onTap: () => controller.setUserName(),
         ),
         SizedBox(width: ThemeAppSize.kInterval12),
         InkWell(

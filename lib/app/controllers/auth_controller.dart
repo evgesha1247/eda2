@@ -8,12 +8,24 @@ class AuthController extends GetxController {
   final cName = TextEditingController();
   final cEmail = TextEditingController();
   final cPassword = TextEditingController();
+
+
+  //  Settting Profile
+  final cSettingName = TextEditingController();
+  final cSettingPhone = TextEditingController();
+  final cSettingPhotoURL = TextEditingController();
+  //////////////////////
+
   late final Rx<User?> user;
   late final AuthRepo authRepo;
   AuthController() {
     try {
       authRepo = Get.find<AuthRepo>();
       user = authRepo.firebaseUser;
+
+      cSettingName.text = user.value?.displayName ?? '';
+      cSettingPhone.text = user.value?.phoneNumber ?? '';
+      cSettingPhotoURL.text = user.value?.photoURL ?? '';
     } catch (e) {
       print('user is null ');
       print(' non init authRepo ');
@@ -40,10 +52,11 @@ class AuthController extends GetxController {
     print('logoutUser');
   }
 
+////
 
-Future<void> setUserName({required String name}) async {
+Future<void> setUserName() async {
     try {
-      await authRepo.firebaseUser.value?.updateDisplayName(name);
+      await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
     } catch (e) {
       print('error up data name ');
   }

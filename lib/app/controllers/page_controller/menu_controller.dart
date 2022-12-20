@@ -44,6 +44,7 @@ class MenuController extends GetxController {
       refreshController.loadComplete();
     } catch (e) {
       refreshController.refreshFailed();
+      print('refreshController  ---  $e');
     }
     update();
   }

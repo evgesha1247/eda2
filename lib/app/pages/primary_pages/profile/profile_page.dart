@@ -9,7 +9,7 @@ class ProfilePage extends StatelessWidget {
     return Column(
       children: [
         ProfileHeader(),
-        Expanded(child: ProfileUserInfo()),
+        Expanded(child: ProfileBody()),
       ],
     );
   }
