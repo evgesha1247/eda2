@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/pages/primary_pages/profile/profile_history.dart';
@@ -17,11 +19,12 @@ class ProfileBody extends StatelessWidget {
       child: Column(
         children: [
           BigText(text: controller.user?.value?.displayName ?? '#NAME'),
+          SizedBox(height: ThemeAppSize.kInterval12),
           Column(children: [
             _ItemsListTile(
               text: 'history',
               icon: Icons.history,
-              fun: () => customShowDialog(widget: ProfileHistory()),
+              fun: () => customShowDialog(widget: const ProfileHistory()),
             ),
           ]),
           const Spacer(),
@@ -48,13 +51,16 @@ class _ItemsListTile extends StatelessWidget {
         InkWell(
           onTap: () => fun(),
           child: Card(
-            elevation: 5,
-            shadowColor: context.theme.cardColor,
-            color: context.theme.scaffoldBackgroundColor,
+            elevation: 8,
+            shadowColor: Colors.grey[800],
+            color: context.theme.cardColor,
             child: ListTile(
-              leading: Icon(icon, color: context.theme.hintColor),
-              title: BigText(text: text),
-              trailing: Icon(Icons.more_vert, color: context.theme.hintColor),
+              leading: Icon(icon, color: context.theme.accentColor),
+              title: BigText(
+                text: text,
+                color: context.theme.accentColor,
+              ),
+              trailing: Icon(Icons.more_vert, color: context.theme.accentColor),
             ),
           ),
         ),
@@ -63,6 +69,3 @@ class _ItemsListTile extends StatelessWidget {
     );
   }
 }
-
-
-/////// dialog setting //////

@@ -109,12 +109,14 @@ class _ItemControlElements extends StatelessWidget {
       children: [
         Container(
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+          margin: const EdgeInsets.all(1.5),
           decoration: BoxDecoration(
-            color: context.theme.cardColor,
+            color: context.theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(ThemeAppSize.kRadius12),
               bottomLeft: Radius.circular(ThemeAppSize.kRadius18),
             ),
+
           ),
           child: BigText(
             text: '\$${product.price}',

@@ -1,5 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -157,17 +156,26 @@ class _TextFieldItem extends StatelessWidget {
         minLines: 1,
         maxLines: null,
         controller: controller,
-
+cursorColor: context.theme.primaryColor,
         decoration: InputDecoration(
-          labelStyle: TextStyle(color: context.theme.cardColor),
+
+          labelStyle: TextStyle(color: context.theme.primaryColor),
           isDense: true,
           fillColor: context.theme.cardColor,
-          prefixIcon: const Icon(Icons.edit),
+          prefixIcon: Icon(Icons.edit, color: context.theme.hintColor),
           hintText: controller.text,
-          border: const OutlineInputBorder(),
+          hintStyle:
+              context.theme.textTheme.bodyMedium?.copyWith(color: Colors.red),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: context.theme.hintColor),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: context.theme.hintColor),
+          ),
           contentPadding: EdgeInsets.all(
             ThemeAppSize.kInterval12,
           ),
+
         ),
       ),
     );

@@ -1,10 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/widgets/icon/anumated_icon_favorit.dart';
 import '../../../../utils/app_constants.dart';
 import '../../../controllers/page_controller/favorite_controller.dart';
 import '../../../models/products_model.dart';
+import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/text/my_text.dart';
 
@@ -21,8 +25,8 @@ class FavoriteBody extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: context.theme.scaffoldBackgroundColor,
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(20),
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(ThemeAppSize.kRadius18 * 2),
           ),
         ),
         child: GetBuilder<FavoriteController>(
@@ -47,25 +51,17 @@ class _BuilderItem extends StatelessWidget {
   final ProductModel item;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
+      height: ThemeAppSize.kHeight75 * 1.8,
 
-      height: ThemeAppSize.kInterval24 * 7,
-      decoration: BoxDecoration(
-        color: context.theme.cardColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(ThemeAppSize.kInterval12),
-        ),
-
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Stack(
         children: [
-          _ItemImg(img: '${AppConstansts.BASE_URL}/uploads/${item.img!}'),
           _ItemInfo(item: item),
+          _ItemImg(item: item),
         ],
       ),
     );
+
   }
 }
 
@@ -74,28 +70,81 @@ class _ItemInfo extends StatelessWidget {
   final ProductModel item;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          child: BigText(
-            text: item.name!,
-            maxLines: 2,
-            color: context.theme.accentColor,
-          ),
+    return Positioned(
+      left: ThemeAppSize.kHeight100 / 2,
+      top: 0,
+      bottom: 0,
+      right: 0,
+      child: Container(
+        padding: EdgeInsets.only(
+          left: ThemeAppSize.kHeight100 / 2 + ThemeAppSize.kInterval12,
         ),
+        alignment: Alignment.centerLeft,
+        decoration: BoxDecoration(
+          color: context.theme.cardColor,
+          borderRadius: BorderRadius.circular(ThemeAppSize.kRadius18),
+        ),
+        clipBehavior: Clip.hardEdge,
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BigText(
+              text: item.name!,
+              maxLines: 2,
+              color: context.theme.accentColor,
+            ),
+            SizedBox(height: ThemeAppSize.kInterval12),
+            Row(
+              children: [
+                SmallText(
+                  text: ' ${item.price} \$',
+                  color: context.theme.accentColor,
+                ),
+                SizedBox(width: ThemeAppSize.kInterval12),
+                CartAddIcon(
+                  product: item,
+                  statusBorder: true,
+                  iconColor: context.theme.accentColor,
+                ),
+              ],
+            )
+          ],
+        ),
+
       ),
     );
   }
 }
 
 class _ItemImg extends StatelessWidget {
-  const _ItemImg({required this.img});
-  final String img;
+  const _ItemImg({required this.item});
+  final ProductModel item;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Image(image: NetworkImage(img), fit: BoxFit.cover),
+    return Positioned(
+      top: (ThemeAppSize.kHeight75 * 1.8 - ThemeAppSize.kHeight100) / 2,
+      child: GestureDetector(
+        onTap: () => Get.toNamed(
+          MainRoutes.getDetailed(item.id),
+          arguments: item,
+        ),
+        child: Container(
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(ThemeAppSize.kRadius18),
+          ),
+          clipBehavior: Clip.hardEdge,
+          child: Image(
+            width: ThemeAppSize.kHeight100,
+            height: ThemeAppSize.kHeight100,
+            image:
+                NetworkImage('${AppConstansts.BASE_URL}/uploads/${item.img!}'),
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
     );
   }
 }

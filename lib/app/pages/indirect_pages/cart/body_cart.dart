@@ -89,7 +89,7 @@ class _Item extends StatelessWidget {
   _Item({required this.controller, required this.item});
   final CartController controller;
   final CartModel item;
-  final height = ThemeAppSize.kInterval24 * 8;
+  final height = ThemeAppSize.kInterval24 * 6;
 
   Widget _itemImg() {
     return GestureDetector(
@@ -99,23 +99,18 @@ class _Item extends StatelessWidget {
           arguments: item.product!,
         );
       },
-      child: Container(
-        width: ThemeAppSize.kInterval24 * 7,
-        height: height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(
-              "${AppConstansts.BASE_URL}/uploads/${item.img!}",
-            ),
-          ),
-        ),
+      child: Image(
+          width: ThemeAppSize.kInterval24 * 5,
+          height: height,
+          fit: BoxFit.cover,
+          image: NetworkImage(
+            "${AppConstansts.BASE_URL}/uploads/${item.img!}",
+          )
       ),
     );
   }
 
   Widget _infoItem() {
-    // final String total = (item.price! * item.count!).toString();
     return Expanded(
       child: Container(
         height: height,
@@ -156,7 +151,12 @@ Widget _itemCloueIcon() {
         color: Get.context?.theme.scaffoldBackgroundColor,
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
                 ),
+          border: Border.all(
+            color: Get.context?.theme.cardColor as Color,
+            width: 1.5,
+          )
               ),
               padding: EdgeInsets.all(ThemeAppSize.kInterval5),
               child: Icon(
@@ -194,7 +194,6 @@ class _RowItem extends StatelessWidget {
   const _RowItem({required this.controller, required this.index});
   final CartController controller;
   final int index;
-
   @override
   Widget build(BuildContext context) {
     final item = controller.getItemsList[index];
@@ -221,7 +220,11 @@ class _AddAndSubProductWidget extends StatelessWidget {
     Get.find<ProductController>()
         .initCountToCart(item.product!, Get.find<CartController>());
     return Container(
-      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12 / 1.5),
+      margin: EdgeInsets.only(
+        top: ThemeAppSize.kInterval12,
+        right: ThemeAppSize.kInterval12,
+      ),
       decoration: BoxDecoration(
         color: context.theme.scaffoldBackgroundColor,
         borderRadius: ThemeAppFun.decoration(
