@@ -35,7 +35,7 @@ class MainRoutes {
 
     GetPage(name: getCart, page: () => const CartPage()),
     GetPage(name: _detailed, page: () => FoodDetailedPage()),
-    GetPage(name: getProfile, page: () => const ProfilePage()),
+    GetPage(name: getProfile, page: () => ProfilePage()),
 
     GetPage(name: getGuiding, page: () => const GuidingPage()),
   ];

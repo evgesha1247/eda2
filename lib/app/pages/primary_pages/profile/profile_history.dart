@@ -29,57 +29,62 @@ class ProfileHistory extends StatelessWidget {
 
     List<int> itemsPerOrder = cartOrderTimeList();
     var listCount = 0;
+print(cartItemsPerOrder);
+    return Container(
+      constraints: BoxConstraints(maxHeight: context.height / 1.5),
+      child: Padding(
+        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+        child: Wrap(
+          children: [
+            for (int i = 0; i < cartItemsPerOrder.length; i++)
 
-    return Expanded(
-      child: ListView(
-        children: [
-          for (int i = 0; i < cartItemsPerOrder.length; i++)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _HistoryData(data: history[listCount].time!),
-                SizedBox(
-                  height: 80,
-                  child: Row(
-                    children: [
-                      Wrap(
-                        direction: Axis.horizontal,
-                        children: List.generate(
-                          itemsPerOrder[i],
-                          (index) {
-                            if (listCount < history.length) {
-                              listCount++;
-                            }
-                            return index <= 2
-                                ? Container(
-                                    height: 80,
-                                    width: 80,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                          ThemeAppSize.kRadius12,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _HistoryData(data: history[listCount].time!),
+                  SizedBox(
+                    height: 80,
+                    child: Row(
+                      children: [
+                        Wrap(
+                          direction: Axis.horizontal,
+                          children: List.generate(
+                            itemsPerOrder[i],
+                            (index) {
+                              if (listCount < history.length) {
+                                listCount++;
+                              }
+                              return index <= 2
+                                  ? Container(
+                                      height: 80,
+                                      width: 80,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                            ThemeAppSize.kRadius12,
+                                          ),
+                                        ),
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                            "${AppConstansts.BASE_URL}/uploads/${history[listCount - 1].img}",
+                                          ),
                                         ),
                                       ),
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                          "${AppConstansts.BASE_URL}/uploads/${history[listCount - 1].img}",
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : const SizedBox.shrink();
-                          },
+                                    )
+                                  : const SizedBox.shrink();
+                            },
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                      _HistoryCount(count: itemsPerOrder[i])
-                    ],
+                        const Spacer(),
+                        _HistoryCount(count: itemsPerOrder[i])
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            )
-        ],
+                ],
+              )
+          ],
+        ),
       ),
     );
   }

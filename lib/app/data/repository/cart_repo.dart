@@ -54,6 +54,7 @@ class CartRepo {
     //   print(getCartHistoryListFromLocal()[j].time.toString());
     //   print('|');
     // }
+    print(getCartHistoryListFromLocal().length);
   }
 
 void removeCart() {

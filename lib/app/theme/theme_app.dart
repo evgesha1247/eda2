@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 const String fontFamily = 'Mariupol';
 
 const _textStyle = TextStyle(
@@ -19,8 +20,6 @@ const textTheme = TextTheme(
 
 
 class Themes {
-
-
 
   static final light = ThemeData.light().copyWith(
     // text

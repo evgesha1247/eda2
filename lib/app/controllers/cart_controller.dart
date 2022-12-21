@@ -14,14 +14,15 @@ class CartController extends GetxController {
       _items.entries.map((e) => e.value).toList();
 
 void buy() {
-
-    cartRepo.addToLocalCartHistoryList();
-    _items = {};
     cartRepo.addToLocalCartList(getItemsList);
+    cartRepo.addToLocalCartHistoryList();
+
     _clearCart();
   }
 
   void _clearCart() {
+    _items = {};
+
     //  ThemeAppFun.printSnackBar('Thank you for your purchase');
     update();
   }

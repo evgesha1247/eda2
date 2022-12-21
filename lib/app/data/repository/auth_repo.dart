@@ -11,11 +11,13 @@ class AuthRepo extends GetxController {
   late final Rx<User?> firebaseUser;
   @override
   void onInit() async {
-    _auth = FirebaseAuth.instance;
+    try {
+      _auth = FirebaseAuth.instance;
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setScreen);
     print('auth repo');
+    } catch (e) {}
     super.onInit();
   }
 

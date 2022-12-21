@@ -29,7 +29,7 @@ class _GuidingBody extends StatelessWidget {
     return GetBuilder<GuidingController>(
       builder: (controller) => IndexedStack(
         index: controller.currentIndexTab,
-        children: const [
+        children: [
           HomePage(),
           MenuPage(),
           FavoritePage(),

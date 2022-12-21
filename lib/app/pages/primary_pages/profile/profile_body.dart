@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/pages/primary_pages/profile/profile_history.dart';
+import 'package:text/app/widgets/show_dialog/custom_show_dialog.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/button/my_button.dart';
@@ -14,14 +16,15 @@ class ProfileBody extends StatelessWidget {
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: Column(
         children: [
-          BigText(text: controller.user.value?.displayName ?? '#NAME'),
+          BigText(text: controller.user?.value?.displayName ?? '#NAME'),
           Column(children: [
             _ItemsListTile(
               text: 'history',
               icon: Icons.history,
-              fun: controller.logoutUser,
+              fun: () => customShowDialog(widget: ProfileHistory()),
             ),
           ]),
+          const Spacer(),
           const MyButtonString(text: 'logout')
         ],
       ),
@@ -60,3 +63,6 @@ class _ItemsListTile extends StatelessWidget {
     );
   }
 }
+
+
+/////// dialog setting //////

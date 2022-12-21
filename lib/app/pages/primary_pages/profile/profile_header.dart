@@ -8,11 +8,12 @@ import '../../../theme/theme_app.dart';
 import '../../../theme/theme_controller.dart';
 import '../../../widgets/button/my_button.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
+import '../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../../widgets/text/my_text.dart';
 
 class ProfileHeader extends StatelessWidget {
   ProfileHeader({super.key});
-  final controller = Get.put(AuthController());
+  final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -51,13 +52,13 @@ class _BGCoverImg extends StatelessWidget {
             width: double.infinity,
             height: ThemeAppSize.kHeight100 * 2,
             fit: BoxFit.cover,
-            'https://sun9-54.userapi.com/impg/RKV-UY7wK_wSFCKDc6Vl-oyWGTWTMt6mD2cV5w/kj6Inn-5HRQ.jpg?size=449x265&quality=96&sign=5a73688beef980c7cbe91bd22773f0ec&type=album',
+            'https://sun9-88.userapi.com/impg/jTS8KhO9zKlRak-GhweWQkF6ZVVEcSRiRbi7TA/Br1eQOIe7l4.jpg?size=1920x1080&quality=95&sign=b9e6799caccad2f82f0c9102572dc572&type=album',
           ),
         ),
         Padding(
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: GestureDetector(
-            onTap: () => _inputDialog(),
+            onTap: () => customShowDialog(widget: const _SettingBody()),
             child: Icon(
               Icons.settings,
               color: Get.context?.theme.primaryColor,
@@ -80,7 +81,7 @@ class _ProfileImg extends StatelessWidget {
       child: CircleAvatar(
         radius: ThemeAppSize.kHeight75,
         backgroundColor: Colors.grey,
-        backgroundImage: NetworkImage(controller.user.value?.photoURL ??
+        backgroundImage: NetworkImage(controller.user?.value?.photoURL ??
             'https://sun9-37.userapi.com/impg/2wacFjjPgzxCl62bPdXcMqaJVygy7Tc-aHqzRg/FKl9lTUpMwQ.jpg?size=338x320&quality=96&sign=21d97efc03d3a0b2e1a1a17fc46a0408&type=album'),
       ),
     );
@@ -88,23 +89,7 @@ class _ProfileImg extends StatelessWidget {
 }
 
 /////// dialog setting //////
-Future _inputDialog() async {
-  return showDialog(
-    context: Get.context!,
-    builder: (BuildContext context) {
-      return Dialog(
-          backgroundColor: context.theme.scaffoldBackgroundColor,
-          alignment: Alignment.bottomCenter,
-          insetPadding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(ThemeAppSize.kRadius12),
-            ),
-          ),
-          child: const _SettingBody());
-    },
-  );
-}
+
 
 class _SettingBody extends StatelessWidget {
   const _SettingBody();
@@ -113,8 +98,10 @@ class _SettingBody extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       height: ThemeAppSize.height / 1.5,
+      width: double.infinity,
       child: Column(
-        children: [
+          children: Get.find<AuthController>().user != null
+              ? [
           const _SettingThemeIcon(),
           SizedBox(height: ThemeAppSize.kInterval12),
           const Center(child: BigText(text: 'Setting')),
@@ -122,7 +109,15 @@ class _SettingBody extends StatelessWidget {
           _SettingTextFields(),
           SizedBox(height: ThemeAppSize.kInterval12),
           _DialogButtons(),
-        ],
+                ]
+              : [
+                  const Spacer(),
+                  SmallText(
+                    text: 'Sorry , user not registered',
+                    size: ThemeAppSize.kFontSize20,
+                  ),
+                  const Spacer(),
+                ]
       ),
     );
   }
@@ -140,7 +135,9 @@ class _SettingTextFields extends StatelessWidget {
         _TextFieldItem(text: 'phone', controller: controller.cSettingPhone),
         SizedBox(height: ThemeAppSize.kInterval12),
         _TextFieldItem(
-            text: 'PhotoUrl', controller: controller.cSettingPhotoURL),
+          text: 'PhotoUrl',
+          controller: controller.cSettingPhotoURL,
+        ),
       ],
     );
   }

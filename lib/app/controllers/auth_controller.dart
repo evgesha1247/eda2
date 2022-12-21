@@ -16,21 +16,25 @@ class AuthController extends GetxController {
   final cSettingPhotoURL = TextEditingController();
   //////////////////////
 
-  late final Rx<User?> user;
+  Rx<User?>? user;
   late final AuthRepo authRepo;
-  AuthController() {
+
+@override
+  onInit() {
     try {
       authRepo = Get.find<AuthRepo>();
       user = authRepo.firebaseUser;
 
-      cSettingName.text = user.value?.displayName ?? '';
-      cSettingPhone.text = user.value?.phoneNumber ?? '';
-      cSettingPhotoURL.text = user.value?.photoURL ?? '';
+      cSettingName.text = user?.value?.displayName ?? '';
+      cSettingPhone.text = user?.value?.phoneNumber ?? '';
+      cSettingPhotoURL.text = user?.value?.photoURL ?? '';
     } catch (e) {
-      print('user is null ');
-      print(' non init authRepo ');
+      print('user is null $e');
     }
-  }
+    super.onInit();
+}
+
+
   final RxBool _isLogScreen = true.obs;
   final RxString _buttonText = ''.obs;
   get buttonText =>
