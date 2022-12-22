@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/page_controller/menu_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/icon/custom_icon.dart';
+import '../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../../widgets/text/my_text.dart';
 
 class MenuFilter extends StatelessWidget {
@@ -17,7 +17,6 @@ class MenuFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final List<FilterItem> listFilter = filterModel
         .map((Filter e) => FilterItem(text: e.text, icon: e.icon))
         .toList();
@@ -66,22 +65,26 @@ class _TitleSort extends StatelessWidget {
         size: ThemeAppSize.kFontSize20,
         fontWeight: FontWeight.w400,
       ),
-      subtitle: SmallText(
-        text: value == SortMethod.zToA || value == SortMethod.aToZ
-            ? 'Name'
-            : 'Price',
-        size: ThemeAppSize.kFontSize18 - 3,
-      ),
+      // subtitle: SmallText(
+      //   text: value == SortMethod.zToA || value == SortMethod.aToZ
+      //       ? 'Name'
+      //       : 'Price',
+      //   size: ThemeAppSize.kFontSize18 - 3,
+      // ),
       trailing: Icon(
         icon,
         color: context.theme.hintColor,
       ),
-      leading: Radio(
-        activeColor: context.theme.primaryColor,
-        value: value,
-        groupValue: controller.method,
-        onChanged: (SortMethod? valueMethod) =>
-            controller.setMethod(valueMethod),
+      leading: GetBuilder<MenuController>(
+        builder: (_) {
+          return Radio(
+            activeColor: context.theme.primaryColor,
+            value: value,
+            groupValue: controller.method,
+            onChanged: (SortMethod? valueMethod) =>
+                controller.setMethod(valueMethod),
+          );
+        },
       ),
     );
   }
@@ -93,61 +96,92 @@ class FilterItem extends StatelessWidget {
   const FilterItem({super.key, required this.text, required this.icon});
 
   void sortByMass() {
-    Get.defaultDialog(
-      title: 'sort',
-      titlePadding: EdgeInsets.only(top: ThemeAppSize.kInterval24),
-      titleStyle: TextStyle(color: Get.context?.theme.hintColor),
-      backgroundColor: Get.context?.theme.scaffoldBackgroundColor,
-      radius: ThemeAppSize.kRadius12,
-      content: Container(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                SmallText(text: 'sort by price'),
-              ],
-            ),
-            _TitleSort(
-              text: 'low to high',
-              value: SortMethod.lowToHigh,
-              icon: Icons.arrow_circle_up,
-            ),
-            _TitleSort(
-              text: 'high to low',
-              value: SortMethod.highToLow,
-              icon: Icons.arrow_circle_down,
-            ),
-            Row(
-              children: [
-                SmallText(text: 'sort by name'),
-              ],
-            ),
-            _TitleSort(
-              text: 'a to z',
-              value: SortMethod.aToZ,
-              icon: Icons.arrow_circle_down,
-            ),
-            _TitleSort(
-              text: 'z to a',
-              value: SortMethod.zToA,
-              icon: Icons.arrow_circle_down,
-            ),
-          ],
-        ),
-      ),
-      confirm: Container(
-        width: 100,
-        height: 4,
-        decoration: BoxDecoration(
-          color: Get.context?.theme.cardColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(
-              ThemeAppSize.kRadius12,
-            ),
+    customShowDialog(
+        radius: ThemeAppSize.kRadius18,
+        widget: Container(
+          height: Get.context!.height / 1.5,
+          padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                  child: BigText(
+                text: 'sort by',
+                size: ThemeAppSize.kFontSize20 * 1.3,
+              )),
+              SizedBox(height: ThemeAppSize.kInterval24),
+              const SmallText(text: 'sort by price'),
+              _TitleSort(
+                text: 'low to high',
+                value: SortMethod.lowToHigh,
+                icon: Icons.arrow_circle_up,
+              ),
+              _TitleSort(
+                text: 'high to low',
+                value: SortMethod.highToLow,
+                icon: Icons.arrow_circle_down,
+              ),
+              SizedBox(height: ThemeAppSize.kInterval24),
+              const SmallText(text: 'sort by name'),
+              _TitleSort(
+                text: 'A to Z',
+                value: SortMethod.aToZ,
+                icon: Icons.arrow_circle_up,
+              ),
+              _TitleSort(
+                text: 'Z to A',
+                value: SortMethod.zToA,
+                icon: Icons.arrow_circle_down,
+              ),
+            ],
           ),
-        ),
-      ),
-    );
+        ));
+    // Get.defaultDialog(
+    //   title: 'sort',
+    //   titlePadding: EdgeInsets.only(top: ThemeAppSize.kInterval24),
+    //   titleStyle: TextStyle(color: Get.context?.theme.hintColor),
+    //   backgroundColor: Get.context?.theme.scaffoldBackgroundColor,
+    //   radius: ThemeAppSize.kRadius12,
+    //   content: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       const SmallText(text: 'sort by price'),
+    //       _TitleSort(
+    //         text: 'low to high',
+    //         value: SortMethod.lowToHigh,
+    //         icon: Icons.arrow_circle_up,
+    //       ),
+    //       _TitleSort(
+    //         text: 'high to low',
+    //         value: SortMethod.highToLow,
+    //         icon: Icons.arrow_circle_down,
+    //       ),
+    //       const SmallText(text: 'sort by name'),
+    //       _TitleSort(
+    //         text: 'a to z',
+    //         value: SortMethod.aToZ,
+    //         icon: Icons.arrow_circle_down,
+    //       ),
+    //       _TitleSort(
+    //         text: 'z to a',
+    //         value: SortMethod.zToA,
+    //         icon: Icons.arrow_circle_down,
+    //       ),
+    //     ],
+    //   ),
+    //   confirm: Container(
+    //     width: 100,
+    //     height: 4,
+    //     decoration: BoxDecoration(
+    //       color: Get.context?.theme.cardColor,
+    //       borderRadius: BorderRadius.all(
+    //         Radius.circular(
+    //           ThemeAppSize.kRadius12,
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   @override

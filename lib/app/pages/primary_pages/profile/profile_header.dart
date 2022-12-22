@@ -110,6 +110,7 @@ class _SettingBody extends StatelessWidget {
           _DialogButtons(),
                 ]
               : [
+                  const _SettingThemeIcon(),
                   const Spacer(),
                   SmallText(
                     text: 'Sorry , user not registered',

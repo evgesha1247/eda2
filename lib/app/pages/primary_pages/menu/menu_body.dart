@@ -109,7 +109,7 @@ class _ItemControlElements extends StatelessWidget {
       children: [
         Container(
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          margin: const EdgeInsets.all(1.5),
+          margin: const EdgeInsets.all(2.5),
           decoration: BoxDecoration(
             color: context.theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.only(
@@ -120,9 +120,7 @@ class _ItemControlElements extends StatelessWidget {
           ),
           child: BigText(
             text: '\$${product.price}',
-            color: ThemeMode.system == ThemeMode.dark
-                ? context.theme.scaffoldBackgroundColor
-                : context.theme.accentColor,
+            color: context.theme.hintColor,
           ),
         ),
         Padding(

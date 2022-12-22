@@ -5,6 +5,8 @@ import '../../theme/theme_app.dart';
 
 Future customShowDialog({
   required Widget widget,
+  double? radius,
+
 }) async {
   return showDialog(
     context: Get.context!,
@@ -14,9 +16,10 @@ Future customShowDialog({
         alignment: Alignment.bottomCenter,
         insetPadding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(ThemeAppSize.kRadius12),
-          ),
+            borderRadius: BorderRadius.vertical(
+          top: Radius.circular(radius ?? ThemeAppSize.kRadius12),
+        )
+
         ),
         child: widget,
       );
