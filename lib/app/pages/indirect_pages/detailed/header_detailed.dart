@@ -38,10 +38,8 @@ class _HeaderImg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlexibleSpaceBar(
-      background: Image.network(
-        img,
-        width: double.maxFinite,
-        fit: BoxFit.cover
+      background:
+          Image.network(img, width: double.maxFinite, fit: BoxFit.cover
       ),
     );
   }

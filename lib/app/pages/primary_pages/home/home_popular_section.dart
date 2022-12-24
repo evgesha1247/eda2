@@ -26,6 +26,21 @@ class HomePopular extends StatelessWidget {
     );
   }
 }
+
+
+class _PopularTitle extends StatelessWidget {
+  const _PopularTitle();
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
+        child: BigText(
+          text: 'Popular product',
+          size: ThemeAppSize.kFontSize18,
+        ),
+      );
+}
+
+
 class _ProductBody extends StatelessWidget {
   const _ProductBody();
   @override
@@ -50,18 +65,6 @@ class _ProductBody extends StatelessWidget {
   }
 }
 
-
-class _PopularTitle extends StatelessWidget {
-  const _PopularTitle();
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
-        child: BigText(
-          text: 'Popular product',
-          size: ThemeAppSize.kFontSize18,
-        ),
-      );
-}
 class _ProductPageList extends StatefulWidget {
   const _ProductPageList({Key? key}) : super(key: key);
   @override
@@ -179,6 +182,8 @@ class _ProductPageListState extends State<_ProductPageList> {
     );
   }
 }
+
+
 class _ItemTitle extends StatelessWidget {
   const _ItemTitle({required this.product});
   final ProductModel product;

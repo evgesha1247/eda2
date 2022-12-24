@@ -10,7 +10,6 @@ class BodyDetailed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-
       child: Padding(
         padding: EdgeInsets.all(ThemeAppSize.kInterval24),
         child: Column(
@@ -21,7 +20,7 @@ class BodyDetailed extends StatelessWidget {
               color: context.theme.hintColor,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 1.7,
+              height: context.height / 1.7,
               child: ExpandableTextWidget(
                 text: description,
               ),
