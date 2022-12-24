@@ -1,6 +1,5 @@
 // ignore_for_file: deprecated_member_use
 
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -40,7 +39,6 @@ class _GuidingBody extends StatelessWidget {
         ],
       ),
     );
-
   }
 }
 
@@ -77,9 +75,6 @@ BottomNavigationBarItem bottomItem(String text, IconData icon) {
   );
 }
 
-
-
-
 const buttonSize = 65.0;
 
 class _FlotingButtom extends StatefulWidget {
@@ -109,9 +104,17 @@ class _FlotingButtomState extends State<_FlotingButtom>
 
   IconData selectIcon = Icons.menu_outlined;
   void _updatePage(int index) {
-    if (iconFlotIconData[index] != Icons.menu_outlined) {}
-    controller.setCurrentIndexTab(index);
-    selectIcon = iconFlotIconData[index];
+    if (iconFlotIconData[index] == Icons.menu_outlined ||
+        iconFlotIconData[index] == selectIcon) {
+      animatedContainer.status == AnimationStatus.completed
+          ? animatedContainer.reverse()
+          : animatedContainer.forward();
+    } else {
+      controller.setCurrentIndexTab(index);
+      selectIcon = iconFlotIconData[index];
+      // Future.delayed(const Duration(milliseconds: 3000))
+      //     .then((onValue) => animatedContainer.reverse());
+    }
     setState(() {});
   }
 
@@ -144,11 +147,7 @@ class _FlotingButtomState extends State<_FlotingButtom>
       constraints:
           BoxConstraints.tight(const Size(buttonDiameter, buttonDiameter)),
       onPressed: () {
-        index == iconFlotIconData.length - 1
-            ? animatedContainer.status == AnimationStatus.completed
-                ? animatedContainer.reverse()
-                : animatedContainer.forward()
-            : _updatePage(index);
+        _updatePage(index);
       },
       child: Icon(
         iconFlotIconData[index],
@@ -157,26 +156,6 @@ class _FlotingButtomState extends State<_FlotingButtom>
             : Colors.grey[800],
       ),
     );
-
-    // GestureDetector(
-    //   onTap: () {
-    //     index == iconFlotIconData.length - 1
-    // ? animatedContainer.status == AnimationStatus.completed
-    //     ? animatedContainer.reverse()
-    //     : animatedContainer.forward()
-    //         : controller.setCurrentIndexTab(index);
-    //   },
-    //   child: ClipOval(
-    //     child: Container(
-    //       width: buttonSize,
-    //       height: buttonSize,
-    //       color: Colors.teal,
-    //       child: ClipOval(
-    //         child: Icon(icon),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
 
