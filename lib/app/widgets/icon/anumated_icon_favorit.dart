@@ -45,10 +45,12 @@ class CartAddIcon extends StatelessWidget {
   final bool statusBorder;
   final Color bg;
   final Color iconColor;
+  final Function? fun;
   const CartAddIcon({
     super.key,
     required this.product,
     this.statusBorder = false,
+    this.fun,
     this.iconColor = Colors.transparent,
     this.bg = Colors.transparent,
 
@@ -60,7 +62,7 @@ class CartAddIcon extends StatelessWidget {
       builder: (controller) {
         return AnimatedIconWidget(
           currIndex: (controller.existInCart(product) ? 0 : 1).obs,
-          fun: () => controller.addOneInCart(product),
+          fun: () => fun ?? controller.addOneInCart(product),
           widget1: WrapperIcon(
             colorBorder: Colors.green,
             bg: bg,
@@ -89,10 +91,12 @@ class FavoritIcon extends StatelessWidget {
   final bool statusBorder;
   final Color bg;
   final Color iconColor;
+  final Function? fun;
   const FavoritIcon({
     super.key,
     required this.product,
     this.statusBorder = false,
+    this.fun,
     this.iconColor = Colors.transparent,
     this.bg = Colors.transparent,
   });
@@ -103,7 +107,7 @@ class FavoritIcon extends StatelessWidget {
       builder: (controller) {
         return AnimatedIconWidget(
           currIndex: (controller.existInFavorites(product) ? 0 : 1).obs,
-          fun: () => controller.upDataFavoriteList(product),
+          fun: () => fun ?? controller.upDataFavoriteList(product),
           widget1: WrapperIcon(
             bg: bg,
             colorBorder: Colors.pink,
