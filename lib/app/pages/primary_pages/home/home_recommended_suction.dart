@@ -161,7 +161,7 @@ class _Item extends StatelessWidget {
                 padding: EdgeInsets.only(
                     left: ThemeAppSize.kInterval12 + imgSize,
                     top: ThemeAppSize.kInterval12,
-                    right: ThemeAppSize.kInterval24,
+                    right: ThemeAppSize.kInterval12,
                     bottom: ThemeAppSize.kInterval12),
                 width: widthInfo,
                 decoration: BoxDecoration(
