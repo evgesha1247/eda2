@@ -23,7 +23,8 @@ void buy() {
   void _clearCart() {
     _items = {};
 
-    //  ThemeAppFun.printSnackBar('Thank you for your purchase');
+    ThemeAppFun.printSnackBar('Thank you for your purchase',
+        title: 'Payment sucess');
     update();
   }
 

@@ -15,7 +15,7 @@ class GuidingPage extends StatelessWidget {
   const GuidingPage({super.key});
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final width = context.width;
     return Scaffold(
       body: const _GuidingBody(),
       bottomNavigationBar: (width >= 370) ? const _BottomBarWidget() : null,

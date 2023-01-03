@@ -14,18 +14,21 @@ class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<MenuController>();
+
+    final RefreshController refreshController = RefreshController(
+        initialRefreshStatus: RefreshStatus.idle, initialRefresh: false);
     return Scaffold(
       body: SmartRefresher(
-        controller: controller.refreshController,
-        onRefresh: controller.onRefresh,
-        onLoading: controller.onRefresh,
+        controller: refreshController,
+        onRefresh: () => controller.onRefresh(refreshController),
+        //  onLoading: controller.onRefresh,
         enablePullDown: true,
-        enablePullUp: true,
+        enablePullUp: false,
         header: MaterialClassicHeader(
           color: context.theme.primaryColor,
           backgroundColor: context.theme.accentColor,
         ),
-        footer: const _FooterLoad(),
+        //     footer: const _FooterLoad(),
         child: CustomScrollView(
           slivers: MediaQuery.of(context).size.width >= 370
               ? [
@@ -48,7 +51,7 @@ class _FooterLoad extends StatelessWidget {
       builder: (context, mode) {
         Widget body;
         if (mode == LoadStatus.idle) {
-          body = const SmallText(text: "No more Data");
+          body = const SmallText(text: "No more data");
         } else if (mode == LoadStatus.loading) {
           body = const CircularWidget();
         } else if (mode == LoadStatus.canLoading) {

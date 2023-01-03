@@ -24,6 +24,7 @@ class MenuController extends GetxController {
     initProductControllerr(Get.find<ProductController>());
   }
 
+
   ListStatus listStatus = ListStatus.grid;
   void togStatusList() {
     listStatus =
@@ -32,16 +33,15 @@ class MenuController extends GetxController {
   }
 
 /////////////////////////////////////////////
-  final RefreshController refreshController =
-      RefreshController(initialRefresh: true);
 
   // get easyRefreshController => _controller;
-  Future<void> onRefresh() async {
+  Future<void> onRefresh(refreshController) async {
     try {
       await Future.delayed(const Duration(seconds: 2));
       initProductControllerr(Get.find<ProductController>());
       refreshController.refreshCompleted();
-      refreshController.loadComplete();
+      //  refreshController.loadComplete();
+      refreshController.headerStatus;
     } catch (e) {
       refreshController.refreshFailed();
       print('refreshController  ---  $e');

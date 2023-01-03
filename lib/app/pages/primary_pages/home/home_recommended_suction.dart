@@ -87,7 +87,7 @@ class _ItemBuilder extends StatelessWidget {
                       MainRoutes.getDetailed(item.id),
                       arguments: item,
                     ),
-                child: _Item(selected: selected, item: item)
+                child: _Item(selected: selected, item: item, index: index)
                 // Obx(
                 //   () => selected.value
                 //       ? _ItemOpen(item: item)
@@ -104,7 +104,9 @@ class _ItemBuilder extends StatelessWidget {
 class _Item extends StatelessWidget {
   final RxBool selected;
   final ProductModel item;
-  const _Item({required this.selected, required this.item});
+  final int index;
+  const _Item(
+      {required this.selected, required this.item, required this.index});
   Widget _itemImg() {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),
@@ -317,7 +319,7 @@ class _Item extends StatelessWidget {
                               color: context.theme.cardColor,
                             ),
                           ),
-                          child: Center(child: BigText(text: '1')),
+                          child: Center(child: BigText(text: '$index')),
                         ),
                         Expanded(
                           child: Container(
