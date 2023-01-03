@@ -16,10 +16,10 @@ class CartRepo {
     // return;
     _cart = [];
     var time = DateTime.now().toString();
-    cartList.forEach((element) {
+    for (var element in cartList) {
       element.time = time;
-      return _cart.add(jsonEncode(element));
-    });
+      continue;
+    }
 
     sharedStore.setStringList(AppConstansts.CART_LIST, _cart);
 
@@ -31,8 +31,9 @@ class CartRepo {
       carts = sharedStore.getStringList(AppConstansts.CART_LIST)!;
     }
     List<CartModel> cartList = [];
-    carts.forEach(
-        (element) => cartList.add(CartModel.fromJson(jsonDecode(element))));
+    for (var element in carts) {
+      cartList.add(CartModel.fromJson(jsonDecode(element)));
+    }
     return cartList;
   }
 
@@ -48,13 +49,6 @@ class CartRepo {
     }
     removeCart();
     sharedStore.setStringList(AppConstansts.CART_HISTORY_LIST, _cartHistory);
-    // print(
-    //     '  count -------- ' + getCartHistoryListFromLocal().length.toString());
-    // for (var j = 0; j < getCartHistoryListFromLocal().length; j++) {
-    //   print(getCartHistoryListFromLocal()[j].time.toString());
-    //   print('|');
-    // }
-    print(getCartHistoryListFromLocal().length);
   }
 
 void removeCart() {
@@ -69,8 +63,9 @@ void removeCart() {
     }
     List<CartModel> cartListHistory = [];
 
-    _cartHistory.forEach((element) =>
-        cartListHistory.add(CartModel.fromJson(jsonDecode(element))));
+    for (var element in _cartHistory) {
+      cartListHistory.add(CartModel.fromJson(jsonDecode(element)));
+    }
 
     return cartListHistory;
   }

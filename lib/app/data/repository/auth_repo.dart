@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, unused_import
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/pages/indirect_pages/splash/splash_controller.dart';
 import 'package:text/app/routes/main_routes.dart';
@@ -16,8 +17,10 @@ class AuthRepo extends GetxController {
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setScreen);
-    print('auth repo');
-    } catch (e) {}
+
+    } catch (e) {
+      debugPrint('$e');
+    }
     super.onInit();
   }
 

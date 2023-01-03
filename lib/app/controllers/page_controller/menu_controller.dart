@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../product_controller.dart';
 import '../../models/products_model.dart';
 
@@ -44,7 +43,7 @@ class MenuController extends GetxController {
       refreshController.headerStatus;
     } catch (e) {
       refreshController.refreshFailed();
-      print('refreshController  ---  $e');
+debugPrint('refreshController  ---  $e');
     }
     update();
   }

@@ -1,15 +1,28 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/pages/primary_pages/guiding/guiding_controller.dart';
-import 'package:text/app/theme/theme_app.dart';
 import '../favorite/favorite_page.dart';
 import '../home/home_page.dart';
 import '../menu/menu_page.dart';
 import '../profile/profile_page.dart';
+
+class _MenuItem {
+  final String text;
+  final IconData icon;
+  const _MenuItem({
+    required this.text,
+    required this.icon,
+  });
+}
+
+const List<_MenuItem> _menuData = [
+  _MenuItem(text: 'Home', icon: Icons.home),
+  _MenuItem(text: 'Menu', icon: Icons.restaurant_menu),
+  _MenuItem(text: 'favorite', icon: Icons.favorite),
+  _MenuItem(text: 'User', icon: Icons.person),
+  _MenuItem(text: '', icon: Icons.menu_outlined),
+];
 
 class GuidingPage extends StatelessWidget {
   const GuidingPage({super.key});
@@ -31,7 +44,7 @@ class _GuidingBody extends StatelessWidget {
     return GetBuilder<GuidingController>(
       builder: (controller) => IndexedStack(
         index: controller.currentIndexTab,
-        children: [
+        children: const [
           HomePage(),
           MenuPage(),
           FavoritePage(),
@@ -57,25 +70,17 @@ class _BottomBarWidget extends StatelessWidget {
         elevation: 5,
         showUnselectedLabels: false,
         showSelectedLabels: true,
-        items: [
-          bottomItem('Home', Icons.home),
-          bottomItem('Menu', Icons.restaurant_menu),
-          bottomItem('favorite', Icons.favorite),
-          bottomItem('History', Icons.history),
-        ],
+        items: List.generate(
+          _menuData.length - 1,
+          (index) => BottomNavigationBarItem(
+            label: _menuData[index].text,
+            icon: Icon(_menuData[index].icon),
+          ),
+        ),
       ),
     );
   }
 }
-
-BottomNavigationBarItem bottomItem(String text, IconData icon) {
-  return BottomNavigationBarItem(
-    label: text,
-    icon: Icon(icon),
-  );
-}
-
-const buttonSize = 65.0;
 
 class _FlotingButtom extends StatefulWidget {
   const _FlotingButtom({Key? key}) : super(key: key);
@@ -85,75 +90,54 @@ class _FlotingButtom extends StatefulWidget {
 
 class _FlotingButtomState extends State<_FlotingButtom>
     with SingleTickerProviderStateMixin {
-  late AnimationController animatedContainer;
-
+  final controller = Get.find<GuidingController>();
   @override
   initState() {
     super.initState();
-    animatedContainer = AnimationController(
+    controller.animatedContainer = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
   }
 
   @override
-  void dispose() {
-    animatedContainer.dispose();
-    super.dispose();
+  Widget build(BuildContext context) {
+    return _BuildFlotingButtom();
   }
+}
 
-  IconData selectIcon = Icons.menu_outlined;
-  void _updatePage(int index) {
-    if (iconFlotIconData[index] == Icons.menu_outlined ||
-        iconFlotIconData[index] == selectIcon) {
-      animatedContainer.status == AnimationStatus.completed
-          ? animatedContainer.reverse()
-          : animatedContainer.forward();
-    } else {
-      controller.setCurrentIndexTab(index);
-      selectIcon = iconFlotIconData[index];
-      // Future.delayed(const Duration(milliseconds: 3000))
-      //     .then((onValue) => animatedContainer.reverse());
-    }
-    setState(() {});
-  }
-
-  final List iconFlotIconData = const [
-    Icons.home,
-    Icons.restaurant_menu,
-    Icons.favorite,
-    Icons.history,
-    Icons.menu_outlined,
-  ];
-
+class _BuildFlotingButtom extends StatelessWidget {
+  _BuildFlotingButtom();
   final controller = Get.find<GuidingController>();
+
   @override
   Widget build(BuildContext context) {
-    return Flow(
-      delegate: FlowMenuDelegate(animatedContainer: animatedContainer),
-      children: List.generate(
-              iconFlotIconData.length, (index) => buildFlotingIcons(index))
-          .toList(),
-    );
-  }
-
-  Widget buildFlotingIcons(int index) {
     const double buttonDiameter = 60;
-    return RawMaterialButton(
-      fillColor: context.theme.primaryColor,
-      splashColor: context.theme.cardColor,
-      elevation: 8,
-      shape: const CircleBorder(),
-      constraints:
-          BoxConstraints.tight(const Size(buttonDiameter, buttonDiameter)),
-      onPressed: () {
-        _updatePage(index);
-      },
-      child: Icon(
-        iconFlotIconData[index],
-        color: selectIcon == iconFlotIconData[index]
-            ? Colors.white
-            : Colors.grey[800],
+    return Flow(
+      delegate: FlowMenuDelegate(
+        animatedContainer: controller.animatedContainer,
+      ),
+      children: List.generate(
+        _menuData.length,
+        (index) => RawMaterialButton(
+          fillColor: Get.context?.theme.primaryColor,
+          splashColor: Get.context?.theme.cardColor,
+          elevation: 8,
+          shape: const CircleBorder(),
+          constraints:
+              BoxConstraints.tight(const Size(buttonDiameter, buttonDiameter)),
+          onPressed: () => controller.updatePage(_menuData[index].icon, index),
+          child: GetBuilder<GuidingController>(
+            builder: (_) {
+              return Icon(
+                _menuData[index].icon,
+                color: controller.selectIcon == _menuData[index].icon
+                    ? Colors.white
+                    : Colors.grey[800],
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -161,6 +145,7 @@ class _FlotingButtomState extends State<_FlotingButtom>
 
 class FlowMenuDelegate extends FlowDelegate {
   final Animation<double> animatedContainer;
+  final buttonSize = 65.0;
   FlowMenuDelegate({required this.animatedContainer})
       : super(repaint: animatedContainer);
   @override

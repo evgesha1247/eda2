@@ -29,7 +29,7 @@ class AuthController extends GetxController {
       cSettingPhone.text = user?.value?.phoneNumber ?? '';
       cSettingPhotoURL.text = user?.value?.photoURL ?? '';
     } catch (e) {
-      print('user is null $e');
+      debugPrint('user is null $e');
     }
     super.onInit();
 }
@@ -53,18 +53,12 @@ class AuthController extends GetxController {
   Future<void> logoutUser() async {
     // final authRepo = Get.find<AuthRepo>();
     // await authRepo.logout();
-    print('logoutUser');
   }
 
 ////
 
 Future<void> setUserName() async {
-    try {
-      await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
-    } catch (e) {
-      print('error up data name ');
-  }
-
+    await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
 }
 
 

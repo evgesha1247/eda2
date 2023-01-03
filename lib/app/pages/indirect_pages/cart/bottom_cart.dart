@@ -64,7 +64,7 @@ class _TotalPrice extends StatelessWidget {
                 SizedBox(width: ThemeAppSize.kInterval12),
                 BigText(text: totalAmount, color: color),
                 const Spacer(),
-                _ButtonCart(),
+                const _ButtonCart(),
               ],
             )
           ],

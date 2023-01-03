@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -21,14 +23,14 @@ class MenuPage extends StatelessWidget {
       body: SmartRefresher(
         controller: refreshController,
         onRefresh: () => controller.onRefresh(refreshController),
-        //  onLoading: controller.onRefresh,
+        onLoading: () => controller.onRefresh(refreshController),
         enablePullDown: true,
         enablePullUp: false,
         header: MaterialClassicHeader(
           color: context.theme.primaryColor,
           backgroundColor: context.theme.accentColor,
         ),
-        //     footer: const _FooterLoad(),
+        footer: const _FooterLoad(),
         child: CustomScrollView(
           slivers: MediaQuery.of(context).size.width >= 370
               ? [
