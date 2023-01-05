@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/widgets/text/my_text.dart';
-import '../../../../utils/app_constants.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/custom_icon.dart';
 
@@ -21,9 +20,9 @@ class HeaderDetailed extends StatelessWidget {
       excludeHeaderSemantics: true,
       titleSpacing: ThemeAppSize.kInterval24,
       title: const _HeaderIcons(),
-      flexibleSpace: _HeaderImg(
-        img: "${AppConstansts.BASE_URL}/uploads/${item.img}",
-      ),
+      // flexibleSpace: _HeaderImg(
+      //   img: "${AppConstansts.BASE_URL}/uploads/${item.img}",
+      // ),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(0),
         child: _BodyTitle(name: item.name!),

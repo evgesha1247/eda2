@@ -26,11 +26,9 @@ class Dependencies {
 
       try {
         await Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
+        options: DefaultFirebaseOptions.currentPlatform,
         ).then((value) => Get.find<AuthRepo>());
-      } catch (e) {
-
-
+    } catch (e) {
       debugPrint('not init firebase');
       debugPrint('$e');
       Get.offAllNamed(MainRoutes.getGuiding);

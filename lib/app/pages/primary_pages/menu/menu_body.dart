@@ -61,7 +61,7 @@ class _ItemBuilderGrid extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              _ItemImg(img: "${AppConstansts.BASE_URL}/uploads/${item.img!}"),
+              // _ItemImg(img: "${AppConstansts.BASE_URL}/uploads/${item.img!}"),
               _ItemControlElements(product: item),
             ],
           ),

@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import '../../../../utils/app_constants.dart';
 import '../../../controllers/cart_controller.dart';
 import '../../../controllers/product_controller.dart';
 import '../../../models/cart_model.dart';
@@ -99,14 +98,14 @@ class _Item extends StatelessWidget {
           arguments: item.product!,
         );
       },
-      child: Image(
-          width: ThemeAppSize.kInterval24 * 5,
-          height: height,
-          fit: BoxFit.cover,
-          image: NetworkImage(
-            "${AppConstansts.BASE_URL}/uploads/${item.img!}",
-          )
-      ),
+      // child: Image(
+      //     width: ThemeAppSize.kInterval24 * 5,
+      //     height: height,
+      //     fit: BoxFit.cover,
+      //     image: NetworkImage(
+      //       "${AppConstansts.BASE_URL}/uploads/${item.img!}",
+      //     )
+      // ),
     );
   }
 

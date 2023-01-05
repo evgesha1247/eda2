@@ -3,10 +3,17 @@
 class AppConstansts {
   static const String APP_NAME = "FlutterApp";
   static const int APP_VERSION = 1;
-  //http://mvs.bslmeiyu.com/api/v1/products/popular/
-  static const String BASE_URL = "http://mvs.bslmeiyu.com";
-  static const String POPULAR_PRODUCT_URL = "/api/v1/products/popular/";
-  static const String RECOMMENDED_PRODUCT_URL = "/api/v1/products/recommended/";
+  // http://mvs.bslmeiyu.com/api/v1/products/popular/
+  // https://fir-app-7be70-default-rtdb.firebaseio.com/products/popular.json
+
+  // static const String BASE_URL = "http://mvs.bslmeiyu.com";
+  // static const String POPULAR_PRODUCT_URL = "/api/v1/products/popular/";
+  // static const String RECOMMENDED_PRODUCT_URL = "/api/v1/products/recommended/";
+
+  static const String BASE_URL =
+      "https://fir-app-7be70-default-rtdb.firebaseio.com/";
+  static const String POPULAR_PRODUCT_URL = "products/popular.json";
+  static const String RECOMMENDED_PRODUCT_URL = "products/recommended.json";
 
   static const String TOKEN = "DBtoken";
 

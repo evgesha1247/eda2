@@ -1,11 +1,7 @@
 // ignore_for_file: deprecated_member_use
-
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/widgets/icon/anumated_icon_favorit.dart';
-import '../../../../utils/app_constants.dart';
 import '../../../controllers/page_controller/favorite_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../routes/main_routes.dart';
@@ -136,13 +132,14 @@ class _ItemImg extends StatelessWidget {
             borderRadius: BorderRadius.circular(ThemeAppSize.kRadius18),
           ),
           clipBehavior: Clip.hardEdge,
-          child: Image(
-            width: ThemeAppSize.kHeight100,
-            height: ThemeAppSize.kHeight100,
-            image:
-                NetworkImage('${AppConstansts.BASE_URL}/uploads/${item.img!}'),
-            fit: BoxFit.cover,
-          ),
+          // child: Image(
+          //   width: ThemeAppSize.kHeight100,
+          //   height: ThemeAppSize.kHeight100,
+          //   image:
+          //       NetworkImage('${AppConstansts.BASE_URL}/uploads/${item.img!}'),
+          //   fit: BoxFit.cover,
+          // ),
+
         ),
       ),
     );

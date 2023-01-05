@@ -6,6 +6,7 @@ import '../../../utils/app_constants.dart';
 
 class FavoriteRepo {
   final SharedPreferences sharedStore;
+
   FavoriteRepo({required this.sharedStore});
 
   List<String> _favorite = [];
@@ -29,6 +30,7 @@ class FavoriteRepo {
     for (var element in favoriteList) {
       _favorite.add(jsonEncode(element));
     }
+    sharedStore.reload();
     sharedStore.setStringList(AppConstansts.FAVORITE_LIST, _favorite);
     getFavoriteList();
   }

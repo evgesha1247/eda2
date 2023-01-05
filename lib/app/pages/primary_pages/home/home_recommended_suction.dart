@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/routes/main_routes.dart';
 import 'package:text/app/widgets/icon/anumated_icon_favorit.dart';
-import '../../../../utils/app_constants.dart';
 import '../../../controllers/product_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/load/circular.dart';
@@ -258,12 +257,12 @@ class _Item extends StatelessWidget {
                           )
                         : ThemeAppFun.decoration(
                             radius: ThemeAppSize.kRadius18),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        "${AppConstansts.BASE_URL}/uploads/${item.img!}",
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                    // image: DecorationImage(
+                    //   // image: NetworkImage(
+                    //   //   "${AppConstansts.BASE_URL}/uploads/${item.img!}",
+                    //   // ),
+                    //   fit: BoxFit.cover,
+                    // ),
                   ),
                 ),
               ),

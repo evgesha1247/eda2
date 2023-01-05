@@ -54,7 +54,6 @@ class ProductController extends GetxController {
         const Duration(seconds: 2),
         () {
           popularStatusLoad = ProductStatusLoad.error;
-
           update();
         },
       );
@@ -67,7 +66,6 @@ class ProductController extends GetxController {
     popularStatusLoad = ProductStatusLoad.loading;
     await _getPopularProductList();
     await _getRecommendedProductList();
-
     update();
   }
 

@@ -24,6 +24,40 @@ const List<_MenuItem> _menuData = [
   _MenuItem(text: '', icon: Icons.menu_outlined),
 ];
 
+// class GuidingPage extends StatelessWidget {
+//   GuidingPage({super.key});
+//   final Future<FirebaseApp> _firebaseApp = Firebase.initializeApp();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: FutureBuilder(
+//           future: _firebaseApp,
+//           builder: (context, snapshot) {
+//             if (snapshot.hasError) {
+//               return Center(
+//                 child: BigText(text: 'error ${snapshot.hasError.hashCode}'),
+//               );
+//             } else if (snapshot.hasData) {
+//               return Center(
+//                 child: Column(
+//                   children: [
+//                     BigText(text: 'good'),
+//                     IconButton(
+//                         onPressed: () {}, icon: const Icon(Icons.plumbing))
+//                   ],
+//                 ),
+//               );
+//             } else {
+//               return Center(
+//                 child: BigText(text: 'code'),
+//               );
+//             }
+//           }),
+//     );
+//   }
+// }
+
 class GuidingPage extends StatelessWidget {
   const GuidingPage({super.key});
   @override
@@ -36,6 +70,25 @@ class GuidingPage extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class _GuidingBody extends StatelessWidget {
   const _GuidingBody({Key? key}) : super(key: key);

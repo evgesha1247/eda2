@@ -1,10 +1,8 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/routes/main_routes.dart';
-import '../../../../utils/app_constants.dart';
 import '../../../controllers/product_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../theme/theme_app.dart';
@@ -126,8 +124,8 @@ class _ProductPageListState extends State<_ProductPageList> {
           padding: EdgeInsets.all(ThemeAppSize.kInterval5),
           child: Stack(
             children: [
-              _ItemImg(
-                  img: "${AppConstansts.BASE_URL}/uploads/${product.img!}"),
+              // _ItemImg(
+              //     img: "${AppConstansts.BASE_URL}/uploads/${product.img!}"),
               _ItemTitle(product: product),
             ],
           ),

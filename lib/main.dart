@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/app/widgets/app/my_app_widget.dart';
 import 'app/controllers/cart_controller.dart';
 import 'app/controllers/page_controller/favorite_controller.dart';
@@ -16,6 +17,8 @@ Future<void> loadData() async {
 }
 
 Future<void> main() async {
+//   final pref = await SharedPreferences.getInstance();
+// await pref.clear();
   WidgetsFlutterBinding.ensureInitialized();
   await ThemeBindings().dependencies();
   await ControllersBindings().dependencies();
@@ -24,4 +27,8 @@ Future<void> main() async {
   runApp(const MyAppWidget());
   await loadData();
   Dependencies().init();
+
+
+
+
 }
