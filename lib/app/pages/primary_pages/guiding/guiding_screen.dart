@@ -1,7 +1,9 @@
 import 'dart:math';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/pages/primary_pages/guiding/guiding_controller.dart';
+import '../../../widgets/text/my_text.dart';
 import '../favorite/favorite_page.dart';
 import '../home/home_page.dart';
 import '../menu/menu_page.dart';
@@ -24,39 +26,6 @@ const List<_MenuItem> _menuData = [
   _MenuItem(text: '', icon: Icons.menu_outlined),
 ];
 
-// class GuidingPage extends StatelessWidget {
-//   GuidingPage({super.key});
-//   final Future<FirebaseApp> _firebaseApp = Firebase.initializeApp();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: FutureBuilder(
-//           future: _firebaseApp,
-//           builder: (context, snapshot) {
-//             if (snapshot.hasError) {
-//               return Center(
-//                 child: BigText(text: 'error ${snapshot.hasError.hashCode}'),
-//               );
-//             } else if (snapshot.hasData) {
-//               return Center(
-//                 child: Column(
-//                   children: [
-//                     BigText(text: 'good'),
-//                     IconButton(
-//                         onPressed: () {}, icon: const Icon(Icons.plumbing))
-//                   ],
-//                 ),
-//               );
-//             } else {
-//               return Center(
-//                 child: BigText(text: 'code'),
-//               );
-//             }
-//           }),
-//     );
-//   }
-// }
 
 class GuidingPage extends StatelessWidget {
   const GuidingPage({super.key});
@@ -70,25 +39,6 @@ class GuidingPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class _GuidingBody extends StatelessWidget {
   const _GuidingBody({Key? key}) : super(key: key);
@@ -162,7 +112,6 @@ class _FlotingButtomState extends State<_FlotingButtom>
 class _BuildFlotingButtom extends StatelessWidget {
   _BuildFlotingButtom();
   final controller = Get.find<GuidingController>();
-
   @override
   Widget build(BuildContext context) {
     const double buttonDiameter = 60;

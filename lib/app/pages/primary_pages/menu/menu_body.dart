@@ -1,8 +1,6 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../utils/app_constants.dart';
 import '../../../controllers/page_controller/menu_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../routes/main_routes.dart';
@@ -61,7 +59,7 @@ class _ItemBuilderGrid extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              // _ItemImg(img: "${AppConstansts.BASE_URL}/uploads/${item.img!}"),
+              _ItemImg(img: item.img!),
               _ItemControlElements(product: item),
             ],
           ),

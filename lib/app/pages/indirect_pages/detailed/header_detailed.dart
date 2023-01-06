@@ -20,9 +20,7 @@ class HeaderDetailed extends StatelessWidget {
       excludeHeaderSemantics: true,
       titleSpacing: ThemeAppSize.kInterval24,
       title: const _HeaderIcons(),
-      // flexibleSpace: _HeaderImg(
-      //   img: "${AppConstansts.BASE_URL}/uploads/${item.img}",
-      // ),
+      flexibleSpace: _HeaderImg(img: item.img!),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(0),
         child: _BodyTitle(name: item.name!),

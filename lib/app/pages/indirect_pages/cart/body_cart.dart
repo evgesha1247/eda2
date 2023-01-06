@@ -98,14 +98,11 @@ class _Item extends StatelessWidget {
           arguments: item.product!,
         );
       },
-      // child: Image(
-      //     width: ThemeAppSize.kInterval24 * 5,
-      //     height: height,
-      //     fit: BoxFit.cover,
-      //     image: NetworkImage(
-      //       "${AppConstansts.BASE_URL}/uploads/${item.img!}",
-      //     )
-      // ),
+      child: Image(
+          width: ThemeAppSize.kInterval24 * 5,
+          height: height,
+          fit: BoxFit.cover,
+          image: NetworkImage(item.img!)),
     );
   }
 

@@ -257,12 +257,12 @@ class _Item extends StatelessWidget {
                           )
                         : ThemeAppFun.decoration(
                             radius: ThemeAppSize.kRadius18),
-                    // image: DecorationImage(
-                    //   // image: NetworkImage(
-                    //   //   "${AppConstansts.BASE_URL}/uploads/${item.img!}",
-                    //   // ),
-                    //   fit: BoxFit.cover,
-                    // ),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        item.img!,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
