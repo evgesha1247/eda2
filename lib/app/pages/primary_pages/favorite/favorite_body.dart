@@ -119,6 +119,7 @@ class _ItemImg extends StatelessWidget {
   final ProductModel item;
   @override
   Widget build(BuildContext context) {
+
     return Positioned(
       top: (ThemeAppSize.kHeight75 * 1.8 - ThemeAppSize.kHeight100) / 2,
       child: GestureDetector(
@@ -135,7 +136,7 @@ class _ItemImg extends StatelessWidget {
           child: Image(
             width: ThemeAppSize.kHeight100,
             height: ThemeAppSize.kHeight100,
-            image: NetworkImage(item.img!),
+            image: NetworkImage('${item.img}'),
             fit: BoxFit.cover,
           ),
 

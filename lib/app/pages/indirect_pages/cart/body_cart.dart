@@ -91,19 +91,23 @@ class _Item extends StatelessWidget {
   final height = ThemeAppSize.kInterval24 * 6;
 
   Widget _itemImg() {
+
     return GestureDetector(
       onTap: () {
+
         Get.toNamed(
           MainRoutes.getDetailed(item.product!.id),
           arguments: item.product!,
         );
       },
       child: Image(
-          width: ThemeAppSize.kInterval24 * 5,
-          height: height,
-          fit: BoxFit.cover,
-          image: NetworkImage(item.img!)),
+        width: ThemeAppSize.kInterval24 * 5,
+        height: height,
+        fit: BoxFit.cover,
+        image: NetworkImage('${item.img}'),
+      ),
     );
+
   }
 
   Widget _infoItem() {

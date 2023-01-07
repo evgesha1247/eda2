@@ -18,9 +18,9 @@ class CartRepo {
     var time = DateTime.now().toString();
     for (var element in cartList) {
       element.time = time;
+      _cart.add(jsonEncode(element));
       continue;
     }
-
     sharedStore.setStringList(AppConstansts.CART_LIST, _cart);
 
   }
@@ -62,11 +62,9 @@ void removeCart() {
           sharedStore.getStringList(AppConstansts.CART_HISTORY_LIST)!;
     }
     List<CartModel> cartListHistory = [];
-
     for (var element in _cartHistory) {
       cartListHistory.add(CartModel.fromJson(jsonDecode(element)));
     }
-
     return cartListHistory;
   }
 }

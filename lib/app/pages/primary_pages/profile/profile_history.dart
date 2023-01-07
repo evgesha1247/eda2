@@ -65,12 +65,12 @@ class ProfileHistory extends StatelessWidget {
                                                 ThemeAppSize.kRadius12,
                                               ),
                                             ),
-                                            // image: DecorationImage(
-                                            //   fit: BoxFit.cover,
-                                            //   image: NetworkImage(
-                                            //     "${AppConstansts.BASE_URL}/uploads/${history[listCount - 1].img}",
-                                            //   ),
-                                            // ),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                "${history[listCount - 1].img}",
+                                              ),
+                                            ),
                                           ),
                                         )
                                       : const SizedBox.shrink();

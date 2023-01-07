@@ -16,7 +16,6 @@ class CartController extends GetxController {
 void buy() {
     cartRepo.addToLocalCartList(getItemsList);
     cartRepo.addToLocalCartHistoryList();
-
     _clearCart();
   }
 

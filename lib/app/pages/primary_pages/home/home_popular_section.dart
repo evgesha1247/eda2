@@ -124,7 +124,7 @@ class _ProductPageListState extends State<_ProductPageList> {
           padding: EdgeInsets.all(ThemeAppSize.kInterval5),
           child: Stack(
             children: [
-              _ItemImg(img: product.img!),
+              _ItemImg(img: '${product.img}'),
               _ItemTitle(product: product),
             ],
           ),
