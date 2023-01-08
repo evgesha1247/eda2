@@ -1,10 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class GuidingController extends GetxController {
-
   int _currentIndexTab = 0;
   IconData selectIcon = Icons.menu_outlined;
   get currentIndexTab => _currentIndexTab;
@@ -15,8 +12,8 @@ class GuidingController extends GetxController {
       update();
     }
   }
-  late AnimationController animatedContainer;
 
+  late AnimationController animatedContainer;
   @override
   void onClose() {
     animatedContainer.dispose();
@@ -34,5 +31,4 @@ class GuidingController extends GetxController {
     }
     update();
   }
-
 }

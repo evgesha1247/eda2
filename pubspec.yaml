@@ -16,16 +16,14 @@ dependencies:
   shared_preferences: ^2.0.15  # локальное хранилище
 
   # firebase
-  firebase_database:
   firebase_auth: ^4.2.4        # регистрация
   firebase_core: ^2.4.1
 
-  pull_to_refresh: ^2.0.0          # обновление при скроле
 
-  get: ^4.6.5                   # поставщик
-  intl: ^0.17.0                 # норм время
-  http: ^0.13.3
+  pull_to_refresh: ^2.0.0      # обновление при скроле
 
+  get: ^4.6.5                  # поставщик
+  intl: ^0.17.0                # норм время
 
 dev_dependencies:
   analyzer: ^5.2.0

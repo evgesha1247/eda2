@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/pages/primary_pages/guiding/guiding_controller.dart';
+import 'package:text/app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/custom_icon.dart';
 import '../../../widgets/text/my_text.dart';

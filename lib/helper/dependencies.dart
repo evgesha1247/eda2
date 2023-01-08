@@ -11,7 +11,7 @@ import '../app/data/repository/auth_repo.dart';
 import '../app/data/repository/favorite_repo.dart';
 import '../app/data/repository/product_repo.dart';
 import '../app/controllers/page_controller/menu_controller.dart';
-import '../app/pages/primary_pages/guiding/guiding_controller.dart';
+import '../app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import '../app/routes/main_routes.dart';
 import '../app/theme/theme_controller.dart';
 import '../utils/app_constants.dart';
