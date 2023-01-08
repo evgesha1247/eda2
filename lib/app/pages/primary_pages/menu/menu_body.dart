@@ -7,12 +7,14 @@ import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/text/my_text.dart';
+import '../guiding/controller/guiding_controller.dart';
 
 class MenuBody extends StatelessWidget {
   MenuBody({super.key});
   final controller = Get.find<MenuController>();
   @override
   Widget build(BuildContext context) {
+    final guidingController = Get.find<GuidingController>();
     return GetBuilder<MenuController>(builder: (MenuController controller) {
       return controller.listStatus == ListStatus.grid
           ? SliverGrid(
@@ -22,9 +24,26 @@ class MenuBody extends StatelessWidget {
               ),
               delegate: SliverChildBuilderDelegate(
                 childCount: controller.filterList.length,
-                (_, int index) =>
-                    _ItemBuilderGrid(item: controller.filterList[index]),
-              ))
+                (_, int index) => Obx(
+                  () => AnimatedContainer(
+                    curve: Curves.easeInOut,
+                    duration: Duration(milliseconds: 350 + (index * 300)),
+                    transform: Matrix4.translationValues(
+                      guidingController.startAnimationMenu.value
+                          ? 0
+                          : index % 2 == 0
+                              ? -context.height
+                              : context.height,
+                      0,
+                      0,
+                    ),
+                    child: _ItemBuilderGrid(
+                      item: controller.filterList[index],
+                    ),
+                  ),
+                ),
+              ),
+            )
           : SliverList(
               delegate: SliverChildBuilderDelegate(
                 childCount: controller.filterList.length,
@@ -59,7 +78,7 @@ class _ItemBuilderGrid extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              _ItemImg(img: '${item.img}'),
+              _ItemImg(img: item.img!),
               _ItemControlElements(product: item),
             ],
           ),
@@ -87,11 +106,14 @@ class _ItemImg extends StatelessWidget {
   const _ItemImg({required this.img});
   @override
   Widget build(BuildContext context) {
-    return Image(
-      height: double.infinity,
-      width: double.infinity,
-      fit: BoxFit.cover,
-      image: NetworkImage(img),
+    return Hero(
+      tag: img,
+      child: Image(
+        height: double.infinity,
+        width: double.infinity,
+        fit: BoxFit.cover,
+        image: NetworkImage(img),
+      ),
     );
   }
 }

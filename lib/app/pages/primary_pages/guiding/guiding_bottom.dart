@@ -21,10 +21,10 @@ class GuidingBottomWidget extends StatelessWidget {
         showUnselectedLabels: false,
         showSelectedLabels: true,
         items: List.generate(
-          Menu.listPage.length - 1,
+          MenuData.listPage.length - 1,
           (index) => BottomNavigationBarItem(
-            label: Menu.listPage[index].text,
-            icon: Icon(Menu.listPage[index].icon),
+            label: MenuData.listPage[index].text,
+            icon: Icon(MenuData.listPage[index].icon),
           ),
         ),
       ),
@@ -69,7 +69,7 @@ class _BuildFlotingButtom extends StatelessWidget {
         animatedContainer: controller.animatedContainer,
       ),
       children: List.generate(
-        Menu.listPage.length,
+        MenuData.listPage.length,
         (index) => RawMaterialButton(
           fillColor: Get.context?.theme.primaryColor,
           splashColor: Get.context?.theme.cardColor,
@@ -78,12 +78,12 @@ class _BuildFlotingButtom extends StatelessWidget {
           constraints:
               BoxConstraints.tight(const Size(buttonDiameter, buttonDiameter)),
           onPressed: () =>
-              controller.updatePage(Menu.listPage[index].icon, index),
+              controller.updatePage(MenuData.listPage[index].icon, index),
           child: GetBuilder<GuidingController>(
             builder: (_) {
               return Icon(
-                Menu.listPage[index].icon,
-                color: controller.selectIcon == Menu.listPage[index].icon
+                MenuData.listPage[index].icon,
+                color: controller.selectIcon == MenuData.listPage[index].icon
                     ? Colors.white
                     : Colors.grey[800],
               );

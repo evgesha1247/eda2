@@ -20,7 +20,7 @@ class HeaderDetailed extends StatelessWidget {
       excludeHeaderSemantics: true,
       titleSpacing: ThemeAppSize.kInterval24,
       title: const _HeaderIcons(),
-      flexibleSpace: _HeaderImg(img: '${item.img}'),
+      flexibleSpace: _HeaderImg(img: item.img!),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(0),
         child: _BodyTitle(name: '${item.name}'),
@@ -36,7 +36,13 @@ class _HeaderImg extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlexibleSpaceBar(
       background:
-          Image.network(img, width: double.maxFinite, fit: BoxFit.cover
+          Hero(
+        tag: img,
+        child: Image.network(
+          img,
+          width: double.maxFinite,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

@@ -1,4 +1,6 @@
 // ignore_for_file: deprecated_member_use
+import 'dart:math';
+
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,7 @@ import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/load/circular.dart';
 import '../../../widgets/text/my_text.dart';
+import '../guiding/guiding_stack_page.dart';
 
 class HomePopular extends StatelessWidget {
   const HomePopular({Key? key}) : super(key: key);
@@ -166,10 +169,24 @@ class _ProductPageListState extends State<_ProductPageList> {
                   child: PageView.builder(
                     controller: pageController,
                     itemCount: popularProduct.popularProductList.length,
-                    itemBuilder: (context, index) => _builderItem(
-                      index,
-                      popularProduct.popularProductList[index],
-                    ),
+                    itemBuilder: (context, index) => Obx(() {
+                      popularProduct.animationInit();
+                      return AnimatedContainer(
+                        curve: Curves.easeInOut,
+                        duration: Duration(milliseconds: 300 + (index * 300)),
+                        transform: Matrix4.translationValues(
+                          popularProduct.startAnimation.value
+                              ? 0
+                              : -context.height,
+                          0,
+                          0,
+                        ),
+                        child: _builderItem(
+                          index,
+                          popularProduct.popularProductList[index],
+                        ),
+                      );
+                    }),
                   ),
                 )
 
@@ -179,7 +196,6 @@ class _ProductPageListState extends State<_ProductPageList> {
     );
   }
 }
-
 
 class _ItemTitle extends StatelessWidget {
   const _ItemTitle({required this.product});
@@ -232,6 +248,7 @@ class _ItemTitle extends StatelessWidget {
 class _ItemImg extends StatelessWidget {
   const _ItemImg({required this.img});
   final String img;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -243,6 +260,7 @@ class _ItemImg extends StatelessWidget {
         ),
       ),
     );
+
   }
 }
 

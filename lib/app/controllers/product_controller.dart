@@ -111,11 +111,9 @@ class ProductController extends GetxController {
 
   ////////////////////////////////////////////////////////
   RxBool startAnimation = false.obs;
-  @override
-  void onInit() {
-    Timer(const Duration(milliseconds: 2800), () {
-      startAnimation.value = !startAnimation.value;
+  void animationInit() {
+    Timer(const Duration(milliseconds: 800), () {
+      startAnimation.value = true;
     });
-    super.onInit();
   }
 }

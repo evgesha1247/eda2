@@ -1,5 +1,9 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../indirect_pages/splash/splash_screen.dart';
 import 'controller/guiding_controller.dart';
 import '../favorite/favorite_page.dart';
 import '../home/home_page.dart';
