@@ -2,9 +2,6 @@ import 'package:text/app/models/products_model.dart';
 
 class CartModel {
   int? id;
-  String? name;
-  int? price;
-  String? img;
   int? count;
   String? time;
   bool? isExit;
@@ -12,21 +9,16 @@ class CartModel {
 
   CartModel({
     this.id,
-    this.name,
     this.product,
-    this.price,
-    this.img,
     this.count,
     this.time,
     this.isExit,
   });
 
   CartModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    price = json['price'];
+
     count = json['count'];
-    img = json['img'];
+    id = json['id'];
     time = json['time'];
     isExit = json['isExit'];
     product = ProductModel.fromJson(json['product']);
@@ -34,11 +26,9 @@ class CartModel {
 
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
-      "name": name,
-      "price": price,
+
       "count": count,
-      "img": img,
+      "id": id,
       "time": time,
       "isExit": isExit,
       "product": product!.toJson(),

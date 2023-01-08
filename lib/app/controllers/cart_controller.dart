@@ -55,7 +55,7 @@ void buy() {
   double get totalAmount {
     double total = 0;
     _items.forEach((key, value) {
-      total += (value.price! * value.count!);
+      total += (value.product!.price! * value.count!);
     });
     return total > 200 ? (total - (total / 100 * discount)) : total;
   }
@@ -67,9 +67,7 @@ void buy() {
         totalCount = value.count! + count;
         return CartModel(
           id: value.id,
-          name: value.name,
-          price: value.price,
-          img: value.img,
+
           count: value.count! + count,
           time: DateTime.now().toString(),
           isExit: true,
@@ -87,9 +85,7 @@ void buy() {
         () {
           return CartModel(
             id: product.id,
-            name: product.name,
-            price: product.price,
-            img: product.img,
+
             count: count,
             time: DateTime.now().toString(),
             isExit: true,
@@ -112,9 +108,7 @@ void buy() {
         product.id!,
         () => CartModel(
           id: product.id,
-          name: product.name,
-          price: product.price,
-          img: product.img,
+
           count: 1,
           time: DateTime.now().toString(),
           isExit: true,

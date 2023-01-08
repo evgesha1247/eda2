@@ -104,7 +104,7 @@ class _Item extends StatelessWidget {
         width: ThemeAppSize.kInterval24 * 5,
         height: height,
         fit: BoxFit.cover,
-        image: NetworkImage('${item.img}'),
+        image: NetworkImage('${item..product!.img}'),
       ),
     );
 
@@ -120,7 +120,7 @@ class _Item extends StatelessWidget {
           children: [
             Expanded(
               child: BigText(
-                text: item.name!,
+                text: item.product!.name!,
                 maxLines: 3,
                 color: Get.context!.theme.accentColor,
                 size: ThemeAppSize.kFontSize20,

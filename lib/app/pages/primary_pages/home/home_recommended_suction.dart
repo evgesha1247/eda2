@@ -268,7 +268,7 @@ class _Item extends StatelessWidget {
                               radius: ThemeAppSize.kRadius18),
                       image: DecorationImage(
                         image: NetworkImage(
-                          '${item.img}',
+                          item.img?[0].imgURL,
                         ),
                         fit: BoxFit.cover,
                       ),

@@ -22,7 +22,7 @@ class ProductModel {
   String? name;
   String? description;
   int? price;
-  String? img;
+  List? img;
   ProductModel({
     this.id,
     this.name,
@@ -36,7 +36,9 @@ class ProductModel {
     name = json['name'];
     description = json['description'];
     price = json['price'];
-    img = json['img'];
+    img = (json['imgs']).map((e) {
+      return Img.fromJson(e as Map<String, dynamic>);
+    }).toList() as List<Img>;
   }
 
   Map<String, dynamic> toJson() {
@@ -45,7 +47,23 @@ class ProductModel {
       "name": this.name,
       "price": this.price,
       "description": this.description,
-      "img": this.img,
+      "imgs": this.img?.map((e) => e.toJson),
     };
   }
+}
+
+class Img {
+  final String imgURL;
+  Img({required this.imgURL});
+
+  factory Img.fromJson(Map<String, dynamic> json) {
+    return Img(imgURL: json['imgURL'] as String);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'imgURL': imgURL,
+    };
+  }
+
 }
