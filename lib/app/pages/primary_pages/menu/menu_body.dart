@@ -106,14 +106,12 @@ class _ItemImg extends StatelessWidget {
   const _ItemImg({required this.img});
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: img,
-      child: Image(
-        height: double.infinity,
-        width: double.infinity,
-        fit: BoxFit.cover,
-        image: NetworkImage(img),
-      ),
+    return Image(
+      height: double.infinity,
+      width: double.infinity,
+      fit: BoxFit.cover,
+      image: NetworkImage(img),
+
     );
   }
 }

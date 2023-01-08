@@ -1,6 +1,4 @@
 // ignore_for_file: deprecated_member_use
-import 'dart:math';
-
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +9,6 @@ import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/load/circular.dart';
 import '../../../widgets/text/my_text.dart';
-import '../guiding/guiding_stack_page.dart';
 
 class HomePopular extends StatelessWidget {
   const HomePopular({Key? key}) : super(key: key);
@@ -27,8 +24,6 @@ class HomePopular extends StatelessWidget {
     );
   }
 }
-
-
 class _PopularTitle extends StatelessWidget {
   const _PopularTitle();
   @override
@@ -40,8 +35,6 @@ class _PopularTitle extends StatelessWidget {
         ),
       );
 }
-
-
 class _ProductBody extends StatelessWidget {
   const _ProductBody();
   @override
@@ -65,7 +58,6 @@ class _ProductBody extends StatelessWidget {
     );
   }
 }
-
 class _ProductPageList extends StatefulWidget {
   const _ProductPageList({Key? key}) : super(key: key);
   @override
@@ -76,7 +68,6 @@ class _ProductPageListState extends State<_ProductPageList> {
   final double _scaleFactore = 0.8;
   final double _height = ThemeAppSize.kHomePageView;
   final pageController = PageController(viewportFraction: .8, initialPage: 0);
-
   @override
   void initState() {
     super.initState();
@@ -86,7 +77,6 @@ class _ProductPageListState extends State<_ProductPageList> {
       });
     });
   }
-
   @override
   void dispose() {
     super.dispose();
@@ -117,7 +107,6 @@ class _ProductPageListState extends State<_ProductPageList> {
       matrix = Matrix4.diagonal3Values(1, currScale, 1)
         ..setTranslationRaw(0, _height * (1 - _scaleFactore) / 2, 1);
     }
-
     return Transform(
       transform: matrix,
       child: GestureDetector(
@@ -135,7 +124,6 @@ class _ProductPageListState extends State<_ProductPageList> {
       ),
     );
   }
-
   Widget _botsIndicator() {
     return GetBuilder<ProductController>(
       builder: (popularProduct) => popularProduct.popularProductList.isNotEmpty
@@ -163,33 +151,27 @@ class _ProductPageListState extends State<_ProductPageList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GetBuilder<ProductController>(
-            builder: (popularProduct) => SizedBox(
-                  height: ThemeAppSize.kHomePageView,
-                  child: PageView.builder(
+        SizedBox(
+          height: ThemeAppSize.kHomePageView,
+          child: GetBuilder<ProductController>(
+              builder: (_) => PageView.builder(
                     controller: pageController,
-                    itemCount: popularProduct.popularProductList.length,
+                    itemCount: _.popularProductList.length,
                     itemBuilder: (context, index) => Obx(() {
-                      popularProduct.animationInit();
+                      _.animationInit();
                       return AnimatedContainer(
                         curve: Curves.easeInOut,
                         duration: Duration(milliseconds: 300 + (index * 300)),
                         transform: Matrix4.translationValues(
-                          popularProduct.startAnimation.value
-                              ? 0
-                              : -context.height,
-                          0,
-                          0,
-                        ),
+                            _.startAnimation.value ? 0 : -context.height, 0, 0),
                         child: _builderItem(
                           index,
-                          popularProduct.popularProductList[index],
+                          _.popularProductList[index],
                         ),
                       );
                     }),
-                  ),
-                )
-
+                  )
+          ),
         ),
         _botsIndicator(),
       ],
@@ -248,15 +230,17 @@ class _ItemTitle extends StatelessWidget {
 class _ItemImg extends StatelessWidget {
   const _ItemImg({required this.img});
   final String img;
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius18),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(img),
+    return Hero(
+      tag: 'img$img',
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius18),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(img),
+          ),
         ),
       ),
     );

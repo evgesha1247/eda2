@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/pages/indirect_pages/detailed/body_detailed.dart';
 import 'package:text/app/pages/indirect_pages/detailed/bottom_detailed.dart';
+import 'package:text/app/theme/theme_app.dart';
+import '../../../widgets/icon/custom_icon.dart';
 import 'header_detailed.dart';
 
 class FoodDetailedPage extends StatelessWidget {
@@ -12,14 +14,99 @@ class FoodDetailedPage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    // CustomScrollView(
+    //   slivers: [
+    //     HeaderDetailed(item: item),
+    //     BodyDetailed(description: item.description!),
+    //   ],
+    // ),
+    // bottomNavigationBar: BottomDetailed(item: item),
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          HeaderDetailed(item: item),
-          BodyDetailed(description: item.description!),
+      body: Exaple4(item: item),
+      // CustomScrollView(
+      //   slivers: [
+      //     HeaderDetailed(item: item),
+      //     BodyDetailed(description: item.description!),
+      //   ],
+      // ),
+      // bottomNavigationBar: BottomDetailed(item: item),
+    );
+  }
+}
+
+class Exaple4 extends StatelessWidget {
+  final ProductModel item;
+  const Exaple4({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    double heightSize = 120;
+    return ListView(
+      shrinkWrap: true,
+      children: [
+        Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                _HeaderImg(img: item.img!),
+                _HeaderIcons(),
+                Positioned(
+                  bottom: -(heightSize / 2),
+                  left: 50,
+                  right: 50,
+                  child: Container(
+                    color: context.theme.canvasColor,
+                    height: heightSize,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: heightSize / 2),
+            Text('data'),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _HeaderImg extends StatelessWidget {
+  final String img;
+  const _HeaderImg({required this.img});
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: 'img$img',
+      child: Image(
+        image: NetworkImage(img),
+        width: double.infinity,
+        height: context.height / 2.5,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+}
+
+class _HeaderIcons extends StatelessWidget {
+  const _HeaderIcons();
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ButtonIconBack(
+            iconColor: context.theme.hintColor,
+            bg: context.theme.scaffoldBackgroundColor,
+          ),
+          ButtonIconCart(
+            iconColor: context.theme.hintColor,
+            bg: context.theme.scaffoldBackgroundColor,
+          ),
         ],
       ),
-      bottomNavigationBar: BottomDetailed(item: item),
     );
   }
 }

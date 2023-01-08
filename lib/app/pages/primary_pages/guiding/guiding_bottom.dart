@@ -11,6 +11,7 @@ class GuidingBottomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GuidingController>(
       builder: (constroller) => BottomNavigationBar(
+
         onTap: constroller.setCurrentIndexTab,
         currentIndex: constroller.currentIndexTab,
         selectedItemColor: context.theme.hintColor,
@@ -59,7 +60,6 @@ class _FlotingWidgetState extends State<FlotingWidget>
 }
 
 class _BuildFlotingButtom extends StatelessWidget {
-  _BuildFlotingButtom();
   final controller = Get.find<GuidingController>();
   @override
   Widget build(BuildContext context) {

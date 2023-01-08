@@ -18,6 +18,7 @@ class MyAppWidget extends StatelessWidget {
           return GetMaterialApp(
             title: 'Restaurant',
             theme: Themes.light,
+
             darkTheme: Themes.dark,
             getPages: MainRoutes.getPages,
             debugShowCheckedModeBanner: false,

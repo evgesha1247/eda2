@@ -35,15 +35,14 @@ class _HeaderImg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlexibleSpaceBar(
-      background:
-          Hero(
-        tag: img,
-        child: Image.network(
-          img,
-          width: double.maxFinite,
-          fit: BoxFit.cover,
-        ),
-      ),
+        background: Hero(
+            tag: 'img$img',
+            child: Image(
+              image: NetworkImage(img),
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ))
+
     );
   }
 }
@@ -80,16 +79,14 @@ class _BodyTitle extends StatelessWidget {
           top: Radius.circular(ThemeAppSize.kRadius18 * 2),
         ),
       ),
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: ThemeAppSize.kInterval12 * 1.5,
-          ),
-          child: BigText(
-            text: name,
-            color: context.theme.hintColor,
-            size: ThemeAppSize.kFontSize20,
-          ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: ThemeAppSize.kInterval12 * 1.5,
+          horizontal: context.width / 5,
+        ),
+        child: BigText(
+          text: name,
+          color: context.theme.hintColor,
         ),
       ),
     );

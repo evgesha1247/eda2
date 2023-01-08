@@ -19,6 +19,23 @@ const textTheme = TextTheme(
 );
 
 
+class CustomTransitionBuilder extends PageTransitionsBuilder {
+  const CustomTransitionBuilder();
+  @override
+  Widget buildTransitions<T>(
+      PageRoute<T> route,
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      Widget child) {
+    final tween =
+        Tween(begin: 0.0, end: 1.0).chain(CurveTween(curve: Curves.easeInSine));
+    return ScaleTransition(
+        scale: animation.drive(tween),
+        child: FadeTransition(opacity: animation, child: child));
+  }
+}
+
 class Themes {
 
   static final light = ThemeData.light().copyWith(
@@ -33,8 +50,17 @@ class Themes {
     hintColor: ThemeAppColor.kFrontColor,
     // static
     accentColor: ThemeAppColor.kBGColor,
-  );
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: CustomTransitionBuilder(),
+        TargetPlatform.iOS: CustomTransitionBuilder(),
+        TargetPlatform.macOS: CustomTransitionBuilder(),
+        TargetPlatform.windows: CustomTransitionBuilder(),
+        TargetPlatform.linux: CustomTransitionBuilder(),
+      },
+    ),
 
+  );
 
   static final dark = ThemeData.dark().copyWith(
     // text
@@ -48,6 +74,17 @@ class Themes {
     hintColor: const Color.fromARGB(255, 189, 159, 151),
     // static
     accentColor: ThemeAppColor.kBGColor,
+
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: CustomTransitionBuilder(),
+        TargetPlatform.iOS: CustomTransitionBuilder(),
+        TargetPlatform.macOS: CustomTransitionBuilder(),
+        TargetPlatform.windows: CustomTransitionBuilder(),
+        TargetPlatform.linux: CustomTransitionBuilder(),
+      },
+    ),
+
   );
 }
 
