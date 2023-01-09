@@ -41,7 +41,7 @@ class FavoriteController extends GetxController {
       _favoriteList.putIfAbsent(
         product.id!,
         () => FavoriteModel(
-          id: product.id,
+          id: product.id!,
           product: product,
           isFavorite: true,
         ),

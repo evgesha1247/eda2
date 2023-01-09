@@ -68,7 +68,7 @@ class ProfileHistory extends StatelessWidget {
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: NetworkImage(
-                                                "${history[listCount - 1].product!.img!.first}",
+                                                "${history[listCount - 1].product!.imgs!.first.imgURL}",
                                               ),
                                             ),
                                           ),

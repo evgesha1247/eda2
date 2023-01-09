@@ -33,7 +33,7 @@ class ProductController extends GetxController {
         await recommendedProductRepo.getRecommendedProductList();
     if (response.statusCode == 200) {
       _recommendedProductList = [];
-      _recommendedProductList.addAll(Product.fromJson(response.body).products);
+      _recommendedProductList.addAll(Product.fromJson(response.body).products!);
       recommendedStatusLoad = ProductStatusLoad.received;
       update();
     } else {
@@ -47,7 +47,7 @@ class ProductController extends GetxController {
     Response response = await popularProductRepo.getPopularProductList();
     if (response.statusCode == 200) {
       _popularProductList = [];
-      _popularProductList.addAll(Product.fromJson(response.body).products);
+      _popularProductList.addAll(Product.fromJson(response.body).products!);
       popularStatusLoad = ProductStatusLoad.received;
     } else {
       Future.delayed(
