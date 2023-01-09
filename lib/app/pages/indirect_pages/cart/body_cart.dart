@@ -100,12 +100,12 @@ class _Item extends StatelessWidget {
           arguments: item.product!,
         );
       },
-      child: Image(
-        width: ThemeAppSize.kInterval24 * 5,
-        height: height,
-        fit: BoxFit.cover,
-        image: NetworkImage('${item..product!.img}'),
-      ),
+      // child:   Image(
+      //   width: ThemeAppSize.kInterval24 * 5,
+      //   height: height,
+      //   fit: BoxFit.cover,
+      //   image: NetworkImage(item.product!.img!.first),
+      // ),
     );
 
   }

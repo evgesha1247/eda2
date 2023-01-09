@@ -16,7 +16,6 @@ class CartModel {
   });
 
   CartModel.fromJson(Map<String, dynamic> json) {
-
     count = json['count'];
     id = json['id'];
     time = json['time'];
@@ -26,7 +25,6 @@ class CartModel {
 
   Map<String, dynamic> toJson() {
     return {
-
       "count": count,
       "id": id,
       "time": time,

@@ -27,9 +27,14 @@ class FavoriteRepo {
 
   void addToFavoriteList(List<FavoriteModel> favoriteList) {
     _favorite = [];
+
+
     for (var element in favoriteList) {
-      _favorite.add(jsonEncode(element));
+      print(jsonEncode(element.product));
+      //  _favorite.add(jsonEncode(element));
     }
+
+
     sharedStore.reload();
     sharedStore.setStringList(AppConstansts.FAVORITE_LIST, _favorite);
     getFavoriteList();

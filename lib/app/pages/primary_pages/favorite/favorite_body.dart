@@ -133,12 +133,12 @@ class _ItemImg extends StatelessWidget {
             borderRadius: BorderRadius.circular(ThemeAppSize.kRadius18),
           ),
           clipBehavior: Clip.hardEdge,
-          child: Image(
-            width: ThemeAppSize.kHeight100,
-            height: ThemeAppSize.kHeight100,
-            image: NetworkImage('${item.img}'),
-            fit: BoxFit.cover,
-          ),
+          // child: Image(
+          //   width: ThemeAppSize.kHeight100,
+          //   height: ThemeAppSize.kHeight100,
+          //   image: NetworkImage(item.img!.first),
+          //   fit: BoxFit.cover,
+          // ),
 
         ),
       ),

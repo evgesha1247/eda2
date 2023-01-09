@@ -67,7 +67,6 @@ void buy() {
         totalCount = value.count! + count;
         return CartModel(
           id: value.id,
-
           count: value.count! + count,
           time: DateTime.now().toString(),
           isExit: true,
@@ -85,7 +84,6 @@ void buy() {
         () {
           return CartModel(
             id: product.id,
-
             count: count,
             time: DateTime.now().toString(),
             isExit: true,
@@ -101,6 +99,7 @@ void buy() {
   }
   /// добавить 1 либо удалить
   void addOneInCart(ProductModel product) {
+
     if (existInCart(product)) {
       _items.remove(product.id);
     } else {
@@ -108,7 +107,6 @@ void buy() {
         product.id!,
         () => CartModel(
           id: product.id,
-
           count: 1,
           time: DateTime.now().toString(),
           isExit: true,

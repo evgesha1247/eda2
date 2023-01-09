@@ -49,7 +49,7 @@ class Exaple4 extends StatelessWidget {
             Stack(
               clipBehavior: Clip.none,
               children: [
-                _HeaderImg(img: item.img?[0]?.imgURL as String),
+                _HeaderImg(img: item.img?.first as String),
                 _HeaderIcons(),
                 Positioned(
                   bottom: -(heightSize / 2),

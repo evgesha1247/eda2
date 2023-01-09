@@ -18,52 +18,58 @@ class Product {
 }
 
 class ProductModel {
-  int? id;
-  String? name;
-  String? description;
-  int? price;
+  int id;
+  String name;
+  String description;
+  String category;
+  int price;
   List? img;
   ProductModel({
-    this.id,
-    this.name,
-    this.description,
-    this.price,
-    this.img,
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.category,
+    required this.price,
+    required this.img,
   });
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    description = json['description'];
-    price = json['price'];
-    img = (json['imgs']).map((e) {
-      return Img.fromJson(e as Map<String, dynamic>);
-    }).toList() as List<Img>;
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    return ProductModel(
+      id: json['id'],
+      category: json['category'],
+      name: json['name'],
+      description: json['description'],
+      price: json['price'],
+      img: (json['imgs']).map((e) => e['imgURL']).toList(),
+    );
   }
 
   Map<String, dynamic> toJson() {
     return {
       "id": this.id,
+      "category": this.category,
       "name": this.name,
       "price": this.price,
       "description": this.description,
-      "imgs": this.img?.map((e) => e.toJson),
+      "imgs": this.img?.map((e) => {'imgURL': e}),
     };
   }
 }
-
-class Img {
+class ProductImg {
   final String imgURL;
-  Img({required this.imgURL});
-
-  factory Img.fromJson(Map<String, dynamic> json) {
-    return Img(imgURL: json['imgURL'] as String);
+  ProductImg({
+    required this.imgURL,
+  });
+  factory ProductImg.fromJson(Map<String, dynamic> json) {
+    return ProductImg(
+      imgURL: json['imgURL'] as String,
+    );
   }
-
   Map<String, dynamic> toJson() {
-    return {
-      'imgURL': imgURL,
+    return <String, dynamic>{'imgURL': imgURL
     };
   }
+
+
 
 }
