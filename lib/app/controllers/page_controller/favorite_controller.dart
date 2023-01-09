@@ -28,7 +28,7 @@ class FavoriteController extends GetxController {
     _itemsLocal = items;
     for (var i = 0; i < _itemsLocal.length; i++) {
       _favoriteList.putIfAbsent(
-          _itemsLocal[i].product!.id!, () => _itemsLocal[i]);
+          _itemsLocal[i].product.id!, () => _itemsLocal[i]);
     }
     update();
   }

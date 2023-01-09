@@ -189,33 +189,27 @@ class _SettingThemeIcon extends StatelessWidget {
   const _SettingThemeIcon();
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ThemeAppController>(
+
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: ThemeAppSize.kInterval24,
+        vertical: ThemeAppSize.kInterval5,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: context.theme.primaryColor,
+          width: 1.5,
+        ),
+      ),
+      child: GetBuilder<ThemeAppController>(
       builder: (_) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            SmallText(
-              text: _.isLightTheme ? 'to dark ' : 'to light ',
-            ),
-            SizedBox(
-              width: 30,
-              height: 30,
-              child: AnimatedIconWidget(
-                currIndex: (_.isLightTheme ? 0 : 1).obs,
-                fun: () => _.tooggTheme(),
-                widget1: Image(
-                  color: Get.context?.theme.cardColor,
-                  image: const AssetImage("assets/icons/tog_theme.png"),
-                ),
-                widget2: Image(
-                  color: Get.context?.theme.accentColor,
-                  image: const AssetImage("assets/icons/tog_theme.png"),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+          return AnimatedIconWidget(
+              currIndex: (_.isLightTheme ? 0 : 1).obs,
+              fun: () => _.tooggTheme(),
+              widget1: const SmallText(text: 'to dark'),
+              widget2: const SmallText(text: 'to light'));
+        },
+      ),
     );
   }
 }

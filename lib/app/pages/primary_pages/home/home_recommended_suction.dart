@@ -65,23 +65,12 @@ class _RecommendedBody extends StatelessWidget {
   }
 }
 
-// void initState() {
-//   super.initState();
-//   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//     setState(() {
-//       startAnimation = true;
-//     });
-//   });
-// }
-
 class _ItemBuilder extends StatelessWidget {
-  final controller;
+  final ProductController controller;
   const _ItemBuilder({required this.controller});
   @override
   Widget build(BuildContext context) {
-
     return ListView.builder(
-
       itemCount: controller.recommendedProductList.length,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
@@ -96,7 +85,8 @@ class _ItemBuilder extends StatelessWidget {
                 item: controller.recommendedProductList[index],
                 index: index,
               ),
-            ));
+          ),
+        );
       },
     );
   }
@@ -107,8 +97,11 @@ class _Item extends StatelessWidget {
   final ProductModel item;
   final int index;
   const _Item(
-      {required this.selected, required this.item, required this.index});
-
+      {
+    required this.selected,
+    required this.item,
+    required this.index,
+  });
   @override
   Widget build(BuildContext context) {
     final maxHeight = ThemeAppSize.kHeight100 * 1.5;
@@ -266,12 +259,12 @@ class _Item extends StatelessWidget {
                             )
                           : ThemeAppFun.decoration(
                               radius: ThemeAppSize.kRadius18),
-                      // image: DecorationImage(
-                      //   image: NetworkImage(
-                      //     item.img!.first,
-                      //   ),
-                      //   fit: BoxFit.cover,
-                      // ),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          item.imgs?.first.imgURL as String,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),

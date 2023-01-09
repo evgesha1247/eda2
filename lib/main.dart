@@ -17,8 +17,8 @@ Future<void> loadData() async {
 }
 
 Future<void> main() async {
-  final pref = await SharedPreferences.getInstance();
-  await pref.clear();
+  // final pref = await SharedPreferences.getInstance();
+  // await pref.clear();
   WidgetsFlutterBinding.ensureInitialized();
   await ThemeBindings().dependencies();
   await ControllersBindings().dependencies();

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:text/app/widgets/text/my_text.dart';
 import '../../../controllers/page_controller/menu_controller.dart';
+import '../../../theme/theme_app.dart';
 import '../../../widgets/load/circular.dart';
 import 'menu_body.dart';
 import 'menu_filter.dart';
@@ -36,6 +37,11 @@ class MenuPage extends StatelessWidget {
               ? [
                   const MenuHeader(),
                   const MenuFilter(),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: ThemeAppSize.kInterval12,
+                    ),
+                  ),
                   MenuBody(),
                 ]
               : [MenuBody()],

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../product_controller.dart';
@@ -23,7 +25,6 @@ class MenuController extends GetxController {
     initProductControllerr(Get.find<ProductController>());
   }
 
-
   ListStatus listStatus = ListStatus.grid;
   void togStatusList() {
     listStatus =
@@ -43,7 +44,7 @@ class MenuController extends GetxController {
       refreshController.headerStatus;
     } catch (e) {
       refreshController.refreshFailed();
-debugPrint('refreshController  ---  $e');
+      debugPrint('refreshController  ---  $e');
     }
     update();
   }
@@ -54,7 +55,6 @@ debugPrint('refreshController  ---  $e');
   List<ProductModel> get filterList => _filterList;
 
   void initProductControllerr(ProductController controller) {
-
     _productList = [];
     for (var element in controller.popularProductList) {
       if (!_productList.contains(element)) {
@@ -113,6 +113,22 @@ debugPrint('refreshController  ---  $e');
   void setMethod(SortMethod? valueMethod) {
     method = valueMethod;
     _sortBy();
+    update();
+  }
+
+  ///// filter
+  late var filterValue = RangeValues(1, 2);
+  var listPrice = <double>[];
+  initFilterValue() {
+    listPrice = [];
+    for (var element in _productList) {
+      listPrice.add(element.price!.toDouble());
+    }
+    filterValue = RangeValues(listPrice.reduce(min), listPrice.reduce(max));
+  }
+
+  onChangedFilter(RangeValues values) {
+    filterValue = values;
     update();
   }
 }

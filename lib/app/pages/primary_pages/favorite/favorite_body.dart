@@ -30,7 +30,7 @@ class FavoriteBody extends StatelessWidget {
             return ListView.separated(
               itemCount: _.getFavoriteList.length,
               itemBuilder: (BuildContext context, int index) =>
-                  _BuilderItem(item: _.getFavoriteList[index].product!),
+                  _BuilderItem(item: _.getFavoriteList[index].product),
               separatorBuilder: (BuildContext context, int index) => SizedBox(
                 height: ThemeAppSize.kInterval12,
               ),
@@ -133,12 +133,15 @@ class _ItemImg extends StatelessWidget {
             borderRadius: BorderRadius.circular(ThemeAppSize.kRadius18),
           ),
           clipBehavior: Clip.hardEdge,
-          // child: Image(
-          //   width: ThemeAppSize.kHeight100,
-          //   height: ThemeAppSize.kHeight100,
-          //   image: NetworkImage(item.img!.first),
-          //   fit: BoxFit.cover,
-          // ),
+          child: Hero(
+            tag: 'page2${item.imgs?.first.imgURL}',
+            child: Image(
+              width: ThemeAppSize.kHeight100,
+              height: ThemeAppSize.kHeight100,
+              image: NetworkImage(item.imgs?.first.imgURL as String),
+              fit: BoxFit.cover,
+            ),
+          ),
 
         ),
       ),

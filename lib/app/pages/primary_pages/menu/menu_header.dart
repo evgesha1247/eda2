@@ -19,40 +19,34 @@ class MenuHeader extends StatelessWidget {
     );
     final controller = Get.find<MenuController>();
     return SliverAppBar(
-automaticallyImplyLeading: false,
+      automaticallyImplyLeading: false,
       floating: true,
       pinned: false,
       snap: true,
       backgroundColor: context.theme.scaffoldBackgroundColor,
-      toolbarHeight: ThemeAppSize.kMenuHeaderSearch,
+      toolbarHeight: ThemeAppSize.kMenuHeaderSearch - ThemeAppSize.kInterval5,
       flexibleSpace: Padding(
-        padding: EdgeInsets.all(ThemeAppSize.kInterval12
+        padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12
         ),
-        child: Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  cursorColor: context.theme.hintColor,
-                  cursorWidth: 1.3,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    fillColor: context.theme.hintColor,
-                    prefixIcon: WrapperIcon(
-                      child: Icon(
-                        Icons.search,
-                        color: context.theme.hintColor,
-                      ),
-                    ),
-                    hintText: 'Search',
-                    hintStyle: TextStyle(color: context.theme.hintColor),
-                    enabledBorder: styleSearch,
-                    focusedBorder: styleSearch,
-                  ),
-                  onChanged: (text) => controller.searchFilter(text),
-                ),
+        child: Center(
+          child: TextField(
+            cursorColor: context.theme.hintColor,
+            cursorWidth: 1.3,
+            decoration: InputDecoration(
+              isDense: true,
+              fillColor: context.theme.hintColor,
+              prefixIcon: Icon(
+                Icons.search,
+                color: context.theme.hintColor,
               ),
-            ],
+              hintText: 'Search',
+              hintStyle: TextStyle(color: context.theme.hintColor),
+              enabledBorder: styleSearch,
+              focusedBorder: styleSearch,
+            ),
+            onChanged: (text) => controller.searchFilter(text),
           ),
+        ),
         //  ),
       ),
     );

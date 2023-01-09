@@ -24,7 +24,7 @@ class FavoriteModel {
     return <String, dynamic>{
       "id": id,
       "isFavorite": isFavorite,
-      "product": product!.toJson()
+      "product": product.toJson()
     };
   }
 }

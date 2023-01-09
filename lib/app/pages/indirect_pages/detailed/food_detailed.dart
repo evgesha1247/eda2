@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
-import 'package:text/app/pages/indirect_pages/detailed/body_detailed.dart';
-import 'package:text/app/pages/indirect_pages/detailed/bottom_detailed.dart';
 import 'package:text/app/theme/theme_app.dart';
 import '../../../widgets/icon/custom_icon.dart';
-import 'header_detailed.dart';
+import '../../primary_pages/guiding/controller/guiding_controller.dart';
 
 class FoodDetailedPage extends StatelessWidget {
   late final ProductModel item;
@@ -23,13 +21,6 @@ class FoodDetailedPage extends StatelessWidget {
     // bottomNavigationBar: BottomDetailed(item: item),
     return Scaffold(
       body: Exaple4(item: item),
-      // CustomScrollView(
-      //   slivers: [
-      //     HeaderDetailed(item: item),
-      //     BodyDetailed(description: item.description!),
-      //   ],
-      // ),
-      // bottomNavigationBar: BottomDetailed(item: item),
     );
   }
 }
@@ -74,17 +65,35 @@ class Exaple4 extends StatelessWidget {
 class _HeaderImg extends StatelessWidget {
   final String img;
   const _HeaderImg({required this.img});
+
+
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: 'img$img',
-      child: Image(
-        image: NetworkImage(img),
-        width: double.infinity,
-        height: context.height / 2.5,
-        fit: BoxFit.cover,
-      ),
-    );
+
+    Widget imgBuild(tag) {
+      return Hero(
+        tag: tag,
+        child: Image(
+          image: NetworkImage(img),
+          width: double.infinity,
+          height: context.height / 2.5,
+          fit: BoxFit.cover,
+        ),
+      );
+    }
+
+    var current = Get.find<GuidingController>().currentIndexTab;
+    switch (current) {
+      case 0:
+        return imgBuild('page0$img');
+      case 1:
+        return imgBuild('page1$img');
+      case 2:
+        return imgBuild('page2$img');
+      default:
+        return imgBuild('');
+    }
+
   }
 }
 

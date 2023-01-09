@@ -78,7 +78,7 @@ class _ItemBuilderGrid extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              //  _ItemImg(img: item.img!.first),
+              _ItemImg(img: item.imgs?.first.imgURL as String),
               _ItemControlElements(product: item),
             ],
           ),
@@ -106,12 +106,15 @@ class _ItemImg extends StatelessWidget {
   const _ItemImg({required this.img});
   @override
   Widget build(BuildContext context) {
-    return Image(
-      height: double.infinity,
-      width: double.infinity,
-      fit: BoxFit.cover,
-      image: NetworkImage(img),
+    return Hero(
+      tag: 'page1$img',
+      child: Image(
+        height: double.infinity,
+        width: double.infinity,
+        fit: BoxFit.cover,
+        image: NetworkImage(img),
 
+      ),
     );
   }
 }
