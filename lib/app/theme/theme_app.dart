@@ -39,6 +39,7 @@ class CustomTransitionBuilder extends PageTransitionsBuilder {
 class Themes {
 
   static final light = ThemeData.light().copyWith(
+
     // text
     textTheme: textTheme,
     primaryTextTheme: textTheme,

@@ -9,7 +9,7 @@ import '../../../controllers/page_controller/menu_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/load/circular.dart';
 import 'menu_body.dart';
-import 'menu_filter.dart';
+import 'filter/menu_filter.dart';
 import 'menu_header.dart';
 
 class MenuPage extends StatelessWidget {

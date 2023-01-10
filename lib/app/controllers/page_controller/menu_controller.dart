@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/theme/theme_app.dart';
 import '../product_controller.dart';
 import '../../models/products_model.dart';
 
@@ -117,18 +118,60 @@ class MenuController extends GetxController {
   }
 
   ///// filter
-  late var filterValue = RangeValues(1, 2);
+  late RangeValues filterValue;
+  get priceRange => '${filterValue.start.round()}-${filterValue.end.round()}\$';
   var listPrice = <double>[];
+
+  Map<String, bool> mapCategory = {};
+
+  onSelectChip(value, String key) {
+    mapCategory.update(key, (v) => value);
+
+    _filterList = _productList.where((element) {
+      for (var el in mapCategory.entries) {
+        if (el.value) {
+          return el.key == element.category;
+        }
+      }
+      return false;
+    }).toList();
+
+    update();
+  }
+
   initFilterValue() {
-    listPrice = [];
     for (var element in _productList) {
-      listPrice.add(element.price!.toDouble());
+      listPrice.addIf(!listPrice.contains(element.price!.toDouble()),
+          element.price!.toDouble());
+      mapCategory.addIf(!mapCategory.containsKey(element.category.toString()),
+          element.category.toString(), false);
     }
     filterValue = RangeValues(listPrice.reduce(min), listPrice.reduce(max));
+
   }
 
   onChangedFilter(RangeValues values) {
-    filterValue = values;
+    var interva = 3;
+    if (values.end - values.start >= interva) {
+      filterValue = values;
+    } else {
+      if (filterValue.start == values.start) {
+        filterValue = RangeValues(
+          filterValue.start,
+          filterValue.start + interva,
+        );
+      } else {
+        filterValue = RangeValues(
+          filterValue.end - interva,
+          filterValue.end,
+        );
+      }
+    }
+    _filterList = _productList
+        .where((element) => (element.price! >= filterValue.start.round() &&
+            element.price! <= filterValue.end.round()))
+        .toList();
+
     update();
   }
 }

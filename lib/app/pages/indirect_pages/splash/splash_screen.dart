@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:rive/rive.dart';
 import 'package:text/app/pages/indirect_pages/splash/splash_controller.dart';
 
 class SplashPage extends StatelessWidget {

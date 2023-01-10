@@ -6,6 +6,7 @@ import '../../controllers/cart_controller.dart';
 import '../../controllers/page_controller/favorite_controller.dart';
 import '../../theme/theme_app.dart';
 import 'custom_icon.dart';
+import 'package:text/app/controllers/page_controller/menu_controller.dart';
 
 class AnimatedIconWidget extends StatelessWidget {
   final Widget widget1;
@@ -128,6 +129,26 @@ class FavoritIcon extends StatelessWidget {
                   : iconColor,
             ),
           ),
+        );
+      },
+    );
+  }
+}
+
+
+
+
+class ButtonTogList extends StatelessWidget {
+  const ButtonTogList({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<MenuController>(
+      builder: (controller) {
+        return AnimatedIconWidget(
+          currIndex: (controller.listStatus == ListStatus.grid ? 0 : 1).obs,
+          fun: () => controller.togStatusList(),
+          widget1: Icon(Icons.grid_view, color: context.theme.hintColor),
+          widget2: Icon(Icons.list, color: context.theme.hintColor),
         );
       },
     );
