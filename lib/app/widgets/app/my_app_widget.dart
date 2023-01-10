@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
 import 'package:flutter/services.dart';
 import '../../controllers/cart_controller.dart';
-import '../../controllers/page_controller/favorite_controller.dart';
+import '../../pages/primary_pages/favorite/controller/favorite_controller.dart';
 import '../../controllers/product_controller.dart';
 import '../../routes/main_routes.dart';
 

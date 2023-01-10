@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
+import 'package:text/app/pages/primary_pages/menu/model/filter_model.dart';
 
 import '../../controllers/cart_controller.dart';
-import '../../controllers/page_controller/favorite_controller.dart';
+import '../../pages/primary_pages/favorite/controller/favorite_controller.dart';
 import '../../theme/theme_app.dart';
 import 'custom_icon.dart';
-import 'package:text/app/controllers/page_controller/menu_controller.dart';
+import 'package:text/app/pages/primary_pages/menu/controller/menu_controller.dart';
 
 class AnimatedIconWidget extends StatelessWidget {
   final Widget widget1;
@@ -145,7 +146,8 @@ class ButtonTogList extends StatelessWidget {
     return GetBuilder<MenuController>(
       builder: (controller) {
         return AnimatedIconWidget(
-          currIndex: (controller.listStatus == ListStatus.grid ? 0 : 1).obs,
+          currIndex:
+              (controller.renderingMethod == RenderingMethod.grid ? 0 : 1).obs,
           fun: () => controller.togStatusList(),
           widget1: Icon(Icons.grid_view, color: context.theme.hintColor),
           widget2: Icon(Icons.list, color: context.theme.hintColor),

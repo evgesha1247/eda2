@@ -13,24 +13,25 @@ enum ProductStatusLoad {
 }
 
 class ProductController extends GetxController {
-  final ProductRepo recommendedProductRepo;
-  final ProductRepo popularProductRepo;
+  final ProductRepo productRepo;
   ProductController({
-    required this.recommendedProductRepo,
-    required this.popularProductRepo,
+    required this.productRepo,
   });
 
   var _popularProductList = <ProductModel>[];
   var _recommendedProductList = <ProductModel>[];
+  var _productMenuList = <ProductModel>[];
+
 
   List<ProductModel> get popularProductList => _popularProductList;
+  List<ProductModel> get productMenuList => _productMenuList;
   List<ProductModel> get recommendedProductList => _recommendedProductList;
 
   /// load Recommended ///
   late ProductStatusLoad recommendedStatusLoad;
   Future<void> _getRecommendedProductList() async {
     Response response =
-        await recommendedProductRepo.getRecommendedProductList();
+        await productRepo.getRecommendedProductList();
     if (response.statusCode == 200) {
       _recommendedProductList = [];
       _recommendedProductList.addAll(Product.fromJson(response.body).products!);
@@ -41,10 +42,20 @@ class ProductController extends GetxController {
     }
   }
 
+  Future<void> _getProductMenuList() async {
+    Response response = await productRepo.getProductMenuList();
+    if (response.statusCode == 200) {
+      _productMenuList = [];
+      _productMenuList.addAll(Product.fromJson(response.body).products!);
+      update();
+    }
+  }
+
+
   /// load Popular //
   late ProductStatusLoad popularStatusLoad;
   Future<void> _getPopularProductList() async {
-    Response response = await popularProductRepo.getPopularProductList();
+    Response response = await productRepo.getPopularProductList();
     if (response.statusCode == 200) {
       _popularProductList = [];
       _popularProductList.addAll(Product.fromJson(response.body).products!);
@@ -66,6 +77,7 @@ class ProductController extends GetxController {
     popularStatusLoad = ProductStatusLoad.loading;
     await _getPopularProductList();
     await _getRecommendedProductList();
+    await _getProductMenuList();
     update();
   }
 

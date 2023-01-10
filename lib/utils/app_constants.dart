@@ -14,6 +14,7 @@ class AppConstansts {
       "https://fir-app-7be70-default-rtdb.firebaseio.com/";
   static const String POPULAR_PRODUCT_URL = "products/popular.json";
   static const String RECOMMENDED_PRODUCT_URL = "products/recommended.json";
+  static const String PRODUCT_URL = "products/products.json";
 
   static const String TOKEN = "DBtoken";
 

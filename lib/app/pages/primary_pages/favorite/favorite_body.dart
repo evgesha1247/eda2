@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/widgets/icon/anumated_icon_favorit.dart';
-import '../../../controllers/page_controller/favorite_controller.dart';
+import 'controller/favorite_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';

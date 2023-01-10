@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:text/app/widgets/text/my_text.dart';
-import '../../../controllers/page_controller/menu_controller.dart';
+import 'controller/menu_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/load/circular.dart';
 import 'menu_body.dart';

@@ -1,23 +1,9 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/theme/theme_app.dart';
-import '../product_controller.dart';
-import '../../models/products_model.dart';
-
-enum SortMethod { lowToHigh, highToLow, aToZ, zToA, reset }
-
-enum ListStatus { list, grid }
-
-class Filter {
-  final String text;
-  final IconData icon;
-  const Filter({
-    required this.text,
-    required this.icon,
-  });
-}
+import '../../../../controllers/product_controller.dart';
+import '../../../../models/products_model.dart';
+import '../model/filter_model.dart';
 
 class MenuController extends GetxController {
   @override
@@ -26,22 +12,21 @@ class MenuController extends GetxController {
     initProductControllerr(Get.find<ProductController>());
   }
 
-  ListStatus listStatus = ListStatus.grid;
+///////////// Tog list to grid
+  late RenderingMethod renderingMethod = RenderingMethod.grid;
   void togStatusList() {
-    listStatus =
-        (listStatus == ListStatus.list) ? ListStatus.grid : ListStatus.list;
+    renderingMethod = renderingMethod == RenderingMethod.list
+        ? RenderingMethod.grid
+        : RenderingMethod.list;
     update();
   }
 
-/////////////////////////////////////////////
-
-  // get easyRefreshController => _controller;
+///////////// Refresh Page
   Future<void> onRefresh(refreshController) async {
     try {
       await Future.delayed(const Duration(seconds: 2));
       initProductControllerr(Get.find<ProductController>());
       refreshController.refreshCompleted();
-      //  refreshController.loadComplete();
       refreshController.headerStatus;
     } catch (e) {
       refreshController.refreshFailed();
@@ -50,47 +35,54 @@ class MenuController extends GetxController {
     update();
   }
 
-////// init all product/////////////////////
-  List<ProductModel> _productList = [];
+///////////// Init product
+  List<ProductModel> _allProductList = [];
   List<ProductModel> _filterList = [];
   List<ProductModel> get filterList => _filterList;
 
   void initProductControllerr(ProductController controller) {
-    _productList = [];
+    _allProductList = [];
     for (var element in controller.popularProductList) {
-      if (!_productList.contains(element)) {
-        _productList.add(element);
+      if (!_allProductList.contains(element)) {
+        _allProductList.add(element);
       }
     }
 
     for (var element in controller.recommendedProductList) {
-      if (!_productList.contains(element)) {
-        _productList.add(element);
+      if (!_allProductList.contains(element)) {
+        _allProductList.add(element);
+      }
+    }
+    for (var element in controller.productMenuList) {
+      if (!_allProductList.contains(element)) {
+        _allProductList.add(element);
       }
     }
 
-    _filterList = _productList;
+    _filterList = _allProductList;
     update();
   }
 
-///////////////////////////// Sort ///////////////////////
+///////////// Sort /////////////
 
+///////////// search
   searchFilter(String text) {
     if (text.isNotEmpty) {
       _filterList = [];
-      _filterList = _productList
+      _filterList = _allProductList
           .where((element) => element.name
               .toString()
               .toLowerCase()
               .contains(RegExp(text.toLowerCase())))
           .toList();
     } else {
-      _filterList = _productList;
+      _filterList = _allProductList;
     }
 
     update();
   }
 
+///////////// sortBy
   SortMethod? method = SortMethod.reset;
   _sortBy() {
     switch (method) {
@@ -117,37 +109,37 @@ class MenuController extends GetxController {
     update();
   }
 
-  ///// filter
+///////////// sortRange
   late RangeValues filterValue;
   get priceRange => '${filterValue.start.round()}-${filterValue.end.round()}\$';
   var listPrice = <double>[];
 
   Map<String, bool> mapCategory = {};
-
+  List<ProductModel> temp = [];
   onSelectChip(value, String key) {
     mapCategory.update(key, (v) => value);
-
-    _filterList = _productList.where((element) {
-      for (var el in mapCategory.entries) {
-        if (el.value) {
-          return el.key == element.category;
+    _filterList = _allProductList.where((element) {
+      for (var e in mapCategory.entries) {
+        if (e.value && e.key == element.category) {
+          return true;
         }
       }
       return false;
     }).toList();
 
+    _filterList = _filterList.isEmpty ? _allProductList : _filterList;
+    temp = _filterList;
     update();
   }
 
   initFilterValue() {
-    for (var element in _productList) {
+    for (var element in _allProductList) {
       listPrice.addIf(!listPrice.contains(element.price!.toDouble()),
           element.price!.toDouble());
       mapCategory.addIf(!mapCategory.containsKey(element.category.toString()),
           element.category.toString(), false);
     }
     filterValue = RangeValues(listPrice.reduce(min), listPrice.reduce(max));
-
   }
 
   onChangedFilter(RangeValues values) {
@@ -167,7 +159,8 @@ class MenuController extends GetxController {
         );
       }
     }
-    _filterList = _productList
+
+    _filterList = temp
         .where((element) => (element.price! >= filterValue.start.round() &&
             element.price! <= filterValue.end.round()))
         .toList();

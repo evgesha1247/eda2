@@ -1,13 +1,14 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controllers/page_controller/menu_controller.dart';
+import 'controller/menu_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/text/my_text.dart';
 import '../guiding/controller/guiding_controller.dart';
+import 'model/filter_model.dart';
 
 class MenuBody extends StatelessWidget {
   MenuBody({super.key});
@@ -16,7 +17,7 @@ class MenuBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final guidingController = Get.find<GuidingController>();
     return GetBuilder<MenuController>(builder: (MenuController controller) {
-      return controller.listStatus == ListStatus.grid
+      return controller.renderingMethod == RenderingMethod.grid
           ? SliverGrid(
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 370,

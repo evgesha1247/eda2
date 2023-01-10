@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/app/controllers/auth_controller.dart';
 import 'package:text/app/controllers/cart_controller.dart';
-import 'package:text/app/controllers/page_controller/favorite_controller.dart';
+import 'package:text/app/pages/primary_pages/favorite/controller/favorite_controller.dart';
 import 'package:text/app/data/repository/cart_repo.dart';
 import '../app/controllers/product_controller.dart';
 import '../app/data/api/api_client.dart';
 import '../app/data/repository/auth_repo.dart';
 import '../app/data/repository/favorite_repo.dart';
 import '../app/data/repository/product_repo.dart';
-import '../app/controllers/page_controller/menu_controller.dart';
+import '../app/pages/primary_pages/menu/controller/menu_controller.dart';
 import '../app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import '../app/routes/main_routes.dart';
 import '../app/theme/theme_controller.dart';
@@ -50,8 +50,7 @@ class ControllersBindings implements Bindings {
   @override
   Future<void> dependencies() async {
     /// product
-    Get.lazyPut(() => ProductController(
-        popularProductRepo: Get.find(), recommendedProductRepo: Get.find()));
+    Get.lazyPut(() => ProductController(productRepo: Get.find()));
     Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
 
     /// cart

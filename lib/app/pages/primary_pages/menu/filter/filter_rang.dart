@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/widgets/text/my_text.dart';
-import '../../../../controllers/page_controller/menu_controller.dart';
+import '../controller/menu_controller.dart';
 import '../../../../theme/theme_app.dart';
 
 class FilterRang extends StatelessWidget {

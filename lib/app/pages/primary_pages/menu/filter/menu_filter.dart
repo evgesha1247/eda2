@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../controllers/page_controller/menu_controller.dart';
 import '../../../../theme/theme_app.dart';
 import '../../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../../../widgets/text/my_text.dart';
+import '../model/filter_model.dart';
 import 'filter_rang.dart';
 import 'filter_sort_by.dart';
 
-const List<Filter> filterModel = [
-  Filter(text: 'Sort by', icon: Icons.short_text_outlined),
-  Filter(text: 'Filter', icon: Icons.filter_alt_outlined),
+const List<FilterModel> filterModel = [
+  FilterModel(text: 'Sort by', icon: Icons.short_text_outlined),
+  FilterModel(text: 'Filter', icon: Icons.filter_alt_outlined),
 ];
 
 class MenuFilter extends StatelessWidget {
@@ -38,7 +38,7 @@ class MenuFilter extends StatelessWidget {
 }
 
 class _FilterItem extends StatelessWidget {
-  final Filter item;
+  final FilterModel item;
   const _FilterItem({required this.item});
   void sortByMass(text) {
     customShowDialog(
