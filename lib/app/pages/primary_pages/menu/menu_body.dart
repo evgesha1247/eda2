@@ -108,7 +108,7 @@ class _ItemImg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: 'page1$img',
+      tag: '1$img',
       child: Image(
         height: double.infinity,
         width: double.infinity,

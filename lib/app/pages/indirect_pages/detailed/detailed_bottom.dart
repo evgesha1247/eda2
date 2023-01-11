@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/widgets/icon/anumated_icon_favorit.dart';
 import '../../../controllers/cart_controller.dart';
 import '../../../controllers/product_controller.dart';
 import '../../../models/products_model.dart';
@@ -47,8 +48,7 @@ class _TotalPriceWidget extends StatelessWidget {
           return Container(
             padding: EdgeInsets.all(ThemeAppSize.kInterval12),
             decoration: BoxDecoration(
-              color:
-                  _.totalItems > 0
+              color: _.totalItems > 0
                   ? context.theme.primaryColor
                   : context.theme.hintColor,
               borderRadius: ThemeAppFun.decoration(

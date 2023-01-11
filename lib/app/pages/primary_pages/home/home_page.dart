@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
             const HomeHeader(),
             const HomePopular(),
             SizedBox(height: ThemeAppSize.kInterval24),
-            const HomeRecommended(),
+          const HomeRecommended(),
           ],
         ),
       )

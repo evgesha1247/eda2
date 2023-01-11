@@ -17,7 +17,7 @@ Future customShowDialog({
         insetPadding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
-          top: Radius.circular(radius ?? ThemeAppSize.kRadius12),
+          top: Radius.circular(radius ?? ThemeAppSize.kRadius18),
         )
 
         ),

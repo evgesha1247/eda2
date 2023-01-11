@@ -18,7 +18,7 @@ class FilterRang extends StatelessWidget {
         const Divider(),
         const PriceRangeSlider(),
         const Divider(),
-        CategoryList(),
+        const CategoryList(),
         const Divider(),
       ],
     );
@@ -74,7 +74,7 @@ class CategoryList extends StatelessWidget {
           SizedBox(height: ThemeAppSize.kInterval5),
           const SmallText(text: 'Category'),
           SizedBox(height: ThemeAppSize.kInterval12),
-          _ItemsBuild(),
+          const _ItemsBuild(),
         ],
       ),
     );
@@ -82,22 +82,37 @@ class CategoryList extends StatelessWidget {
 }
 
 class _ItemsBuild extends StatelessWidget {
-  _ItemsBuild();
+  const _ItemsBuild();
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MenuController>(
-      builder: (controller) => Wrap(
-        children: List.generate(
-          controller.mapCategory.length,
-          (index) => FilterChip(
-            label: Text(controller.mapCategory.keys.toList()[index]),
-            labelPadding:
-                EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
-            selectedColor: Colors.purple,
-            selected: controller.mapCategory.values.toList()[index],
-            onSelected: (bool value) => controller.onSelectChip(
-                value, controller.mapCategory.keys.toList()[index]),
+      builder: (controller) => SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          spacing: ThemeAppSize.kInterval12,
+          runSpacing: ThemeAppSize.kInterval12,
+          children: List.generate(
+            controller.mapCategory.length,
+            (index) => FilterChip(
+              label: Text(controller.mapCategory.keys.toList()[index]),
+              labelPadding:
+                  EdgeInsets.symmetric(
+                horizontal: ThemeAppSize.kInterval24,
+                vertical: ThemeAppSize.kInterval5 / 2,
+              ),
+              labelStyle: TextStyle(
+                color: controller.mapCategory.values.toList()[index]
+                    ? context.theme.accentColor
+                    : context.theme.hintColor,
+              ),
+              selectedColor: context.theme.cardColor,
+              backgroundColor: context.theme.cardColor,
+              checkmarkColor: context.theme.accentColor,
+              selected: controller.mapCategory.values.toList()[index],
+              onSelected: (bool value) => controller.onSelectChip(
+                  value, controller.mapCategory.keys.toList()[index]),
+            ),
           ),
         ),
       ),

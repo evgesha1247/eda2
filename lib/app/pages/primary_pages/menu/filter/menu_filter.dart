@@ -42,7 +42,7 @@ class _FilterItem extends StatelessWidget {
   const _FilterItem({required this.item});
   void sortByMass(text) {
     customShowDialog(
-      radius: ThemeAppSize.kRadius18,
+      //radius: ThemeAppSize.kRadius18,
       widget: Container(
         height: Get.context!.height / 1.5,
         padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),

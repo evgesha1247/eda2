@@ -40,18 +40,23 @@ class ExpandableTextWidget extends StatelessWidget {
             SmallText(
               height: 1.4,
               size: ThemeAppSize.kFontSize18,
-              text: (_.firstText + (_.hiddeText ? _.secondText : '...')),
+              text: (_.firstText + (_.hiddeText ? _.secondText : '')),
               color: context.theme.hintColor,
               maxLines: 99,
             ),
-            InkWell(
+            SizedBox(height: ThemeAppSize.kInterval12),
+            _.secondText != ''
+                ? InkWell(
               onTap: () => _.tog(),
               child: BigText(
-                text: _.hiddeText ? 'close' : 'show',
-                color: context.theme.hintColor,
-                size: ThemeAppSize.kFontSize20,
+                        text: _.hiddeText ? 'close' : 'show',
+                        color: _.hiddeText
+                            ? context.theme.hintColor
+                            : context.theme.hintColor.withOpacity(0.5),
+                        size: ThemeAppSize.kFontSize20
               ),
-            )
+                  )
+                : const SizedBox(),
           ],
         ),
       ),
