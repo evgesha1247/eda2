@@ -61,6 +61,16 @@ Future<void> setUserName() async {
     await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
 }
 
+// Future<void> setUserName() async {
+//     await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
+// }
+// Future<void> setUserName() async {
+//     await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
+// }
+// Future<void> setUserName() async {
+//     await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
+// }
+
 
 
 

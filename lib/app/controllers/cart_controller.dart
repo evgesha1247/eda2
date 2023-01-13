@@ -58,7 +58,20 @@ void buy() {
       total += (value.product!.price! * value.count!);
     });
     return total > 200 ? (total - (total / 100 * discount)) : total;
+
+
   }
+
+
+  int totalPrice() {
+    var total = 0;
+    var history = getHistoryList().toList();
+    for (int i = 0; i < history.length; i++) {
+      total += history[i].count! * history[i].product!.price!;
+    }
+    return total;
+  }
+
   /// обновление элементов корзина на -1 или 1
   void addItem(ProductModel product, int count) {
     if (existInCart(product)) {

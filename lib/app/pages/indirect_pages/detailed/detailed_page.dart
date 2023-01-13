@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/theme/theme_app.dart';
-import 'package:text/app/widgets/text/my_text.dart';
 import '../../../widgets/icon/custom_icon.dart';
 import 'detailed_body.dart';
 import 'detailed_bottom.dart';

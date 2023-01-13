@@ -124,7 +124,7 @@ void sortByMass({img, index}) {
     barrierLabel: "",
     barrierDismissible: true,
     barrierColor: Colors.black.withOpacity(0.5),
-    transitionDuration: Duration(milliseconds: 300),
+    transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (_, __, ___) {
       return Center(
         child: Container(

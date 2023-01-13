@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controller/menu_controller.dart';
 import '../../../theme/theme_app.dart';
-import '../../../widgets/icon/custom_icon.dart';
 
 class MenuHeader extends StatelessWidget {
   const MenuHeader({super.key});
@@ -30,6 +29,7 @@ class MenuHeader extends StatelessWidget {
         ),
         child: Center(
           child: TextField(
+            autofocus: false,
             cursorColor: context.theme.hintColor,
             cursorWidth: 1.3,
             decoration: InputDecoration(
