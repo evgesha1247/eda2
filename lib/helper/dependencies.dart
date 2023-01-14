@@ -41,7 +41,7 @@ class ApiBindings implements Bindings {
   @override
   Future<void> dependencies() async {
     Get.put(ApiClient(appBaseUrl: AppConstansts.BASE_URL));
-    Get.lazyPut(() => AuthRepo());
+    Get.lazyPut(() => AuthRepo(), fenix: true);
   }
 }
 

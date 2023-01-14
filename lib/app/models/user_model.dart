@@ -4,9 +4,11 @@ class UserModel {
   final String? name;
   final String? phone;
   final String? imgURL;
+  final String? email;
   UserModel({
     this.name,
     this.phone,
+    this.email,
     this.imgURL,
   });
 
@@ -19,6 +21,7 @@ class UserModel {
       name: data?['name'],
       phone: data?['phone'],
       imgURL: data?['imgURL'],
+      email: data?['email'],
     );
   }
 
@@ -27,6 +30,8 @@ class UserModel {
       if (name != null) "name": name,
       if (phone != null) "phone": phone,
       if (imgURL != null) "imgURL": imgURL,
+      if (email != null) "email": email,
+
     };
   }
 }

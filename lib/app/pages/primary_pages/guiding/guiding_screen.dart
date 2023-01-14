@@ -9,7 +9,7 @@ class GuidingPage extends StatelessWidget {
   const GuidingPage({super.key});
   @override
   Widget build(BuildContext context) {
-    final width = context.width;
+    final width = Get.context!.width;
     return Scaffold(
       body: const GuidingStackPage(),
       bottomNavigationBar: (width >= 370) ? const GuidingBottomWidget() : null,

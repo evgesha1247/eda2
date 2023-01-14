@@ -17,59 +17,84 @@ class AuthController extends GetxController {
   final cSettingPhone = TextEditingController();
   final cSettingPhotoURL = TextEditingController();
   //////////////////////
-
-
   late UserModel? userData;
   Rx<User?>? firebaseUser;
   late final AuthRepo authRepo;
-  late final DocumentReference userStory;
+late DocumentReference userStory;
+
 @override
   onInit() {
-authRepo = Get.find<AuthRepo>();
+    authRepo = Get.find<AuthRepo>();
     try {
-      userStory = authRepo.storyUser.doc(authRepo.firebaseUser.value!.uid);
+
       firebaseUser = authRepo.firebaseUser;
-      initUser();
+      userStory = authRepo.storyUser.doc(firebaseUser?.value!.uid);
     } catch (e) {
       debugPrint('user is null $e');
     }
     super.onInit();
 }
+  //// tog page
+  final RxBool _isLogScreen = true.obs;
+  get isLogScreen => _isLogScreen.value;
+  final RxString _buttonText = ''.obs;
+  get buttonText =>
+      _buttonText.value = _isLogScreen.value ? 'Login' : 'Register';
+  togScreenAuth() {
+    _isLogScreen.value = !_isLogScreen.value;
+  }
 
-void initUser() async {
+
+/// auth
+  Future authUser({required email, required pass}) async {
+    if (isLogScreen) {
+      await authRepo.loginUser(email: email, password: pass);
+    } else {
+      await authRepo.createUser(email: email, password: pass);
+      await addUserDatails(
+        name: ' name user ',
+        phone: 'phone user',
+        imgURL:
+            'https://sun2-4.userapi.com/impf/c855216/v855216408/137d0f/vXLp85bBRPw.jpg?size=1080x1080&quality=96&sign=6826f7160e783c9030c3eaeb216b59f1&type=album',
+        email: email,
+      );
+    }
+  }
+
+  Future<void> addUserDatails({name, phone, imgURL, email}) async {
+    userStory.set(
+      {
+        "name": name,
+        "phone": phone,
+        "imgURL": imgURL,
+        "email": email,
+      },
+    );
+  }
+  getUserDatails() async {
     final ref = userStory.withConverter(
       fromFirestore: UserModel.fromFirestore,
       toFirestore: (UserModel user, _) => user.toFirestore(),
     );
     final docSnap = await ref.get();
-    userData = docSnap.data() as UserModel; // Convert to City object
-    if (userData != null) {
+    var user = docSnap.data();
+    if (user != null) {
+      print(user);
+      print(user.email);
+      print(user.phone);
+      print(user.name);
     } else {
       print("No such document.");
     }
-    cSettingName.text = userData?.name ?? '';
-    cSettingPhone.text = userData?.phone ?? '';
-    cSettingPhotoURL.text = userData?.imgURL ?? '';
-
-}
-  final RxBool _isLogScreen = true.obs;
-  final RxString _buttonText = ''.obs;
-  get buttonText =>
-      _buttonText.value = _isLogScreen.value ? 'Login' : 'Register';
-  get isLogScreen => _isLogScreen.value;
-  togScreenAuth() {
-    _isLogScreen.value = !_isLogScreen.value;
-  }
-
-  Future authUser({required email, required pass}) async {
-    isLogScreen
-        ? await authRepo.loginUser(email: email, password: pass)
-        : await authRepo.createUser(email: email, password: pass);
   }
 
   Future<void> logoutUser() async {
-    // final authRepo = Get.find<AuthRepo>();
-    // await authRepo.logout();
+    try {
+      final authRepo = Get.find<AuthRepo>();
+      await authRepo.logout();
+    } catch (e) {
+      print(e);
+    }
   }
 
 ////
@@ -77,41 +102,9 @@ void initUser() async {
 
 
 Future<void> saveUpData() async {
-    if (cSettingName.text != '') {
-      await _setUserName();
-    }
-    if (cSettingPhone.text != '') {
-      await _setUserPhotoURL();
-    }
-    if (cSettingPhotoURL.text != '') {
-      await _setUserPhone();
-    }
+    // authRepo.upDataUserInfo(
+    //     cSettingName.text, cSettingPhone.text, cSettingPhotoURL.text);
+
   }
-
-  Future<void> _setUserName() async {
-    authRepo.storyUser
-        .doc(authRepo.firebaseUser.value!.uid)
-        .set({"name": cSettingPhone.text});
-    await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
-}
-
-
-Future<void> _setUserPhone() async {
-    authRepo.storyUser
-        .doc(authRepo.firebaseUser.value!.uid)
-        .set({"Phone": cSettingPhone.text});
-    //{"Phone": cSettingPhone.text}
-    //   await authRepo.firebaseUser.value?.updatePhoneNumber(cSettingPhone.text);
-  }
-
-  Future<void> _setUserPhotoURL() async {
-    authRepo.storyUser
-        .doc(authRepo.firebaseUser.value!.uid)
-        .set({"PhotoURL": cSettingPhone.text});
-    await authRepo.firebaseUser.value?.updatePhotoURL(cSettingPhotoURL.text);
-  }
-
-
-
 
 }

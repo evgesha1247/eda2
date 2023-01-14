@@ -11,8 +11,8 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-      ProfileHeader(),
+      children: [
+      const ProfileHeader(),
       ProfileBody(),
     ]);
 

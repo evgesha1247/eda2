@@ -14,19 +14,11 @@ GuidingController() {
   setCurrentIndexTab(int? index) {
     if (index != null) {
       _currentIndexTab = index;
-      switch (currentIndexTab) {
-        case 1:
-          Timer(const Duration(milliseconds: 100), () {
+      if (currentIndexTab == 1) {
+        Timer(const Duration(milliseconds: 100), () {
             startAnimationMenu.value = true;
-          });
-          break;
-        default:
+        });
       }
-
-      // else {
-      //   startAnimationMenu.value = false;
-      // }
-
       update();
     }
   }
@@ -37,9 +29,9 @@ GuidingController() {
 
   late AnimationController animatedContainer;
   @override
-  void onClose() {
+  void dispose() {
     animatedContainer.dispose();
-    super.onClose();
+    super.dispose();
   }
 
   void updatePage(icon, index) {

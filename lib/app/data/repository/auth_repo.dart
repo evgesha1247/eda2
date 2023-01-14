@@ -12,14 +12,15 @@ import 'package:text/helper/dependencies.dart';
 
 class AuthRepo extends GetxController {
   late final FirebaseAuth _auth;
-  late final FirebaseFirestore _storyUser;
-  CollectionReference get storyUser => _storyUser.collection('users');
+  late final CollectionReference _storyUser;
+  CollectionReference get storyUser => _storyUser;
+
   late final Rx<User?> firebaseUser;
   @override
   void onInit() async {
     try {
       _auth = FirebaseAuth.instance;
-      _storyUser = FirebaseFirestore.instance;
+      _storyUser = FirebaseFirestore.instance.collection("users");
 
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
@@ -34,7 +35,7 @@ class AuthRepo extends GetxController {
   _setScreen(User? user) async {
     user == null
         ? Get.offNamed(MainRoutes.getAuth)
-        : Get.toNamed(MainRoutes.getSplash);
+        : Get.offNamed(MainRoutes.getSplash);
   }
 
   Future<void> createUser({required email, required password}) async {
@@ -54,27 +55,36 @@ class AuthRepo extends GetxController {
     }
   }
 
+
+
+
   Future<void> loginUser({required email, required password}) async {
-
     try {
-
-
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-
       if (e.code == 'weak-password') {
-
         ThemeAppFun.printSnackBar('weak-password', title: '');
       } else if (e.code == 'email-already-in-use') {
-
         ThemeAppFun.printSnackBar('email-already-in-use', title: '');
       }
     } catch (e) {
-      print('object _--_');
-      ThemeAppFun.printSnackBar(' -__- ', title: '');
-
+      ThemeAppFun.printSnackBar('error', title: '$e');
     }
   }
+
+
+// upDataUserInfo(name, phone, img) {
+//     try {
+//       _storyUser.collection("users").doc(_auth.currentUser?.uid).set({
+//         "name": name,
+//         "Phone": phone,
+//         "PhotoURL": img,
+//       });
+//     } catch (e) {
+//       print(e);
+//     }
+// }
+
 
   Future<void> logout() async => _auth.signOut();
 }
