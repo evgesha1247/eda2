@@ -100,7 +100,7 @@ class _DialogButtonSave extends StatelessWidget {
       children: [
         InkWell(
           child: const MyButtonString(text: 'save'),
-          onTap: () => controller.saveUpData(),
+            onTap: () => controller.saveUpData()
         ),
       ],
     );

@@ -66,12 +66,12 @@ class _ImgAndInfo extends StatelessWidget {
       widget: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          controller.user?.value?.photoURL != null
+          controller.cSettingPhotoURL.text != ''
               ? CircleAvatar(
                   radius: sizeCircleAvatar,
                   backgroundColor: Colors.grey,
                   backgroundImage: NetworkImage(
-                    controller.user!.value!.photoURL!,
+                      controller.cSettingPhotoURL.text
                   ),
                 )
               : Stack(
@@ -101,8 +101,13 @@ class _ImgAndInfo extends StatelessWidget {
                   ],
                 ),
           BigText(
-            text: controller.user?.value?.displayName ?? 'name',
+            text: controller.cSettingName.text,
             size: ThemeAppSize.kFontSize16 * 1.5,
+          ),
+          SizedBox(height: ThemeAppSize.kInterval5),
+          SmallText(
+            text: controller.cSettingPhone.text,
+            size: ThemeAppSize.kFontSize16,
           ),
         ],
       ),

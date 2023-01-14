@@ -3,8 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/models/user_model.dart';
 import 'package:text/app/pages/indirect_pages/splash/splash_controller.dart';
 import 'package:text/app/routes/main_routes.dart';
+import 'package:text/app/theme/theme_app.dart';
 import 'package:text/helper/dependencies.dart';
 
 
@@ -18,6 +20,7 @@ class AuthRepo extends GetxController {
     try {
       _auth = FirebaseAuth.instance;
       _storyUser = FirebaseFirestore.instance;
+
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setScreen);
@@ -52,16 +55,24 @@ class AuthRepo extends GetxController {
   }
 
   Future<void> loginUser({required email, required password}) async {
+
     try {
+
+
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
+
       if (e.code == 'weak-password') {
-        print('косячный пороль.');
+
+        ThemeAppFun.printSnackBar('weak-password', title: '');
       } else if (e.code == 'email-already-in-use') {
-        print('косячное мыло.');
+
+        ThemeAppFun.printSnackBar('email-already-in-use', title: '');
       }
     } catch (e) {
-      print('косяк :$e');
+      print('object _--_');
+      ThemeAppFun.printSnackBar(' -__- ', title: '');
+
     }
   }
 

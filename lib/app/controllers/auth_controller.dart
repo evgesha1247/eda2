@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../data/repository/auth_repo.dart';
+import '../models/user_model.dart';
 
 class AuthController extends GetxController {
   final cName = TextEditingController();
@@ -17,27 +18,40 @@ class AuthController extends GetxController {
   final cSettingPhotoURL = TextEditingController();
   //////////////////////
 
-  Rx<User?>? user;
+
+  late UserModel? userData;
+  Rx<User?>? firebaseUser;
   late final AuthRepo authRepo;
   late final DocumentReference userStory;
 @override
   onInit() {
+authRepo = Get.find<AuthRepo>();
     try {
       userStory = authRepo.storyUser.doc(authRepo.firebaseUser.value!.uid);
-      authRepo = Get.find<AuthRepo>();
-      user = authRepo.firebaseUser;
-      cSettingName.text = //userStory.get("name");
-          user?.value?.displayName ?? '';
-      cSettingPhone.text = user?.value?.phoneNumber ?? '';
-      cSettingPhotoURL.text = user?.value?.photoURL ?? '';
+      firebaseUser = authRepo.firebaseUser;
+      initUser();
     } catch (e) {
       debugPrint('user is null $e');
-
     }
     super.onInit();
 }
 
+void initUser() async {
+    final ref = userStory.withConverter(
+      fromFirestore: UserModel.fromFirestore,
+      toFirestore: (UserModel user, _) => user.toFirestore(),
+    );
+    final docSnap = await ref.get();
+    userData = docSnap.data() as UserModel; // Convert to City object
+    if (userData != null) {
+    } else {
+      print("No such document.");
+    }
+    cSettingName.text = userData?.name ?? '';
+    cSettingPhone.text = userData?.phone ?? '';
+    cSettingPhotoURL.text = userData?.imgURL ?? '';
 
+}
   final RxBool _isLogScreen = true.obs;
   final RxString _buttonText = ''.obs;
   get buttonText =>

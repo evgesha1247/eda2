@@ -53,18 +53,18 @@ class _AuthBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Obx(() => controller.isLogScreen
-            ? const SizedBox.shrink()
-            : Column(
-                children: [
-                  MyTextField(
-                    controller: controller.cName,
-                    text: 'Ivan',
-                    icon: Icons.person,
-                  ),
-                  SizedBox(height: ThemeAppSize.kInterval12),
-                ],
-              )),
+        // Obx(() => controller.isLogScreen
+        //     ? const SizedBox.shrink()
+        //     : Column(
+        //         children: [
+        //           MyTextField(
+        //             controller: controller.cName,
+        //             text: 'Ivan',
+        //             icon: Icons.person,
+        //           ),
+        //           SizedBox(height: ThemeAppSize.kInterval12),
+        //         ],
+        //       )),
         MyTextField(
           controller: controller.cEmail,
           text: 'Ivan@gmail.com',
