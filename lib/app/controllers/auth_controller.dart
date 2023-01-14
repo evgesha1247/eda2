@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,18 +19,20 @@ class AuthController extends GetxController {
 
   Rx<User?>? user;
   late final AuthRepo authRepo;
-
+  late final DocumentReference userStory;
 @override
   onInit() {
     try {
+      userStory = authRepo.storyUser.doc(authRepo.firebaseUser.value!.uid);
       authRepo = Get.find<AuthRepo>();
       user = authRepo.firebaseUser;
-
-      cSettingName.text = user?.value?.displayName ?? '';
+      cSettingName.text = //userStory.get("name");
+          user?.value?.displayName ?? '';
       cSettingPhone.text = user?.value?.phoneNumber ?? '';
       cSettingPhotoURL.text = user?.value?.photoURL ?? '';
     } catch (e) {
       debugPrint('user is null $e');
+
     }
     super.onInit();
 }
@@ -57,19 +60,42 @@ class AuthController extends GetxController {
 
 ////
 
-Future<void> setUserName() async {
+
+
+Future<void> saveUpData() async {
+    if (cSettingName.text != '') {
+      await _setUserName();
+    }
+    if (cSettingPhone.text != '') {
+      await _setUserPhotoURL();
+    }
+    if (cSettingPhotoURL.text != '') {
+      await _setUserPhone();
+    }
+  }
+
+  Future<void> _setUserName() async {
+    authRepo.storyUser
+        .doc(authRepo.firebaseUser.value!.uid)
+        .set({"name": cSettingPhone.text});
     await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
 }
 
-// Future<void> setUserName() async {
-//     await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
-// }
-// Future<void> setUserName() async {
-//     await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
-// }
-// Future<void> setUserName() async {
-//     await authRepo.firebaseUser.value?.updateDisplayName(cSettingName.text);
-// }
+
+Future<void> _setUserPhone() async {
+    authRepo.storyUser
+        .doc(authRepo.firebaseUser.value!.uid)
+        .set({"Phone": cSettingPhone.text});
+    //{"Phone": cSettingPhone.text}
+    //   await authRepo.firebaseUser.value?.updatePhoneNumber(cSettingPhone.text);
+  }
+
+  Future<void> _setUserPhotoURL() async {
+    authRepo.storyUser
+        .doc(authRepo.firebaseUser.value!.uid)
+        .set({"PhotoURL": cSettingPhone.text});
+    await authRepo.firebaseUser.value?.updatePhotoURL(cSettingPhotoURL.text);
+  }
 
 
 

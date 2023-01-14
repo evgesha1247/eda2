@@ -39,6 +39,7 @@ class MyButtonString extends StatelessWidget {
         ),
       ),
       child: Wrap(
+        alignment: WrapAlignment.center,
         children: [
           SmallText(
             text: text,

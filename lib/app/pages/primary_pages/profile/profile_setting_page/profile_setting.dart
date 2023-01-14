@@ -1,35 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../controllers/auth_controller.dart';
 import '../../../../theme/theme_app.dart';
 import '../../../../widgets/text/my_text.dart';
+import '../profile_page.dart';
 
 class ProfileSetting extends StatelessWidget {
   const ProfileSetting({super.key});
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      direction: Axis.vertical,
-      children: Get.find<AuthController>().user != null
-          ? [
-              //    const _SettingThemeIcon(),
-              SizedBox(height: ThemeAppSize.kInterval12),
-              const Center(child: BigText(text: 'Setting')),
-              SizedBox(height: ThemeAppSize.kInterval12),
-              _SettingTextFields(),
-              SizedBox(height: ThemeAppSize.kInterval12),
-              //  _DialogButtons(),
-            ]
-          : [
-              //    const _SettingThemeIcon(),
-              const Spacer(),
-              SmallText(
-                text: 'Sorry , user not registered',
-                size: ThemeAppSize.kFontSize20,
-              ),
-              const Spacer(),
-            ],
+    return Padding(
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+      child: ListView(scrollDirection: Axis.vertical, children:
+              // Get.find<AuthController>().user == null
+              //     ?
+              [
+        const _TitleSetting(title: 'Setting'),
+        _SettingTextFields(),
+        _DialogButtonSave(),
+      ]
+          // : [
+          //     SmallText(
+          //       text: 'Sorry , user not registered',
+          //       size: ThemeAppSize.kFontSize20,
+          //     ),
+          //   ],
+          ),
+    );
+  }
+}
+
+class _TitleSetting extends StatelessWidget {
+  final String title;
+  const _TitleSetting({required this.title});
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const SizedBox(),
+        const Spacer(),
+        BigText(text: title),
+        const Spacer(),
+        _DialogButtonClose(),
+      ],
     );
   }
 }
@@ -39,13 +52,18 @@ class _SettingTextFields extends StatelessWidget {
   final controller = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SmallText(text: 'name'),
         _TextFieldItem(controller: controller.cSettingName),
         SizedBox(height: ThemeAppSize.kInterval12),
+        const SmallText(text: 'Phone'),
         _TextFieldItem(controller: controller.cSettingPhone),
         SizedBox(height: ThemeAppSize.kInterval12),
+        const SmallText(text: 'Photo ( URL )'),
         _TextFieldItem(controller: controller.cSettingPhotoURL),
+        SizedBox(height: ThemeAppSize.kInterval12),
       ],
     );
   }
@@ -59,49 +77,44 @@ class _TextFieldItem extends StatelessWidget {
     final style = OutlineInputBorder(
       borderSide: BorderSide(color: context.theme.hintColor),
     );
-    return Card(
-      color: context.theme.scaffoldBackgroundColor,
-      clipBehavior: Clip.hardEdge,
-      elevation: 3,
-      child: TextField(
-        minLines: 1,
-        maxLines: null,
-        controller: controller,
-        cursorColor: context.theme.primaryColor,
-        decoration: InputDecoration(
-          isDense: true,
-          prefixIcon: Icon(Icons.edit, color: context.theme.hintColor),
-          hintText: controller.text,
-          hintStyle: TextStyle(color: context.theme.primaryColor),
-          border: style,
-          focusedBorder: style,
-          contentPadding: EdgeInsets.all(
-            ThemeAppSize.kInterval12,
-          ),
-        ),
+    return TextFormField(
+      maxLines: null,
+      controller: controller,
+      cursorColor: context.theme.primaryColor,
+      decoration: InputDecoration(
+        isDense: true,
+        prefixIcon: Icon(Icons.edit, color: context.theme.hintColor),
+        border: style,
+        focusedBorder: style,
       ),
     );
   }
 }
 
+class _DialogButtonSave extends StatelessWidget {
+  _DialogButtonSave();
+  final controller = Get.find<AuthController>();
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        InkWell(
+          child: const MyButtonString(text: 'save'),
+          onTap: () => controller.saveUpData(),
+        ),
+      ],
+    );
+  }
+}
 
-// class _DialogButtons extends StatelessWidget {
-//   _DialogButtons();
-//   final controller = Get.find<AuthController>();
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         InkWell(
-//           child: const MyButtonString(text: 'save'),
-//           onTap: () => controller.setUserName(),
-//         ),
-//         SizedBox(width: ThemeAppSize.kInterval12),
-//         InkWell(
-//           child: const MyButtonString(text: 'back'),
-//           onTap: () => Get.back(),
-//         ),
-//       ],
-//     );
-//   }
-// }
+class _DialogButtonClose extends StatelessWidget {
+  _DialogButtonClose();
+  final controller = Get.find<AuthController>();
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: const Icon(Icons.close),
+      onTap: () => Get.back(),
+    );
+  }
+}

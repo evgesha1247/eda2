@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print, unused_import
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,11 +10,14 @@ import 'package:text/helper/dependencies.dart';
 
 class AuthRepo extends GetxController {
   late final FirebaseAuth _auth;
+  late final FirebaseFirestore _storyUser;
+  CollectionReference get storyUser => _storyUser.collection('users');
   late final Rx<User?> firebaseUser;
   @override
   void onInit() async {
     try {
       _auth = FirebaseAuth.instance;
+      _storyUser = FirebaseFirestore.instance;
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setScreen);
