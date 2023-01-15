@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/models/user_model.dart';
 import 'package:text/app/pages/indirect_pages/splash/splash_controller.dart';
 import 'package:text/app/routes/main_routes.dart';
 import 'package:text/app/theme/theme_app.dart';
@@ -35,7 +34,7 @@ class AuthRepo extends GetxController {
   _setScreen(User? user) async {
     user == null
         ? Get.offNamed(MainRoutes.getAuth)
-        : Get.offNamed(MainRoutes.getSplash);
+        : Get.toNamed(MainRoutes.getSplash);
   }
 
   Future<void> createUser({required email, required password}) async {

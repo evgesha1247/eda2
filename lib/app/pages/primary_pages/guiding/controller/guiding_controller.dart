@@ -6,21 +6,17 @@ import 'package:get/get.dart';
 class GuidingController extends GetxController {
   int _currentIndexTab = 0;
   IconData selectIcon = Icons.menu_outlined;
-  get currentIndexTab => _currentIndexTab;
-GuidingController() {
-    setCurrentIndexTab(0);
-  }
+  int get currentIndexTab => _currentIndexTab;
+
   RxBool startAnimationMenu = false.obs;
-  setCurrentIndexTab(int? index) {
-    if (index != null) {
+  setCurrentIndexTab(int index) {
       _currentIndexTab = index;
       if (currentIndexTab == 1) {
         Timer(const Duration(milliseconds: 100), () {
             startAnimationMenu.value = true;
         });
       }
-      update();
-    }
+    update();
   }
 
 
@@ -28,12 +24,6 @@ GuidingController() {
 
 
   late AnimationController animatedContainer;
-  @override
-  void dispose() {
-    animatedContainer.dispose();
-    super.dispose();
-  }
-
   void updatePage(icon, index) {
     if (icon == Icons.menu_outlined || selectIcon == icon) {
       animatedContainer.status == AnimationStatus.completed

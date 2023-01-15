@@ -77,7 +77,7 @@ class ThemeBindings implements Bindings {
 class AllPageBindings implements Bindings {
   @override
   Future<void> dependencies() async {
-    Get.lazyPut<GuidingController>(() => GuidingController());
+    Get.lazyPut(() => GuidingController(), fenix: true);
     Get.lazyPut(() => MenuController(), fenix: true);
     Get.lazyPut(() => AuthController(), fenix: true);
   }

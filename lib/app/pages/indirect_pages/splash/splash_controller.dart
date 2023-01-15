@@ -10,7 +10,6 @@ class SplashController extends GetxController {
     Timer(const Duration(seconds: 2), () {
       Get.offAndToNamed(MainRoutes.getGuiding);
     });
-
     super.onInit();
   }
 }
