@@ -12,7 +12,6 @@ import '../../../theme/theme_controller.dart';
 import '../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../../widgets/text/my_text.dart';
 
-
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
   @override
@@ -63,18 +62,19 @@ class _ImgAndInfo extends StatelessWidget {
     return wrapContainer(
       color: context.theme.scaffoldBackgroundColor,
       height: ThemeAppSize.kHeight100 * 2.5,
-      widget: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          controller.cSettingPhotoURL.text != ''
-              ? CircleAvatar(
+      widget: Obx(() => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (controller.userData.value['imgURL'] != null &&
+                  controller.userData.value['imgURL'] != "")
+                CircleAvatar(
                   radius: sizeCircleAvatar,
                   backgroundColor: Colors.grey,
                   backgroundImage: NetworkImage(
-                      controller.cSettingPhotoURL.text
-                  ),
+                      controller.userData.value['imgURL'].toString()),
                 )
-              : Stack(
+              else
+                Stack(
                   children: [
                     /// icon img
                     CircleAvatar(
@@ -100,17 +100,12 @@ class _ImgAndInfo extends StatelessWidget {
                     ),
                   ],
                 ),
-          BigText(
-            text: controller.cSettingName.text,
-            size: ThemeAppSize.kFontSize16 * 1.5,
-          ),
-          SizedBox(height: ThemeAppSize.kInterval5),
-          SmallText(
-            text: controller.cSettingPhone.text,
-            size: ThemeAppSize.kFontSize16,
-          ),
-        ],
-      ),
+              BigText(
+                text: controller.userData.value['name'] ?? '',
+                size: ThemeAppSize.kFontSize16 * 1.5,
+              ),
+            ],
+          )),
     );
   }
 }
@@ -185,9 +180,6 @@ class _Achievement extends StatelessWidget {
     );
   }
 }
-
-
-
 
 class _HeaderIcons extends StatelessWidget {
   const _HeaderIcons();

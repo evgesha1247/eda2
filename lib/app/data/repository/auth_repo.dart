@@ -11,17 +11,16 @@ import 'package:text/helper/dependencies.dart';
 
 class AuthRepo extends GetxController {
   late final FirebaseAuth _auth;
-  late final CollectionReference _storyUser;
-  CollectionReference get storyUser => _storyUser;
 
   late final Rx<User?> firebaseUser;
   @override
   void onInit() async {
     try {
       _auth = FirebaseAuth.instance;
-      _storyUser = FirebaseFirestore.instance.collection("users");
+
 
     firebaseUser = Rx<User?>(_auth.currentUser);
+
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setScreen);
 
@@ -32,9 +31,12 @@ class AuthRepo extends GetxController {
   }
 
   _setScreen(User? user) async {
-    user == null
-        ? Get.offNamed(MainRoutes.getAuth)
-        : Get.toNamed(MainRoutes.getSplash);
+    if (user == null) {
+      Get.offNamed(MainRoutes.getAuth);
+    } else {
+      Get.toNamed(MainRoutes.getSplash);
+    }
+
   }
 
   Future<void> createUser({required email, required password}) async {

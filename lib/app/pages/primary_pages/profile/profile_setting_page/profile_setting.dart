@@ -11,21 +11,13 @@ class ProfileSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-      child: ListView(scrollDirection: Axis.vertical, children:
-              // Get.find<AuthController>().user == null
-              //     ?
-              [
+      child: Column(
+        children: [
         const _TitleSetting(title: 'Setting'),
-        _SettingTextFields(),
+          _SettingBody(),
         _DialogButtonSave(),
-      ]
-          // : [
-          //     SmallText(
-          //       text: 'Sorry , user not registered',
-          //       size: ThemeAppSize.kFontSize20,
-          //     ),
-          //   ],
-          ),
+        ],
+      ),
     );
   }
 }
@@ -47,42 +39,51 @@ class _TitleSetting extends StatelessWidget {
   }
 }
 
-class _SettingTextFields extends StatelessWidget {
-  _SettingTextFields();
-  final controller = Get.put(AuthController());
+class _SettingBody extends StatelessWidget {
+  _SettingBody();
+  final _ = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SmallText(text: 'name'),
-        _TextFieldItem(controller: controller.cSettingName),
-        SizedBox(height: ThemeAppSize.kInterval12),
-        const SmallText(text: 'Phone'),
-        _TextFieldItem(controller: controller.cSettingPhone),
-        SizedBox(height: ThemeAppSize.kInterval12),
-        const SmallText(text: 'Photo ( URL )'),
-        _TextFieldItem(controller: controller.cSettingPhotoURL),
-        SizedBox(height: ThemeAppSize.kInterval12),
-      ],
+    final List cTextField = [_.cName, _.cPhone, _.cPhotoURL];
+    final List cTitle = ['name', 'Phone', ' Photo ( URL )'];
+    return Expanded(
+      child: ListView(
+        shrinkWrap: true,
+        children: List.generate(
+          cTextField.length,
+          (index) => Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SmallText(text: cTitle[index]),
+              _TextFieldItem(
+                  controller: cTextField[index], text: cTitle[index]),
+              SizedBox(height: ThemeAppSize.kInterval12),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
 
 class _TextFieldItem extends StatelessWidget {
   final TextEditingController controller;
-  const _TextFieldItem({required this.controller});
+  final String text;
+  const _TextFieldItem({this.text = '', required this.controller});
   @override
   Widget build(BuildContext context) {
     final style = OutlineInputBorder(
       borderSide: BorderSide(color: context.theme.hintColor),
     );
-    return TextFormField(
-      maxLines: null,
+    return TextField(
+      maxLines: 10,
+      minLines: 1,
       controller: controller,
       cursorColor: context.theme.primaryColor,
+      keyboardType: text == 'Phone' ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         isDense: true,
+        hintText: controller.text,
         prefixIcon: Icon(Icons.edit, color: context.theme.hintColor),
         border: style,
         focusedBorder: style,
@@ -99,9 +100,8 @@ class _DialogButtonSave extends StatelessWidget {
     return Row(
       children: [
         InkWell(
-          child: const MyButtonString(text: 'save'),
-            onTap: () => controller.saveUpData()
-        ),
+            child: const MyButtonString(text: 'save'),
+            onTap: () => controller.saveUpData()),
       ],
     );
   }

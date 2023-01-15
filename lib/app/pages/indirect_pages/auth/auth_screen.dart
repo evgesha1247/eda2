@@ -17,18 +17,21 @@ class AuthPage extends StatelessWidget {
           children: [
             const _AuthImg(),
             SizedBox(height: ThemeAppSize.kInterval24),
-            _AuthBody(),
-            SizedBox(height: ThemeAppSize.kInterval24),
-            _ToggLog(),
-            const Spacer(),
-            _AuthButtonSubmit(),
-
+            Expanded(
+                child: ListView(shrinkWrap: true, children: [
+              _AuthBody(),
+              SizedBox(height: ThemeAppSize.kInterval24),
+              _ToggLog(),
+              // const Spacer(),
+              _AuthButtonSubmit(),
+            ])),
           ],
         ),
       ),
     );
   }
 }
+
 class _AuthImg extends StatelessWidget {
   const _AuthImg();
   @override
@@ -45,7 +48,6 @@ class _AuthImg extends StatelessWidget {
   }
 }
 
-
 class _AuthBody extends StatelessWidget {
   final controller = Get.put(AuthController());
   _AuthBody();
@@ -53,18 +55,30 @@ class _AuthBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Obx(() => controller.isLogScreen
-        //     ? const SizedBox.shrink()
-        //     : Column(
-        //         children: [
-        //           MyTextField(
-        //             controller: controller.cName,
-        //             text: 'Ivan',
-        //             icon: Icons.person,
-        //           ),
-        //           SizedBox(height: ThemeAppSize.kInterval12),
-        //         ],
-        //       )),
+        Obx(() => controller.isLogScreen
+            ? const SizedBox.shrink()
+            : Column(
+                children: [
+                  MyTextField(
+                    controller: controller.cName,
+                    text: 'Ivan',
+                    icon: Icons.person,
+                  ),
+                  SizedBox(height: ThemeAppSize.kInterval12),
+                  MyTextField(
+                    controller: controller.cPhone,
+                    text: 'Phone',
+                    icon: Icons.phone,
+                  ),
+                  SizedBox(height: ThemeAppSize.kInterval12),
+                  MyTextField(
+                    controller: controller.cPhotoURL,
+                    text: 'img URL',
+                    icon: Icons.image,
+                  ),
+                  SizedBox(height: ThemeAppSize.kInterval12),
+                ],
+              )),
         MyTextField(
           controller: controller.cEmail,
           text: 'Ivan@gmail.com',
@@ -87,12 +101,25 @@ class _AuthButtonSubmit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
-      child: Obx(() => MySubmitButton(
-          fun: () => controller.authUser(
-                email: controller.cEmail.text,
-                pass: controller.cPassword.text,
+      child: Obx(() => InkWell(
+            onTap: () => controller.authUser(),
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: ThemeAppSize.kInterval24,
+                vertical: ThemeAppSize.kInterval12,
               ),
-          text: controller.buttonText)),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(ThemeAppSize.kRadius12),
+                ),
+                border: Border.all(
+                  color: context.theme.cardColor,
+                  width: 2,
+                ),
+              ),
+              child: Center(child: BigText(text: controller.buttonText)),
+            ),
+          )),
     );
   }
 }
@@ -108,33 +135,6 @@ class _ToggLog extends StatelessWidget {
             text: controller.isLogScreen ? 'no account?' : 'have an account?',
             color: context.theme.hintColor,
           )),
-    );
-  }
-}
-
-class MySubmitButton extends StatelessWidget {
-  const MySubmitButton({super.key, required this.text, required this.fun});
-  final String text;
-  final Function() fun;
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: fun,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: ThemeAppSize.kInterval24,
-          vertical: ThemeAppSize.kInterval12,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(ThemeAppSize.kRadius12),
-          ),
-          border: Border.all(
-            color: context.theme.primaryColor,
-          ),
-        ),
-        child: BigText(text: text),
-      ),
     );
   }
 }
@@ -166,6 +166,8 @@ class MyTextField extends StatelessWidget {
           obscureText: !status.value,
           textInputAction: TextInputAction.next,
           cursorColor: context.theme.accentColor,
+          keyboardType:
+              text == 'Phone' ? TextInputType.number : TextInputType.text,
           decoration: InputDecoration(
             hintStyle: TextStyle(color: context.theme.accentColor),
             hintText: text,

@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,32 +7,6 @@ import 'package:get/get.dart';
 import '../data/repository/auth_repo.dart';
 
 class AuthController extends GetxController {
-  final cName = TextEditingController();
-  final cEmail = TextEditingController();
-  final cPassword = TextEditingController();
-
-
-  //  Settting Profile
-  final cSettingName = TextEditingController();
-  final cSettingPhone = TextEditingController();
-  final cSettingPhotoURL = TextEditingController();
-  //////////////////////
-  Rx<User?>? firebaseUser;
-  late final AuthRepo authRepo;
-late DocumentReference userStory;
-
-@override
-  onInit() {
-    authRepo = Get.find<AuthRepo>();
-    try {
-
-      firebaseUser = authRepo.firebaseUser;
-      userStory = authRepo.storyUser.doc(firebaseUser?.value!.uid);
-    } catch (e) {
-      debugPrint('user is null $e');
-    }
-    super.onInit();
-}
   //// tog page
   final RxBool _isLogScreen = true.obs;
   get isLogScreen => _isLogScreen.value;
@@ -43,13 +18,54 @@ late DocumentReference userStory;
   }
 
 
-/// auth
-  Future authUser({required email, required pass}) async {
-    if (isLogScreen) {
-      await authRepo.loginUser(email: email, password: pass);
-    } else {
-      await authRepo.createUser(email: email, password: pass);
+  final cEmail = TextEditingController();
+  final cPassword = TextEditingController();
+  final cName = TextEditingController();
+  final cPhone = TextEditingController();
+  final cPhotoURL = TextEditingController();
 
+  //////////////////////
+  Rx<User?>? firebaseUser;
+  late final AuthRepo authRepo;
+
+
+/// auth
+  Future authUser() async {
+    if (isLogScreen) {
+      await authRepo.loginUser(email: cEmail.text, password: cPassword.text);
+      await getDataUser();
+    } else {
+      await authRepo.createUser(email: cEmail.text, password: cPassword.text);
+      await createDataUser();
+    }
+  }
+
+  RxMap userData = <String, dynamic>{}.obs;
+  Future<RxMap> getDataUser() async {
+    if (authRepo.firebaseUser.value != null) {
+      DocumentReference user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(authRepo.firebaseUser.value?.uid);
+      userData.value = await user
+          .get()
+          .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
+    }
+
+    return userData;
+  }
+
+  Future createDataUser() async {
+    if (authRepo.firebaseUser.value != null) {
+      final userData = <String, String>{
+        "name": cName.text,
+        "phone": cPhone.text,
+        "imgURL": cPhotoURL.text,
+        "email": cEmail.text,
+      };
+      DocumentReference user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(authRepo.firebaseUser.value?.uid);
+      await user.set({userData});
     }
   }
 
@@ -62,9 +78,58 @@ late DocumentReference userStory;
 
 
 Future<void> saveUpData() async {
-    // authRepo.upDataUserInfo(
-    //     cSettingName.text, cSettingPhone.text, cSettingPhotoURL.text);
+    if (authRepo.firebaseUser.value != null) {
+      DocumentReference user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(authRepo.firebaseUser.value?.uid);
 
+      _setName(user);
+      _setPhone(user);
+      _setImgUrl(user);
+
+      clearControlls();
+      getDataUser();
+      Get.back();
+    }
   }
+
+  clearControlls() {
+    cName.text = '';
+    cPhone.text = '';
+    cPhotoURL.text = '';
+    cEmail.text = '';
+  }
+
+  _setName(DocumentReference user) async {
+    if (cName.text != '') {
+      await user.update({'name': cName.text});
+    }
+  }
+
+  _setPhone(DocumentReference user) async {
+    if (cPhone.text != '') {
+      await user.update({'phone': cPhone.text});
+    }
+  }
+
+  _setImgUrl(DocumentReference user) async {
+    if (cPhotoURL.text != '') {
+      await user.update({'imgURL': cPhotoURL.text});
+    }
+  }
+
+  @override
+  onInit() {
+    authRepo = Get.find<AuthRepo>();
+    try {
+      firebaseUser = authRepo.firebaseUser;
+    } catch (e) {
+      debugPrint('user is null $e');
+    }
+    getDataUser();
+
+    super.onInit();
+  }
+
 
 }
