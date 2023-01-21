@@ -34,7 +34,6 @@ class AuthRepo extends GetxController {
     } else {
       Get.toNamed(MainRoutes.getSplash);
     }
-
   }
 
   Future<void> createUser({required email, required password}) async {
