@@ -33,18 +33,12 @@ class MenuPage extends StatelessWidget {
         ),
         footer: const _FooterLoad(),
         child: CustomScrollView(
-          slivers: MediaQuery.of(context).size.width >= 370
-              ? [
-                  const MenuHeader(),
-                  const MenuFilter(),
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: ThemeAppSize.kInterval12,
-                    ),
-                  ),
-                  MenuBody(),
-                ]
-              : [MenuBody()],
+          slivers: [
+            const MenuHeader(),
+            if (MediaQuery.of(context).size.width >= ThemeAppSize.kMaxMinWidth)
+              const MenuFilter(),
+            MenuBody(),
+          ],
         ),
       ),
     );

@@ -19,8 +19,8 @@ class MenuBody extends StatelessWidget {
     return GetBuilder<MenuController>(builder: (MenuController controller) {
       return controller.renderingMethod == RenderingMethod.grid
           ? SliverGrid(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 370,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: ThemeAppSize.kMaxMinWidth - 1,
                 childAspectRatio: 0.9,
               ),
               delegate: SliverChildBuilderDelegate(

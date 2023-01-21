@@ -18,19 +18,24 @@ class MenuFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Row(
+      child: Column(
         children: [
-          SizedBox(width: ThemeAppSize.kInterval12),
-          const ButtonTogList(),
-          ...List.generate(
-            filterModel.length,
-            (index) => Row(
-              children: [
-                SizedBox(width: ThemeAppSize.kInterval12),
-                _FilterItem(item: filterModel[index]),
-              ],
-            ),
-          ).toList(),
+          Row(
+            children: [
+              SizedBox(width: ThemeAppSize.kInterval12),
+              const ButtonTogList(),
+              ...List.generate(
+                filterModel.length,
+                (index) => Row(
+                  children: [
+                    SizedBox(width: ThemeAppSize.kInterval12),
+                    _FilterItem(item: filterModel[index]),
+                  ],
+                ),
+              ).toList(),
+            ],
+          ),
+          SizedBox(height: ThemeAppSize.kInterval12),
         ],
       ),
     );

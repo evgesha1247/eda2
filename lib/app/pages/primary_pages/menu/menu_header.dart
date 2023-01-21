@@ -1,11 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/widgets/text/my_text.dart';
 import 'controller/menu_controller.dart';
 import '../../../theme/theme_app.dart';
 
 class MenuHeader extends StatelessWidget {
   const MenuHeader({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MediaQuery.of(context).size.width >= ThemeAppSize.kMaxMinWidth
+        ? const _Search()
+        : const _Title();
+  }
+}
 
+class _Title extends StatelessWidget {
+  const _Title();
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Center(
+          child: Padding(
+        padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
+        child: Row(
+          children: const [
+            Expanded(child: Divider()),
+            BigText(text: 'Menu list'),
+            Expanded(child: Divider()),
+          ],
+        ),
+      )),
+    );
+  }
+}
+
+class _Search extends StatelessWidget {
+  const _Search();
   @override
   Widget build(BuildContext context) {
     final InputBorder styleSearch = OutlineInputBorder(
@@ -17,6 +47,7 @@ class MenuHeader extends StatelessWidget {
       ),
     );
     final controller = Get.find<MenuController>();
+
     return SliverAppBar(
       automaticallyImplyLeading: false,
       floating: true,

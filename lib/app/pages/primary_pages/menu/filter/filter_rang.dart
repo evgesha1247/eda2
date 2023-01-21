@@ -66,7 +66,6 @@ class PriceRangeSlider extends StatelessWidget {
 
 class CategoryList extends StatelessWidget {
   const CategoryList({super.key});
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -85,7 +84,6 @@ class CategoryList extends StatelessWidget {
 
 class _ItemsBuild extends StatelessWidget {
   const _ItemsBuild();
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MenuController>(
@@ -97,17 +95,18 @@ class _ItemsBuild extends StatelessWidget {
           children: List.generate(
             controller.mapCategory.length,
             (index) => FilterChip(
-              label: Text(controller.mapCategory.keys.toList()[index]),
+              label: BigText(
+                text: controller.mapCategory.keys.toList()[index],
+                color: controller.mapCategory.values.toList()[index]
+                    ? context.theme.accentColor
+                    : context.theme.accentColor.withOpacity(0.5),
+              ),
               labelPadding:
                   EdgeInsets.symmetric(
                 horizontal: ThemeAppSize.kInterval24,
                 vertical: ThemeAppSize.kInterval5 / 2,
               ),
-              labelStyle: TextStyle(
-                color: controller.mapCategory.values.toList()[index]
-                    ? context.theme.accentColor
-                    : context.theme.hintColor,
-              ),
+
               selectedColor: context.theme.cardColor,
               backgroundColor: context.theme.cardColor,
               checkmarkColor: context.theme.accentColor,

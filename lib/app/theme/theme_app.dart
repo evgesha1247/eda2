@@ -104,6 +104,7 @@ abstract class ThemeAppSize {
   static double width = 392.72;
   static double kScreensHeight = Get.context!.height;
   static double kScreensWidth = Get.context!.width;
+  static double kMaxMinWidth = 320;
 
   // радиус
   static double kRadius5 = kScreensHeight / (height / 5);

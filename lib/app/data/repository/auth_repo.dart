@@ -53,9 +53,6 @@ class AuthRepo extends GetxController {
     }
   }
 
-
-
-
   Future<void> loginUser({required email, required password}) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -69,19 +66,6 @@ class AuthRepo extends GetxController {
       ThemeAppFun.printSnackBar('error', title: '$e');
     }
   }
-
-
-// upDataUserInfo(name, phone, img) {
-//     try {
-//       _storyUser.collection("users").doc(_auth.currentUser?.uid).set({
-//         "name": name,
-//         "Phone": phone,
-//         "PhotoURL": img,
-//       });
-//     } catch (e) {
-//       print(e);
-//     }
-// }
 
 
   Future<void> logout() async => _auth.signOut();
