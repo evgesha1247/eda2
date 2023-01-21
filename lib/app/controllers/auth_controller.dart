@@ -41,7 +41,8 @@ class AuthController extends GetxController {
   }
 
   RxMap userData = <String, dynamic>{}.obs;
-  Future<RxMap> getDataUser() async {
+
+  Future<void> getDataUser() async {
     if (authRepo.firebaseUser.value != null) {
       DocumentReference user = FirebaseFirestore.instance
           .collection('users')
@@ -50,23 +51,19 @@ class AuthController extends GetxController {
           .get()
           .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
     }
-
-    return userData;
   }
 
-  Future createDataUser() async {
-    if (authRepo.firebaseUser.value != null) {
-      final userData = <String, String>{
+  Future<void> createDataUser() async {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .set({
         "name": cName.text,
         "phone": cPhone.text,
         "imgURL": cPhotoURL.text,
         "email": cEmail.text,
-      };
-      DocumentReference user = FirebaseFirestore.instance
-          .collection('users')
-          .doc(authRepo.firebaseUser.value?.uid);
-      await user.set({userData});
-    }
+    }).onError((e, _) => print("Error writing document: $e"));
+    getDataUser();
   }
 
   Future<void> logoutUser() async {

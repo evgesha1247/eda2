@@ -9,6 +9,9 @@ class GuidingController extends GetxController {
   int get currentIndexTab => _currentIndexTab;
 
   RxBool startAnimationMenu = false.obs;
+
+
+
   setCurrentIndexTab(int index) {
       _currentIndexTab = index;
       if (currentIndexTab == 1) {

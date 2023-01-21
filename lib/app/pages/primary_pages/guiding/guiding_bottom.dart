@@ -11,7 +11,6 @@ class GuidingBottomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GuidingController>(
       builder: (constroller) => BottomNavigationBar(
-
         onTap: constroller.setCurrentIndexTab,
         currentIndex: constroller.currentIndexTab,
         selectedItemColor: context.theme.hintColor,

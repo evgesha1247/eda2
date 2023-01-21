@@ -19,6 +19,7 @@ class ProfileBody extends StatelessWidget {
           shrinkWrap: true,
           children: [
             UserInfo(),
+
             InkWell(
               onTap: () => controller.logoutUser(),
               child: const MyButtonString(
@@ -35,7 +36,7 @@ class ProfileBody extends StatelessWidget {
 class UserInfo extends StatelessWidget {
   UserInfo({super.key});
   final controller = Get.find<AuthController>();
-  final List dataKey = const ['email', 'phone', 'imgUrl'];
+  final List dataKey = const ['email', 'phone'];
   @override
   Widget build(BuildContext context) {
     return Obx(() => Column(

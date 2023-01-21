@@ -17,8 +17,6 @@ class AuthRepo extends GetxController {
   void onInit() async {
     try {
       _auth = FirebaseAuth.instance;
-
-
     firebaseUser = Rx<User?>(_auth.currentUser);
 
     firebaseUser.bindStream(_auth.userChanges());
