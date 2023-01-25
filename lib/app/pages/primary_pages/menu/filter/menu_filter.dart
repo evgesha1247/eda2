@@ -8,9 +8,9 @@ import '../model/filter_model.dart';
 import 'filter_rang.dart';
 import 'filter_sort_by.dart';
 
-const List<FilterModel> filterModel = [
-  FilterModel(text: 'Sort by', icon: Icons.short_text_outlined),
-  FilterModel(text: 'Filter', icon: Icons.filter_alt_outlined),
+final List<FilterModel> filterModel = [
+  FilterModel(text: 'sort_by'.tr, icon: Icons.short_text_outlined),
+  FilterModel(text: 'filter'.tr, icon: Icons.filter_alt_outlined),
 ];
 
 class MenuFilter extends StatelessWidget {
@@ -18,25 +18,34 @@ class MenuFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              SizedBox(width: ThemeAppSize.kInterval12),
-              const ButtonTogList(),
-              ...List.generate(
-                filterModel.length,
-                (index) => Row(
-                  children: [
-                    SizedBox(width: ThemeAppSize.kInterval12),
-                    _FilterItem(item: filterModel[index]),
-                  ],
-                ),
-              ).toList(),
-            ],
-          ),
-          SizedBox(height: ThemeAppSize.kInterval12),
-        ],
+      child: SizedBox(
+        height: ThemeAppSize.kMenuHeaderFilter,
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                children: [
+                  SizedBox(width: ThemeAppSize.kInterval12),
+                  const ButtonTogList(),
+                  ...List.generate(
+                    filterModel.length,
+                    (index) => Row(
+                      children: [
+                        SizedBox(width: ThemeAppSize.kInterval12),
+                        _FilterItem(item: filterModel[index]),
+                      ],
+                    ),
+                  ).toList(),
+
+                ],
+              ),
+            ),
+
+            SizedBox(height: ThemeAppSize.kInterval12),
+          ],
+        ),
       ),
     );
   }
@@ -51,7 +60,7 @@ class _FilterItem extends StatelessWidget {
       widget: Container(
         height: Get.context!.height / 1.5,
         padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
-        child: text == 'Sort by'
+        child: text == 'sort_by'.tr
             ? FilterSortBy(widgetTitle: _FilterTitle(title: text))
             : FilterRang(widgetTitle: _FilterTitle(title: text)),
       ),

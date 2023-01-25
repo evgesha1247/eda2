@@ -9,6 +9,7 @@ class GuidingBottomWidget extends StatelessWidget {
   const GuidingBottomWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+
     return GetBuilder<GuidingController>(
       builder: (constroller) => BottomNavigationBar(
         onTap: constroller.setCurrentIndexTab,
@@ -21,10 +22,12 @@ class GuidingBottomWidget extends StatelessWidget {
         showUnselectedLabels: false,
         showSelectedLabels: true,
         items: List.generate(
-          MenuData.listPage.length - 1,
+          MenuData().listPage.length - 1,
           (index) => BottomNavigationBarItem(
-            label: MenuData.listPage[index].text,
-            icon: Icon(MenuData.listPage[index].icon),
+            label: MenuData()
+                .listPage[index]
+                .text, //MenuData.listPage[index].text,
+            icon: Icon(MenuData().listPage[index].icon),
           ),
         ),
       ),
@@ -68,7 +71,7 @@ class _BuildFlotingButtom extends StatelessWidget {
         animatedContainer: controller.animatedContainer,
       ),
       children: List.generate(
-        MenuData.listPage.length,
+        MenuData().listPage.length,
         (index) => RawMaterialButton(
           fillColor: Get.context?.theme.primaryColor,
           splashColor: Get.context?.theme.cardColor,
@@ -77,12 +80,12 @@ class _BuildFlotingButtom extends StatelessWidget {
           constraints:
               BoxConstraints.tight(const Size(buttonDiameter, buttonDiameter)),
           onPressed: () =>
-              controller.updatePage(MenuData.listPage[index].icon, index),
+              controller.updatePage(MenuData().listPage[index].icon, index),
           child: GetBuilder<GuidingController>(
             builder: (_) {
               return Icon(
-                MenuData.listPage[index].icon,
-                color: controller.selectIcon == MenuData.listPage[index].icon
+                MenuData().listPage[index].icon,
+                color: controller.selectIcon == MenuData().listPage[index].icon
                     ? Colors.white
                     : Colors.grey[800],
               );

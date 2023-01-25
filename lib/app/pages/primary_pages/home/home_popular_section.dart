@@ -30,7 +30,7 @@ class _PopularTitle extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
         child: BigText(
-          text: 'Popular product',
+          text: 'popular_product'.tr,
           size: ThemeAppSize.kFontSize18,
         ),
       );

@@ -15,7 +15,7 @@ class ProfileSetting extends StatelessWidget {
         children: [
         const _TitleSetting(title: 'Setting'),
           _SettingBody(),
-        _DialogButtonSave(),
+          _ButtonSave(),
         ],
       ),
     );
@@ -29,15 +29,66 @@ class _TitleSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        Btn(),
         const SizedBox(),
         const Spacer(),
         BigText(text: title),
         const Spacer(),
-        _DialogButtonClose(),
+        _ButtonClose(),
       ],
     );
   }
 }
+
+class Btn extends StatelessWidget {
+  const Btn({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () => Get.updateLocale(const Locale('en', 'US')),
+      child: const Text('Korean'),
+    );
+  }
+}
+
+class DropdownButtonExample extends StatefulWidget {
+  const DropdownButtonExample({super.key});
+  @override
+  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+}
+
+const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+
+class _DropdownButtonExampleState extends State<DropdownButtonExample> {
+  String dropdownValue = list.first;
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      items: list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+}
+
+
 
 class _SettingBody extends StatelessWidget {
   _SettingBody();
@@ -92,8 +143,8 @@ class _TextFieldItem extends StatelessWidget {
   }
 }
 
-class _DialogButtonSave extends StatelessWidget {
-  _DialogButtonSave();
+class _ButtonSave extends StatelessWidget {
+  _ButtonSave();
   final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
@@ -107,8 +158,8 @@ class _DialogButtonSave extends StatelessWidget {
   }
 }
 
-class _DialogButtonClose extends StatelessWidget {
-  _DialogButtonClose();
+class _ButtonClose extends StatelessWidget {
+  _ButtonClose();
   final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {

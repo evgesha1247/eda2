@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MenuModel {
   final String text;
@@ -10,12 +11,12 @@ class MenuModel {
 }
 
 class MenuData {
-  static const List<MenuModel> _menuData = [
-    MenuModel(text: 'Home', icon: Icons.home),
-    MenuModel(text: 'Menu', icon: Icons.restaurant_menu),
-    MenuModel(text: 'favorite', icon: Icons.favorite),
-    MenuModel(text: 'User', icon: Icons.person),
-    MenuModel(text: '', icon: Icons.menu_outlined),
+  final List<MenuModel> _menuData = [
+    MenuModel(text: 'home'.tr, icon: Icons.home),
+    MenuModel(text: 'menu'.tr, icon: Icons.restaurant_menu),
+    MenuModel(text: 'favorites'.tr, icon: Icons.favorite),
+    MenuModel(text: 'person'.tr, icon: Icons.person),
+    const MenuModel(text: '', icon: Icons.menu_outlined),
   ];
-  static List<MenuModel> get listPage => _menuData.toList();
+  List<MenuModel> get listPage => _menuData.toList();
 }

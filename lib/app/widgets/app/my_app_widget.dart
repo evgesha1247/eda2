@@ -6,6 +6,7 @@ import '../../controllers/cart_controller.dart';
 import '../../pages/primary_pages/favorite/controller/favorite_controller.dart';
 import '../../controllers/product_controller.dart';
 import '../../routes/main_routes.dart';
+import '../../theme/theme_languages.dart';
 
 class MyAppWidget extends StatelessWidget {
   const MyAppWidget({Key? key}) : super(key: key);
@@ -17,8 +18,12 @@ class MyAppWidget extends StatelessWidget {
         return GetBuilder<FavoriteController>(builder: (_) {
           return GetMaterialApp(
             title: 'Restaurant',
+            //Languages
+            translations: Languages(),
+            locale: Get.deviceLocale,
+            fallbackLocale: const Locale('ru', 'RU'),
+            //
             theme: Themes.light,
-
             darkTheme: Themes.dark,
             getPages: MainRoutes.getPages,
             debugShowCheckedModeBanner: false,

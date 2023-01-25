@@ -15,7 +15,7 @@ class FavoritHeader extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(ThemeAppSize.kInterval12),
           child: BigText(
-            text: 'Favorites',
+            text: 'favorites'.tr,
             color: context.theme.accentColor,
           ),
         ),

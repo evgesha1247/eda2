@@ -33,13 +33,8 @@ class _RecommendedTitle extends StatelessWidget {
     return Row(
       children: [
         BigText(
-          text: 'Top recommended',
+          text: 'top_recommended'.tr,
           size: ThemeAppSize.kFontSize18,
-        ),
-        const BigText(text: '•'),
-        SmallText(
-          text: 'Food pairing',
-          size: ThemeAppSize.kFontSize16,
         ),
       ],
     );

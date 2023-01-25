@@ -39,7 +39,7 @@ class PriceRangeSlider extends StatelessWidget {
             SizedBox(height: ThemeAppSize.kInterval5),
             Row(
               children: [
-                const SmallText(text: 'Price range'),
+                SmallText(text: 'price_range'.tr),
                 const Spacer(),
                 SmallText(text: menuController.priceRange),
               ],
@@ -73,7 +73,7 @@ class CategoryList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: ThemeAppSize.kInterval5),
-          const SmallText(text: 'Category'),
+          SmallText(text: 'category'.tr),
           SizedBox(height: ThemeAppSize.kInterval12),
           const _ItemsBuild(),
         ],
@@ -106,7 +106,6 @@ class _ItemsBuild extends StatelessWidget {
                 horizontal: ThemeAppSize.kInterval24,
                 vertical: ThemeAppSize.kInterval5 / 2,
               ),
-
               selectedColor: context.theme.cardColor,
               backgroundColor: context.theme.cardColor,
               checkmarkColor: context.theme.accentColor,

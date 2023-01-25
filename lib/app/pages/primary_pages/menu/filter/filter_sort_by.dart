@@ -16,27 +16,27 @@ class FilterSortBy extends StatelessWidget {
       children: [
         widgetTitle,
         const Divider(),
-        const BigText(text: 'Price'),
+        BigText(text: 'price'.tr),
         _ListTitleSort(
-          text: 'low to high',
+          text: 'low_to_high'.tr,
           value: SortMethod.lowToHigh,
           icon: Icons.arrow_circle_up,
         ),
         _ListTitleSort(
-          text: 'high to low',
+          text: 'high_to_low'.tr,
           value: SortMethod.highToLow,
           icon: Icons.arrow_circle_down,
         ),
         SizedBox(height: ThemeAppSize.kInterval5),
         const Divider(),
-        const BigText(text: 'Name'),
+        BigText(text: 'name'.tr),
         _ListTitleSort(
-          text: 'A to Z',
+          text: 'A_to_Z'.tr,
           value: SortMethod.aToZ,
           icon: Icons.arrow_circle_up,
         ),
         _ListTitleSort(
-          text: 'Z to A',
+          text: 'Z_to_A'.tr,
           value: SortMethod.zToA,
           icon: Icons.arrow_circle_down,
         ),

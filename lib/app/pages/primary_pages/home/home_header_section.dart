@@ -44,7 +44,7 @@ class _UserTitle extends StatelessWidget {
       children: [
         const _UserIcon(),
         SizedBox(width: ThemeAppSize.kInterval12),
-        const BigText(text: 'Welcom'),
+        BigText(text: 'welcom'.tr),
         SizedBox(width: ThemeAppSize.kInterval5),
         Icon(
           Icons.grid_3x3,

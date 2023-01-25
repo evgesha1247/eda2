@@ -23,10 +23,10 @@ class _Title extends StatelessWidget {
           child: Padding(
         padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval12),
         child: Row(
-          children: const [
-            Expanded(child: Divider()),
-            BigText(text: 'Menu list'),
-            Expanded(child: Divider()),
+          children: [
+            const Expanded(child: Divider()),
+            BigText(text: 'menu_list'.tr),
+            const Expanded(child: Divider()),
           ],
         ),
       )),
@@ -47,7 +47,6 @@ class _Search extends StatelessWidget {
       ),
     );
     final controller = Get.find<MenuController>();
-
     return SliverAppBar(
       automaticallyImplyLeading: false,
       floating: true,
@@ -70,7 +69,7 @@ class _Search extends StatelessWidget {
                 Icons.search,
                 color: context.theme.hintColor,
               ),
-              hintText: 'Search',
+              hintText: 'search'.tr,
               hintStyle: TextStyle(color: context.theme.hintColor),
               enabledBorder: styleSearch,
               focusedBorder: styleSearch,

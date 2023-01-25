@@ -135,7 +135,7 @@ abstract class ThemeAppSize {
 
 // home menu
   static double kMenuHeaderSearch = kHeight75;
-  static double kMenuHeaderFilter = kHeight75;
+  static double kMenuHeaderFilter = kHeight75 - kInterval24;
 }
 
 abstract class ThemeAppFun {
