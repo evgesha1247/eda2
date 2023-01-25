@@ -23,6 +23,7 @@ class AuthController extends GetxController {
   final cName = TextEditingController();
   final cPhone = TextEditingController();
   final cPhotoURL = TextEditingController();
+  final cAddress = TextEditingController();
 
   //////////////////////
   Rx<User?>? firebaseUser;
@@ -83,6 +84,7 @@ Future<void> saveUpData() async {
       _setName(user);
       _setPhone(user);
       _setImgUrl(user);
+      _setAdress(user);
 
       clearControlls();
       getDataUser();
@@ -102,6 +104,13 @@ Future<void> saveUpData() async {
       await user.update({'name': cName.text});
     }
   }
+
+  _setAdress(DocumentReference user) async {
+    if (cAddress.text != '') {
+      await user.update({'adress': cAddress.text});
+    }
+  }
+
 
   _setPhone(DocumentReference user) async {
     if (cPhone.text != '') {

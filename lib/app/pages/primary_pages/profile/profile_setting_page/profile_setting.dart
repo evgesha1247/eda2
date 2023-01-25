@@ -60,15 +60,20 @@ class _SettingBody extends StatelessWidget {
   final _ = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
-    final List cTextField = [_.cName, _.cPhone, _.cPhotoURL];
-    final List cTitle = ['name'.tr, 'phone'.tr, '${'photo'.tr} ( URL )'];
+    final List cTextField = [_.cName, _.cPhone, _.cAddress, _.cPhotoURL];
+    final List cTitle = [
+      'name'.tr,
+      'phone'.tr,
+      'address'.tr,
+      '${'photo'.tr} ( URL )'
+    ];
     return Expanded(
       child: ListView(
         shrinkWrap: true,
         children: List.generate(
           cTextField.length,
           (index) => Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SmallText(text: cTitle[index]),
               _TextFieldItem(
@@ -124,8 +129,7 @@ class _ButtonSave extends StatelessWidget {
 }
 
 class _ButtonClose extends StatelessWidget {
-  _ButtonClose();
-  final controller = Get.find<AuthController>();
+  const _ButtonClose();
   @override
   Widget build(BuildContext context) {
     return InkWell(

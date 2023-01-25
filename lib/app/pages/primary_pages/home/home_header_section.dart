@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/controllers/auth_controller.dart';
 import 'package:text/app/controllers/product_controller.dart';
 import 'package:text/app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import '../../../theme/theme_app.dart';
@@ -10,7 +11,6 @@ class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
   @override
   Widget build(BuildContext context) {
-
     return Obx(
       () => AnimatedContainer(
         curve: Curves.easeInOut,
@@ -39,7 +39,7 @@ class _UserTitle extends StatelessWidget {
   const _UserTitle();
   @override
   Widget build(BuildContext context) {
-
+    final controller = Get.find<AuthController>();
     return Row(
       children: [
         const _UserIcon(),
@@ -51,9 +51,9 @@ class _UserTitle extends StatelessWidget {
           size: ThemeAppSize.kFontSize16,
           color: context.theme.hintColor,
         ),
-        BigText(
-          text: 'Name', size: ThemeAppSize.kFontSize18
-        ),
+        Obx(() => BigText(
+            text: '${controller.userData.value['name']} ',
+            size: ThemeAppSize.kFontSize18)),
       ],
     );
   }

@@ -38,7 +38,7 @@ class UserInfo extends StatelessWidget {
   final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
-    List dataKey = ['email'.tr, 'phone'.tr];
+    List dataKey = ['email'.tr, 'phone'.tr, 'address'.tr];
     return Obx(() => Column(
           children: [
             ...List.generate(

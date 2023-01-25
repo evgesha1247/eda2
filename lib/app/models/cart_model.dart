@@ -33,3 +33,17 @@ class CartModel {
     };
   }
 }
+class OrderModel {
+  int count;
+  String name;
+  OrderModel({
+    required this.count,
+    required this.name,
+  });
+  Map<String, dynamic> toJson() {
+    return {
+      "count": count,
+      "name": name,
+    };
+  }
+}

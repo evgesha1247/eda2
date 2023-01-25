@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/utils/app_constants.dart';
+import '../../controllers/auth_controller.dart';
 import '../../models/cart_model.dart';
 
 class CartRepo {
@@ -22,7 +26,6 @@ class CartRepo {
       continue;
     }
     sharedStore.setStringList(AppConstansts.CART_LIST, _cart);
-
   }
 
   List<CartModel> getCartListFromLocal() {
@@ -51,7 +54,28 @@ class CartRepo {
     sharedStore.setStringList(AppConstansts.CART_HISTORY_LIST, _cartHistory);
   }
 
-void removeCart() {
+  pushCartGlobal(List<CartModel> cartList) {
+    final data = Get.find<AuthController>().userData.value;
+
+    final order = [];
+    cartList.forEach((element) {
+      order.add(
+        OrderModel(count: element.count!, name: element.product!.name!)
+            .toJson(),
+      );
+    });
+
+    FirebaseFirestore.instance
+        .collection('pay')
+        .doc(DateTime.now().toString())
+        .set({
+      "order": order,
+      "user phone": data['phone'],
+      "user adress": data['adress'],
+    }).onError((e, _) => print("Error writing document: $e"));
+  }
+
+  void removeCart() {
     _cart = [];
     sharedStore.remove(AppConstansts.CART_LIST);
   }
