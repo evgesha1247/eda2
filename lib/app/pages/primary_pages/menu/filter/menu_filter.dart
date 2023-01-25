@@ -8,19 +8,21 @@ import '../model/filter_model.dart';
 import 'filter_rang.dart';
 import 'filter_sort_by.dart';
 
-final List<FilterModel> filterModel = [
-  FilterModel(text: 'sort_by'.tr, icon: Icons.short_text_outlined),
-  FilterModel(text: 'filter'.tr, icon: Icons.filter_alt_outlined),
-];
+
 
 class MenuFilter extends StatelessWidget {
   const MenuFilter({super.key});
   @override
   Widget build(BuildContext context) {
+    List<FilterModel> filterModel = [
+      FilterModel(text: 'sort_by'.tr, icon: Icons.short_text_outlined),
+      FilterModel(text: 'filter'.tr, icon: Icons.filter_alt_outlined),
+    ];
     return SliverToBoxAdapter(
       child: SizedBox(
         height: ThemeAppSize.kMenuHeaderFilter,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: ListView(

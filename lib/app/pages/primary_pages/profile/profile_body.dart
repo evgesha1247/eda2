@@ -22,8 +22,8 @@ class ProfileBody extends StatelessWidget {
 
             InkWell(
               onTap: () => controller.logoutUser(),
-              child: const MyButtonString(
-                text: 'logout',
+              child: MyButtonString(
+                text: 'logout'.tr,
               ),
             )
           ],
@@ -36,9 +36,9 @@ class ProfileBody extends StatelessWidget {
 class UserInfo extends StatelessWidget {
   UserInfo({super.key});
   final controller = Get.find<AuthController>();
-  final List dataKey = const ['email', 'phone'];
   @override
   Widget build(BuildContext context) {
+    List dataKey = ['email'.tr, 'phone'.tr];
     return Obx(() => Column(
           children: [
             ...List.generate(

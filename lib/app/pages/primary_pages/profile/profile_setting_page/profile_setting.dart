@@ -13,7 +13,7 @@ class ProfileSetting extends StatelessWidget {
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: Column(
         children: [
-        const _TitleSetting(title: 'Setting'),
+          _TitleSetting(title: 'setting'.tr),
           _SettingBody(),
           _ButtonSave(),
         ],
@@ -29,8 +29,7 @@ class _TitleSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Btn(),
-        const SizedBox(),
+        const _ButtonLanguage(),
         const Spacer(),
         BigText(text: title),
         const Spacer(),
@@ -40,55 +39,21 @@ class _TitleSetting extends StatelessWidget {
   }
 }
 
-class Btn extends StatelessWidget {
-  const Btn({super.key});
+class _ButtonLanguage extends StatelessWidget {
+  const _ButtonLanguage();
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: () => Get.updateLocale(const Locale('en', 'US')),
-      child: const Text('Korean'),
-    );
-  }
-}
-
-class DropdownButtonExample extends StatefulWidget {
-  const DropdownButtonExample({super.key});
-  @override
-  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
-}
-
-const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
-
-class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-  String dropdownValue = list.first;
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          dropdownValue = value!;
-        });
+    return InkWell(
+      onTap: () {
+        Get.updateLocale(Get.locale != const Locale('en', 'US')
+            ? const Locale('en', 'US')
+            : const Locale('ru', 'RU'));
       },
-      items: list.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
+      child: const Icon(Icons.language),
     );
+
   }
 }
-
-
 
 class _SettingBody extends StatelessWidget {
   _SettingBody();
@@ -96,7 +61,7 @@ class _SettingBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List cTextField = [_.cName, _.cPhone, _.cPhotoURL];
-    final List cTitle = ['name', 'Phone', ' Photo ( URL )'];
+    final List cTitle = ['name'.tr, 'phone'.tr, '${'photo'.tr} ( URL )'];
     return Expanded(
       child: ListView(
         shrinkWrap: true,
@@ -151,7 +116,7 @@ class _ButtonSave extends StatelessWidget {
     return Row(
       children: [
         InkWell(
-            child: const MyButtonString(text: 'save'),
+            child: MyButtonString(text: 'save'.tr),
             onTap: () => controller.saveUpData()),
       ],
     );

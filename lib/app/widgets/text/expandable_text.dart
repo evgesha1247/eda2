@@ -49,7 +49,7 @@ class ExpandableTextWidget extends StatelessWidget {
                 ? InkWell(
               onTap: () => _.tog(),
               child: BigText(
-                        text: _.hiddeText ? 'close' : 'show',
+                        text: _.hiddeText ? 'close'.tr : 'show'.tr,
                         color: _.hiddeText
                             ? context.theme.hintColor
                             : context.theme.hintColor.withOpacity(0.5),

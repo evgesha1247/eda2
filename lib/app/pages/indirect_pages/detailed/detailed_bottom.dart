@@ -55,7 +55,7 @@ class _TotalPriceWidget extends StatelessWidget {
               ),
             ),
             child: BigText(
-              text: '\$ ${_.totalAmount} | Go to cart',
+              text: '\$ ${_.totalAmount} | ${'go_to_cart'.tr}',
               color: context.theme.accentColor,
               size: ThemeAppSize.kFontSize20,
             ),

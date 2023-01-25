@@ -4,8 +4,14 @@ class Languages extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'ru_RU': {
+          // menu guiding
+          'home': 'Главное',
+          'menu': 'Меню',
+          'favorites': 'Избранные',
+          'person': 'профель',
+
           // home  ,  1 page
-          'welcom': 'добро пожаловать',
+          'welcom': 'Здравствйте',
           'popular_product': 'полулярные позиции',
           'top_recommended': 'топ рекомендаций',
 
@@ -17,23 +23,54 @@ class Languages extends Translations {
           'A_to_Z': 'по порядку',
           'Z_to_A': 'с конца',
 
+          /// menu  ,  2 page , filter
+          'price_range': 'Диапозон',
+          'category': 'Категория',
+
           /// menu  ,  2 page , sort by
           'price': 'Цена',
           'name': 'Название',
           'low_to_high': 'по возрастанию',
           'high_to_low': 'по убыванию',
 
-          /// menu  ,  2 page , filter
-          'price_range': 'Диапозон',
-          'category': 'Категория',
+          // cart
+          'cart': 'Корзина',
+          'total': 'Цена',
+          'discount': 'Скидка',
+          'pay': 'Купить',
+          // detailed
+          'description': 'Описание',
+          'more_images': 'Больше изображений',
+          'show': 'раскрыть',
+          'close': 'закрыть',
+          'go_to_cart': 'К заказу',
 
-          // menu
-          'home': 'Главное',
-          'menu': 'Меню',
-          'favorites': 'Избранные',
-          'person': 'профель',
+
+          // User
+          'buy': 'Покупок',
+          'bought_on': 'Потраченно',
+          'favorite': 'Избранных',
+          'logout': 'Выйти',
+          'email': 'Почта',
+
+          // User setting
+          'setting': 'Настройки',
+          'photo': 'Фото',
+          'phone': 'Телефон',
+          'save': 'сохранить',
         },
+
+
+
         'en_US': {
+
+          // menu guiding
+          'home': 'Home',
+          'menu': 'Menu',
+          'favorites': 'Favorites',
+          'person': 'Person',
+
+
           // home  ,  1 page
           'welcom': 'Welcom',
           'popular_product': 'Popular product',
@@ -57,11 +94,32 @@ class Languages extends Translations {
           'price_range': 'Price range',
           'category': 'Category',
 
-          // menu
-          'home': 'Home',
-          'menu': 'Menu',
-          'favorites': 'Favorites',
-          'person': 'Person',
+
+          // cart
+          'cart': 'Cart',
+          'total': 'Total',
+          'discount': 'Discount',
+          'pay': 'Pay',
+
+          // detailed
+          'description': 'Introduce',
+          'more_images': 'More images',
+          'show': 'show',
+          'close': 'close',
+          'go_to_cart': 'Go to cart',
+
+          // User
+          'buy': 'buy',
+          'bought_on': 'bought on',
+          'favorite': 'favorites',
+          'logout': 'logout',
+          'email': 'email',
+
+          // User setting
+          'setting': 'Setting',
+          'photo': 'Photo',
+          'phone': 'phone',
+          'save': 'save',
         },
       };
 }

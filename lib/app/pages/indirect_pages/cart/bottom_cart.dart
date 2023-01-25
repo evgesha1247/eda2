@@ -53,14 +53,14 @@ class _TotalPrice extends StatelessWidget {
             Row(
                 children: _.totalAmount > 200
                     ? [
-                        SmallText(text: 'discount ', color: color),
+                        SmallText(text: 'discount'.tr, color: color),
                         SizedBox(width: ThemeAppSize.kInterval12),
                         BigText(text: '-${_.discount} % ', color: Colors.green),
                       ]
                     : []),
             Row(
               children: [
-                SmallText(text: 'total', color: color),
+                SmallText(text: 'total'.tr, color: color),
                 SizedBox(width: ThemeAppSize.kInterval12),
                 BigText(text: totalAmount, color: color),
                 const Spacer(),
@@ -98,7 +98,7 @@ class _ButtonCart extends StatelessWidget {
               ),
             ),
             child: BigText(
-              text: ' Pay ',
+              text: 'pay'.tr,
               color: controller.getItemsList.isNotEmpty
                   ? context.theme.accentColor
                   : context.theme.accentColor.withOpacity(0.5),

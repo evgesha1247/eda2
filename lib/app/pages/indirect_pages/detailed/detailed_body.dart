@@ -40,7 +40,7 @@ class _Description extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BigText(text: 'Introduce', color: context.theme.hintColor),
+            BigText(text: 'description'.tr, color: context.theme.hintColor),
             SizedBox(height: ThemeAppSize.kInterval12),
             ExpandableTextWidget(text: description),
           ],
@@ -60,7 +60,7 @@ class _ImagesListBuilder extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const BigText(text: 'More images'),
+          BigText(text: 'more_images'.tr),
           SizedBox(height: ThemeAppSize.kInterval12),
           Wrap(
             alignment: WrapAlignment.center,

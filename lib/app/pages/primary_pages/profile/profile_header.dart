@@ -92,7 +92,7 @@ class _ImgAndInfo extends StatelessWidget {
                           print('object');
                         },
                         child: Icon(
-                          Icons.add_circle_outline,
+                          Icons.error_outline_outlined,
                           size: ThemeAppSize.kFontSize14 * 3,
                           color: context.theme.primaryColor,
                         ),
@@ -151,7 +151,7 @@ class _Achievement extends StatelessWidget {
                 child: GetBuilder<FavoriteController>(
                   builder: (_) {
                     return achievementItem(
-                      'favorites',
+                      'favorite'.tr,
                       _.getFavoriteList.length,
                     );
                   },
@@ -163,14 +163,14 @@ class _Achievement extends StatelessWidget {
                 ),
                 child: GetBuilder<CartController>(
                   builder: (_) {
-                    return achievementItem('buy', _.getHistoryList().length);
+                    return achievementItem('buy'.tr, _.getHistoryList().length);
                   },
                 ),
               ),
               GetBuilder<CartController>(
                 builder: (_) {
                   var total = _.totalPrice();
-                  return achievementItem('bought on', '$total \$');
+                  return achievementItem('bought_on'.tr, '$total \$');
                 },
               ),
             ],
