@@ -38,6 +38,7 @@ class UserInfo extends StatelessWidget {
   final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
+    List dataList = ['email', 'phone', 'address'];
     List dataKey = ['email'.tr, 'phone'.tr, 'address'.tr];
     return Obx(() => Column(
           children: [
@@ -48,7 +49,7 @@ class UserInfo extends StatelessWidget {
                 children: [
                   SmallText(text: dataKey[index]),
                   SmallText(
-                    text: controller.userData.value[dataKey[index]] ?? '',
+                    text: controller.userData.value[dataList[index]] ?? '',
                     size: ThemeAppSize.kFontSize16 * 1.5,
                   ),
                 ],
