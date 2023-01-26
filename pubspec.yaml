@@ -13,8 +13,12 @@ dependencies:
 
   flutter_slidable: ^2.0.0     # слайд для корзины
   dots_indicator: ^2.1.0       # точки-интикаторы страницы
-  shared_preferences: ^2.0.15  # локальное хранилище
 
+
+
+  shared_preferences: ^2.0.15  # локальное хранилище
+  hive:
+  hive_flutter:
   # firebase
   cloud_firestore: ^4.3.1
   firebase_auth: ^4.2.4        # регистрация
@@ -36,6 +40,8 @@ dependencies:
 dev_dependencies:
   analyzer: ^5.2.0
   flutter_lints: ^2.0.1
+  build_runner: ^2.3.3
+  hive_generator :
   flutter_test:
     sdk: flutter
 

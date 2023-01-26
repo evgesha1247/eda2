@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/app/controllers/auth_controller.dart';
 import 'package:text/app/controllers/cart_controller.dart';
@@ -23,7 +24,6 @@ import 'package:firebase_core/firebase_core.dart';
 class Dependencies {
   Future<void> init() => _constructor();
   Future<void> _constructor() async {
-
       try {
         await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
@@ -60,7 +60,7 @@ class ControllersBindings implements Bindings {
     /// favorite
     Get.lazyPut(() => FavoriteController(favoriteRepo: Get.find()),
         fenix: true);
-    Get.lazyPut(() => FavoriteRepo(sharedStore: Get.find()));
+    Get.lazyPut(() => FavoriteRepo());
   }
 }
 
@@ -68,6 +68,10 @@ class ThemeBindings implements Bindings {
   @override
   Future<void> dependencies() async {
     final sharedStore = await SharedPreferences.getInstance();
+
+    await Hive.initFlutter();
+    await Hive.openBox('favorites_list');
+
     Get.lazyPut(() => sharedStore);
     Get.lazyPut(() => ThemeAppController(), fenix: true);
   }

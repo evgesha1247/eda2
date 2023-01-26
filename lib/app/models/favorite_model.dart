@@ -1,8 +1,13 @@
+
 import 'package:text/app/models/products_model.dart';
 
+
 class FavoriteModel {
+
   int id;
+
   bool isFavorite;
+
   ProductModel product;
 
   FavoriteModel({

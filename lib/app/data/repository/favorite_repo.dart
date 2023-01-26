@@ -1,21 +1,20 @@
 import 'dart:convert';
-
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:text/app/models/favorite_model.dart';
 import '../../../utils/app_constants.dart';
 
 class FavoriteRepo {
-  final SharedPreferences sharedStore;
-
-  FavoriteRepo({required this.sharedStore});
+  // final SharedPreferences sharedStore;
 
   List<String> _favorite = [];
+  final favoriteBox = Hive.box('favorites_list');
+
 
   List<FavoriteModel> getFavoriteList() {
-    if (sharedStore.containsKey(AppConstansts.FAVORITE_LIST)) {
+    if (favoriteBox.containsKey(AppConstansts.FAVORITE_LIST)) {
       List<FavoriteModel> favoriteList = [];
       for (var element
-          in sharedStore.getStringList(AppConstansts.FAVORITE_LIST)!) {
+          in favoriteBox.get(AppConstansts.FAVORITE_LIST)!) {
         favoriteList.add(FavoriteModel.fromJson(jsonDecode(element)));
       }
       return favoriteList;
@@ -31,8 +30,8 @@ class FavoriteRepo {
       _favorite.add(jsonEncode(element));
     }
 
-    sharedStore.reload();
-    sharedStore.setStringList(AppConstansts.FAVORITE_LIST, _favorite);
+    favoriteBox.put(AppConstansts.FAVORITE_LIST, _favorite);
+
     getFavoriteList();
   }
 
