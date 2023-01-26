@@ -12,7 +12,7 @@ class AuthController extends GetxController {
   get isLogScreen => _isLogScreen.value;
   final RxString _buttonText = ''.obs;
   get buttonText =>
-      _buttonText.value = _isLogScreen.value ? 'Login' : 'Register';
+      _buttonText.value = _isLogScreen.value ? 'login'.tr : 'register'.tr;
   togScreenAuth() {
     _isLogScreen.value = !_isLogScreen.value;
   }

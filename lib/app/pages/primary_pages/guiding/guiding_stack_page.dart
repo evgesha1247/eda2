@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/pages/indirect_pages/auth/auth_screen.dart';
 import 'controller/guiding_controller.dart';
 import '../favorite/favorite_page.dart';
 import '../home/home_page.dart';

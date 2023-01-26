@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../theme/theme_app.dart';
+import '../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../widgets/text/my_text.dart';
 import '../../../controllers/auth_controller.dart';
 
@@ -15,7 +16,15 @@ class AuthPage extends StatelessWidget {
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         child: Column(
           children: [
-            const _AuthImg(),
+            Stack(
+              children: const [
+                Center(child: _AuthImg()),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ToggLanguage(),
+                ),
+              ],
+            ),
             SizedBox(height: ThemeAppSize.kInterval24),
             Expanded(
                 child: ListView(shrinkWrap: true, children: [
@@ -131,10 +140,14 @@ class _ToggLog extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => controller.togScreenAuth(),
-      child: Obx(() => BigText(
-            text: controller.isLogScreen ? 'no account?' : 'have an account?',
-            color: context.theme.hintColor,
-          )),
+      child: Center(
+        child: Obx(() => BigText(
+              text: controller.isLogScreen
+                  ? 'no_accaount'.tr
+                  : 'have_an_account'.tr,
+              color: context.theme.hintColor,
+            )),
+      ),
     );
   }
 }

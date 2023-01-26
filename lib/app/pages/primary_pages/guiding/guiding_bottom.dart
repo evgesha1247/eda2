@@ -9,7 +9,6 @@ class GuidingBottomWidget extends StatelessWidget {
   const GuidingBottomWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     return GetBuilder<GuidingController>(
       builder: (constroller) => BottomNavigationBar(
         onTap: constroller.setCurrentIndexTab,

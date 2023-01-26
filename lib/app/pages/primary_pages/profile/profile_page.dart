@@ -15,10 +15,13 @@ class ProfilePage extends StatelessWidget {
       const ProfileHeader(),
       ProfileBody(),
     ]);
-
-
   }
 }
+
+
+
+
+
 
 class MyButtonString extends StatelessWidget {
   const MyButtonString({super.key, required this.text});

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/pages/primary_pages/menu/model/filter_model.dart';
+import 'package:text/app/widgets/text/my_text.dart';
 
 import '../../controllers/cart_controller.dart';
 import '../../pages/primary_pages/favorite/controller/favorite_controller.dart';
@@ -153,6 +154,23 @@ class ButtonTogList extends StatelessWidget {
           widget2: Icon(Icons.list, color: context.theme.hintColor),
         );
       },
+    );
+  }
+}
+
+class ToggLanguage extends StatelessWidget {
+  const ToggLanguage();
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedIconWidget(
+      currIndex: (Get.locale != const Locale('en', 'US') ? 0 : 1).obs,
+      fun: () {
+        Get.updateLocale(Get.locale != const Locale('en', 'US')
+            ? const Locale('en', 'US')
+            : const Locale('ru', 'RU'));
+      },
+      widget1: BigText(text: 'ru', color: context.theme.hintColor),
+      widget2: BigText(text: 'en', color: context.theme.hintColor),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../controllers/auth_controller.dart';
 import '../../../../theme/theme_app.dart';
+import '../../../../widgets/icon/anumated_icon_favorit.dart';
 import '../../../../widgets/text/my_text.dart';
 import '../profile_page.dart';
 
@@ -29,7 +30,7 @@ class _TitleSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const _ButtonLanguage(),
+        const ToggLanguage(),
         const Spacer(),
         BigText(text: title),
         const Spacer(),
@@ -39,21 +40,7 @@ class _TitleSetting extends StatelessWidget {
   }
 }
 
-class _ButtonLanguage extends StatelessWidget {
-  const _ButtonLanguage();
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Get.updateLocale(Get.locale != const Locale('en', 'US')
-            ? const Locale('en', 'US')
-            : const Locale('ru', 'RU'));
-      },
-      child: const Icon(Icons.language),
-    );
 
-  }
-}
 
 class _SettingBody extends StatelessWidget {
   _SettingBody();

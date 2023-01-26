@@ -58,6 +58,13 @@ class Languages extends Translations {
           'photo': 'Фото',
           'phone': 'Телефон',
           'save': 'сохранить',
+
+
+          // auth page
+          'login': 'Войти',
+          'register': 'Регистрация',
+          'no_accaount': 'нет аккаунта ?',
+          'have_an_account': 'уже есть аккаунт ?',
         },
 
 
@@ -120,6 +127,12 @@ class Languages extends Translations {
           'photo': 'Photo',
           'phone': 'phone',
           'save': 'save',
+
+          // auth page
+          'login': 'Login',
+          'register': 'Register',
+          'no_accaount': 'no accaount ?',
+          'have_an_account': 'have an account ?',
         },
       };
 }
