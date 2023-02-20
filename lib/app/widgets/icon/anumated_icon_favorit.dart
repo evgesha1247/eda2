@@ -6,9 +6,9 @@ import 'package:text/app/widgets/text/my_text.dart';
 
 import '../../controllers/cart_controller.dart';
 import '../../pages/primary_pages/favorite/controller/favorite_controller.dart';
+import '../../pages/primary_pages/menu/controller/menu_controller.dart';
 import '../../theme/theme_app.dart';
 import 'custom_icon.dart';
-import 'package:text/app/pages/primary_pages/menu/controller/menu_controller.dart';
 
 class AnimatedIconWidget extends StatelessWidget {
   final Widget widget1;
@@ -144,7 +144,7 @@ class ButtonTogList extends StatelessWidget {
   const ButtonTogList({super.key});
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MenuController>(
+    return GetBuilder<MenuControll>(
       builder: (controller) {
         return AnimatedIconWidget(
           currIndex:
@@ -159,7 +159,7 @@ class ButtonTogList extends StatelessWidget {
 }
 
 class ToggLanguage extends StatelessWidget {
-  const ToggLanguage();
+  const ToggLanguage({super.key});
   @override
   Widget build(BuildContext context) {
     return AnimatedIconWidget(

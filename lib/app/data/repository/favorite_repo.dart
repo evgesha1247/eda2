@@ -29,7 +29,7 @@ class FavoriteRepo {
     for (var element in favoriteList) {
       _favorite.add(jsonEncode(element));
     }
-
+favoriteBox.clear();
     favoriteBox.put(AppConstansts.FAVORITE_LIST, _favorite);
 
     getFavoriteList();

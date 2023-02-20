@@ -5,7 +5,7 @@ import '../../../../controllers/product_controller.dart';
 import '../../../../models/products_model.dart';
 import '../model/filter_model.dart';
 
-class MenuController extends GetxController {
+class MenuControll extends GetxController {
   @override
   void onInit() {
     super.onInit();

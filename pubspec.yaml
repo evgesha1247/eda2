@@ -14,24 +14,22 @@ dependencies:
   flutter_slidable: ^2.0.0     # слайд для корзины
   dots_indicator: ^2.1.0       # точки-интикаторы страницы
 
-
-
-  shared_preferences: ^2.0.15  # локальное хранилище
+  # локальное хранилище
+  shared_preferences: ^2.0.15
   hive:
   hive_flutter:
+
   # firebase
   cloud_firestore: ^4.3.1
-  firebase_auth: ^4.2.4        # регистрация
+  firebase_auth: ^4.2.4
   firebase_core: ^2.4.1
 
-
   pull_to_refresh: ^2.0.0      # обновление при скроле
-
   get: ^4.6.5                  # поставщик
   intl: ^0.17.0                # норм время
 
-
   lottie: ^2.1.0
+  google_maps_flutter: ^2.2.3
 
 
 

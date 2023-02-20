@@ -34,7 +34,7 @@ class _TitleSetting extends StatelessWidget {
         const Spacer(),
         BigText(text: title),
         const Spacer(),
-        _ButtonClose(),
+        const _ButtonClose(),
       ],
     );
   }

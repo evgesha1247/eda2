@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/utils/app_constants.dart';
@@ -55,15 +54,15 @@ class CartRepo {
   }
 
   pushCartGlobal(List<CartModel> cartList) {
-    final data = Get.find<AuthController>().userData.value;
+    final data = Get.find<AuthController>().userData;
 
     final order = [];
-    cartList.forEach((element) {
+    for (var element in cartList) {
       order.add(
         OrderModel(count: element.count!, name: element.product!.name!)
             .toJson(),
       );
-    });
+    }
 
     FirebaseFirestore.instance
         .collection('pay')
@@ -72,7 +71,7 @@ class CartRepo {
       "order": order,
       "user phone": data['phone'],
       "user adress": data['adress'],
-    }).onError((e, _) => print("Error writing document: $e"));
+    });
   }
 
   void removeCart() {

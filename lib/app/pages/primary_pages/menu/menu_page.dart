@@ -16,7 +16,7 @@ class MenuPage extends StatelessWidget {
   const MenuPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MenuController>();
+    final controller = Get.find<MenuControll>();
 
     final RefreshController refreshController = RefreshController(
         initialRefreshStatus: RefreshStatus.idle, initialRefresh: false);

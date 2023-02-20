@@ -46,14 +46,21 @@ class _UserTitle extends StatelessWidget {
         SizedBox(width: ThemeAppSize.kInterval12),
         FittedBox(child: BigText(text: 'welcom'.tr)),
         SizedBox(width: ThemeAppSize.kInterval5),
-        Icon(
+        Row(
+          children: controller.userData['name'] != null
+              ? [
+                  Icon(
           Icons.grid_3x3,
           size: ThemeAppSize.kFontSize16,
           color: context.theme.hintColor,
         ),
         Obx(() => BigText(
-            text: '${controller.userData.value['name']} ',
+                      text: controller.userData['name'] ?? '',
             size: ThemeAppSize.kFontSize18)),
+                ]
+              : [],
+        ),
+
       ],
     );
   }

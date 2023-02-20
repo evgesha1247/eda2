@@ -82,7 +82,7 @@ class AllPageBindings implements Bindings {
   @override
   Future<void> dependencies() async {
     Get.lazyPut(() => GuidingController(), fenix: true);
-    Get.lazyPut(() => MenuController(), fenix: true);
+    Get.lazyPut(() => MenuControll(), fenix: true);
     Get.lazyPut(() => AuthController(), fenix: true);
   }
 }

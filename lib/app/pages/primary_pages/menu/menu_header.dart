@@ -46,7 +46,7 @@ class _Search extends StatelessWidget {
         style: BorderStyle.solid,
       ),
     );
-    final controller = Get.find<MenuController>();
+    final controller = Get.find<MenuControll>();
     return SliverAppBar(
       automaticallyImplyLeading: false,
       floating: true,

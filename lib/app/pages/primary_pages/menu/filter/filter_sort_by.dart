@@ -54,7 +54,7 @@ class _ListTitleSort extends StatelessWidget {
     required this.text,
     required this.icon,
   });
-  final controller = Get.find<MenuController>();
+  final controller = Get.find<MenuControll>();
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -66,9 +66,9 @@ class _ListTitleSort extends StatelessWidget {
       minLeadingWidth: ThemeAppSize.kInterval12,
       title: BigText(text: text),
       trailing: Icon(icon, color: context.theme.hintColor),
-      leading: GetBuilder<MenuController>(
+      leading: GetBuilder<MenuControll>(
         builder: (_) {
-          return Radio(
+          return Radio<SortMethod>(
             activeColor: context.theme.primaryColor,
             value: value,
             groupValue: controller.method,

@@ -12,11 +12,11 @@ import 'model/filter_model.dart';
 
 class MenuBody extends StatelessWidget {
   MenuBody({super.key});
-  final controller = Get.find<MenuController>();
+  final controller = Get.find<MenuControll>();
   @override
   Widget build(BuildContext context) {
     final guidingController = Get.find<GuidingController>();
-    return GetBuilder<MenuController>(builder: (MenuController controller) {
+    return GetBuilder<MenuControll>(builder: (MenuControll controller) {
       return controller.renderingMethod == RenderingMethod.grid
           ? SliverGrid(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

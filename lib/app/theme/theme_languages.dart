@@ -8,10 +8,10 @@ class Languages extends Translations {
           'home': 'Главное',
           'menu': 'Меню',
           'favorites': 'Избранные',
-          'person': 'профель',
+          'person': 'Профиль',
 
           // home  ,  1 page
-          'welcom': 'Здравствйте',
+          'welcom': 'Здравствуйте',
           'popular_product': 'полулярные позиции',
           'top_recommended': 'топ рекомендаций',
 
@@ -19,7 +19,7 @@ class Languages extends Translations {
           'search': 'Поиск',
           'sort_by': 'сортировать по',
           'menu_list': 'список позиций',
-          'filter': 'фильтер',
+          'filter': 'фильтр',
           'A_to_Z': 'по порядку',
           'Z_to_A': 'с конца',
 

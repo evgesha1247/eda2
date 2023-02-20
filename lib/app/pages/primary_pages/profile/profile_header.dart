@@ -65,13 +65,13 @@ class _ImgAndInfo extends StatelessWidget {
       widget: Obx(() => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (controller.userData.value['imgURL'] != null &&
-                  controller.userData.value['imgURL'] != "")
+              if (controller.userData['imgURL'] != null &&
+                  controller.userData['imgURL'] != "")
                 CircleAvatar(
                   radius: sizeCircleAvatar,
                   backgroundColor: Colors.grey,
                   backgroundImage: NetworkImage(
-                      controller.userData.value['imgURL'].toString()),
+                      controller.userData['imgURL'].toString()),
                 )
               else
                 Stack(
@@ -101,7 +101,7 @@ class _ImgAndInfo extends StatelessWidget {
                   ],
                 ),
               BigText(
-                text: controller.userData.value['name'] ?? '',
+                text: controller.userData['name'] ?? '',
                 size: ThemeAppSize.kFontSize16 * 1.5,
               ),
             ],

@@ -1,7 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:text/app/pages/primary_pages/profile/profile_page.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../../theme/theme_app.dart';
@@ -19,13 +22,13 @@ class ProfileBody extends StatelessWidget {
           shrinkWrap: true,
           children: [
             UserInfo(),
-
             InkWell(
               onTap: () => controller.logoutUser(),
               child: MyButtonString(
                 text: 'logout'.tr,
               ),
-            )
+            ),
+
           ],
         ),
       ),
@@ -49,7 +52,7 @@ class UserInfo extends StatelessWidget {
                 children: [
                   SmallText(text: dataKey[index]),
                   SmallText(
-                    text: controller.userData.value[dataList[index]] ?? '',
+                    text: controller.userData[dataList[index]] ?? '',
                     size: ThemeAppSize.kFontSize16 * 1.5,
                   ),
                 ],

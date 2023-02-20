@@ -11,7 +11,7 @@ import '../../../../theme/theme_app.dart';
 class FilterRang extends StatelessWidget {
   final Widget widgetTitle;
   FilterRang({super.key, required this.widgetTitle});
-  final init = Get.find<MenuController>().initFilterValue();
+  final init = Get.find<MenuControll>().initFilterValue();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,7 +31,7 @@ class PriceRangeSlider extends StatelessWidget {
   const PriceRangeSlider({super.key});
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MenuController>(
+    return GetBuilder<MenuControll>(
       builder: (menuController) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +86,7 @@ class _ItemsBuild extends StatelessWidget {
   const _ItemsBuild();
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MenuController>(
+    return GetBuilder<MenuControll>(
       builder: (controller) => SizedBox(
         width: double.infinity,
         child: Wrap(

@@ -63,7 +63,7 @@ class AuthController extends GetxController {
         "phone": cPhone.text,
         "imgURL": cPhotoURL.text,
         "email": cEmail.text,
-    }).onError((e, _) => print("Error writing document: $e"));
+    });
     getDataUser();
   }
 
