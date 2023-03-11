@@ -6,6 +6,7 @@ import '../home/home_page.dart';
 import '../menu/menu_page.dart';
 import '../profile/profile_page.dart';
 
+
 class GuidingStackPage extends StatelessWidget {
   const GuidingStackPage({Key? key}) : super(key: key);
   @override

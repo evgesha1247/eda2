@@ -14,6 +14,7 @@ class GuidingPage extends StatelessWidget {
       body: const GuidingStackPage(),
       bottomNavigationBar: (widthStatus) ? const GuidingBottomWidget() : null,
       floatingActionButton: (!widthStatus) ? const FlotingWidget() : null,
+
     );
   }
 }

@@ -69,7 +69,7 @@ class Themes {
     primaryTextTheme: textTheme,
     //main
     scaffoldBackgroundColor: ThemeAppColor.kFrontColor,
-    cardColor: const Color.fromARGB(255, 106, 76, 80),
+    cardColor: ThemeAppColor.kBGColor,
     primaryColor: ThemeAppColor.kAccent,
     // text
     hintColor: const Color.fromARGB(255, 189, 159, 151),

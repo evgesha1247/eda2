@@ -40,15 +40,11 @@ class _HeaderIcons extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ButtonIconBack(
-            iconColor: context.theme.hintColor,
-            bg: context.theme.scaffoldBackgroundColor,
-          ),
-          const Spacer(),
+        children: const [
+          ButtonIconBack(),
+          Spacer(),
           ButtonIconCart(
-            iconColor: context.theme.hintColor,
-            bg: context.theme.scaffoldBackgroundColor,
+
           ),
         ],
       ),

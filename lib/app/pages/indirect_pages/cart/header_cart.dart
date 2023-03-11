@@ -20,9 +20,7 @@ class CartHeader extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             child: GestureDetector(
               onTap: () => Get.back(),
-              child: ButtonIconBack(
-                iconColor: context.theme.hintColor,
-              ),
+              child: const ButtonIconBack()
             ),
           ),
           BigText(

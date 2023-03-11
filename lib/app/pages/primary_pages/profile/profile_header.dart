@@ -70,8 +70,8 @@ class _ImgAndInfo extends StatelessWidget {
                 CircleAvatar(
                   radius: sizeCircleAvatar,
                   backgroundColor: Colors.grey,
-                  backgroundImage: NetworkImage(
-                      controller.userData['imgURL'].toString()),
+                  backgroundImage:
+                      NetworkImage(controller.userData['imgURL'].toString()),
                 )
               else
                 Stack(
@@ -88,9 +88,7 @@ class _ImgAndInfo extends StatelessWidget {
                       bottom: -ThemeAppSize.kInterval5 / 2.5,
                       right: -ThemeAppSize.kInterval5 / 2.5,
                       child: InkWell(
-                        onTap: () {
-                          print('object');
-                        },
+                        onTap: () {},
                         child: Icon(
                           Icons.error_outline_outlined,
                           size: ThemeAppSize.kFontSize14 * 3,

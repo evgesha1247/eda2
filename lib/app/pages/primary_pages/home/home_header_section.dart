@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/controllers/auth_controller.dart';
 import 'package:text/app/controllers/product_controller.dart';
-import 'package:text/app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/custom_icon.dart';
 import '../../../widgets/text/my_text.dart';
@@ -20,7 +19,7 @@ class HomeHeader extends StatelessWidget {
           Get.find<ProductController>().startAnimation.value
               ? 0
               : -context.height,
-          0,
+            0
         ),
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         child: Row(
@@ -42,7 +41,7 @@ class _UserTitle extends StatelessWidget {
     final controller = Get.find<AuthController>();
     return Row(
       children: [
-        const _UserIcon(),
+        const ButtonIconUser(),
         SizedBox(width: ThemeAppSize.kInterval12),
         FittedBox(child: BigText(text: 'welcom'.tr)),
         SizedBox(width: ThemeAppSize.kInterval5),
@@ -62,25 +61,6 @@ class _UserTitle extends StatelessWidget {
         ),
 
       ],
-    );
-  }
-}
-
-class _UserIcon extends StatelessWidget {
-  const _UserIcon();
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Get.find<GuidingController>().setCurrentIndexTab(3),
-      child: WrapperIcon(
-        statusBorder: true,
-        colorBorder: context.theme.hintColor,
-        child: Icon(
-          Icons.person_outline,
-          color: context.theme.hintColor,
-          size: ThemeAppSize.kFontSize20,
-        ),
-      ),
     );
   }
 }

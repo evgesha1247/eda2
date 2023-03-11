@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../theme/theme_app.dart';
-import '../../../widgets/icon/anumated_icon_favorit.dart';
+import '../../../widgets/icon/anumated_icon.dart';
 import '../../../widgets/text/my_text.dart';
 import '../../../controllers/auth_controller.dart';
 

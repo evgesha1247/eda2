@@ -113,7 +113,6 @@ void buy() {
   }
   /// добавить 1 либо удалить
   void addOneInCart(ProductModel product) {
-
     if (existInCart(product)) {
       _items.remove(product.id);
     } else {

@@ -6,7 +6,7 @@ import 'package:text/app/routes/main_routes.dart';
 import '../../../controllers/product_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../theme/theme_app.dart';
-import '../../../widgets/icon/anumated_icon_favorit.dart';
+import '../../../widgets/icon/anumated_icon.dart';
 import '../../../widgets/load/circular.dart';
 import '../../../widgets/text/my_text.dart';
 
@@ -191,7 +191,7 @@ class _ItemTitle extends StatelessWidget {
         gradient: const LinearGradient(
             begin: FractionalOffset.topCenter,
             end: FractionalOffset.bottomCenter,
-            colors: [Colors.transparent, Color.fromARGB(171, 33, 26, 22)],
+            colors: [Colors.transparent, Color.fromARGB(140, 33, 26, 22)],
             stops: [0.4, .9]),
         borderRadius: ThemeAppFun.decoration(
           radius: ThemeAppSize.kRadius18,
@@ -200,16 +200,13 @@ class _ItemTitle extends StatelessWidget {
       child: Row(
         children: [
           CartAddIcon(
-            statusBorder: true,
             product: product,
-            iconColor: context.theme.accentColor,
+
           ),
           SizedBox(width: ThemeAppSize.kInterval12),
           FavoritIcon(
-            statusBorder: true,
-            product: product,
-            bg: Colors.transparent,
-            iconColor: context.theme.accentColor,
+            product: product
+
           ),
           SizedBox(width: ThemeAppSize.kInterval12),
           Expanded(

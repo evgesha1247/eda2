@@ -1,3 +1,4 @@
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/widgets/app/my_app_widget.dart';
@@ -7,17 +8,18 @@ import 'app/controllers/product_controller.dart';
 import 'app/theme/theme_controller.dart';
 import 'helper/dependencies.dart';
 
+
 Future<void> loadData() async {
   Get.find<ThemeAppController>().getThemeStatus();
   await Get.find<ProductController>().getDataProduct();
   Get.find<CartController>().getCartListLocal();
-  //Get.find<CartController>().getCartHistoryListLocal();
   Get.find<FavoriteController>().getItemsListLocal();
 }
 
+
+
+
 Future<void> main() async {
-  // final pref = await SharedPreferences.getInstance();
-  // await pref.clear();
   WidgetsFlutterBinding.ensureInitialized();
   await ThemeBindings().dependencies();
   await ControllersBindings().dependencies();
@@ -26,8 +28,4 @@ Future<void> main() async {
   runApp(const MyAppWidget());
   await loadData();
   Dependencies().init();
-
-
-
-
 }

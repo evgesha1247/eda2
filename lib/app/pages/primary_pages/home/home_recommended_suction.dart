@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/routes/main_routes.dart';
-import 'package:text/app/widgets/icon/anumated_icon_favorit.dart';
+import 'package:text/app/widgets/icon/anumated_icon.dart';
 import '../../../controllers/product_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/load/circular.dart';
@@ -142,7 +142,6 @@ class _Item extends StatelessWidget {
                       bottom: ThemeAppSize.kInterval12),
                   width: widthInfo,
                   decoration: BoxDecoration(
-                    color: context.theme.cardColor,
                     borderRadius: BorderRadius.all(
                       Radius.circular(ThemeAppSize.kRadius18),
                     ),
@@ -186,7 +185,6 @@ class _Item extends StatelessWidget {
                               child: FavoritIcon(
                                 product: item,
                                 fun: selected.value ? null : () {},
-                                iconColor: context.theme.accentColor,
                               ),
                             ),
                             Positioned(
@@ -195,7 +193,7 @@ class _Item extends StatelessWidget {
                               child: CartAddIcon(
                                 product: item,
                                 fun: selected.value ? null : () {},
-                                iconColor: context.theme.accentColor,
+
                               ),
                             ),
                           ],
@@ -312,6 +310,7 @@ class _Item extends StatelessWidget {
           );
         },
       ),
+
     );
   }
 }
@@ -321,28 +320,6 @@ class _ErrorLoadRecommended extends StatelessWidget {
   const _ErrorLoadRecommended({required this.controller});
   @override
   Widget build(BuildContext context) {
-    return AnimatedIconWidget(
-      currIndex:
-          (controller.popularStatusLoad == ProductStatusLoad.error ? 0 : 1).obs,
-      fun: () => controller.getDataProduct(),
-      widget1: const _IconError(
-        icon: Icons.wifi_off,
-        text: 'no connection',
-      ),
-      widget2: const _IconError(
-        icon: Icons.arrow_circle_down_outlined,
-        text: 'connection . . . ',
-      ),
-    );
-  }
-}
-
-class _IconError extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  const _IconError({required this.icon, required this.text});
-  @override
-  Widget build(BuildContext context) {
     final color = ThemeMode.system == ThemeMode.dark
         ? context.theme.cardColor.withOpacity(0.5)
         : context.theme.cardColor.withOpacity(.6);
@@ -350,8 +327,8 @@ class _IconError extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(icon, size: 100, color: color),
-        BigText(text: text, color: color)
+        Icon(Icons.wifi_off, size: 100, color: color),
+        BigText(text: 'no connection', color: color)
       ],
     );
   }

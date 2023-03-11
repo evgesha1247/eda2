@@ -5,7 +5,7 @@ import 'controller/menu_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
-import '../../../widgets/icon/anumated_icon_favorit.dart';
+import '../../../widgets/icon/anumated_icon.dart';
 import '../../../widgets/text/my_text.dart';
 import '../guiding/controller/guiding_controller.dart';
 import 'model/filter_model.dart';
@@ -151,15 +151,10 @@ class _ItemControlElements extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CartAddIcon(
-                product: product,
-                bg: context.theme.scaffoldBackgroundColor,
-                iconColor: context.theme.hintColor,
+                product: product
               ),
               FavoritIcon(
-                product: product,
-                bg: context.theme.scaffoldBackgroundColor,
-                iconColor: context.theme.hintColor,
-              )
+                product: product),
             ],
           ),
         )

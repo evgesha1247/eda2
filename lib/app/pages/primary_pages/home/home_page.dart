@@ -9,15 +9,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(context) {
     return SingleChildScrollView(
-        child: Column(
-          children: [
-            const HomeHeader(),
-            const HomePopular(),
-            SizedBox(height: ThemeAppSize.kInterval24),
+      child: Column(
+        children: [
+          const HomeHeader(),
+          const HomePopular(),
+          SizedBox(height: ThemeAppSize.kInterval24),
           const HomeRecommended(),
-          ],
-        ),
-      )
+        ],
+      ),
+    )
 ;
   }
 }
