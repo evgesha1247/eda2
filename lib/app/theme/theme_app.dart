@@ -18,24 +18,6 @@ const textTheme = TextTheme(
   bodyMedium: _textStyle,
 );
 
-
-class CustomTransitionBuilder extends PageTransitionsBuilder {
-  const CustomTransitionBuilder();
-  @override
-  Widget buildTransitions<T>(
-      PageRoute<T> route,
-      BuildContext context,
-      Animation<double> animation,
-      Animation<double> secondaryAnimation,
-      Widget child) {
-    final tween =
-        Tween(begin: 0.0, end: 1.0).chain(CurveTween(curve: Curves.easeInSine));
-    return ScaleTransition(
-        scale: animation.drive(tween),
-        child: FadeTransition(opacity: animation, child: child));
-  }
-}
-
 class Themes {
 
   static final light = ThemeData.light().copyWith(
@@ -51,15 +33,7 @@ class Themes {
     hintColor: ThemeAppColor.kFrontColor,
     // static
     accentColor: ThemeAppColor.kBGColor,
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {
-        TargetPlatform.android: CustomTransitionBuilder(),
-        TargetPlatform.iOS: CustomTransitionBuilder(),
-        TargetPlatform.macOS: CustomTransitionBuilder(),
-        TargetPlatform.windows: CustomTransitionBuilder(),
-        TargetPlatform.linux: CustomTransitionBuilder(),
-      },
-    ),
+
 
   );
 
@@ -76,16 +50,6 @@ class Themes {
     // static
     accentColor: ThemeAppColor.kBGColor,
 
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {
-        TargetPlatform.android: CustomTransitionBuilder(),
-        TargetPlatform.iOS: CustomTransitionBuilder(),
-        TargetPlatform.macOS: CustomTransitionBuilder(),
-        TargetPlatform.windows: CustomTransitionBuilder(),
-        TargetPlatform.linux: CustomTransitionBuilder(),
-      },
-    ),
-
   );
 }
 
@@ -97,6 +61,7 @@ abstract class ThemeAppColor {
   static const Color grey = Color.fromARGB(255, 160, 113, 118);
   static const Color darkTextColor = Color.fromARGB(255, 0, 0, 0);
   static const Color lightTextColor = Color.fromARGB(255, 255, 255, 255);
+  static const Color kGreen = Color.fromRGBO(76, 175, 80, 1);
 }
 
 abstract class ThemeAppSize {
@@ -107,7 +72,6 @@ abstract class ThemeAppSize {
   static double kMaxMinWidth = 320;
 
   // радиус
-  static double kRadius5 = kScreensHeight / (height / 5);
   static double kRadius12 = kScreensHeight / (height / 12);
   static double kRadius18 = kScreensHeight / (height / 18);
   // отступы
@@ -115,8 +79,6 @@ abstract class ThemeAppSize {
   static double kInterval12 = kScreensHeight / (height / 12);
   static double kInterval24 = kScreensHeight / (height / 24);
   // fonts
-  static double kFontSize12 = kScreensHeight / (height / 12);
-  static double kFontSize14 = kScreensHeight / (height / 14);
   static double kFontSize16 = kScreensHeight / (height / 16);
   static double kFontSize18 = kScreensHeight / (height / 18);
   static double kFontSize20 = kScreensHeight / (height / 20);

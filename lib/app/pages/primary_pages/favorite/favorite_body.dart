@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/widgets/icon/anumated_icon_favorit.dart';
+import 'package:text/app/widgets/icon/anumated_icon.dart';
 import 'controller/favorite_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../routes/main_routes.dart';
@@ -101,8 +101,8 @@ class _ItemInfo extends StatelessWidget {
                 SizedBox(width: ThemeAppSize.kInterval12),
                 CartAddIcon(
                   product: item,
-                  statusBorder: true,
-                  iconColor: context.theme.accentColor,
+                  // statusBorder: true,
+                  // iconColor: context.theme.accentColor,
                 ),
               ],
             )

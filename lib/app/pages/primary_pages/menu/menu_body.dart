@@ -5,7 +5,7 @@ import 'controller/menu_controller.dart';
 import '../../../models/products_model.dart';
 import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
-import '../../../widgets/icon/anumated_icon_favorit.dart';
+import '../../../widgets/icon/anumated_icon.dart';
 import '../../../widgets/text/my_text.dart';
 import '../guiding/controller/guiding_controller.dart';
 import 'model/filter_model.dart';
@@ -81,6 +81,22 @@ class _ItemBuilderGrid extends StatelessWidget {
             children: [
               _ItemImg(img: item.imgs?.first.imgURL as String),
               _ItemControlElements(product: item),
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Color.fromARGB(101, 33, 26, 22)
+                      ],
+                      stops: [
+                        0.4,
+                        .9
+                      ]),
+                ),
+              ),
+
             ],
           ),
         ),

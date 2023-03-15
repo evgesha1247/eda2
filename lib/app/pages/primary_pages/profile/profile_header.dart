@@ -89,11 +89,11 @@ class _ImgAndInfo extends StatelessWidget {
                       right: -ThemeAppSize.kInterval5 / 2.5,
                       child: InkWell(
                         onTap: () {
-                          print('object');
+
                         },
                         child: Icon(
                           Icons.error_outline_outlined,
-                          size: ThemeAppSize.kFontSize14 * 3,
+                          size: ThemeAppSize.kFontSize16 * 2,
                           color: context.theme.primaryColor,
                         ),
                       ),

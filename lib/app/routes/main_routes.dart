@@ -5,7 +5,7 @@ import 'package:text/app/pages/indirect_pages/cart/cart_page.dart';
 import 'package:text/app/pages/indirect_pages/detailed/detailed_page.dart';
 import 'package:text/app/pages/indirect_pages/splash/splash_screen.dart';
 import '../pages/primary_pages/profile/profile_page.dart';
-import '../pages/primary_pages/guiding/guiding_screen.dart';
+import '../pages/primary_pages/guiding/guiding_page.dart';
 import '../widgets/load/circular.dart';
 
 class MainRoutes {

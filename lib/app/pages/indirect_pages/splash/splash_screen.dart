@@ -5,9 +5,12 @@ import 'package:text/app/pages/indirect_pages/splash/splash_controller.dart';
 
 class SplashPage extends StatelessWidget {
   SplashPage({super.key});
-  final controller = Get.put(SplashController());
+  final controller = Get.put(
+    SplashController(),
+  );
   @override
   Widget build(BuildContext context) {
+    controller.onInit();
     return Scaffold(
       body: Center(
         child: Column(

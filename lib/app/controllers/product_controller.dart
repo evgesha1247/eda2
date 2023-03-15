@@ -123,9 +123,14 @@ class ProductController extends GetxController {
 
   ////////////////////////////////////////////////////////
   RxBool startAnimation = false.obs;
-  void animationInit() {
-    Timer(const Duration(milliseconds: 800), () {
+  Future<void> animationInit() async {
+    await Future.delayed(const Duration(seconds: 1), () {
       startAnimation.value = true;
     });
   }
+
+
+
+
+
 }

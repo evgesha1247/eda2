@@ -5,82 +5,88 @@ import 'package:text/app/controllers/product_controller.dart';
 import 'package:text/app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/custom_icon.dart';
+import '../../../widgets/icon/wrap_icon.dart';
+import '../../../widgets/load/circular.dart';
 import '../../../widgets/text/my_text.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => AnimatedContainer(
+    final controller = Get.find<ProductController>();
+    switch (controller.popularStatusLoad) {
+      case ProductStatusLoad.loading:
+        return SizedBox(
+          height: ThemeAppSize.kScreensHeight,
+          child: const CircularWidget(),
+        );
+      case ProductStatusLoad.error:
+        return const SizedBox();
+      case ProductStatusLoad.received:
+        return Obx(() {
+          controller.animationInit();
+          return AnimatedContainer(
+            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         curve: Curves.easeInOut,
         duration: const Duration(milliseconds: 800),
         transform: Matrix4.translationValues(
-          0,
-          Get.find<ProductController>().startAnimation.value
-              ? 0
-              : -context.height,
-          0,
-        ),
-        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+                0, controller.startAnimation.value ? 0 : -context.height, 0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
-            _UserTitle(),
+                _UserTitile(),
             ButtonIconCart(),
           ],
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 }
+}
 
-class _UserTitle extends StatelessWidget {
-  const _UserTitle();
+class _UserTitile extends StatelessWidget {
+  const _UserTitile();
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
+    Widget userIcon() {
+      return GestureDetector(
+        onTap: () => Get.find<GuidingController>().setCurrentIndexTab(3),
+        child: WrapperIcon(
+          colorBorder: context.theme.hintColor,
+          child: Icon(
+            Icons.person_outline,
+            color: context.theme.hintColor,
+          ),
+        ),
+      );
+    }
+
+    Widget userGreetings() {
+      return Obx(
+        () => Row(
+          children: [
+            FittedBox(child: BigText(text: 'welcom'.tr)),
+            if (controller.userData['name'] != null) ...[
+              SizedBox(width: ThemeAppSize.kInterval5),
+              Row(
+                children: [
+                  Icon(Icons.grid_3x3, color: context.theme.hintColor),
+                  BigText(text: controller.userData['name'] ?? ''),
+                ],
+              ),
+            ],
+          ],
+        ),
+      );
+    }
+
     return Row(
       children: [
-        const _UserIcon(),
+        userIcon(),
         SizedBox(width: ThemeAppSize.kInterval12),
-        FittedBox(child: BigText(text: 'welcom'.tr)),
-        SizedBox(width: ThemeAppSize.kInterval5),
-        Row(
-          children: controller.userData['name'] != null
-              ? [
-                  Icon(
-          Icons.grid_3x3,
-          size: ThemeAppSize.kFontSize16,
-          color: context.theme.hintColor,
-        ),
-        Obx(() => BigText(
-                      text: controller.userData['name'] ?? '',
-            size: ThemeAppSize.kFontSize18)),
-                ]
-              : [],
-        ),
-
+        userGreetings(),
       ],
-    );
-  }
-}
-
-class _UserIcon extends StatelessWidget {
-  const _UserIcon();
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Get.find<GuidingController>().setCurrentIndexTab(3),
-      child: WrapperIcon(
-        statusBorder: true,
-        colorBorder: context.theme.hintColor,
-        child: Icon(
-          Icons.person_outline,
-          color: context.theme.hintColor,
-          size: ThemeAppSize.kFontSize20,
-        ),
-      ),
     );
   }
 }
