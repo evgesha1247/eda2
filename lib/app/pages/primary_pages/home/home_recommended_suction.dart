@@ -5,6 +5,7 @@ import 'package:text/app/models/products_model.dart';
 import 'package:text/app/widgets/icon/anumated_icon.dart';
 import '../../../controllers/product_controller.dart';
 import '../../../theme/theme_app.dart';
+import '../../../widgets/animation/anim_scale.dart';
 import '../../../widgets/load/circular.dart';
 import '../../../widgets/text/my_text.dart';
 
@@ -64,7 +65,7 @@ class _RecommendedBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProductController>();
-    return ListView.builder(
+    return ListView.separated(
       itemCount: controller.recommendedProductList.length,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
@@ -80,6 +81,9 @@ class _RecommendedBody extends StatelessWidget {
           ),
         );
       },
+      separatorBuilder: (BuildContext context, int index) => SizedBox(
+        height: ThemeAppSize.kInterval12,
+      ),
     );
   }
 }
@@ -91,11 +95,6 @@ class _ItemBuild extends StatefulWidget {
   _ItemBuildState createState() => _ItemBuildState();
 }
 
-
-
-
-RxBool expand = false.obs;
-
 class _ItemBuildState extends State<_ItemBuild>
     with SingleTickerProviderStateMixin {
   late final AnimationController expandController = AnimationController(
@@ -104,19 +103,21 @@ class _ItemBuildState extends State<_ItemBuild>
   );
   late final Animation<double> animation = CurvedAnimation(
     parent: expandController,
-    curve: Curves.fastOutSlowIn,
+    curve: Curves.easeOutBack,
   );
-
+  RxBool expand = false.obs;
   void _runExpandCheck() {
     expand.value = !expand.value;
     expand.value ? expandController.forward() : expandController.reverse();
   }
 
-  Widget hiding(Widget widget) => SizeTransition(
-        axisAlignment: 1.0,
-        sizeFactor: animation,
-        child: widget,
-      );
+  Widget hiding(Widget widget) {
+    return SizeTransition(
+      axisAlignment: 1.0,
+      sizeFactor: animation,
+      child: widget,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,31 +125,54 @@ class _ItemBuildState extends State<_ItemBuild>
       onTap: () => _runExpandCheck(),
       child: Container(
         color: context.theme.cardColor,
+        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         child: Row(
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _ItemImg(img: widget.item.imgs?.first.imgURL as String),
-                hiding(_ItemPrice(price: widget.item.price.toString())),
+                _ItemImg(
+                  img: widget.item.imgs?.first.imgURL as String,
+                  select: expand,
+                ),
+                hiding(
+                  Column(
+                    children: [
+                      SizedBox(height: ThemeAppSize.kInterval5),
+                      _ItemPrice(
+                        price: widget.item.price.toString(),
+                        select: expand,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
+            SizedBox(width: ThemeAppSize.kInterval12),
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _ItemName(name: widget.item.name as String),
                   hiding(
                     Column(
                       children: [
+                        SizedBox(height: ThemeAppSize.kInterval5),
                         _ItemDescription(
-                            description: widget.item.description as String),
-                        _ItemButton(item: widget.item),
+                          description: widget.item.description as String,
+                        ),
+                        SizedBox(height: ThemeAppSize.kInterval24),
+                        _ItemButton(
+                          item: widget.item,
+                          select: expand,
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-            const _ItemDivider(),
+            //     const _ItemDivider(),
           ],
         ),
       ),
@@ -156,30 +180,37 @@ class _ItemBuildState extends State<_ItemBuild>
   }
 }
 
-final maxHeight = ThemeAppSize.kHeight100 * 1.5;
-final minHeight = ThemeAppSize.kHeight100 + ThemeAppSize.kInterval12;
-final widthDivider = ThemeAppSize.kHeight75 - ThemeAppSize.kInterval12;
-const durationWrapBox = Duration(milliseconds: 300);
-
 class _ItemName extends StatelessWidget {
   final String name;
   const _ItemName({required this.name});
   @override
   Widget build(BuildContext context) {
-    return BigText(text: name, color: context.theme.accentColor);
+    return BigText(
+      text: name,
+      color: context.theme.accentColor,
+      size: ThemeAppSize.kFontSize16 * 1.4,
+    );
   }
 }
 
 class _ItemButton extends StatelessWidget {
   final ProductModel item;
-  const _ItemButton({required this.item});
+  final RxBool select;
+  const _ItemButton({required this.item, required this.select});
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CartAddIcon(product: item),
+        AnimationScaleWidget(
+          widget: CartAddIcon(product: item),
+          select: select,
+        ),
         SizedBox(width: ThemeAppSize.kInterval12),
-        FavoritIcon(product: item),
+        AnimationScaleWidget(
+          durationMilliseconds: 1750,
+          widget: FavoritIcon(product: item),
+          select: select,
+        ),
       ],
     );
   }
@@ -187,21 +218,21 @@ class _ItemButton extends StatelessWidget {
 
 class _ItemPrice extends StatelessWidget {
   final String price;
-  const _ItemPrice({required this.price});
+  final RxBool select;
+  const _ItemPrice({required this.price, required this.select});
   @override
   Widget build(BuildContext context) {
-
-    return SizedBox(
-      width: ThemeAppSize.kHeight100,
-      child: Center(
-        child: SmallText(
-          text: 'Price  $price \$',
-          maxLines: 1,
-          size: ThemeAppSize.kFontSize20,
-          color: context.theme.accentColor,
+    return AnimationScaleWidget(
+      select: select,
+      widget: SizedBox(
+        width: ThemeAppSize.kHeight100,
+        child: Center(
+          child: SmallText(
+            text: 'Price  $price \$',
+            color: context.theme.accentColor,
+          ),
         ),
       ),
-
     );
   }
 }
@@ -212,7 +243,8 @@ class _ItemDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BigText(
-      maxLines: 2,
+      maxLines: 3,
+      size: ThemeAppSize.kFontSize16,
       text: description,
       color: context.theme.accentColor,
     );
@@ -221,25 +253,29 @@ class _ItemDescription extends StatelessWidget {
 
 class _ItemImg extends StatelessWidget {
   final String img;
-  const _ItemImg({required this.img});
+  final RxBool select;
+  const _ItemImg({required this.img, required this.select});
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final imgSize = expand.value
-          ? ThemeAppSize.kHeight100 + ThemeAppSize.kInterval12
+      final size =
+          !select.value ? ThemeAppSize.kHeight75
           : ThemeAppSize.kHeight100;
       return AnimatedContainer(
-        width: imgSize,
-        height: imgSize,
+        width: !select.value ? size : size,
+        height: !select.value ? size : size * 1.3,
+        duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
           color: context.theme.cardColor,
-          borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius18),
+          borderRadius: ThemeAppFun.decoration(
+              radius: !select.value
+                  ? ThemeAppSize.kRadius18
+                  : ThemeAppSize.kRadius12),
           image: DecorationImage(
             image: NetworkImage(img),
             fit: BoxFit.cover,
           ),
         ),
-        duration: durationWrapBox,
       );
     });
   }
@@ -249,38 +285,28 @@ class _ItemDivider extends StatelessWidget {
   const _ItemDivider();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 100,
-      child: Column(
-        children: [
-          Expanded(
-            child: Container(
-              width: 2,
-              color: Colors.red,
+    return Column(
+      children: [
+        Container(
+          width: 2,
+          color: Colors.red,
+        ),
+        Container(
+          width: ThemeAppSize.kInterval24 * 1.5,
+          height: ThemeAppSize.kInterval24 * 1.5,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(ThemeAppSize.kRadius18),
             ),
+            border: Border.all(color: Colors.red),
           ),
-          Container(
-            width: ThemeAppSize.kInterval24 * 1.5,
-            height: ThemeAppSize.kInterval24 * 1.5,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(ThemeAppSize.kRadius18),
-              ),
-              border: Border.all(
-                color: Colors.red,
-              ),
-            ),
-            child: Center(child: BigText(text: '${1}')),
-          ),
-          Expanded(
-            child: Container(
-              width: 2,
-              color: Colors.red,
-            ),
-          ),
-        ],
-      ),
+          child: Center(child: BigText(text: '${1}')),
+        ),
+        Container(
+          width: 2,
+          color: Colors.red,
+        ),
+      ],
     );
   }
 }
