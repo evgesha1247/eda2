@@ -26,7 +26,7 @@ class MenuPage extends StatelessWidget {
         onRefresh: () => controller.onRefresh(refreshController),
         onLoading: () => controller.onRefresh(refreshController),
         enablePullDown: true,
-        enablePullUp: false,
+        enablePullUp: true,
         header: MaterialClassicHeader(
           color: context.theme.primaryColor,
           backgroundColor: context.theme.accentColor,

@@ -1,6 +1,5 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/widgets/icon/anumated_icon.dart';
@@ -21,49 +20,63 @@ class HomeRecommended extends StatelessWidget {
           case ProductStatusLoad.loading:
             return const CircularWidget();
           case ProductStatusLoad.error:
-            return const _ErrorLoadWidget();
+            return const _ErrorLoadRecommended();
           case ProductStatusLoad.received:
-            return const _SuccessfulDownload();
+            return const _GoodLoadRecommended();
         }
       },
     );
   }
 }
+///// Error Widget ////
+class _ErrorLoadRecommended extends StatelessWidget {
+  const _ErrorLoadRecommended();
+  @override
+  Widget build(BuildContext context) {
+    final color = ThemeMode.system == ThemeMode.dark
+        ? context.theme.cardColor.withOpacity(0.5)
+        : context.theme.cardColor.withOpacity(.6);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(Icons.wifi_off, size: 100, color: color),
+        BigText(text: 'no connection', color: color),
+      ],
+    );
+  }
+}
 
-class _SuccessfulDownload extends StatelessWidget {
-  const _SuccessfulDownload();
+//// Good Widget ////
+class _GoodLoadRecommended extends StatelessWidget {
+  const _GoodLoadRecommended();
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
       child: Column(
         children: [
-          const _RecommendedTitle(),
+          const _TitleRecommended(),
           SizedBox(height: ThemeAppSize.kInterval12),
-          const _RecommendedBody(),
+          const _BodyRecommended(),
         ],
       ),
     );
   }
 }
-
-class _RecommendedTitle extends StatelessWidget {
-  const _RecommendedTitle({Key? key}) : super(key: key);
+class _TitleRecommended extends StatelessWidget {
+  const _TitleRecommended({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        BigText(
-          text: 'top_recommended'.tr,
-          size: ThemeAppSize.kFontSize18,
-        ),
+        BigText(text: 'top_recommended'.tr, size: ThemeAppSize.kFontSize18)
       ],
     );
   }
 }
-
-class _RecommendedBody extends StatelessWidget {
-  const _RecommendedBody();
+class _BodyRecommended extends StatelessWidget {
+  const _BodyRecommended();
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProductController>();
@@ -76,7 +89,10 @@ class _RecommendedBody extends StatelessWidget {
             curve: Curves.easeInOut,
             duration: Duration(milliseconds: 350 + (index * 300)),
             transform: Matrix4.translationValues(
-                controller.startAnimation.value ? 0 : context.width, 0, 0),
+              controller.startAnimation.value ? 0 : context.width,
+              0,
+              0,
+            ),
             child: _ItemBuild(
               item: controller.recommendedProductList[index],
               index: index,
@@ -97,9 +113,7 @@ class _ItemBuild extends StatefulWidget {
   @override
   _ItemBuildState createState() => _ItemBuildState();
 }
-
-class _ItemBuildState extends State<_ItemBuild>
-    with SingleTickerProviderStateMixin {
+class _ItemBuildState extends State<_ItemBuild> with SingleTickerProviderStateMixin {
   late final AnimationController expandController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 500),
@@ -113,15 +127,14 @@ class _ItemBuildState extends State<_ItemBuild>
   void _runExpandCheck() {
     expand.value = !expand.value;
     expand.value ? expandController.forward() : expandController.reverse();
-
-    ///
   }
-
-  Widget hiding(Widget widget) {
+  Widget hiding(List<Widget> widgets) {
     return SizeTransition(
       axisAlignment: 1.0,
       sizeFactor: animation,
-      child: widget,
+      child: Column(
+        children: widgets,
+      ),
     );
   }
 
@@ -131,98 +144,75 @@ class _ItemBuildState extends State<_ItemBuild>
       children: [
         GestureDetector(
           onTap: () => _runExpandCheck(),
-
-          child: Obx(
-            () => AnimatedContainer(
-              decoration: BoxDecoration(
-                color: expand.value
-                    ? context.theme.cardColor
-                    : context.theme.cardColor.withOpacity(0.6),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(
-                    expand.value
-                        ? ThemeAppSize.kRadius12
-                        : ThemeAppSize.kRadius18,
-                  ),
+          child: _ItemContainer(
+            select: expand,
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _ItemImg(item: widget.item, select: expand),
+                    hiding([
+                      SizedBox(height: ThemeAppSize.kInterval5),
+                      _ItemPrice(price: widget.item.price.toString(), select: expand),
+                    ]),
+                  ],
                 ),
-              ),
-              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-              duration: const Duration(milliseconds: 300),
-              child: Row(
-                children: [
-                  Column(
+
+                SizedBox(width: ThemeAppSize.kInterval12),
+                Expanded(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InkWell(
-                        onTap: () => Get.toNamed(
-                          MainRoutes.getDetailed(widget.item.id),
-                          arguments: widget.item,
-                        ),
-                        child: _ItemImg(
-                          img: widget.item.imgs?.first.imgURL as String,
-                          select: expand,
-                        ),
-                      ),
-                      hiding(
-                        Column(
-                          children: [
-                            SizedBox(height: ThemeAppSize.kInterval5),
-                            _ItemPrice(
-                              price: widget.item.price.toString(),
-                              select: expand,
-                            ),
-                          ],
-                        ),
-                      ),
+                      _ItemName(name: widget.item.name as String),
+                      hiding([
+                        SizedBox(height: ThemeAppSize.kInterval5),
+                        _ItemDescription(description: widget.item.description!),
+                        SizedBox(height: ThemeAppSize.kInterval24),
+                        _ItemButton(item: widget.item, select: expand),
+                      ]),
                     ],
                   ),
-                  AnimationScaleWidget(
-                    widget: const SizedBox(width: 10),
-                    select: expand,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _ItemName(name: widget.item.name as String),
-                        hiding(
-                          Column(
-                            children: [
-                              SizedBox(height: ThemeAppSize.kInterval5),
-                              _ItemDescription(
-                                description: widget.item.description as String,
-                              ),
-                              SizedBox(height: ThemeAppSize.kInterval24),
-                              _ItemButton(
-                                item: widget.item,
-                                select: expand,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
-        Obx(() => AnimatedPositioned(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.fastOutSlowIn,
-              top: 0,
-              right: expand.value ? 0 : ThemeAppSize.kInterval12,
-              bottom: 0,
-              child: _ItemDivider(
-                index: widget.index,
-                select: expand,
-              ),
-            )),
+        _ItemTopIndecator(index: widget.index, select: expand),
       ],
     );
   }
 }
+
+class _ItemContainer extends StatelessWidget {
+  final RxBool select;
+  final Widget child;
+  const _ItemContainer({required this.select, required this.child});
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => AnimatedContainer(
+        decoration: BoxDecoration(
+          color: select.value
+              ? context.theme.cardColor
+              : context.theme.cardColor.withOpacity(0.6),
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              select.value ? ThemeAppSize.kRadius12 : ThemeAppSize.kRadius18,
+            ),
+          ),
+        ),
+        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+        duration: const Duration(milliseconds: 300),
+        child: child,
+      ),
+    );
+  }
+}
+
+///////////////////////////
+///// Item Components ////
+//////////////////////////
 
 class _ItemName extends StatelessWidget {
   final String name;
@@ -240,7 +230,6 @@ class _ItemName extends StatelessWidget {
     );
   }
 }
-
 class _ItemButton extends StatelessWidget {
   final ProductModel item;
   final RxBool select;
@@ -263,7 +252,6 @@ class _ItemButton extends StatelessWidget {
     );
   }
 }
-
 class _ItemPrice extends StatelessWidget {
   final String price;
   final RxBool select;
@@ -284,7 +272,6 @@ class _ItemPrice extends StatelessWidget {
     );
   }
 }
-
 class _ItemDescription extends StatelessWidget {
   final String description;
   const _ItemDescription({required this.description});
@@ -298,43 +285,52 @@ class _ItemDescription extends StatelessWidget {
     );
   }
 }
-
 class _ItemImg extends StatelessWidget {
-  final String img;
+  final ProductModel item;
   final RxBool select;
-  const _ItemImg({required this.img, required this.select});
+  const _ItemImg({required this.item, required this.select});
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final size =
-          !select.value ? ThemeAppSize.kHeight75 : ThemeAppSize.kHeight100;
-      return AnimatedContainer(
-        width: !select.value ? size : size,
-        height: !select.value ? size : size * 1.3,
-        duration: const Duration(milliseconds: 300),
-        decoration: BoxDecoration(
-          color: context.theme.cardColor,
-          borderRadius: ThemeAppFun.decoration(
-            radius:
-                select.value ? ThemeAppSize.kRadius12 : ThemeAppSize.kRadius18,
+    return InkWell(
+      onTap: () => Get.toNamed(
+        MainRoutes.getDetailed(item.id),
+        arguments: item,
+      ),
+      child: Obx(() {
+        final size = !select.value ? ThemeAppSize.kHeight75 : ThemeAppSize.kHeight100;
+        return AnimatedContainer(
+          width: !select.value ? size : size,
+          height: !select.value ? size : size * 1.3,
+          duration: const Duration(milliseconds: 300),
+          decoration: BoxDecoration(
+            color: context.theme.cardColor,
+            borderRadius: ThemeAppFun.decoration(
+              radius: select.value ? ThemeAppSize.kRadius12 : ThemeAppSize.kRadius18,
+            ),
+            image: DecorationImage(
+              image: NetworkImage(item.imgs?.first.imgURL as String),
+              fit: BoxFit.cover,
+            ),
           ),
-          image: DecorationImage(
-            image: NetworkImage(img),
-            fit: BoxFit.cover,
-          ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 }
-
-class _ItemDivider extends StatelessWidget {
+class _ItemTopIndecator extends StatelessWidget {
   final RxBool select;
   final int index;
-  const _ItemDivider({required this.select, required this.index});
+  const _ItemTopIndecator({required this.select, required this.index});
   @override
   Widget build(BuildContext context) {
-    return Obx(() => AnimatedAlign(
+    return Obx(
+      () => AnimatedPositioned(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
+        top: 0,
+        right: select.value ? 0 : ThemeAppSize.kInterval12,
+        bottom: 0,
+        child: AnimatedAlign(
           alignment: select.value ? Alignment.topCenter : Alignment.center,
           duration: const Duration(milliseconds: 500),
           curve: Curves.fastOutSlowIn,
@@ -345,9 +341,7 @@ class _ItemDivider extends StatelessWidget {
               color: ThemeAppColor.kYellow,
               borderRadius: BorderRadius.all(
                 Radius.circular(
-                  !select.value
-                      ? ThemeAppSize.kRadius18
-                      : ThemeAppSize.kRadius12,
+                    !select.value ? ThemeAppSize.kRadius18 : ThemeAppSize.kRadius12
                 ),
               ),
             ),
@@ -359,25 +353,8 @@ class _ItemDivider extends StatelessWidget {
               ),
             ),
           ),
-        ));
-  }
-}
-
-///// error !!! ////
-class _ErrorLoadWidget extends StatelessWidget {
-  const _ErrorLoadWidget();
-  @override
-  Widget build(BuildContext context) {
-    final color = ThemeMode.system == ThemeMode.dark
-        ? context.theme.cardColor.withOpacity(0.5)
-        : context.theme.cardColor.withOpacity(.6);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(Icons.wifi_off, size: 100, color: color),
-        BigText(text: 'no connection', color: color)
-      ],
+        ),
+      ),
     );
   }
 }

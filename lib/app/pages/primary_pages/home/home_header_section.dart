@@ -23,25 +23,30 @@ class HomeHeader extends StatelessWidget {
       case ProductStatusLoad.error:
         return const SizedBox();
       case ProductStatusLoad.received:
-        return Obx(() {
-          controller.animationInit();
-          return AnimatedContainer(
-            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-        curve: Curves.easeInOut,
-        duration: const Duration(milliseconds: 800),
-        transform: Matrix4.translationValues(
-                0, controller.startAnimation.value ? 0 : -context.height, 0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-                _UserTitile(),
-            ButtonIconCart(),
-          ],
-            ),
-          );
-        });
+        return Obx(
+          () {
+            controller.animationInit();
+            return AnimatedContainer(
+              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+              curve: Curves.easeInOut,
+              duration: const Duration(milliseconds: 800),
+              transform: Matrix4.translationValues(
+                0,
+                controller.startAnimation.value ? 0 : -context.height,
+                0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  _UserTitile(),
+                  ButtonIconCart(),
+                ],
+              ),
+            );
+          },
+        );
+    }
   }
-}
 }
 
 class _UserTitile extends StatelessWidget {

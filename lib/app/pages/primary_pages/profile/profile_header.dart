@@ -58,7 +58,9 @@ class _ImgAndInfo extends StatelessWidget {
   final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
+    final guidingController = Get.find<GuidingController>();
     final sizeCircleAvatar = ThemeAppSize.kInterval12 * 5;
+
     return wrapContainer(
       color: context.theme.scaffoldBackgroundColor,
       height: ThemeAppSize.kHeight100 * 2.5,
@@ -68,7 +70,9 @@ class _ImgAndInfo extends StatelessWidget {
               if (controller.userData['imgURL'] != null &&
                   controller.userData['imgURL'] != "")
                 CircleAvatar(
-                  radius: sizeCircleAvatar,
+                  radius: guidingController.startAnimationProfile.value
+                      ? sizeCircleAvatar
+                      : 10,
                   backgroundColor: Colors.grey,
                   backgroundImage: NetworkImage(
                       controller.userData['imgURL'].toString()),
@@ -78,7 +82,9 @@ class _ImgAndInfo extends StatelessWidget {
                   children: [
                     /// icon img
                     CircleAvatar(
-                      radius: sizeCircleAvatar,
+                      radius: guidingController.startAnimationProfile.value
+                          ? sizeCircleAvatar
+                          : 10,
                       backgroundColor: Colors.grey,
                       backgroundImage: const AssetImage('assets/imgs/user.jpg'),
                     ),
