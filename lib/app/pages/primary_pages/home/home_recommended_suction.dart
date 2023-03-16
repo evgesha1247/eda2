@@ -1,9 +1,11 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/widgets/icon/anumated_icon.dart';
 import '../../../controllers/product_controller.dart';
+import '../../../routes/main_routes.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/animation/anim_scale.dart';
 import '../../../widgets/load/circular.dart';
@@ -77,20 +79,21 @@ class _RecommendedBody extends StatelessWidget {
                 controller.startAnimation.value ? 0 : context.width, 0, 0),
             child: _ItemBuild(
               item: controller.recommendedProductList[index],
+              index: index,
             ),
           ),
         );
       },
-      separatorBuilder: (BuildContext context, int index) => SizedBox(
-        height: ThemeAppSize.kInterval12,
-      ),
+      separatorBuilder: (BuildContext context, int index) =>
+          SizedBox(height: ThemeAppSize.kInterval12),
     );
   }
 }
 
 class _ItemBuild extends StatefulWidget {
   final ProductModel item;
-  const _ItemBuild({required this.item});
+  final int index;
+  const _ItemBuild({required this.item, required this.index});
   @override
   _ItemBuildState createState() => _ItemBuildState();
 }
@@ -106,9 +109,12 @@ class _ItemBuildState extends State<_ItemBuild>
     curve: Curves.easeOutBack,
   );
   RxBool expand = false.obs;
+
   void _runExpandCheck() {
     expand.value = !expand.value;
     expand.value ? expandController.forward() : expandController.reverse();
+
+    ///
   }
 
   Widget hiding(Widget widget) {
@@ -121,50 +127,78 @@ class _ItemBuildState extends State<_ItemBuild>
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => _runExpandCheck(),
-      child: Container(
-        color: context.theme.cardColor,
-        padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _ItemImg(
-                  img: widget.item.imgs?.first.imgURL as String,
-                  select: expand,
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: () => _runExpandCheck(),
+
+          child: Obx(
+            () => AnimatedContainer(
+              decoration: BoxDecoration(
+                color: expand.value
+                    ? context.theme.cardColor
+                    : context.theme.cardColor.withOpacity(0.6),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    expand.value
+                        ? ThemeAppSize.kRadius12
+                        : ThemeAppSize.kRadius18,
+                  ),
                 ),
-                hiding(
+              ),
+              padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+              duration: const Duration(milliseconds: 300),
+              child: Row(
+                children: [
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: ThemeAppSize.kInterval5),
-                      _ItemPrice(
-                        price: widget.item.price.toString(),
-                        select: expand,
+                      InkWell(
+                        onTap: () => Get.toNamed(
+                          MainRoutes.getDetailed(widget.item.id),
+                          arguments: widget.item,
+                        ),
+                        child: _ItemImg(
+                          img: widget.item.imgs?.first.imgURL as String,
+                          select: expand,
+                        ),
+                      ),
+                      hiding(
+                        Column(
+                          children: [
+                            SizedBox(height: ThemeAppSize.kInterval5),
+                            _ItemPrice(
+                              price: widget.item.price.toString(),
+                              select: expand,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-            SizedBox(width: ThemeAppSize.kInterval12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _ItemName(name: widget.item.name as String),
-                  hiding(
-                    Column(
+                  AnimationScaleWidget(
+                    widget: const SizedBox(width: 10),
+                    select: expand,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: ThemeAppSize.kInterval5),
-                        _ItemDescription(
-                          description: widget.item.description as String,
-                        ),
-                        SizedBox(height: ThemeAppSize.kInterval24),
-                        _ItemButton(
-                          item: widget.item,
-                          select: expand,
+                        _ItemName(name: widget.item.name as String),
+                        hiding(
+                          Column(
+                            children: [
+                              SizedBox(height: ThemeAppSize.kInterval5),
+                              _ItemDescription(
+                                description: widget.item.description as String,
+                              ),
+                              SizedBox(height: ThemeAppSize.kInterval24),
+                              _ItemButton(
+                                item: widget.item,
+                                select: expand,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -172,10 +206,20 @@ class _ItemBuildState extends State<_ItemBuild>
                 ],
               ),
             ),
-            //     const _ItemDivider(),
-          ],
+          ),
         ),
-      ),
+        Obx(() => AnimatedPositioned(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.fastOutSlowIn,
+              top: 0,
+              right: expand.value ? 0 : ThemeAppSize.kInterval12,
+              bottom: 0,
+              child: _ItemDivider(
+                index: widget.index,
+                select: expand,
+              ),
+            )),
+      ],
     );
   }
 }
@@ -185,10 +229,14 @@ class _ItemName extends StatelessWidget {
   const _ItemName({required this.name});
   @override
   Widget build(BuildContext context) {
-    return BigText(
-      text: name,
-      color: context.theme.accentColor,
-      size: ThemeAppSize.kFontSize16 * 1.4,
+    return SizedBox(
+      width: 180,
+      child: BigText(
+        text: name,
+        maxLines: 2,
+        color: context.theme.accentColor,
+        size: ThemeAppSize.kFontSize16 * 1.4,
+      ),
     );
   }
 }
@@ -228,7 +276,7 @@ class _ItemPrice extends StatelessWidget {
         width: ThemeAppSize.kHeight100,
         child: Center(
           child: SmallText(
-            text: 'Price  $price \$',
+            text: '${'total'.tr}  $price \$',
             color: context.theme.accentColor,
           ),
         ),
@@ -259,8 +307,7 @@ class _ItemImg extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       final size =
-          !select.value ? ThemeAppSize.kHeight75
-          : ThemeAppSize.kHeight100;
+          !select.value ? ThemeAppSize.kHeight75 : ThemeAppSize.kHeight100;
       return AnimatedContainer(
         width: !select.value ? size : size,
         height: !select.value ? size : size * 1.3,
@@ -268,9 +315,9 @@ class _ItemImg extends StatelessWidget {
         decoration: BoxDecoration(
           color: context.theme.cardColor,
           borderRadius: ThemeAppFun.decoration(
-              radius: !select.value
-                  ? ThemeAppSize.kRadius18
-                  : ThemeAppSize.kRadius12),
+            radius:
+                select.value ? ThemeAppSize.kRadius12 : ThemeAppSize.kRadius18,
+          ),
           image: DecorationImage(
             image: NetworkImage(img),
             fit: BoxFit.cover,
@@ -282,32 +329,37 @@ class _ItemImg extends StatelessWidget {
 }
 
 class _ItemDivider extends StatelessWidget {
-  const _ItemDivider();
+  final RxBool select;
+  final int index;
+  const _ItemDivider({required this.select, required this.index});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 2,
-          color: Colors.red,
-        ),
-        Container(
-          width: ThemeAppSize.kInterval24 * 1.5,
-          height: ThemeAppSize.kInterval24 * 1.5,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(ThemeAppSize.kRadius18),
+    return Obx(() => AnimatedAlign(
+          alignment: select.value ? Alignment.topCenter : Alignment.center,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.fastOutSlowIn,
+          child: Container(
+            width: ThemeAppSize.kInterval12 * 3,
+            height: ThemeAppSize.kInterval12 * 3,
+            decoration: BoxDecoration(
+              color: ThemeAppColor.kYellow,
+              borderRadius: BorderRadius.all(
+                Radius.circular(
+                  !select.value
+                      ? ThemeAppSize.kRadius18
+                      : ThemeAppSize.kRadius12,
+                ),
+              ),
             ),
-            border: Border.all(color: Colors.red),
+            child: Center(
+              child: BigText(
+                maxLines: 2,
+                text: '${index + 1}',
+                color: context.theme.cardColor,
+              ),
+            ),
           ),
-          child: Center(child: BigText(text: '${1}')),
-        ),
-        Container(
-          width: 2,
-          color: Colors.red,
-        ),
-      ],
-    );
+        ));
   }
 }
 

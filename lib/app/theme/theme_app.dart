@@ -62,6 +62,7 @@ abstract class ThemeAppColor {
   static const Color darkTextColor = Color.fromARGB(255, 0, 0, 0);
   static const Color lightTextColor = Color.fromARGB(255, 255, 255, 255);
   static const Color kGreen = Color.fromRGBO(76, 175, 80, 1);
+  static const Color kYellow = Color.fromARGB(255, 255, 207, 95);
 }
 
 abstract class ThemeAppSize {
