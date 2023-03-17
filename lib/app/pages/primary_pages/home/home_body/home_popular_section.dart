@@ -65,7 +65,6 @@ class _BodyProduct extends StatefulWidget {
   @override
   State<_BodyProduct> createState() => _BodyProductState();
 }
-
 class _BodyProductState extends State<_BodyProduct> {
   var _currPageValue = 0.0;
   final double _scaleFactore = 0.8;
@@ -165,7 +164,6 @@ class _ItemContainerPopular extends StatelessWidget {
     );
   }
 }
-
 class _ItemImg extends StatelessWidget {
   final String img;
   const _ItemImg({required this.img});
@@ -186,7 +184,6 @@ class _ItemImg extends StatelessWidget {
     );
   }
 }
-
 class _ItemTitle extends StatelessWidget {
   const _ItemTitle({required this.product});
   final ProductModel product;
@@ -226,7 +223,6 @@ class _ItemTitle extends StatelessWidget {
     );
   }
 }
-
 class _ItemBotsIndicator extends StatelessWidget {
   final double currPageValue;
   const _ItemBotsIndicator({required this.currPageValue});
