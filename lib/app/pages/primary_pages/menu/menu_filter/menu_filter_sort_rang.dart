@@ -8,9 +8,9 @@ import 'package:text/app/widgets/text/my_text.dart';
 import '../controller/menu_controller.dart';
 import '../../../../theme/theme_app.dart';
 
-class FilterRang extends StatelessWidget {
+class SortRangFilterMenu extends StatelessWidget {
   final Widget widgetTitle;
-  FilterRang({super.key, required this.widgetTitle});
+  SortRangFilterMenu({super.key, required this.widgetTitle});
   final init = Get.find<MenuControll>().initFilterValue();
   @override
   Widget build(BuildContext context) {
@@ -18,17 +18,17 @@ class FilterRang extends StatelessWidget {
       children: [
         widgetTitle,
         const Divider(),
-        const PriceRangeSlider(),
+        const PriceSliderSortRangFilterMenu(),
         const Divider(),
-        const CategoryList(),
+        const CategorySortRangFilterMenu(),
         const Divider(),
       ],
     );
   }
 }
 
-class PriceRangeSlider extends StatelessWidget {
-  const PriceRangeSlider({super.key});
+class PriceSliderSortRangFilterMenu extends StatelessWidget {
+  const PriceSliderSortRangFilterMenu({super.key});
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MenuControll>(
@@ -53,8 +53,7 @@ class PriceRangeSlider extends StatelessWidget {
                 min: menuController.listPrice.reduce(min),
                 max: menuController.listPrice.reduce(max),
                 values: menuController.filterValue,
-                onChanged: (RangeValues values) =>
-                    menuController.onChangedFilter(values),
+                onChanged: (RangeValues values) => menuController.onChangedFilter(values),
               ),
             ),
           ],
@@ -64,8 +63,8 @@ class PriceRangeSlider extends StatelessWidget {
   }
 }
 
-class CategoryList extends StatelessWidget {
-  const CategoryList({super.key});
+class CategorySortRangFilterMenu extends StatelessWidget {
+  const CategorySortRangFilterMenu({super.key});
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -101,8 +100,7 @@ class _ItemsBuild extends StatelessWidget {
                     ? context.theme.accentColor
                     : context.theme.accentColor.withOpacity(0.5),
               ),
-              labelPadding:
-                  EdgeInsets.symmetric(
+              labelPadding: EdgeInsets.symmetric(
                 horizontal: ThemeAppSize.kInterval24,
                 vertical: ThemeAppSize.kInterval5 / 2,
               ),

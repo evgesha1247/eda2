@@ -5,7 +5,6 @@ import 'package:text/app/widgets/icon/wrap_icon.dart';
 import '../../controllers/cart_controller.dart';
 import '../../routes/main_routes.dart';
 import '../../theme/theme_app.dart';
-import '../../theme/theme_controller.dart';
 import '../text/my_text.dart';
 
 class ButtonIconBack extends StatelessWidget {
@@ -18,24 +17,18 @@ class ButtonIconBack extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ThemeAppController>(
-      builder: (_) {
-        return GestureDetector(
-          onTap: () => Get.back(),
-          child: WrapperIcon(
-            bg: bg,
-            colorBorder: iconColor == Colors.transparent
-                ? context.theme.textTheme.bodyMedium?.color
-                : iconColor,
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              color: iconColor == Colors.transparent
-                  ? context.theme.textTheme.bodyMedium?.color
-                  : iconColor,
-            ),
-          ),
-        );
-      },
+
+    return GestureDetector(
+      onTap: () => Get.back(),
+      child: WrapperIcon(
+        bg: bg != Colors.transparent ? bg.withOpacity(0.7) : Colors.transparent,
+        colorBorder:
+            iconColor == Colors.transparent ? context.theme.cardColor : iconColor,
+        child: Icon(
+          Icons.arrow_back_ios_new,
+          color: iconColor == Colors.transparent ? context.theme.cardColor : iconColor,
+        ),
+      ),
     );
   }
 }
@@ -57,11 +50,9 @@ class ButtonIconCart extends StatelessWidget {
           return Stack(
             children: [
               WrapperIcon(
-                bg: bg,
-                colorBorder: iconColor == Colors.transparent
-                    ? context.theme.hintColor
-                    : iconColor,
-
+                bg: bg != Colors.transparent ? bg.withOpacity(0.7) : Colors.transparent,
+                colorBorder:
+                    iconColor == Colors.transparent ? context.theme.hintColor : iconColor,
                 child: Row(children: [
                   Icon(
                     _.totalItems >= 1
@@ -72,9 +63,10 @@ class ButtonIconCart extends StatelessWidget {
                         : iconColor,
                   ),
                   SizedBox(
-                    width: _.totalItems >= 1 ? ThemeAppSize.kInterval24 : 0,
+                    width: _.totalItems >= 1 ? ThemeAppSize.kInterval24 : 0
                   )
-                ]),
+                  ],
+                ),
               ),
               _.totalItems >= 1
                   ? Positioned(

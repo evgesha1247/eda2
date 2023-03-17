@@ -8,7 +8,7 @@ import 'package:text/app/widgets/icon/wrap_icon.dart';
 import 'package:text/app/widgets/text/my_text.dart';
 
 import '../../controllers/cart_controller.dart';
-import '../../pages/primary_pages/favorite/controller/favorite_controller.dart';
+import '../../pages/primary_pages/profile/favorite/controller/favorite_controller.dart';
 import '../../pages/primary_pages/menu/controller/menu_controller.dart';
 import '../../theme/theme_app.dart';
 

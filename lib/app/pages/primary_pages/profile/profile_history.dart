@@ -5,8 +5,8 @@ import '../../../controllers/cart_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/text/my_text.dart';
 
-class ProfileHistory extends StatelessWidget {
-  const ProfileHistory({super.key});
+class HistoryPayProfile extends StatelessWidget {
+  const HistoryPayProfile({super.key});
   @override
   Widget build(BuildContext context) {
     var history = Get.find<CartController>().getHistoryList().reversed.toList();

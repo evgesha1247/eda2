@@ -11,9 +11,9 @@ class GuidingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool widthStatus = context.width >= ThemeAppSize.kMaxMinWidth;
     return Scaffold(
-      body: const GuidingStackPage(),
-      bottomNavigationBar: (widthStatus) ? const GuidingBottomWidget() : null,
-      floatingActionButton: (!widthStatus) ? const FlotingWidget() : null,
+      body: const StackPageGuiding(),
+      bottomNavigationBar: (widthStatus) ? const BottomGuiding() : null,
+      floatingActionButton: (!widthStatus) ? const FlotingGuiding() : null,
     );
   }
 }

@@ -5,13 +5,11 @@ import '../../../../widgets/icon/anumated_icon.dart';
 import '../../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../../../widgets/text/my_text.dart';
 import '../model/filter_model.dart';
-import 'filter_rang.dart';
-import 'filter_sort_by.dart';
+import 'menu_filter_sort_by.dart';
+import 'menu_filter_sort_rang.dart';
 
-
-
-class MenuFilter extends StatelessWidget {
-  const MenuFilter({super.key});
+class FilterMenu extends StatelessWidget {
+  const FilterMenu({super.key});
   @override
   Widget build(BuildContext context) {
     List<FilterModel> filterModel = [
@@ -36,15 +34,13 @@ class MenuFilter extends StatelessWidget {
                     (index) => Row(
                       children: [
                         SizedBox(width: ThemeAppSize.kInterval12),
-                        _FilterItem(item: filterModel[index]),
+                        _ItemFilterMenu(item: filterModel[index]),
                       ],
                     ),
                   ).toList(),
-
                 ],
               ),
             ),
-
             SizedBox(height: ThemeAppSize.kInterval12),
           ],
         ),
@@ -53,18 +49,17 @@ class MenuFilter extends StatelessWidget {
   }
 }
 
-class _FilterItem extends StatelessWidget {
+class _ItemFilterMenu extends StatelessWidget {
   final FilterModel item;
-  const _FilterItem({required this.item});
+  const _ItemFilterMenu({required this.item});
   void sortByMass(text) {
     customShowDialog(
-      //radius: ThemeAppSize.kRadius18,
       widget: Container(
         height: Get.context!.height / 1.5,
         padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
         child: text == 'sort_by'.tr
-            ? FilterSortBy(widgetTitle: _FilterTitle(title: text))
-            : FilterRang(widgetTitle: _FilterTitle(title: text)),
+            ? SortByFilterMenu(widgetTitle: _TitleFilterMenu(title: text))
+            : SortRangFilterMenu(widgetTitle: _TitleFilterMenu(title: text)),
       ),
     );
   }
@@ -94,9 +89,9 @@ class _FilterItem extends StatelessWidget {
   }
 }
 
-class _FilterTitle extends StatelessWidget {
+class _TitleFilterMenu extends StatelessWidget {
   final String title;
-  const _FilterTitle({required this.title});
+  const _TitleFilterMenu({required this.title});
   @override
   Widget build(BuildContext context) {
     return Column(

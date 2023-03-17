@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/widgets/app/my_app_widget.dart';
 import 'app/controllers/cart_controller.dart';
-import 'app/pages/primary_pages/favorite/controller/favorite_controller.dart';
+import 'app/pages/primary_pages/profile/favorite/controller/favorite_controller.dart';
 import 'app/controllers/product_controller.dart';
 import 'app/theme/theme_controller.dart';
 import 'helper/dependencies.dart';

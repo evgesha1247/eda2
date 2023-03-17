@@ -11,8 +11,6 @@ class GuidingController extends GetxController {
   RxBool startAnimationMenu = false.obs;
   RxBool startAnimationProfile = false.obs;
 
-
-
   setCurrentIndexTab(int index) {
     _currentIndexTab = index;
     startAnimationMenu.value = false;
@@ -30,10 +28,6 @@ class GuidingController extends GetxController {
 
     update();
   }
-
-
-
-
 
   late AnimationController animatedContainer;
   void updatePage(icon, index) {

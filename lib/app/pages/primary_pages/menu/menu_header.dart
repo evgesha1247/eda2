@@ -4,18 +4,18 @@ import 'package:text/app/widgets/text/my_text.dart';
 import 'controller/menu_controller.dart';
 import '../../../theme/theme_app.dart';
 
-class MenuHeader extends StatelessWidget {
-  const MenuHeader({super.key});
+class HeaderMenu extends StatelessWidget {
+  const HeaderMenu({super.key});
   @override
   Widget build(BuildContext context) {
     return MediaQuery.of(context).size.width >= ThemeAppSize.kMaxMinWidth
-        ? const _Search()
-        : const _Title();
+        ? const _SearchMenu()
+        : const _TitleMenu();
   }
 }
 
-class _Title extends StatelessWidget {
-  const _Title();
+class _TitleMenu extends StatelessWidget {
+  const _TitleMenu();
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -33,9 +33,8 @@ class _Title extends StatelessWidget {
     );
   }
 }
-
-class _Search extends StatelessWidget {
-  const _Search();
+class _SearchMenu extends StatelessWidget {
+  const _SearchMenu();
   @override
   Widget build(BuildContext context) {
     final InputBorder styleSearch = OutlineInputBorder(

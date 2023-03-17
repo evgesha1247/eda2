@@ -10,8 +10,8 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      const ProfileHeader(),
-      ProfileBody(),
+      const HeaderProfile(),
+      BodyProfile(),
     ]);
   }
 }

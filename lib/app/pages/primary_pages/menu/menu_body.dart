@@ -10,15 +10,16 @@ import '../../../widgets/text/my_text.dart';
 import '../guiding/controller/guiding_controller.dart';
 import 'model/filter_model.dart';
 
-class MenuBody extends StatelessWidget {
-  MenuBody({super.key});
-  final controller = Get.find<MenuControll>();
+class BodyMenu extends StatelessWidget {
+  const BodyMenu({super.key});
   @override
   Widget build(BuildContext context) {
     final guidingController = Get.find<GuidingController>();
-    return GetBuilder<MenuControll>(builder: (MenuControll controller) {
-      return controller.renderingMethod == RenderingMethod.grid
-          ? SliverGrid(
+    return GetBuilder<MenuControll>(
+      builder: (MenuControll controller) {
+        switch (controller.renderingMethod) {
+          case RenderingMethod.grid:
+            return SliverGrid(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: ThemeAppSize.kMaxMinWidth - 1,
                 childAspectRatio: 0.9,
@@ -30,29 +31,30 @@ class MenuBody extends StatelessWidget {
                     curve: Curves.easeInOut,
                     duration: Duration(milliseconds: 350 + (index * 300)),
                     transform: Matrix4.translationValues(
-                      guidingController.startAnimationMenu.value
-                          ? 0
-                          : index % 2 == 0
-                              ? -context.height
-                              : context.height,
-                      0,
-                      0,
-                    ),
+                        guidingController.startAnimationMenu.value
+                            ? 0
+                            : index % 2 == 0
+                                ? -context.height
+                                : context.height,
+                        0,
+                        0),
                     child: _ItemBuilderGrid(
                       item: controller.filterList[index],
                     ),
                   ),
                 ),
               ),
-            )
-          : SliverList(
+            );
+          case RenderingMethod.list:
+            return SliverList(
               delegate: SliverChildBuilderDelegate(
                 childCount: controller.filterList.length,
-                (_, int index) =>
-                    _ItemBuilderList(item: controller.filterList[index]),
+                (_, int index) => _ItemBuilderList(item: controller.filterList[index]),
               ),
             );
-    });
+        }
+      },
+    );
   }
 }
 
@@ -86,17 +88,10 @@ class _ItemBuilderGrid extends StatelessWidget {
                   gradient: LinearGradient(
                       begin: FractionalOffset.topCenter,
                       end: FractionalOffset.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Color.fromARGB(101, 33, 26, 22)
-                      ],
-                      stops: [
-                        0.4,
-                        .9
-                      ]),
+                      colors: [Colors.transparent, Color.fromARGB(101, 33, 26, 22)],
+                      stops: [0.4, .9]),
                 ),
               ),
-
             ],
           ),
         ),
@@ -130,7 +125,6 @@ class _ItemImg extends StatelessWidget {
         width: double.infinity,
         fit: BoxFit.cover,
         image: NetworkImage(img),
-
       ),
     );
   }
@@ -154,7 +148,6 @@ class _ItemControlElements extends StatelessWidget {
               topRight: Radius.circular(ThemeAppSize.kRadius12),
               bottomLeft: Radius.circular(ThemeAppSize.kRadius18),
             ),
-
           ),
           child: BigText(
             text: '\$${product.price}',

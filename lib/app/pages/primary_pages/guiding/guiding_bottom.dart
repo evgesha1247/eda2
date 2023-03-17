@@ -2,11 +2,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controller/guiding_controller.dart';
-import 'model/menu_model.dart';
+import 'model/guiding_menu_model.dart';
 
 /// menu
-class GuidingBottomWidget extends StatelessWidget {
-  const GuidingBottomWidget({Key? key}) : super(key: key);
+class BottomGuiding extends StatelessWidget {
+  const BottomGuiding({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GuidingController>(
@@ -21,12 +21,13 @@ class GuidingBottomWidget extends StatelessWidget {
         showUnselectedLabels: false,
         showSelectedLabels: true,
         items: List.generate(
-          MenuData().listPage.length - 1,
+          DataMenuGuiding().listPage.length - 1,
           (index) => BottomNavigationBarItem(
-            label: MenuData()
+            label:
+                DataMenuGuiding()
                 .listPage[index]
                 .text, //MenuData.listPage[index].text,
-            icon: Icon(MenuData().listPage[index].icon),
+            icon: Icon(DataMenuGuiding().listPage[index].icon),
           ),
         ),
       ),
@@ -36,13 +37,13 @@ class GuidingBottomWidget extends StatelessWidget {
 
 /// elivation botton
 
-class FlotingWidget extends StatefulWidget {
-  const FlotingWidget({Key? key}) : super(key: key);
+class FlotingGuiding extends StatefulWidget {
+  const FlotingGuiding({Key? key}) : super(key: key);
   @override
-  State<FlotingWidget> createState() => _FlotingWidgetState();
+  State<FlotingGuiding> createState() => _FlotingGuidingState();
 }
 
-class _FlotingWidgetState extends State<FlotingWidget>
+class _FlotingGuidingState extends State<FlotingGuiding>
     with SingleTickerProviderStateMixin {
   final controller = Get.find<GuidingController>();
   @override
@@ -70,7 +71,7 @@ class _BuildFlotingButtom extends StatelessWidget {
         animatedContainer: controller.animatedContainer,
       ),
       children: List.generate(
-        MenuData().listPage.length,
+        DataMenuGuiding().listPage.length,
         (index) => RawMaterialButton(
           fillColor: Get.context?.theme.primaryColor,
           splashColor: Get.context?.theme.cardColor,
@@ -79,12 +80,12 @@ class _BuildFlotingButtom extends StatelessWidget {
           constraints:
               BoxConstraints.tight(const Size(buttonDiameter, buttonDiameter)),
           onPressed: () =>
-              controller.updatePage(MenuData().listPage[index].icon, index),
+              controller.updatePage(DataMenuGuiding().listPage[index].icon, index),
           child: GetBuilder<GuidingController>(
             builder: (_) {
               return Icon(
-                MenuData().listPage[index].icon,
-                color: controller.selectIcon == MenuData().listPage[index].icon
+                DataMenuGuiding().listPage[index].icon,
+                color: controller.selectIcon == DataMenuGuiding().listPage[index].icon
                     ? Colors.white
                     : Colors.grey[800],
               );

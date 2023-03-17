@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 import 'package:text/app/widgets/icon/anumated_icon.dart';
-import '../../../controllers/product_controller.dart';
-import '../../../routes/main_routes.dart';
-import '../../../theme/theme_app.dart';
-import '../../../widgets/animation/anim_scale.dart';
-import '../../../widgets/load/circular.dart';
-import '../../../widgets/text/my_text.dart';
+import '../../../../controllers/product_controller.dart';
+import '../../../../routes/main_routes.dart';
+import '../../../../theme/theme_app.dart';
+import '../../../../widgets/animation/anim_scale.dart';
+import '../../../../widgets/load/circular.dart';
+import '../../../../widgets/text/my_text.dart';
 
-class HomeRecommended extends StatelessWidget {
-  const HomeRecommended({Key? key}) : super(key: key);
+class RecommendedHome extends StatelessWidget {
+  const RecommendedHome({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProductController>(
@@ -28,6 +28,7 @@ class HomeRecommended extends StatelessWidget {
     );
   }
 }
+
 ///// Error Widget ////
 class _ErrorLoadRecommended extends StatelessWidget {
   const _ErrorLoadRecommended();
@@ -64,17 +65,17 @@ class _GoodLoadRecommended extends StatelessWidget {
     );
   }
 }
+
 class _TitleRecommended extends StatelessWidget {
   const _TitleRecommended({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [
-        BigText(text: 'top_recommended'.tr, size: ThemeAppSize.kFontSize18)
-      ],
+      children: [BigText(text: 'top_recommended'.tr, size: ThemeAppSize.kFontSize18)],
     );
   }
 }
+
 class _BodyRecommended extends StatelessWidget {
   const _BodyRecommended();
   @override
@@ -113,6 +114,7 @@ class _ItemBuild extends StatefulWidget {
   @override
   _ItemBuildState createState() => _ItemBuildState();
 }
+
 class _ItemBuildState extends State<_ItemBuild> with SingleTickerProviderStateMixin {
   late final AnimationController expandController = AnimationController(
     vsync: this,
@@ -128,6 +130,7 @@ class _ItemBuildState extends State<_ItemBuild> with SingleTickerProviderStateMi
     expand.value = !expand.value;
     expand.value ? expandController.forward() : expandController.reverse();
   }
+
   Widget hiding(List<Widget> widgets) {
     return SizeTransition(
       axisAlignment: 1.0,
@@ -158,7 +161,6 @@ class _ItemBuildState extends State<_ItemBuild> with SingleTickerProviderStateMi
                     ]),
                   ],
                 ),
-
                 SizedBox(width: ThemeAppSize.kInterval12),
                 Expanded(
                   child: Column(
@@ -230,6 +232,7 @@ class _ItemName extends StatelessWidget {
     );
   }
 }
+
 class _ItemButton extends StatelessWidget {
   final ProductModel item;
   final RxBool select;
@@ -238,10 +241,7 @@ class _ItemButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        AnimationScaleWidget(
-          widget: CartAddIcon(product: item),
-          select: select,
-        ),
+        AnimationScaleWidget(widget: CartAddIcon(product: item), select: select),
         SizedBox(width: ThemeAppSize.kInterval12),
         AnimationScaleWidget(
           durationMilliseconds: 1750,
@@ -252,6 +252,7 @@ class _ItemButton extends StatelessWidget {
     );
   }
 }
+
 class _ItemPrice extends StatelessWidget {
   final String price;
   final RxBool select;
@@ -272,6 +273,7 @@ class _ItemPrice extends StatelessWidget {
     );
   }
 }
+
 class _ItemDescription extends StatelessWidget {
   final String description;
   const _ItemDescription({required this.description});
@@ -285,6 +287,7 @@ class _ItemDescription extends StatelessWidget {
     );
   }
 }
+
 class _ItemImg extends StatelessWidget {
   final ProductModel item;
   final RxBool select;
@@ -317,6 +320,7 @@ class _ItemImg extends StatelessWidget {
     );
   }
 }
+
 class _ItemTopIndecator extends StatelessWidget {
   final RxBool select;
   final int index;
@@ -341,8 +345,7 @@ class _ItemTopIndecator extends StatelessWidget {
               color: ThemeAppColor.kYellow,
               borderRadius: BorderRadius.all(
                 Radius.circular(
-                    !select.value ? ThemeAppSize.kRadius18 : ThemeAppSize.kRadius12
-                ),
+                    !select.value ? ThemeAppSize.kRadius18 : ThemeAppSize.kRadius12),
               ),
             ),
             child: Center(

@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/app/controllers/auth_controller.dart';
 import 'package:text/app/controllers/cart_controller.dart';
-import 'package:text/app/pages/primary_pages/favorite/controller/favorite_controller.dart';
+import 'package:text/app/pages/primary_pages/profile/favorite/controller/favorite_controller.dart';
 import 'package:text/app/data/repository/cart_repo.dart';
 import '../app/controllers/product_controller.dart';
 import '../app/data/api/api_client.dart';

@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/pages/primary_pages/favorite/controller/favorite_controller.dart';
+import 'package:text/app/pages/primary_pages/profile/favorite/controller/favorite_controller.dart';
 import 'package:text/app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import 'package:text/app/pages/primary_pages/profile/profile_history.dart';
 import 'package:text/app/pages/primary_pages/profile/profile_setting_page/profile_setting.dart';
@@ -12,8 +12,8 @@ import '../../../theme/theme_controller.dart';
 import '../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../../widgets/text/my_text.dart';
 
-class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({super.key});
+class HeaderProfile extends StatelessWidget {
+  const HeaderProfile({super.key});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -165,7 +165,7 @@ class _Achievement extends StatelessWidget {
               ),
               InkWell(
                 onTap: () => customShowDialog(
-                  widget: const ProfileHistory(),
+                  widget: const HistoryPayProfile(),
                 ),
                 child: GetBuilder<CartController>(
                   builder: (_) {

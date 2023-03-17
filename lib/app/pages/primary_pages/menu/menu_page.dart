@@ -9,7 +9,7 @@ import 'controller/menu_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/load/circular.dart';
 import 'menu_body.dart';
-import 'filter/menu_filter.dart';
+import 'menu_filter/menu_filter.dart';
 import 'menu_header.dart';
 
 class MenuPage extends StatelessWidget {
@@ -19,7 +19,10 @@ class MenuPage extends StatelessWidget {
     final controller = Get.find<MenuControll>();
 
     final RefreshController refreshController = RefreshController(
-        initialRefreshStatus: RefreshStatus.idle, initialRefresh: false);
+      initialRefreshStatus: RefreshStatus.idle,
+      initialRefresh: false,
+    );
+
     return Scaffold(
       body: SmartRefresher(
         controller: refreshController,
@@ -34,10 +37,9 @@ class MenuPage extends StatelessWidget {
         footer: const _FooterLoad(),
         child: CustomScrollView(
           slivers: [
-            const MenuHeader(),
-            if (MediaQuery.of(context).size.width >= ThemeAppSize.kMaxMinWidth)
-              const MenuFilter(),
-            MenuBody(),
+            const HeaderMenu(),
+            if (context.width >= ThemeAppSize.kMaxMinWidth) const FilterMenu(),
+            const BodyMenu(),
           ],
         ),
       ),
@@ -61,10 +63,7 @@ class _FooterLoad extends StatelessWidget {
         } else {
           body = const SmallText(text: "error");
         }
-        return SizedBox(
-          height: 80.0,
-          child: Center(child: body),
-        );
+        return Center(child: body);
       },
     );
   }

@@ -6,9 +6,9 @@ import '../controller/menu_controller.dart';
 import '../../../../widgets/text/my_text.dart';
 import '../model/filter_model.dart';
 
-class FilterSortBy extends StatelessWidget {
+class SortByFilterMenu extends StatelessWidget {
   final Widget widgetTitle;
-  const FilterSortBy({super.key, required this.widgetTitle});
+  const SortByFilterMenu({super.key, required this.widgetTitle});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,12 +17,12 @@ class FilterSortBy extends StatelessWidget {
         widgetTitle,
         const Divider(),
         BigText(text: 'price'.tr),
-        _ListTitleSort(
+        _ItemFilterMenu(
           text: 'low_to_high'.tr,
           value: SortMethod.lowToHigh,
           icon: Icons.arrow_circle_up,
         ),
-        _ListTitleSort(
+        _ItemFilterMenu(
           text: 'high_to_low'.tr,
           value: SortMethod.highToLow,
           icon: Icons.arrow_circle_down,
@@ -30,12 +30,12 @@ class FilterSortBy extends StatelessWidget {
         SizedBox(height: ThemeAppSize.kInterval5),
         const Divider(),
         BigText(text: 'name'.tr),
-        _ListTitleSort(
+        _ItemFilterMenu(
           text: 'A_to_Z'.tr,
           value: SortMethod.aToZ,
           icon: Icons.arrow_circle_up,
         ),
-        _ListTitleSort(
+        _ItemFilterMenu(
           text: 'Z_to_A'.tr,
           value: SortMethod.zToA,
           icon: Icons.arrow_circle_down,
@@ -45,11 +45,11 @@ class FilterSortBy extends StatelessWidget {
   }
 }
 
-class _ListTitleSort extends StatelessWidget {
+class _ItemFilterMenu extends StatelessWidget {
   final SortMethod value;
   final String text;
   final IconData icon;
-  _ListTitleSort({
+  _ItemFilterMenu({
     required this.value,
     required this.text,
     required this.icon,
@@ -72,8 +72,7 @@ class _ListTitleSort extends StatelessWidget {
             activeColor: context.theme.primaryColor,
             value: value,
             groupValue: controller.method,
-            onChanged: (SortMethod? valueMethod) =>
-                controller.setMethod(valueMethod),
+            onChanged: (SortMethod? valueMethod) => controller.setMethod(valueMethod),
           );
         },
       ),
