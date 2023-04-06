@@ -40,7 +40,7 @@ class _BodyTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: ThemeAppSize.kInterval12 * 1.5,
+        vertical: ThemeAppSize.kInterval12 * 1.4,
       ),
       decoration: BoxDecoration(
         color: context.theme.scaffoldBackgroundColor,

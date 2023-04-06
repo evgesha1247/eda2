@@ -100,6 +100,7 @@ class _Item extends StatelessWidget {
           arguments: item.product!,
         );
       },
+
       child: Image(
         width: ThemeAppSize.kInterval24 * 5,
         height: height,
@@ -149,9 +150,9 @@ Widget _itemCloueIcon() {
     return Container(
               decoration: BoxDecoration(
         color: Get.context?.theme.scaffoldBackgroundColor,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(ThemeAppSize.kRadius12),
+            topRight: Radius.circular(ThemeAppSize.kRadius12),
                 ),
           border: Border.all(
             color: Get.context?.theme.cardColor as Color,

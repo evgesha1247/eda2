@@ -3,6 +3,7 @@
 class AppConstansts {
   static const String APP_NAME = "FlutterApp";
   static const int APP_VERSION = 1;
+
   // http://mvs.bslmeiyu.com/api/v1/products/popular/
   // https://fir-app-7be70-default-rtdb.firebaseio.com/products/popular.json
 
@@ -15,8 +16,10 @@ class AppConstansts {
   static const String POPULAR_PRODUCT_URL = "products/popular.json";
   static const String RECOMMENDED_PRODUCT_URL = "products/recommended.json";
   static const String PRODUCT_URL = "products/products.json";
-
   static const String TOKEN = "DBtoken";
+
+  static const String LOCOL_KEY_RESTORAN = 'Rest';
+  static const String LOCOL_KEY_INFO_DATA_RESTORAN = 'infoRestorans';
 
 
   static const String CART_LIST = "Cart_List";

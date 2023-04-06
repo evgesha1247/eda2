@@ -28,7 +28,8 @@ class BodyMenu extends StatelessWidget {
                   (_, int index) => _ItemBuilderGrid(
                         item: controller.filterList[index],
                         index: index,
-                      )),
+                ),
+              ),
             );
           case RenderingMethod.list:
             return SliverList(
@@ -96,7 +97,7 @@ class _ItemBuilderList extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: Material(
-        elevation: 8,
+        elevation: 5,
         color: context.theme.scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(ThemeAppSize.kRadius12),
         shadowColor: context.theme.cardColor,

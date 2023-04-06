@@ -11,10 +11,11 @@ class BigText extends StatelessWidget {
   final FontWeight fontWeight;
   final bool rightToLeft;
   final Color color;
-
+final double? height;
   const BigText({
     Key? key,
     required this.text,
+    this.height,
     this.color = Colors.transparent,
     this.overflow = TextOverflow.ellipsis,
     this.size = 0,
@@ -33,6 +34,7 @@ class BigText extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow,
       style: TextStyle(
+        height: height,
         decorationThickness: decorationThickness,
         fontSize: size == 0 ? ThemeAppSize.kFontSize20 : size,
         color: color == Colors.transparent ? context.theme.hintColor : color,
@@ -46,7 +48,7 @@ class BigText extends StatelessWidget {
 class SmallText extends StatelessWidget {
   final String text;
   final double size;
-  final double height;
+  final double? height;
   final int? maxLines;
   final Color color;
   final TextOverflow overflow;
@@ -55,7 +57,7 @@ class SmallText extends StatelessWidget {
     required this.text,
     this.color = Colors.transparent,
     this.overflow = TextOverflow.ellipsis,
-    this.height = 1.2,
+    this.height,
     this.size = 0,
     this.maxLines = 2,
   }) : super(key: key);
@@ -68,7 +70,7 @@ class SmallText extends StatelessWidget {
       style: TextStyle(
         fontSize: size == 0 ? ThemeAppSize.kFontSize20 : size,
         color: color == Colors.transparent ? context.theme.hintColor : color,
-        height: height,
+        height: height ?? 1.2,
         fontWeight: FontWeight.w300,
       ),
     );

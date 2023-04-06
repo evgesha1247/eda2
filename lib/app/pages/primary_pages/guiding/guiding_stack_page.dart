@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../about/about_page.dart';
 import 'controller/guiding_controller.dart';
 import '../home/home_page.dart';
 import '../menu/menu_page.dart';
@@ -15,7 +16,7 @@ class StackPageGuiding extends StatelessWidget {
         children: const [
           HomePage(),
           MenuPage(),
-          Text('data'),
+          AboutPage(),
           ProfilePage(),
         ],
       ),

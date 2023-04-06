@@ -9,10 +9,12 @@ class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      const HeaderProfile(),
-      BodyProfile(),
-    ]);
+    return Column(
+      children: const [
+        HeaderProfile(),
+        BodyProfile(),
+      ],
+    );
   }
 }
 
@@ -37,7 +39,7 @@ class MyButtonString extends StatelessWidget {
       child: Wrap(
         alignment: WrapAlignment.center,
         children: [
-          SmallText(
+          BigText(
             text: text,
             color: context.theme.primaryColor,
           ),

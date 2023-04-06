@@ -21,7 +21,6 @@ const textTheme = TextTheme(
 class Themes {
 
   static final light = ThemeData.light().copyWith(
-
     // text
     textTheme: textTheme,
     primaryTextTheme: textTheme,
@@ -46,7 +45,7 @@ class Themes {
     cardColor: const Color.fromARGB(255, 106, 76, 80),
     primaryColor: ThemeAppColor.kAccent,
     // text
-    hintColor: const Color.fromARGB(255, 189, 159, 151),
+    hintColor: ThemeAppColor.kTextDark,
     // static
     accentColor: ThemeAppColor.kBGColor,
 
@@ -56,13 +55,17 @@ class Themes {
 abstract class ThemeAppColor {
   static const Color kFrontColor = Color.fromARGB(255, 75, 53, 56);
   static const Color kBGColor = Color.fromARGB(255, 246, 206, 195);
+
+
   static const Color kAccent = Colors.pink;
-  static const Color kAccent2 = Color.fromARGB(255, 72, 51, 54);
-  static const Color grey = Color.fromARGB(255, 160, 113, 118);
-  static const Color darkTextColor = Color.fromARGB(255, 0, 0, 0);
-  static const Color lightTextColor = Color.fromARGB(255, 255, 255, 255);
+  static const Color kAccentCard = Color.fromARGB(193, 130, 24, 59);
+
   static const Color kGreen = Color.fromRGBO(76, 175, 80, 1);
   static const Color kYellow = Color.fromARGB(255, 255, 207, 95);
+
+  // text
+  static const Color kTextDark = Color.fromARGB(255, 189, 159, 151);
+  static const Color kTextLight = Color.fromARGB(255, 255, 207, 95);
 }
 
 abstract class ThemeAppSize {

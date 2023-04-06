@@ -195,9 +195,9 @@ class _ItemContainer extends StatelessWidget {
     return Obx(
       () => AnimatedContainer(
         decoration: BoxDecoration(
-          color: select.value
+          color: !select.value
               ? context.theme.cardColor
-              : context.theme.cardColor.withOpacity(0.6),
+              : ThemeAppColor.kAccentCard,
           borderRadius: BorderRadius.all(
             Radius.circular(
               select.value ? ThemeAppSize.kRadius12 : ThemeAppSize.kRadius18,
@@ -241,11 +241,19 @@ class _ItemButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        AnimationScaleWidget(widget: CartAddIcon(product: item), select: select),
+        AnimationScaleWidget(
+            widget: CartAddIcon(
+              product: item,
+              bg: context.theme.scaffoldBackgroundColor,
+            ),
+            select: select),
         SizedBox(width: ThemeAppSize.kInterval12),
         AnimationScaleWidget(
           durationMilliseconds: 1750,
-          widget: FavoritIcon(product: item),
+          widget: FavoritIcon(
+            product: item,
+            bg: context.theme.scaffoldBackgroundColor,
+          ),
           select: select,
         ),
       ],

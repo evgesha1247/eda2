@@ -17,7 +17,6 @@ class ButtonIconBack extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () => Get.back(),
       child: WrapperIcon(
@@ -32,7 +31,6 @@ class ButtonIconBack extends StatelessWidget {
     );
   }
 }
-
 class ButtonIconCart extends StatelessWidget {
   final Color iconColor;
   final Color bg;

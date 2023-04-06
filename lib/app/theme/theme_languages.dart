@@ -58,6 +58,7 @@ class Languages extends Translations {
           'photo': 'Фото',
           'phone': 'Телефон',
           'save': 'сохранить',
+          'address': 'адрес',
 
 
           // auth page
@@ -65,11 +66,22 @@ class Languages extends Translations {
           'register': 'Регистрация',
           'no_accaount': 'нет аккаунта ?',
           'have_an_account': 'уже есть аккаунт ?',
+
+
+          //
+          'Dark mode': 'Темный режим',
+          'Language': 'Язык',
+          'preference': 'предпоченик',
+          'are common': 'общие',
         },
 
 
 
         'en_US': {
+          'preference': 'preference',
+          'are common': 'are common',
+          'Language': 'Language',
+          'Dark mode': 'Dark mode',
 
           // menu guiding
           'home': 'Home',
@@ -127,6 +139,7 @@ class Languages extends Translations {
           'photo': 'Photo',
           'phone': 'phone',
           'save': 'save',
+          'address': 'address',
 
           // auth page
           'login': 'Login',

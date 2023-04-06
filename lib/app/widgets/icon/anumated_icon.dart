@@ -33,7 +33,7 @@ class CartAddIcon extends StatelessWidget {
           widget1: WrapperIcon(
             colorBorder: Colors.green[300],
             bg: bg != Colors.transparent
-                ? bg.withOpacity(0.7)
+                ? bg.withOpacity(0.75)
                 : Colors.transparent,
             child: const Icon(
               Icons.done,
@@ -79,7 +79,7 @@ class FavoritIcon extends StatelessWidget {
           widget1: WrapperIcon(
             colorBorder: Colors.pink[300],
             bg: bg != Colors.transparent
-                ? bg.withOpacity(0.7)
+                ? bg.withOpacity(0.75)
                 : Colors.transparent,
             child: const Icon(
               Icons.favorite,
@@ -126,7 +126,9 @@ class ButtonTogList extends StatelessWidget {
 }
 
 class ToggLanguage extends StatelessWidget {
-  const ToggLanguage({super.key});
+  final Widget? w1;
+  final Widget? w2;
+  const ToggLanguage({super.key, this.w1, this.w2});
   @override
   Widget build(BuildContext context) {
     return _AnimatedIconWidget(
@@ -136,8 +138,8 @@ class ToggLanguage extends StatelessWidget {
             ? const Locale('en', 'US')
             : const Locale('ru', 'RU'));
       },
-      widget1: BigText(text: 'ru', color: context.theme.hintColor),
-      widget2: BigText(text: 'en', color: context.theme.hintColor),
+      widget1: w1 ?? BigText(text: 'ru', color: context.theme.hintColor),
+      widget2: w2 ?? BigText(text: 'en', color: context.theme.hintColor),
     );
   }
 }

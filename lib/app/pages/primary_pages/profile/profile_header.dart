@@ -8,7 +8,7 @@ import 'package:text/app/pages/primary_pages/profile/profile_setting_page/profil
 import '../../../controllers/auth_controller.dart';
 import '../../../controllers/cart_controller.dart';
 import '../../../theme/theme_app.dart';
-import '../../../theme/theme_controller.dart';
+import '../../../widgets/icon/wrap_icon.dart';
 import '../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../../widgets/text/my_text.dart';
 
@@ -17,200 +17,129 @@ class HeaderProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: ThemeAppSize.kHeight100 * 3.3,
+      height: ThemeAppSize.height / 2.5,
       child: Stack(
-        children: [
-          const _Achievement(),
-          _ImgAndInfo(),
-          const _HeaderIcons(),
+        children: const [
+          _ImgUser(),
+          _ProgresUser(),
+          _IconSetting(),
         ],
       ),
     );
   }
 }
 
-Widget wrapContainer({color, height, required Widget widget}) {
-  return Container(
-    width: double.infinity,
-    height: height,
-    decoration: BoxDecoration(
-      color: color,
-      borderRadius: BorderRadius.vertical(
-        bottom: Radius.circular(
-          ThemeAppSize.kRadius18 * 1.5,
-        ),
-      ),
-      boxShadow: const [
-        BoxShadow(
-          color: Color.fromARGB(255, 33, 33, 33),
-          spreadRadius: 2,
-          blurRadius: 5,
-          offset: Offset(0, 2),
-        ),
-      ],
-    ),
-    child: widget,
-  );
-}
 
-class _ImgAndInfo extends StatelessWidget {
-  _ImgAndInfo();
-  final controller = Get.find<AuthController>();
+class _ImgUser extends StatelessWidget {
+  const _ImgUser();
   @override
   Widget build(BuildContext context) {
-    final guidingController = Get.find<GuidingController>();
-    final sizeCircleAvatar = ThemeAppSize.kInterval12 * 5;
-
-    return wrapContainer(
-      color: context.theme.scaffoldBackgroundColor,
-      height: ThemeAppSize.kHeight100 * 2.5,
-      widget: Obx(() => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (controller.userData['imgURL'] != null &&
-                  controller.userData['imgURL'] != "")
-                CircleAvatar(
-                  radius: guidingController.startAnimationProfile.value
-                      ? sizeCircleAvatar
-                      : 10,
-                  backgroundColor: Colors.grey,
-                  backgroundImage: NetworkImage(
-                      controller.userData['imgURL'].toString()),
-                )
-              else
-                Stack(
-                  children: [
-                    /// icon img
-                    CircleAvatar(
-                      radius: guidingController.startAnimationProfile.value
-                          ? sizeCircleAvatar
-                          : 10,
-                      backgroundColor: Colors.grey,
-                      backgroundImage: const AssetImage('assets/imgs/user.jpg'),
-                    ),
-
-                    /// icon add
-                    Positioned(
-                      bottom: -ThemeAppSize.kInterval5 / 2.5,
-                      right: -ThemeAppSize.kInterval5 / 2.5,
-                      child: InkWell(
-                        onTap: () {
-
-                        },
-                        child: Icon(
-                          Icons.error_outline_outlined,
-                          size: ThemeAppSize.kFontSize16 * 2,
-                          color: context.theme.primaryColor,
-                        ),
-                      ),
-                    ),
-                  ],
+    final controller = Get.find<AuthController>();
+    final radius = BorderRadius.vertical(
+      bottom: Radius.circular(ThemeAppSize.kRadius18),
+    );
+    return Obx(() {
+      final String? img = controller.userData['imgURL'];
+      return Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: radius,
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                  (img != null && img != "") ? img.toString() : 'https://goo.su/XVCX',
                 ),
-              BigText(
-                text: controller.userData['name'] ?? '',
-                size: ThemeAppSize.kFontSize16 * 1.5,
               ),
-            ],
-          )),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: radius,
+              gradient: const LinearGradient(
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomCenter,
+                colors: [Colors.transparent, Color.fromARGB(235, 0, 0, 0)],
+                stops: [0.6, 1],
+              ),
+            ),
+          )
+        ],
+      );
+    }
     );
   }
 }
 
-class _Achievement extends StatelessWidget {
-  const _Achievement();
+class _ProgresUser extends StatelessWidget {
+  const _ProgresUser();
   @override
   Widget build(BuildContext context) {
     Widget achievementItem(text, count) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          SmallText(
+          BigText(
+            size: ThemeAppSize.kFontSize20 * 1.8,
             text: count.toString(),
             color: context.theme.accentColor,
+            height: 0,
           ),
           SmallText(
-            maxLines: 2,
+            height: 0,
             text: text,
             color: context.theme.accentColor,
           ),
         ],
       );
     }
-
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: wrapContainer(
-        color: context.theme.cardColor,
-        height: ThemeAppSize.kHeight100 * 3.3,
-        widget: Padding(
-          padding: EdgeInsets.all(
-            ThemeAppSize.kInterval24 - ThemeAppSize.kInterval5,
+    final guidingC = Get.find<GuidingController>();
+    return Padding(
+      padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          InkWell(
+            onTap: () => guidingC.setCurrentIndexTab(2),
+            child: GetBuilder<FavoriteController>(
+              builder: (_) => achievementItem('favorite'.tr, _.getFavoriteList.length),
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              InkWell(
-                onTap: () =>
-                    Get.find<GuidingController>().setCurrentIndexTab(2),
-                child: GetBuilder<FavoriteController>(
-                  builder: (_) {
-                    return achievementItem(
-                      'favorite'.tr,
-                      _.getFavoriteList.length,
-                    );
-                  },
-                ),
-              ),
-              InkWell(
-                onTap: () => customShowDialog(
-                  widget: const HistoryPayProfile(),
-                ),
-                child: GetBuilder<CartController>(
-                  builder: (_) {
-                    return achievementItem('buy'.tr, _.getHistoryList().length);
-                  },
-                ),
-              ),
-              GetBuilder<CartController>(
-                builder: (_) {
-                  var total = _.totalPrice();
-                  return achievementItem('bought_on'.tr, '$total \$');
-                },
-              ),
-            ],
+          //SizedBox(width: ThemeAppSize.kInterval24),
+          InkWell(
+            onTap: () => customShowDialog(widget: const HistoryPayProfile()),
+            child: GetBuilder<CartController>(
+              builder: (_) => achievementItem('buy'.tr, '${_.getHistoryList().length}'),
+            ),
           ),
-        ),
+          //   SizedBox(width: ThemeAppSize.kInterval24),
+          GetBuilder<CartController>(
+            builder: (_) {
+              var total = _.totalPrice();
+              return achievementItem('bought_on'.tr, '$total');
+            },
+          ),
+        ],
       ),
     );
   }
 }
 
-class _HeaderIcons extends StatelessWidget {
-  const _HeaderIcons();
+class _IconSetting extends StatelessWidget {
+  const _IconSetting();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-      child: Row(
-        children: [
-          InkWell(
-            onTap: () => Get.find<ThemeAppController>().tooggTheme(),
-            child: Icon(
-              Icons.dark_mode,
-              color: context.theme.hintColor,
-            ),
+    return Align(
+      alignment: Alignment.topRight,
+      child: InkWell(
+        onTap: () => customShowDialog(widget: const ProfileSetting()),
+        child: WrapperIcon(
+
+          child: Icon(
+            Icons.settings,
+            color: context.theme.cardColor,
           ),
-          const Spacer(),
-          InkWell(
-            onTap: () => customShowDialog(widget: const ProfileSetting()),
-            child: Icon(
-              Icons.settings,
-              color: context.theme.hintColor,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

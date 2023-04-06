@@ -34,7 +34,10 @@ class MenuPage extends StatelessWidget {
           color: context.theme.primaryColor,
           backgroundColor: context.theme.accentColor,
         ),
-        footer: const _FooterLoad(),
+        footer: MaterialClassicHeader(
+          color: context.theme.primaryColor,
+          backgroundColor: context.theme.accentColor,
+        ),
         child: CustomScrollView(
           slivers: [
             const HeaderMenu(),
