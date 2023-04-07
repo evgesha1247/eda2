@@ -14,6 +14,7 @@ import '../app/data/repository/product_repo.dart';
 import '../app/pages/primary_pages/about/controller/about_controller.dart';
 import '../app/pages/primary_pages/menu/controller/menu_controller.dart';
 import '../app/pages/primary_pages/guiding/controller/guiding_controller.dart';
+import '../app/pages/primary_pages/profile/controller/profile_cobtroller.dart';
 import '../app/routes/main_routes.dart';
 import '../app/theme/theme_controller.dart';
 import '../utils/app_constants.dart';
@@ -86,5 +87,7 @@ class AllPageBindings implements Bindings {
     Get.lazyPut(() => MenuControll(), fenix: true);
     Get.lazyPut(() => AuthController(), fenix: true);
     Get.lazyPut(() => AboutController(), fenix: true);
+    Get.lazyPut(() => ProfileController(), fenix: true);
+
   }
 }

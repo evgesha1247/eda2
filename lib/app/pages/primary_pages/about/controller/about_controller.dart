@@ -13,7 +13,6 @@ class AboutController extends GetxController {
     selectedIndexPickupAdress == index
         ? selectedIndexPickupAdress = -1
         : selectedIndexPickupAdress = index;
-
     update();
   }
 
