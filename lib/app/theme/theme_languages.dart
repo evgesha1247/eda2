@@ -73,11 +73,14 @@ class Languages extends Translations {
           'Language': 'Язык',
           'preference': 'предпоченик',
           'are common': 'общие',
+          'User_name': 'Имя',
         },
 
 
 
         'en_US': {
+          'User_name': 'Name',
+
           'preference': 'preference',
           'are common': 'are common',
           'Language': 'Language',

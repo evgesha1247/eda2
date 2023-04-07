@@ -15,7 +15,7 @@ class AboutPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: const [
-          _BodyTitle(title: 'nbgj title'),
+          _BodyTitle(title: 'title'),
           _BodyAbout(),
         ],
       ),
@@ -36,13 +36,14 @@ class _BodyAbout extends StatelessWidget {
   const _BodyAbout();
   @override
   Widget build(BuildContext context) {
-    Get.find<AboutController>().initLocalData();
+    final controller = Get.find<AboutController>();
+    controller.initLocalData();
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.3,
       child: GetBuilder<AboutController>(
-        builder: (controller) {
+        builder: (_) {
           return ListView.builder(
-            itemCount: controller.listInfoRestorans.length,
+            itemCount: _.listInfoRestorans.length,
             itemBuilder: (BuildContext context, int index) => _ItemBuilder(index: index),
           );
         },

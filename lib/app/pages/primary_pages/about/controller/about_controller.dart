@@ -17,8 +17,7 @@ class AboutController extends GetxController {
   }
 
   Future<void> initLocalData() async {
-    if (listInfoRestorans != []) return;
-
+    listInfoRestorans = [];
     final db = FirebaseFirestore.instance;
     CollectionReference collectionRef =
         db.collection(AppConstansts.LOCOL_KEY_INFO_DATA_RESTORAN);
@@ -41,6 +40,8 @@ class AboutController extends GetxController {
         ),
       );
     });
+    print(listInfoRestorans);
+
     update();
   }
 }

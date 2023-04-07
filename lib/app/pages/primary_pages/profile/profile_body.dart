@@ -1,9 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/controllers/product_controller.dart';
 import 'package:text/app/pages/primary_pages/profile/controller/profile_cobtroller.dart';
 import 'package:text/app/pages/primary_pages/profile/profile_page.dart';
 import 'package:text/app/widgets/icon/wrap_icon.dart';
@@ -20,9 +18,7 @@ class BodyProfile extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
       child: Column(
         children: [
-          SizedBox(height: ThemeAppSize.kInterval24),
           const _UserName(),
-          SizedBox(height: ThemeAppSize.kInterval24),
           const FavoriteSection(),
           SizedBox(height: ThemeAppSize.kInterval24),
           const _UserInfo(),
@@ -39,16 +35,40 @@ class _UserName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        BigText(
-          text: controller.userData['name'] ?? 'Name is null',
-          fontWeight: FontWeight.w500,
-          height: 0,
-          size: ThemeAppSize.kFontSize18 * 1.5,
-        ),
-      ],
+    final style = OutlineInputBorder(
+        borderSide: const BorderSide(color: ThemeAppColor.kTextDark),
+        borderRadius: BorderRadius.all(Radius.circular(
+          ThemeAppSize.kRadius12,
+        )));
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval24),
+      child: controller.userData['name'] != null
+          ? BigText(
+              text: controller.userData['name'].toString(),
+              fontWeight: FontWeight.w500,
+              height: 0,
+              size: ThemeAppSize.kFontSize18 * 1.5,
+            )
+          : TextField(
+              controller: controller.cName,
+              cursorColor: context.theme.primaryColor,
+              decoration: InputDecoration(
+                suffixIcon: InkWell(
+                  onTap: () => controller.saveUpData(),
+                  child: WrapperIcon(
+                    colorBorder: context.theme.hintColor,
+                    child: Icon(Icons.edit, color: context.theme.hintColor),
+                  ),
+                ),
+                isDense: true,
+                label: BigText(
+                  text: 'User_name'.tr,
+                  color: context.theme.hintColor,
+                ),
+                border: style,
+                focusedBorder: style,
+              ),
+            ),
     );
   }
 }
@@ -79,14 +99,32 @@ class _UserInfo extends StatelessWidget {
                     children: [
                       const _InfoTitle(title: 'Общая информация'),
                       SizedBox(height: ThemeAppSize.kInterval12),
+                      Divider(
+                        color: context.theme.hintColor,
+                        height: ThemeAppSize.kInterval5,
+                        thickness: 0.5,
+                      ),
+                      SizedBox(height: ThemeAppSize.kInterval12),
                       const _InfoItemBuilder(),
                       SizedBox(height: ThemeAppSize.kInterval12),
                       InkWell(
-                          onTap: () => _.togVisibility(),
-                          child: SmallText(
-                            text: 'скрыть инфу',
-                            size: 16,
-                            color: Colors.black.withOpacity(0.6),
+                          onTap: () => _.isVisibility ? {} : _.togVisibility(),
+                          child: WrapperIcon(
+                            colorBorder: context.theme.hintColor,
+                            child: Wrap(
+                              children: [
+                                SmallText(
+                                    text: 'скрыть инфу',
+                                    size: 16,
+                                    color: context.theme.hintColor),
+                                SizedBox(width: ThemeAppSize.kInterval12),
+                                Icon(
+                                  Icons.no_encryption_gmailerrorred_outlined,
+                                  size: 16,
+                                  color: context.theme.hintColor,
+                                )
+                              ],
+                            ),
                           )),
                     ],
                   ),
@@ -124,12 +162,13 @@ class _InfoTitle extends StatelessWidget {
       children: [
         SmallText(
           text: title,
-          color: context.theme.hintColor.withOpacity(0.5),
+            size: ThemeAppSize.kFontSize16 * 1.5,
+            color: context.theme.hintColor
         ),
         const Spacer(),
         WrapperIcon(
           colorBorder: context.theme.hintColor,
-          child: Icon(Icons.edit, color: context.theme.hintColor),
+          child: Icon(Icons.edit_note, color: context.theme.hintColor),
         ),
       ],
     );
@@ -165,9 +204,57 @@ class _UserLogout extends StatelessWidget {
   const _UserLogout();
   @override
   Widget build(BuildContext context) {
+
     final controller = Get.find<AuthController>();
+    void showMaterialDialog(context) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
+              side: const BorderSide(color: ThemeAppColor.kAccent),
+            ),
+            backgroundColor: context.theme.scaffoldBackgroundColor,
+            titlePadding: EdgeInsets.all(ThemeAppSize.kInterval12),
+            actionsPadding: EdgeInsets.all(ThemeAppSize.kInterval12),
+            contentPadding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                BigText(text: 'Вы уверины ?'),
+                BigText(
+                  text: '!',
+                  color: ThemeAppColor.kAccent,
+                  size: 30,
+                  fontWeight: FontWeight.w900,
+                ),
+              ],
+            ),
+            content: const SmallText(
+                text: 'при выходе из аккаунта вы не сможите осуществлять заказы'),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () => Get.back(),
+                    child: const SmallText(text: 'отмена'),
+                  ),
+                  InkWell(
+                    onTap: () => controller.logoutUser(),
+                    child: const SmallText(text: 'ок'),
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return InkWell(
-      onTap: () => controller.logoutUser(),
+      onTap: () => showMaterialDialog(context),
       child: MyButtonString(
         text: 'logout'.tr,
       ),

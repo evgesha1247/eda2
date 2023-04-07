@@ -17,14 +17,15 @@ class AuthController extends GetxController {
     _isLogScreen.value = !_isLogScreen.value;
   }
 
+  final cName = TextEditingController();
+  final cPhone = TextEditingController();
+  final cAddress = TextEditingController();
+  final cPhotoURL = TextEditingController();
 
   final cEmail = TextEditingController();
   final cPassword = TextEditingController();
-  final cName = TextEditingController();
-  final cPhone = TextEditingController();
-  final cPhotoURL = TextEditingController();
-  final cAddress = TextEditingController();
 
+  late final List settingControler = [cName, cPhone, cAddress, cPhotoURL];
   //////////////////////
   Rx<User?>? firebaseUser;
   late final AuthRepo authRepo;
@@ -68,6 +69,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> logoutUser() async {
+
     authRepo.logout();
   }
 
@@ -76,6 +78,10 @@ class AuthController extends GetxController {
 
 
 Future<void> saveUpData() async {
+    if (authRepo.initialized) {
+      Get.snackbar('User', 'is not initialized', snackPosition: SnackPosition.TOP);
+      return;
+    }
     if (authRepo.firebaseUser.value != null) {
       DocumentReference user = FirebaseFirestore.instance
           .collection('users')
@@ -88,8 +94,11 @@ Future<void> saveUpData() async {
 
       clearControlls();
       getDataUser();
+      Get.snackbar('Name', 'up data', snackPosition: SnackPosition.TOP);
       Get.back();
     }
+
+
   }
 
   clearControlls() {
@@ -121,6 +130,9 @@ Future<void> saveUpData() async {
   _setImgUrl(DocumentReference user) async {
     if (cPhotoURL.text != '') {
       await user.update({'imgURL': cPhotoURL.text});
+      Get.snackbar('Img URL', 'UpData !', snackPosition: SnackPosition.TOP);
+    } else {
+      Get.snackbar('URl', 'indicate link !', snackPosition: SnackPosition.TOP);
     }
   }
 

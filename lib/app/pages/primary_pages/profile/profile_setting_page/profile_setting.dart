@@ -11,15 +11,28 @@ class ProfileSetting extends StatelessWidget {
   const ProfileSetting({super.key});
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      height: context.height - ThemeAppSize.kHeight75,
+
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-      child: Column(
+      child: ListView(
+        shrinkWrap: true,
         children: [
           const _TitleHeaderSetting(),
           SizedBox(height: ThemeAppSize.kInterval12),
           const _BodySetting(),
         ],
       ),
+      // child: Expanded(
+      //   child: ListView(
+      //     shrinkWrap: true,
+      //     children: [
+      //       //    const _TitleHeaderSetting(),
+      // SizedBox(height: ThemeAppSize.kInterval12),
+      // const _BodySetting(),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
@@ -28,21 +41,19 @@ class _TitleHeaderSetting extends StatelessWidget {
   const _TitleHeaderSetting();
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Stack(
-        children: [
-          Center(
-            child: BigText(text: 'setting'.tr, size: ThemeAppSize.kFontSize20 * 1.3),
+    return Stack(
+      children: [
+        Center(
+          child: BigText(text: 'setting'.tr, size: ThemeAppSize.kFontSize20 * 1.3),
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: InkWell(
+            child: Icon(Icons.close, color: context.theme.hintColor),
+            onTap: () => Get.back(),
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: InkWell(
-              child: Icon(Icons.close, color: context.theme.hintColor),
-              onTap: () => Get.back(),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -51,16 +62,14 @@ class _BodySetting extends StatelessWidget {
   const _BodySetting();
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          const _BodyPreference(),
-          SizedBox(height: ThemeAppSize.kInterval12),
-          const _BodyAreCommon(),
-          const Spacer(),
-          const _SaveSetting(),
-        ],
-      ),
+    return Column(
+      children: [
+        const _BodyPreference(),
+        SizedBox(height: ThemeAppSize.kInterval12),
+        const _BodyAreCommon(),
+        SizedBox(height: ThemeAppSize.kInterval24),
+        const _SaveSetting(),
+      ],
     );
   }
 }
@@ -173,65 +182,23 @@ class TextFilds extends StatelessWidget {
   const TextFilds({super.key});
   @override
   Widget build(BuildContext context) {
-    final _ = Get.put(AuthController());
-    final List cTextField = [_.cName, _.cPhone, _.cAddress, _.cPhotoURL];
+    final _ = Get.find<AuthController>();
     final List cTitle = ['name'.tr, 'phone'.tr, 'address'.tr, '${'photo'.tr} ( URL )'];
-    final style = OutlineInputBorder(
-        borderSide: const BorderSide(color: ThemeAppColor.kTextDark),
-        borderRadius: BorderRadius.all(Radius.circular(
-          ThemeAppSize.kRadius12,
-        ))
-    );
-    Widget itemBuild(controller, text) {
-      return TextField(
-        maxLines: 10,
-        minLines: 1,
-        controller: controller,
-        cursorColor: context.theme.primaryColor,
-
-        keyboardType: text == 'Phone' ? TextInputType.number : TextInputType.text,
-        decoration: InputDecoration(
-          isDense: true,
-          //     hintText: controller.text ?? 'qwe',
-          label: BigText(
-            text: text,
-            color: context.theme.hintColor,
-            size: ThemeAppSize.kFontSize20,
-          ),
-
-          hintStyle: const TextStyle(
-            color: ThemeAppColor.kTextDark,
-          ),
-          prefixIcon: const Icon(
-            Icons.edit,
-            color: ThemeAppColor.kTextDark,
-          ),
-          border: style,
-          focusedBorder: style,
-        ),
-      );
-    }
-
     return Container(
       decoration: BoxDecoration(
         color: context.theme.cardColor,
         borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius12),
       ),
-      padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: ListView(
         shrinkWrap: true,
         children: List.generate(
-          cTextField.length,
+          _.settingControler.length,
           (index) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // SmallText(
-              //   text: cTitle[index],
-              //   color: ThemeAppColor.kTextDark,
-              // ),
               SizedBox(height: ThemeAppSize.kInterval12),
-
-              itemBuild(cTextField[index], cTitle[index]),
+              _ItemTextFieldBuild(_.settingControler[index], cTitle[index]),
               SizedBox(height: ThemeAppSize.kInterval12),
             ],
           ),
@@ -240,7 +207,34 @@ class TextFilds extends StatelessWidget {
     );
   }
 }
-
+class _ItemTextFieldBuild extends StatelessWidget {
+  final String text;
+  final TextEditingController controller;
+  const _ItemTextFieldBuild(this.controller, this.text);
+  @override
+  Widget build(BuildContext context) {
+    final style = OutlineInputBorder(
+        borderSide: BorderSide(color: context.theme.accentColor),
+        borderRadius: BorderRadius.all(Radius.circular(
+          ThemeAppSize.kRadius18,
+        )));
+    return TextField(
+      maxLines: 10,
+      minLines: 1,
+      controller: controller,
+      cursorColor: context.theme.primaryColor,
+      keyboardType: text == 'Phone' ? TextInputType.number : TextInputType.text,
+      decoration: InputDecoration(
+        isDense: true,
+        label: BigText(text: text, color: context.theme.accentColor),
+        prefixIcon: Icon(Icons.edit, color: context.theme.accentColor),
+        enabledBorder: style,
+        border: style,
+        focusedBorder: style,
+      ),
+    );
+  }
+}
 class _SaveSetting extends StatelessWidget {
   const _SaveSetting();
   @override
