@@ -17,13 +17,11 @@ class BodyProfile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
       child: Column(
-        children: [
-          const _UserName(),
-          const FavoriteSection(),
-          SizedBox(height: ThemeAppSize.kInterval24),
-          const _UserInfo(),
-          SizedBox(height: ThemeAppSize.kInterval24),
-          const _UserLogout(),
+        children: const [
+          _UserName(),
+          FavoriteSection(),
+          _UserInfoSection(),
+          _UserLogout(),
         ],
       ),
     );
@@ -40,137 +38,142 @@ class _UserName extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(
           ThemeAppSize.kRadius12,
         )));
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval24),
-      child: controller.userData['name'] != null
-          ? BigText(
-              text: controller.userData['name'].toString(),
-              fontWeight: FontWeight.w500,
-              height: 0,
-              size: ThemeAppSize.kFontSize18 * 1.5,
-            )
-          : TextField(
-              controller: controller.cName,
-              cursorColor: context.theme.primaryColor,
-              decoration: InputDecoration(
-                suffixIcon: InkWell(
-                  onTap: () => controller.saveUpData(),
+    return Obx(() => Padding(
+          padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval24),
+          child: controller.userData['name'] != null
+              ? BigText(
+                  text: controller.userData['name'].toString(),
+                  fontWeight: FontWeight.w500,
+                  height: 0,
+                  size: ThemeAppSize.kFontSize18 * 1.5,
+                )
+              : TextField(
+                  controller: controller.cName,
+                  cursorColor: context.theme.primaryColor,
+                  decoration: InputDecoration(
+                    suffixIcon: InkWell(
+                      onTap: () => controller.saveUpData(),
+                      child: WrapperIcon(
+                        colorBorder: context.theme.hintColor,
+                        child: Icon(Icons.edit, color: context.theme.hintColor),
+                      ),
+                    ),
+                    isDense: true,
+                    label: BigText(
+                      text: 'User_name'.tr,
+                      color: context.theme.hintColor,
+                    ),
+                    border: style,
+                    focusedBorder: style,
+                  ),
+                ),
+        ));
+  }
+}
+
+class _UserInfoSection extends StatelessWidget {
+  const _UserInfoSection();
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: const [
+        _UserInfoOpen(),
+        _UserInfoClose(),
+      ],
+    );
+  }
+}
+
+class _UserInfoOpen extends StatelessWidget {
+  const _UserInfoOpen();
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<ProfileController>();
+    return Container(
+      padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+      decoration: BoxDecoration(
+        color: controller.isVisibility.value
+            ? context.theme.hintColor.withOpacity(0.2)
+            : Colors.transparent,
+        borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
+        border: Border.all(color: context.theme.hintColor, width: .5),
+      ),
+      child: ClipRRect(
+        child: ImageFiltered(
+          imageFilter: ImageFilter.blur(
+              sigmaX: controller.isVisibility.value ? 5 : 0,
+              sigmaY: controller.isVisibility.value ? 5 : 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Row(
+                children: [
+                  SmallText(
+                      text: 'Общая информация',
+                      size: ThemeAppSize.kFontSize16 * 1.5,
+                      color: context.theme.hintColor),
+                  const Spacer(),
+                  WrapperIcon(
+                    colorBorder: context.theme.hintColor,
+                    child: Icon(Icons.edit_note, color: context.theme.hintColor),
+                  ),
+                ],
+              ),
+              SizedBox(height: ThemeAppSize.kInterval12),
+              Divider(
+                color: context.theme.hintColor,
+                height: ThemeAppSize.kInterval5,
+                thickness: 0.5,
+              ),
+              SizedBox(height: ThemeAppSize.kInterval12),
+              const _InfoItemBuilder(),
+              SizedBox(height: ThemeAppSize.kInterval12),
+              InkWell(
+                  onTap: () => controller.togVisibility(),
                   child: WrapperIcon(
                     colorBorder: context.theme.hintColor,
-                    child: Icon(Icons.edit, color: context.theme.hintColor),
-                  ),
-                ),
-                isDense: true,
-                label: BigText(
-                  text: 'User_name'.tr,
-                  color: context.theme.hintColor,
-                ),
-                border: style,
-                focusedBorder: style,
-              ),
-            ),
-    );
-  }
-}
-
-class _UserInfo extends StatelessWidget {
-  const _UserInfo();
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<ProfileController>(
-      builder: (_) {
-        return Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.all(ThemeAppSize.kInterval24),
-              decoration: BoxDecoration(
-                color: _.isVisibility
-                    ? context.theme.hintColor.withOpacity(0.2)
-                    : Colors.transparent,
-                borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
-                border: Border.all(color: context.theme.hintColor, width: .5),
-              ),
-              child: ClipRRect(
-                child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(
-                      sigmaX: _.isVisibility ? 5 : 0, sigmaY: _.isVisibility ? 5 : 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const _InfoTitle(title: 'Общая информация'),
-                      SizedBox(height: ThemeAppSize.kInterval12),
-                      Divider(
-                        color: context.theme.hintColor,
-                        height: ThemeAppSize.kInterval5,
-                        thickness: 0.5,
-                      ),
-                      SizedBox(height: ThemeAppSize.kInterval12),
-                      const _InfoItemBuilder(),
-                      SizedBox(height: ThemeAppSize.kInterval12),
-                      InkWell(
-                          onTap: () => _.isVisibility ? {} : _.togVisibility(),
-                          child: WrapperIcon(
-                            colorBorder: context.theme.hintColor,
-                            child: Wrap(
-                              children: [
-                                SmallText(
-                                    text: 'скрыть инфу',
-                                    size: 16,
-                                    color: context.theme.hintColor),
-                                SizedBox(width: ThemeAppSize.kInterval12),
-                                Icon(
-                                  Icons.no_encryption_gmailerrorred_outlined,
-                                  size: 16,
-                                  color: context.theme.hintColor,
-                                )
-                              ],
-                            ),
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Positioned.fill(
-              child: Center(
-                child: GestureDetector(
-                  onTap: () => _.isVisibility ? _.togVisibility() : {},
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 500),
-                    opacity: _.isVisibility ? 1 : 0,
-                    child: WrapperIcon(
-                      colorBorder: context.theme.hintColor,
-                      child: Icon(Icons.visibility_off, color: context.theme.hintColor),
+                    child: Wrap(
+                      children: [
+                        SmallText(
+                            text: 'скрыть инфу',
+                            size: 16,
+                            color: context.theme.hintColor),
+                        SizedBox(width: ThemeAppSize.kInterval12),
+                        Icon(
+                          Icons.no_encryption_gmailerrorred_outlined,
+                          size: 16,
+                          color: context.theme.hintColor,
+                        )
+                      ],
                     ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+                  )),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
 
-class _InfoTitle extends StatelessWidget {
-  final String title;
-  const _InfoTitle({required this.title});
+class _UserInfoClose extends StatelessWidget {
+  const _UserInfoClose();
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SmallText(
-          text: title,
-            size: ThemeAppSize.kFontSize16 * 1.5,
-            color: context.theme.hintColor
-        ),
-        const Spacer(),
-        WrapperIcon(
-          colorBorder: context.theme.hintColor,
-          child: Icon(Icons.edit_note, color: context.theme.hintColor),
-        ),
-      ],
+    final controller = Get.find<ProfileController>();
+    return Positioned.fill(
+      child: Center(
+        child: Obx(() => GestureDetector(
+              onTap: () => controller.togVisibility(),
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 500),
+                opacity: controller.isVisibility.value ? 1 : 0,
+                child: WrapperIcon(
+                  colorBorder: context.theme.hintColor,
+                  child: Icon(Icons.visibility_off, color: context.theme.hintColor),
+                ),
+              ),
+            )),
+      ),
     );
   }
 }
@@ -200,11 +203,11 @@ class _InfoItemBuilder extends StatelessWidget {
     );
   }
 }
+
 class _UserLogout extends StatelessWidget {
   const _UserLogout();
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.find<AuthController>();
     void showMaterialDialog(context) {
       showDialog(

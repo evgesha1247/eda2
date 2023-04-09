@@ -15,7 +15,7 @@ final double? height;
   const BigText({
     Key? key,
     required this.text,
-    this.height,
+    this.height = 0,
     this.color = Colors.transparent,
     this.overflow = TextOverflow.ellipsis,
     this.size = 0,
@@ -57,7 +57,7 @@ class SmallText extends StatelessWidget {
     required this.text,
     this.color = Colors.transparent,
     this.overflow = TextOverflow.ellipsis,
-    this.height,
+    this.height = 0,
     this.size = 0,
     this.maxLines = 2,
   }) : super(key: key);
@@ -70,7 +70,7 @@ class SmallText extends StatelessWidget {
       style: TextStyle(
         fontSize: size == 0 ? ThemeAppSize.kFontSize20 : size,
         color: color == Colors.transparent ? context.theme.hintColor : color,
-        height: height ?? 1.2,
+        height: height,
         fontWeight: FontWeight.w300,
       ),
     );

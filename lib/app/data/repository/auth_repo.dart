@@ -44,12 +44,12 @@ class AuthRepo extends GetxController {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('косячный пороль.');
+        Get.snackbar('weak password !', 'please check the password');
       } else if (e.code == 'email-already-in-use') {
-        print('косячное мыло.');
+        Get.snackbar('email already in use !', 'please check the email');
       }
     } catch (e) {
-      print('косяк :$e');
+      Get.snackbar('Ошибка !', '$e');
     }
   }
 
@@ -58,12 +58,12 @@ class AuthRepo extends GetxController {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        ThemeAppFun.printSnackBar('weak-password', title: '');
+        Get.snackbar('weak password !', 'please check the password');
       } else if (e.code == 'email-already-in-use') {
-        ThemeAppFun.printSnackBar('email-already-in-use', title: '');
+        Get.snackbar('email already in use !', 'please check the email');
       }
     } catch (e) {
-      ThemeAppFun.printSnackBar('error', title: '$e');
+      Get.snackbar('Ошибка !', '$e');
     }
   }
 

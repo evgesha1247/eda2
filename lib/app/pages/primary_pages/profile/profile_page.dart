@@ -36,14 +36,11 @@ class MyButtonString extends StatelessWidget {
           ),
         ),
       ),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        children: [
-          BigText(
+      child: Center(
+        child: BigText(
             text: text,
             color: context.theme.primaryColor,
-          ),
-        ],
+        ),
       ),
     );
   }

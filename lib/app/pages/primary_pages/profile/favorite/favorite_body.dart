@@ -11,12 +11,19 @@ class FavoriteSection extends StatelessWidget {
   const FavoriteSection({super.key});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const _TitleFavorite(),
-        SizedBox(height: ThemeAppSize.kInterval12),
-        const _BodyFavorite(),
-      ],
+    return GetBuilder<FavoriteController>(
+      builder: (_) {
+        return Column(
+          children: _.getFavoriteList.isNotEmpty
+              ? [
+                  const _TitleFavorite(),
+                  SizedBox(height: ThemeAppSize.kInterval12),
+                  const _BodyFavorite(),
+                  SizedBox(height: ThemeAppSize.kInterval12),
+                ]
+              : [],
+        );
+      },
     );
   }
 }
@@ -49,7 +56,7 @@ class _BodyFavorite extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) =>
                 _ItemBuilder(item: _.getFavoriteList[index].product),
             separatorBuilder: (BuildContext context, int index) => SizedBox(
-              width: ThemeAppSize.kInterval24,
+              width: ThemeAppSize.kInterval12,
             ),
           );
         },
@@ -58,21 +65,19 @@ class _BodyFavorite extends StatelessWidget {
   }
 }
 
-
-
 class _ItemBuilder extends StatelessWidget {
   const _ItemBuilder({required this.item});
   final ProductModel item;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(
-        MainRoutes.getDetailed(item.id),
-        arguments: item,
-      ),
+        onTap: () => Get.toNamed(
+              MainRoutes.getDetailed(item.id),
+              arguments: item,
+            ),
         child: Container(
           width: ThemeAppSize.kHeight100,
-        height: ThemeAppSize.kHeight100,
+          height: ThemeAppSize.kHeight100,
           decoration: BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.cover,
@@ -82,7 +87,6 @@ class _ItemBuilder extends StatelessWidget {
               Radius.circular(ThemeAppSize.kInterval12),
             ),
           ),
-        )
-    );
+        ));
   }
 }

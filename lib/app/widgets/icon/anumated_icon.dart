@@ -41,14 +41,14 @@ class CartAddIcon extends StatelessWidget {
             ),
           ),
           widget2: WrapperIcon(
-            colorBorder: context.theme.accentColor,
+            colorBorder: context.theme.hintColor,
             bg: bg != Colors.transparent
                 ? bg.withOpacity(0.5)
                 : Colors.transparent,
             child: Icon(
               Icons.add,
               color: iconColor == Colors.transparent
-                  ? context.theme.accentColor
+                  ? context.theme.hintColor
                   : iconColor,
             ),
           ),
@@ -87,14 +87,14 @@ class FavoritIcon extends StatelessWidget {
             ),
           ),
           widget2: WrapperIcon(
-            colorBorder: context.theme.accentColor,
+            colorBorder: context.theme.hintColor,
             bg: bg != Colors.transparent
                 ? bg.withOpacity(0.5)
                 : Colors.transparent,
             child: Icon(
               Icons.favorite_outline,
               color: iconColor == Colors.transparent
-                  ? context.theme.accentColor
+                  ? context.theme.hintColor
                   : iconColor,
             ),
           ),

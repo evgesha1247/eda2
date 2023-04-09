@@ -30,7 +30,6 @@ class AuthController extends GetxController {
   Rx<User?>? firebaseUser;
   late final AuthRepo authRepo;
 
-
 /// auth
   Future authUser() async {
     if (isLogScreen) {
@@ -52,6 +51,8 @@ class AuthController extends GetxController {
       userData.value = await user
           .get()
           .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
+
+
     }
   }
 
@@ -69,33 +70,33 @@ class AuthController extends GetxController {
   }
 
   Future<void> logoutUser() async {
-
-    authRepo.logout();
+    await authRepo.logout();
   }
 
 ////
 
 
-
-Future<void> saveUpData() async {
-    if (authRepo.initialized) {
-      Get.snackbar('User', 'is not initialized', snackPosition: SnackPosition.TOP);
-      return;
-    }
+Future<DocumentReference?> onUserInit() async {
     if (authRepo.firebaseUser.value != null) {
-      DocumentReference user = FirebaseFirestore.instance
+      return FirebaseFirestore.instance
           .collection('users')
           .doc(authRepo.firebaseUser.value?.uid);
+    }
+    return null;
+  }
 
+  Future<void> saveUpData() async {
+    final user = await onUserInit();
+    if (user != null) {
       _setName(user);
       _setPhone(user);
-      _setImgUrl(user);
+      setImgUrl();
       _setAdress(user);
 
       clearControlls();
       getDataUser();
-      Get.snackbar('Name', 'up data', snackPosition: SnackPosition.TOP);
-      Get.back();
+    } else {
+      Get.snackbar('User', 'is not initialized', snackPosition: SnackPosition.TOP);
     }
 
 
@@ -108,32 +109,40 @@ Future<void> saveUpData() async {
     cEmail.text = '';
   }
 
-  _setName(DocumentReference user) async {
+  Future<void> _setName(DocumentReference user) async {
     if (cName.text != '') {
       await user.update({'name': cName.text});
+      Get.snackbar('Name', 'up data', snackPosition: SnackPosition.TOP);
     }
   }
 
-  _setAdress(DocumentReference user) async {
+  Future<void> _setAdress(DocumentReference user) async {
     if (cAddress.text != '') {
+
       await user.update({'adress': cAddress.text});
+      Get.snackbar('adress', 'up data', snackPosition: SnackPosition.TOP);
     }
   }
 
 
-  _setPhone(DocumentReference user) async {
+  Future<void> _setPhone(DocumentReference user) async {
     if (cPhone.text != '') {
       await user.update({'phone': cPhone.text});
+      Get.snackbar('phone', 'up data', snackPosition: SnackPosition.TOP);
+
     }
   }
 
-  _setImgUrl(DocumentReference user) async {
-    if (cPhotoURL.text != '') {
+  Future<void> setImgUrl() async {
+    final user = await onUserInit();
+    if (cPhotoURL.text != '' && user != null) {
       await user.update({'imgURL': cPhotoURL.text});
       Get.snackbar('Img URL', 'UpData !', snackPosition: SnackPosition.TOP);
+      Get.back();
     } else {
       Get.snackbar('URl', 'indicate link !', snackPosition: SnackPosition.TOP);
     }
+
   }
 
   @override

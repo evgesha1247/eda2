@@ -14,7 +14,7 @@ class DataMenuGuiding {
   final List<ModelMenuGuiding> _menuData = [
     ModelMenuGuiding(text: 'home'.tr, icon: Icons.home),
     ModelMenuGuiding(text: 'menu'.tr, icon: Icons.restaurant_menu),
-    ModelMenuGuiding(text: 'favorites'.tr, icon: Icons.favorite),
+    ModelMenuGuiding(text: 'about'.tr, icon: Icons.location_on),
     ModelMenuGuiding(text: 'person'.tr, icon: Icons.person),
     const ModelMenuGuiding(text: '', icon: Icons.menu_outlined),
   ];

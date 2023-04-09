@@ -28,7 +28,7 @@ class BodyMenu extends StatelessWidget {
                   (_, int index) => _ItemBuilderGrid(
                         item: controller.filterList[index],
                         index: index,
-                ),
+                      )
               ),
             );
           case RenderingMethod.list:
@@ -43,7 +43,27 @@ class BodyMenu extends StatelessWidget {
     );
   }
 }
-
+class ContentContainer extends StatelessWidget {
+  final Widget child;
+  const ContentContainer({required this.child});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: ThemeAppSize.kInterval12,
+        bottom: ThemeAppSize.kInterval24,
+        right: ThemeAppSize.kInterval12,
+      ),
+      child: Material(
+          elevation: 5,
+          color: context.theme.scaffoldBackgroundColor,
+          borderRadius: BorderRadius.circular(ThemeAppSize.kRadius12),
+          shadowColor: context.theme.cardColor,
+          clipBehavior: Clip.hardEdge,
+          child: child),
+    );
+  }
+}
 class _ItemBuilderGrid extends StatelessWidget {
   final ProductModel item;
   final int index;
@@ -64,23 +84,13 @@ class _ItemBuilderGrid extends StatelessWidget {
           0,
           0,
         ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: ThemeAppSize.kInterval12,
-            bottom: ThemeAppSize.kInterval24,
-            right: ThemeAppSize.kInterval12,
-          ),
-          child: Material(
-            elevation: 8,
-            shadowColor: context.theme.cardColor,
-            borderRadius: BorderRadius.circular(ThemeAppSize.kRadius12),
-            clipBehavior: Clip.hardEdge,
+        child: ContentContainer(
             child: Stack(
               children: [
                 _ItemImg(product: item),
                 _ItemIcons(product: item),
               ],
-            ),
+
           ),
         ),
       ),
@@ -94,14 +104,7 @@ class _ItemBuilderList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = ThemeAppSize.kHeight100 * 1.2;
-    return Padding(
-      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-      child: Material(
-        elevation: 5,
-        color: context.theme.scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(ThemeAppSize.kRadius12),
-        shadowColor: context.theme.cardColor,
-        clipBehavior: Clip.hardEdge,
+    return ContentContainer(
         child: Row(
           children: [
             _ItemImg(product: item, w: size, h: size),
@@ -111,15 +114,14 @@ class _ItemBuilderList extends StatelessWidget {
                   Row(
                     children: [
                       _ItemName(name: item.name as String),
-                      _ItemPrice(product: item, isDart: false),
+                    _ItemPrice(product: item),
                     ],
                   ),
                   Row(children: [_ItemButtoms(product: item)]),
                 ],
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -185,7 +187,7 @@ class _ItemIcons extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _ItemPrice(product: product, isDart: true),
+        _ItemPrice(product: product),
         _ItemButtoms(product: product),
       ],
     );
@@ -194,10 +196,8 @@ class _ItemIcons extends StatelessWidget {
 
 class _ItemPrice extends StatelessWidget {
   final ProductModel product;
-  final bool isDart;
   const _ItemPrice({
     required this.product,
-    required this.isDart,
   });
   @override
   Widget build(BuildContext context) {
@@ -205,7 +205,7 @@ class _ItemPrice extends StatelessWidget {
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       margin: const EdgeInsets.all(2.5),
       decoration: BoxDecoration(
-        color: isDart ? context.theme.scaffoldBackgroundColor : context.theme.cardColor,
+        color: context.theme.cardColor,
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(ThemeAppSize.kRadius12),
           bottomLeft: Radius.circular(ThemeAppSize.kRadius18),
@@ -213,7 +213,7 @@ class _ItemPrice extends StatelessWidget {
       ),
       child: BigText(
         text: '\$${product.price}',
-        color: isDart ? context.theme.cardColor : context.theme.accentColor,
+        color: context.theme.accentColor,
       ),
     );
   }

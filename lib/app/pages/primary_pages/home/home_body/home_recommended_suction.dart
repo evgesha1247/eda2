@@ -84,6 +84,7 @@ class _BodyRecommended extends StatelessWidget {
     return ListView.separated(
       itemCount: controller.recommendedProductList.length,
       shrinkWrap: true,
+physics: const PageScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         return Obx(
           () => AnimatedContainer(
