@@ -1,6 +1,8 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/widgets/animation/anim_scale.dart';
+import '../../guiding/controller/guiding_controller.dart';
 import 'controller/favorite_controller.dart';
 import '../../../../models/products_model.dart';
 import '../../../../routes/main_routes.dart';
@@ -32,12 +34,21 @@ class _TitleFavorite extends StatelessWidget {
   const _TitleFavorite({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        BigText(text: 'favorites'.tr),
-        SmallText(text: 'see all', color: context.theme.primaryColor),
-      ],
+    final controller = Get.find<GuidingController>();
+
+    return AnimationScaleWidget(
+      durationMilliseconds: 1750,
+      select: controller.startAnimationProfile,
+      widget: Padding(
+        padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            BigText(text: 'favorites'.tr),
+            SmallText(text: 'see all', color: context.theme.primaryColor),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -54,7 +65,7 @@ class _BodyFavorite extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: _.getFavoriteList.length,
             itemBuilder: (BuildContext context, int index) =>
-                _ItemBuilder(item: _.getFavoriteList[index].product),
+                _ItemBuilder(item: _.getFavoriteList[index].product, index: index),
             separatorBuilder: (BuildContext context, int index) => SizedBox(
               width: ThemeAppSize.kInterval12,
             ),
@@ -66,27 +77,36 @@ class _BodyFavorite extends StatelessWidget {
 }
 
 class _ItemBuilder extends StatelessWidget {
-  const _ItemBuilder({required this.item});
+  final int index;
+  const _ItemBuilder({required this.item, required this.index});
   final ProductModel item;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () => Get.toNamed(
-              MainRoutes.getDetailed(item.id),
-              arguments: item,
-            ),
-        child: Container(
-          width: ThemeAppSize.kHeight100,
-          height: ThemeAppSize.kHeight100,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(item.imgs?.first.imgURL as String),
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(ThemeAppSize.kInterval12),
-            ),
-          ),
+    final controller = Get.find<GuidingController>();
+
+    return Obx(() => AnimatedContainer(
+          curve: Curves.easeInOutBack,
+          duration: Duration(milliseconds: 1350 + (index * 350)),
+          transform: Matrix4.translationValues(
+              controller.startAnimationProfile.value ? 0 : context.width, 0, 0),
+          child: GestureDetector(
+              onTap: () => Get.toNamed(
+                    MainRoutes.getDetailed(item.id),
+                    arguments: item,
+                  ),
+              child: Container(
+                width: ThemeAppSize.kHeight100,
+                height: ThemeAppSize.kHeight100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(item.imgs?.first.imgURL as String),
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(ThemeAppSize.kInterval12),
+                  ),
+                ),
+              )),
         ));
   }
 }

@@ -140,9 +140,9 @@ class Languages extends Translations {
           // User setting
           'setting': 'Setting',
           'photo': 'Photo',
-          'phone': 'phone',
+          'phone': 'Phone',
           'save': 'save',
-          'address': 'address',
+          'address': 'Address',
 
           // auth page
           'login': 'Login',

@@ -9,6 +9,7 @@ import 'package:text/app/pages/primary_pages/profile/profile_setting_page/profil
 import '../../../controllers/auth_controller.dart';
 import '../../../controllers/cart_controller.dart';
 import '../../../theme/theme_app.dart';
+import '../../../widgets/animation/anim_scale.dart';
 import '../../../widgets/icon/wrap_icon.dart';
 import '../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../../widgets/text/my_text.dart';
@@ -36,30 +37,56 @@ class _ImgUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
-    return Container(
-        height: ThemeAppSize.height / 2.5,
-        width: double.infinity,
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(ThemeAppSize.kRadius18),
-        )),
-        child: ShaderMask(
-          blendMode: BlendMode.srcATop,
-          shaderCallback: (bounds) => const LinearGradient(
-            begin: FractionalOffset.topCenter,
-            end: FractionalOffset.bottomCenter,
-            colors: [Colors.transparent, Color.fromARGB(235, 0, 0, 0)],
-            stops: [0.5, 2],
-          ).createShader(bounds),
-          child: Obx(() {
-            return Image.network(
-              fit: BoxFit.cover,
-              controller.userData['imgURL'].toString(),
-              errorBuilder: (context, error, stackTrace) =>
-                  Image.asset(fit: BoxFit.cover, 'assets/imgs/error_avatar.png'),
-            );
-          }),
+
+final _ = Get.find<GuidingController>();
+    return Obx(() => AnimatedContainer(
+          curve: Curves.ease,
+          duration: const Duration(milliseconds: 800),
+          transform: Matrix4.translationValues(
+              0, _.startAnimationProfile.value ? 0 : -ThemeAppSize.height / 2.5, 0),
+          child: AnimationScaleWidget(
+            durationMilliseconds: 1000,
+            select: _.startAnimationProfile,
+            widget: Container(
+              height: ThemeAppSize.height / 2.5,
+              width: double.infinity,
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(ThemeAppSize.kRadius18),
+              )),
+              child: ShaderMask(
+                blendMode: BlendMode.srcATop,
+                shaderCallback: (bounds) => const LinearGradient(
+                  begin: FractionalOffset.topCenter,
+                  end: FractionalOffset.bottomCenter,
+                  colors: [Colors.transparent, Color.fromARGB(235, 0, 0, 0)],
+                  stops: [0.5, 2],
+                ).createShader(bounds),
+                child: Obx(
+                  () {
+                    return Image.network(
+                      fit: BoxFit.cover,
+                      '${controller.userData['imgURL']}',
+                      errorBuilder: (context, error, stackTrace) {
+                        //////                   //////
+                        ///         <Errro>         ///
+                        //////                   //////
+
+                        // Get.snackbar('URl', 'link is invalid !',
+                        //     snackPosition: SnackPosition.TOP);
+
+                        ////////  </Errro>  //////////
+
+                        return Image.asset(
+                            fit: BoxFit.cover, 'assets/imgs/error_avatar.png');
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
         ));
   }
 }
@@ -88,28 +115,55 @@ class _ProgresUser extends StatelessWidget {
     }
 
     final guidingC = Get.find<GuidingController>();
+    final _ = Get.find<GuidingController>();
     return Padding(
       padding: EdgeInsets.all(ThemeAppSize.kInterval24),
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Wrap(
-          spacing: ThemeAppSize.width / 6,
+          spacing: ThemeAppSize.width / 10,
           children: [
-            InkWell(
-              onTap: () => guidingC.setCurrentIndexTab(2),
-              child: GetBuilder<FavoriteController>(
-                builder: (_) => achievementItem('favorite'.tr, _.getFavoriteList.length),
+            Obx(
+              () => AnimatedContainer(
+                curve: Curves.easeOutBack,
+                duration: const Duration(milliseconds: 1500),
+                transform: Matrix4.translationValues(
+                    0, _.startAnimationProfile.value ? 0 : 100, 0),
+                child: InkWell(
+                  onTap: () => guidingC.setCurrentIndexTab(2),
+                  child: GetBuilder<FavoriteController>(
+                    builder: (_) =>
+                        achievementItem('favorite'.tr, _.getFavoriteList.length),
+                  ),
+                ),
               ),
             ),
-            InkWell(
-              onTap: () => customShowDialog(widget: const HistoryPayProfile()),
-              child: GetBuilder<CartController>(
-                builder: (_) => achievementItem('buy'.tr, '${_.getHistoryList().length}'),
+            Obx(
+              () => AnimatedContainer(
+                curve: Curves.easeOutBack,
+                duration: const Duration(milliseconds: 1850),
+                transform: Matrix4.translationValues(
+                    0, _.startAnimationProfile.value ? 0 : 100, 0),
+                child: InkWell(
+                  onTap: () => customShowDialog(widget: const HistoryPayProfile()),
+                  child: GetBuilder<CartController>(
+                    builder: (_) =>
+                        achievementItem('buy'.tr, '${_.getHistoryList().length}'),
+                  ),
+                ),
               ),
             ),
-            GetBuilder<CartController>(
-              builder: (_) => achievementItem('bought_on'.tr, '${_.totalPrice()}'),
-            ),
+            Obx(
+              () => AnimatedContainer(
+                curve: Curves.easeOutBack,
+                duration: const Duration(milliseconds: 2200),
+                transform: Matrix4.translationValues(
+                    0, _.startAnimationProfile.value ? 0 : 100, 0),
+                child: GetBuilder<CartController>(
+                  builder: (_) => achievementItem('bought_on'.tr, '${_.totalPrice()}'),
+                ),
+              ),
+            )
           ],
         ),
       ),

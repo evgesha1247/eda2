@@ -167,7 +167,6 @@ class _ItemContainerPopular extends StatelessWidget {
 class _ItemImg extends StatelessWidget {
   final String img;
   const _ItemImg({required this.img});
-
   @override
   Widget build(BuildContext context) {
     return Hero(

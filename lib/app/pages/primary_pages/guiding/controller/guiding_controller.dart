@@ -20,7 +20,7 @@ class GuidingController extends GetxController {
       });
     }
     if (currentIndexTab == 3) {
-      Timer(const Duration(milliseconds: 700), () {
+      Timer(const Duration(milliseconds: 100), () {
         startAnimationProfile.value = true;
       });
     }

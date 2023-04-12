@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
 
@@ -49,4 +51,9 @@ class FavoriteController extends GetxController {
     favoriteRepo.addToFavoriteList(getFavoriteList);
     update();
   }
+
+
+
+
+
 }

@@ -23,16 +23,6 @@ class ProfileSetting extends StatelessWidget {
           const _BodySetting(),
         ],
       ),
-      // child: Expanded(
-      //   child: ListView(
-      //     shrinkWrap: true,
-      //     children: [
-      //       //    const _TitleHeaderSetting(),
-      // SizedBox(height: ThemeAppSize.kInterval12),
-      // const _BodySetting(),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
@@ -183,7 +173,7 @@ class TextFilds extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _ = Get.find<AuthController>();
-    final List cTitle = ['name'.tr, 'phone'.tr, 'address'.tr, '${'photo'.tr} ( URL )'];
+    final List cTitle = ['phone'.tr, 'address'.tr];
     return Container(
       decoration: BoxDecoration(
         color: context.theme.cardColor,
@@ -193,7 +183,7 @@ class TextFilds extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: List.generate(
-          _.settingControler.length,
+          cTitle.length,
           (index) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -231,6 +221,7 @@ class _ItemTextFieldBuild extends StatelessWidget {
         enabledBorder: style,
         border: style,
         focusedBorder: style,
+
       ),
     );
   }

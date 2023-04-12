@@ -25,7 +25,7 @@ class AuthController extends GetxController {
   final cEmail = TextEditingController();
   final cPassword = TextEditingController();
 
-  late final List settingControler = [cName, cPhone, cAddress, cPhotoURL];
+  late final List settingControler = [cPhone, cAddress];
   //////////////////////
   Rx<User?>? firebaseUser;
   late final AuthRepo authRepo;
@@ -42,19 +42,25 @@ class AuthController extends GetxController {
   }
 
   RxMap userData = <String, dynamic>{}.obs;
+  late DocumentReference? myUser;
 
-  Future<void> getDataUser() async {
+Future<DocumentReference?> onUserInit() async {
     if (authRepo.firebaseUser.value != null) {
-      DocumentReference user = FirebaseFirestore.instance
+      return FirebaseFirestore.instance
           .collection('users')
           .doc(authRepo.firebaseUser.value?.uid);
-      userData.value = await user
-          .get()
-          .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
-
-
     }
+    return null;
   }
+
+  Future<void> getDataUser() async {
+    myUser = await onUserInit();
+    userData.value = await myUser!
+          .get()
+        .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
+    clearControlls();
+  }
+
 
   Future<void> createDataUser() async {
     FirebaseFirestore.instance
@@ -76,69 +82,43 @@ class AuthController extends GetxController {
 ////
 
 
-Future<DocumentReference?> onUserInit() async {
-    if (authRepo.firebaseUser.value != null) {
-      return FirebaseFirestore.instance
-          .collection('users')
-          .doc(authRepo.firebaseUser.value?.uid);
-    }
-    return null;
-  }
-
   Future<void> saveUpData() async {
-    final user = await onUserInit();
-    if (user != null) {
-      _setName(user);
-      _setPhone(user);
-      setImgUrl();
-      _setAdress(user);
-
-      clearControlls();
-      getDataUser();
+    if (myUser != null) {
+      await setPhone();
+      await setAdress();
+      await getDataUser();
     } else {
       Get.snackbar('User', 'is not initialized', snackPosition: SnackPosition.TOP);
     }
-
-
   }
-
-  clearControlls() {
-    cName.text = '';
-    cPhone.text = '';
-    cPhotoURL.text = '';
-    cEmail.text = '';
-  }
-
-  Future<void> _setName(DocumentReference user) async {
-    if (cName.text != '') {
-      await user.update({'name': cName.text});
-      Get.snackbar('Name', 'up data', snackPosition: SnackPosition.TOP);
-    }
-  }
-
-  Future<void> _setAdress(DocumentReference user) async {
+  Future<void> setAdress() async {
     if (cAddress.text != '') {
-
-      await user.update({'adress': cAddress.text});
+      await myUser!.update({'adress': cAddress.text});
       Get.snackbar('adress', 'up data', snackPosition: SnackPosition.TOP);
     }
   }
 
 
-  Future<void> _setPhone(DocumentReference user) async {
+  Future<void> setPhone() async {
     if (cPhone.text != '') {
-      await user.update({'phone': cPhone.text});
+      await myUser!.update({'phone': cPhone.text});
       Get.snackbar('phone', 'up data', snackPosition: SnackPosition.TOP);
+    }
+  }
 
+  Future<void> setName() async {
+    if (cName.text != '') {
+      await myUser!.update({'name': cName.text});
+      await getDataUser();
+      Get.snackbar('Name', 'up data', snackPosition: SnackPosition.TOP);
     }
   }
 
   Future<void> setImgUrl() async {
-    final user = await onUserInit();
-    if (cPhotoURL.text != '' && user != null) {
-      await user.update({'imgURL': cPhotoURL.text});
+    if (cPhotoURL.text != '') {
+      await myUser!.update({'imgURL': cPhotoURL.text});
+      await getDataUser();
       Get.snackbar('Img URL', 'UpData !', snackPosition: SnackPosition.TOP);
-      Get.back();
     } else {
       Get.snackbar('URl', 'indicate link !', snackPosition: SnackPosition.TOP);
     }
@@ -158,5 +138,13 @@ Future<DocumentReference?> onUserInit() async {
     super.onInit();
   }
 
+
+  clearControlls() {
+    cName.text = '';
+    cPhone.text = '';
+    cAddress.text = '';
+    cPhotoURL.text = '';
+    cEmail.text = '';
+  }
 
 }

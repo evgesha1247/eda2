@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 class AnimationScaleWidget extends StatelessWidget {
   final Widget widget;
   final RxBool select;
