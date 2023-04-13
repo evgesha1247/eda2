@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
-
 import '../../../../../data/repository/favorite_repo.dart';
 import '../../../../../models/favorite_model.dart';
 

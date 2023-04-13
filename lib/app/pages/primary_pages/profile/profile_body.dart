@@ -1,10 +1,8 @@
-// ignore_for_file: deprecated_member_use
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import 'package:text/app/pages/primary_pages/profile/controller/profile_cobtroller.dart';
-import 'package:text/app/pages/primary_pages/profile/profile_page.dart';
 import 'package:text/app/widgets/icon/wrap_icon.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../../theme/theme_app.dart';
@@ -286,11 +284,19 @@ class _UserLogout extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval24),
-      child: InkWell(
-        onTap: () => showMaterialDialog(context),
-        child: MyButtonString(
-          text: 'logout'.tr,
-        ),
+      child: Wrap(
+        children: [
+          InkWell(
+            onTap: () => showMaterialDialog(context),
+            child: WrapperIcon(
+              colorBorder: ThemeAppColor.kAccent,
+              child: BigText(
+                text: 'logout'.tr,
+                color: ThemeAppColor.kAccent,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

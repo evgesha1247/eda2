@@ -40,8 +40,8 @@ class AuthController extends GetxController {
       await createDataUser();
     }
   }
-
   RxMap userData = <String, dynamic>{}.obs;
+
   late DocumentReference? myUser;
 
 Future<DocumentReference?> onUserInit() async {
@@ -55,9 +55,13 @@ Future<DocumentReference?> onUserInit() async {
 
   Future<void> getDataUser() async {
     myUser = await onUserInit();
-    userData.value = await myUser!
+    try {
+      userData.value = await myUser!
           .get()
         .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
+    } catch (e) {
+      Get.snackbar('Ошибка !', '$e');
+    }
     clearControlls();
   }
 
@@ -71,6 +75,7 @@ Future<DocumentReference?> onUserInit() async {
         "phone": cPhone.text,
         "imgURL": cPhotoURL.text,
         "email": cEmail.text,
+      "address": cAddress.text,
     });
     getDataUser();
   }
@@ -91,6 +96,7 @@ Future<DocumentReference?> onUserInit() async {
       Get.snackbar('User', 'is not initialized', snackPosition: SnackPosition.TOP);
     }
   }
+
   Future<void> setAdress() async {
     if (cAddress.text != '') {
       await myUser!.update({'adress': cAddress.text});
@@ -108,8 +114,8 @@ Future<DocumentReference?> onUserInit() async {
 
   Future<void> setName() async {
     if (cName.text != '') {
-      await myUser!.update({'name': cName.text});
-      await getDataUser();
+      myUser!.update({'name': cName.text});
+      getDataUser();
       Get.snackbar('Name', 'up data', snackPosition: SnackPosition.TOP);
     }
   }
@@ -140,11 +146,11 @@ Future<DocumentReference?> onUserInit() async {
 
 
   clearControlls() {
-    cName.text = '';
-    cPhone.text = '';
-    cAddress.text = '';
-    cPhotoURL.text = '';
-    cEmail.text = '';
+    // cName.text = '';
+    // cPhone.text = '';
+    // cAddress.text = '';
+    // cPhotoURL.text = '';
+    // cEmail.text = '';
   }
 
 }

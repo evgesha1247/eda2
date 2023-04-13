@@ -1,6 +1,6 @@
-// ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/pages/indirect_pages/auth/auth_screen.dart';
 import 'package:text/app/pages/primary_pages/profile/favorite/controller/favorite_controller.dart';
 import 'package:text/app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import 'package:text/app/pages/primary_pages/profile/profile_history.dart';
@@ -13,6 +13,7 @@ import '../../../widgets/animation/anim_scale.dart';
 import '../../../widgets/icon/wrap_icon.dart';
 import '../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../../widgets/text/my_text.dart';
+import '../../../widgets/text_field/my_text_field.dart';
 
 class HeaderProfile extends StatelessWidget {
   const HeaderProfile({super.key});
@@ -38,7 +39,7 @@ class _ImgUser extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
 
-final _ = Get.find<GuidingController>();
+    final _ = Get.find<GuidingController>();
     return Obx(() => AnimatedContainer(
           curve: Curves.ease,
           duration: const Duration(milliseconds: 800),
@@ -102,13 +103,13 @@ class _ProgresUser extends StatelessWidget {
           BigText(
             size: ThemeAppSize.kFontSize20 * 1.8,
             text: count.toString(),
-            color: context.theme.accentColor,
+            color: ThemeAppColor.kBGColor,
             height: 0,
           ),
           SmallText(
             height: 0,
             text: text,
-            color: context.theme.accentColor,
+            color: ThemeAppColor.kBGColor,
           ),
         ],
       );
@@ -120,47 +121,53 @@ class _ProgresUser extends StatelessWidget {
       padding: EdgeInsets.all(ThemeAppSize.kInterval24),
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: Wrap(
-          spacing: ThemeAppSize.width / 10,
+        child: Row(
+          //  spacing: ThemeAppSize.width / 10,
           children: [
-            Obx(
-              () => AnimatedContainer(
-                curve: Curves.easeOutBack,
-                duration: const Duration(milliseconds: 1500),
-                transform: Matrix4.translationValues(
-                    0, _.startAnimationProfile.value ? 0 : 100, 0),
-                child: InkWell(
-                  onTap: () => guidingC.setCurrentIndexTab(2),
-                  child: GetBuilder<FavoriteController>(
-                    builder: (_) =>
-                        achievementItem('favorite'.tr, _.getFavoriteList.length),
+            Expanded(
+              child: Obx(
+                () => AnimatedContainer(
+                  curve: Curves.easeOutBack,
+                  duration: const Duration(milliseconds: 1500),
+                  transform: Matrix4.translationValues(
+                      0, _.startAnimationProfile.value ? 0 : 100, 0),
+                  child: InkWell(
+                    onTap: () => guidingC.setCurrentIndexTab(2),
+                    child: GetBuilder<FavoriteController>(
+                      builder: (_) =>
+                          achievementItem('favorite'.tr, _.getFavoriteList.length),
+                    ),
                   ),
                 ),
               ),
             ),
-            Obx(
-              () => AnimatedContainer(
-                curve: Curves.easeOutBack,
-                duration: const Duration(milliseconds: 1850),
-                transform: Matrix4.translationValues(
-                    0, _.startAnimationProfile.value ? 0 : 100, 0),
-                child: InkWell(
-                  onTap: () => customShowDialog(widget: const HistoryPayProfile()),
+            Expanded(
+              child: Obx(
+                () => AnimatedContainer(
+                  curve: Curves.easeOutBack,
+                  duration: const Duration(milliseconds: 1850),
+                  transform: Matrix4.translationValues(
+                      0, _.startAnimationProfile.value ? 0 : 100, 0),
+                  child: InkWell(
+                    onTap: () => customShowDialog(widget: const HistoryPayProfile()),
+                    child: GetBuilder<CartController>(
+                      builder: (_) =>
+                          achievementItem('buy'.tr, '${_.getHistoryList().length}'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Obx(
+                () => AnimatedContainer(
+                  curve: Curves.easeOutBack,
+                  duration: const Duration(milliseconds: 2200),
+                  transform: Matrix4.translationValues(
+                      0, _.startAnimationProfile.value ? 0 : 100, 0),
                   child: GetBuilder<CartController>(
-                    builder: (_) =>
-                        achievementItem('buy'.tr, '${_.getHistoryList().length}'),
+                    builder: (_) => achievementItem('bought_on'.tr, '${_.totalPrice()}'),
                   ),
-                ),
-              ),
-            ),
-            Obx(
-              () => AnimatedContainer(
-                curve: Curves.easeOutBack,
-                duration: const Duration(milliseconds: 2200),
-                transform: Matrix4.translationValues(
-                    0, _.startAnimationProfile.value ? 0 : 100, 0),
-                child: GetBuilder<CartController>(
-                  builder: (_) => achievementItem('bought_on'.tr, '${_.totalPrice()}'),
                 ),
               ),
             )
@@ -188,82 +195,47 @@ class _HeaderIcons extends StatelessWidget {
   }
 }
 
-
 class _IconEditImg extends StatelessWidget {
   const _IconEditImg();
   @override
   Widget build(BuildContext context) {
-    final style = OutlineInputBorder(
-      borderSide: const BorderSide(color: ThemeAppColor.kTextDark),
-      borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
-    );
+
     final auth = Get.find<AuthController>();
-    Widget title() {
-      return Padding(
-        padding: EdgeInsets.only(
-          top: ThemeAppSize.kInterval12,
-          left: ThemeAppSize.kInterval12,
-          right: ThemeAppSize.kInterval12,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SmallText(text: 'edit img', color: context.theme.hintColor),
-            InkWell(
-              onTap: () => Get.back(),
-              child: Icon(Icons.close, color: context.theme.hintColor),
-            ),
-          ],
-        ),
-      );
-    }
-
-    Widget content() {
-      return TextField(
-        controller: auth.cPhotoURL,
-        cursorColor: context.theme.primaryColor,
-        decoration: InputDecoration(
-          isDense: true,
-          label: BigText(
-            text: 'URL',
-            color: context.theme.hintColor,
-            size: ThemeAppSize.kFontSize20,
-          ),
-          hintStyle: const TextStyle(color: ThemeAppColor.kTextDark),
-          border: style,
-          focusedBorder: style,
-        ),
-      );
-    }
-
-    Widget submit() {
-      return Padding(
-        padding: EdgeInsets.only(
-          bottom: ThemeAppSize.kInterval12,
-          right: ThemeAppSize.kInterval12,
-        ),
-        child: InkWell(
-          onTap: () => auth.setImgUrl(),
-          child: const MyButtonString(text: 'Применить'),
-        ),
-      )
-  ;
-    }
 
     return InkWell(
-      onTap: () => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
+      onTap: () => customShowDialog(
+        widget: Padding(
+          padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+          child: Wrap(
+            spacing: ThemeAppSize.kInterval12,
+            runSpacing: ThemeAppSize.kInterval12,
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                    width: context.width / 1.5,
+                    child: SmallText(
+                      height: 1.2,
+                      text: 'Обновить данные о фотографии',
+                      maxLines: 2,
+                      size: ThemeAppSize.kFontSize18 * 1.5,
+                    ),
+                  ),
+                  const Spacer(),
+                  InkWell(
+                      onTap: () => Get.back(),
+                      child: Icon(Icons.close, color: context.theme.hintColor)),
+                ],
+              ),
+              SizedBox(height: ThemeAppSize.kInterval12),
+              MyTextField(textController: auth.cPhotoURL, text: 'URL'),
+              SizedBox(height: ThemeAppSize.kInterval12),
+              InkWell(
+                onTap: () => auth.setImgUrl(),
+                child: const MyButtonString(text: 'Применить'),
+              ),
+            ],
           ),
-          backgroundColor: context.theme.scaffoldBackgroundColor,
-          contentPadding: EdgeInsets.all(ThemeAppSize.kInterval12),
-          buttonPadding: EdgeInsets.zero,
-          iconPadding: EdgeInsets.zero,
-          icon: title(),
-          content: content(),
-          actions: [submit()],
         ),
       ),
       child: WrapperIcon(
@@ -277,8 +249,6 @@ class _IconEditImg extends StatelessWidget {
     );
   }
 }
-
-
 
 class _IconSetting extends StatelessWidget {
   const _IconSetting();

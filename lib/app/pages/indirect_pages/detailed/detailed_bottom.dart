@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/cart_controller.dart';
@@ -56,7 +54,7 @@ class _TotalPriceWidget extends StatelessWidget {
             ),
             child: BigText(
               text: '\$ ${_.totalAmount} | ${'go_to_cart'.tr}',
-              color: context.theme.accentColor,
+              color: ThemeAppColor.kBGColor,
               size: ThemeAppSize.kFontSize20,
             ),
           );

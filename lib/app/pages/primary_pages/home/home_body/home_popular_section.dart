@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -214,7 +214,7 @@ class _ItemTitle extends StatelessWidget {
               text: product.name!,
               size: ThemeAppSize.kFontSize20,
               maxLines: 2,
-              color: context.theme.accentColor,
+              color: ThemeAppColor.kBGColor,
             ),
           ),
         ],
@@ -279,7 +279,7 @@ class _ErrorLoadPopular extends StatelessWidget {
                   text: 'Check internet connection',
                   maxLines: 2,
                   size: ThemeAppSize.kFontSize20,
-                  color: context.theme.accentColor,
+                  color: ThemeAppColor.kBGColor,
                 ),
                 SizedBox(height: ThemeAppSize.kInterval24),
                 InkWell(

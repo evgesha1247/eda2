@@ -12,11 +12,10 @@ class CartRepo {
 
   List<String> _cart = [];
   List<String> _cartHistory = [];
-
-  void addToLocalCartList(List<CartModel> cartList) {
-    // sharedStore.remove(AppConstansts.CART_LIST);
+  // sharedStore.remove(AppConstansts.CART_LIST);
     // sharedStore.remove(AppConstansts.CART_HISTORY_LIST);
     // return;
+  void addToLocalCartList(List<CartModel> cartList) {
     _cart = [];
     var time = DateTime.now().toString();
     for (var element in cartList) {
@@ -57,6 +56,7 @@ class CartRepo {
     final data = Get.find<AuthController>().userData;
 
     final order = [];
+
     for (var element in cartList) {
       order.add(
         OrderModel(count: element.count!, name: element.product!.name!)
@@ -72,6 +72,7 @@ class CartRepo {
       "user phone": data['phone'],
       "user adress": data['adress'],
     });
+
   }
 
   void removeCart() {

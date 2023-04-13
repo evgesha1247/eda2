@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,9 +29,6 @@ class Themes {
     primaryColor: ThemeAppColor.kAccent,
     // text
     hintColor: ThemeAppColor.kFrontColor,
-    // static
-    accentColor: ThemeAppColor.kBGColor,
-
 
   );
 
@@ -46,8 +42,7 @@ class Themes {
     primaryColor: ThemeAppColor.kAccent,
     // text
     hintColor: ThemeAppColor.kTextDark,
-    // static
-    accentColor: ThemeAppColor.kBGColor,
+
 
   );
 }

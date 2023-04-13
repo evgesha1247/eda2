@@ -1,12 +1,8 @@
-// ignore_for_file: avoid_print, unused_import
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/pages/indirect_pages/splash/splash_controller.dart';
 import 'package:text/app/routes/main_routes.dart';
-import 'package:text/app/theme/theme_app.dart';
-import 'package:text/helper/dependencies.dart';
 
 
 class AuthRepo extends GetxController {
@@ -58,12 +54,14 @@ class AuthRepo extends GetxController {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        Get.snackbar('weak password !', 'please check the password');
+        Get.snackbar('weak password !', 'please check the password',
+            snackPosition: SnackPosition.TOP);
       } else if (e.code == 'email-already-in-use') {
-        Get.snackbar('email already in use !', 'please check the email');
+        Get.snackbar('email already in use !', 'please check the email',
+            snackPosition: SnackPosition.TOP);
       }
     } catch (e) {
-      Get.snackbar('Ошибка !', '$e');
+      Get.snackbar('Ошибка !', '$e', snackPosition: SnackPosition.TOP);
     }
   }
 

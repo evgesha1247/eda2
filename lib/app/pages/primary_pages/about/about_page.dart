@@ -14,9 +14,10 @@ class AboutPage extends StatelessWidget {
       padding: EdgeInsets.all(ThemeAppSize.kInterval24),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          _BodyTitle(title: 'title'),
-          _BodyAbout(),
+        children: [
+          const _BodyTitle(title: 'Список заведений'),
+          SizedBox(height: ThemeAppSize.kInterval12),
+          const _BodyAbout(),
         ],
       ),
     );

@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/theme/theme_app.dart';
@@ -44,7 +42,7 @@ class _TotalPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = ThemeMode.system == ThemeMode.dark
         ? context.theme.scaffoldBackgroundColor
-        : context.theme.accentColor;
+        : ThemeAppColor.kBGColor;
     return GetBuilder<CartController>(
       builder: (_) {
         final totalAmount = _.totalAmount.toString();
@@ -100,8 +98,8 @@ class _ButtonCart extends StatelessWidget {
             child: BigText(
               text: 'pay'.tr,
               color: controller.getItemsList.isNotEmpty
-                  ? context.theme.accentColor
-                  : context.theme.accentColor.withOpacity(0.5),
+                  ? ThemeAppColor.kBGColor
+                  : ThemeAppColor.kBGColor.withOpacity(0.5),
               size: ThemeAppSize.kFontSize20,
             ),
           ),

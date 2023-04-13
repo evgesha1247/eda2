@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
@@ -227,7 +226,7 @@ class _ItemName extends StatelessWidget {
       child: BigText(
         text: name,
         maxLines: 2,
-        color: context.theme.accentColor,
+        color: ThemeAppColor.kBGColor,
         size: ThemeAppSize.kFontSize16 * 1.4,
       ),
     );
@@ -275,7 +274,7 @@ class _ItemPrice extends StatelessWidget {
         child: Center(
           child: SmallText(
             text: '${'total'.tr}  $price \$',
-            color: context.theme.accentColor,
+            color: ThemeAppColor.kBGColor,
           ),
         ),
       ),
@@ -292,7 +291,7 @@ class _ItemDescription extends StatelessWidget {
       maxLines: 3,
       size: ThemeAppSize.kFontSize16,
       text: description,
-      color: context.theme.accentColor,
+      color: ThemeAppColor.kBGColor,
     );
   }
 }

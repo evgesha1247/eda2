@@ -4,6 +4,7 @@ import 'package:text/app/models/products_model.dart';
 import '../data/repository/cart_repo.dart';
 import '../models/cart_model.dart';
 import '../theme/theme_app.dart';
+import 'auth_controller.dart';
 
 class CartController extends GetxController {
   final CartRepo cartRepo;
@@ -14,10 +15,18 @@ class CartController extends GetxController {
       _items.entries.map((e) => e.value).toList();
 
 void buy() {
+    final data = Get.find<AuthController>().userData;
+    if (data['adress'] == null ||
+        data['adress'] == '' ||
+        data['phone'] == null ||
+        data['phone'] == '') {
+      Get.snackbar('адрес или телефон', ' вы не указали данные или они не верны !');
+    } else {
     cartRepo.addToLocalCartList(getItemsList);
     cartRepo.addToLocalCartHistoryList();
     cartRepo.pushCartGlobal(getItemsList);
     _clearCart();
+    }
   }
 
   void _clearCart() {
@@ -113,7 +122,6 @@ void buy() {
   }
   /// добавить 1 либо удалить
   void addOneInCart(ProductModel product) {
-
     if (existInCart(product)) {
       _items.remove(product.id);
     } else {

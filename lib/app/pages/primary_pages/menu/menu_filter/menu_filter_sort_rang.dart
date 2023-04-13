@@ -1,7 +1,4 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/widgets/text/my_text.dart';
@@ -97,8 +94,8 @@ class _ItemsBuild extends StatelessWidget {
               label: BigText(
                 text: controller.mapCategory.keys.toList()[index],
                 color: controller.mapCategory.values.toList()[index]
-                    ? context.theme.accentColor
-                    : context.theme.accentColor.withOpacity(0.5),
+                    ? ThemeAppColor.kBGColor
+                    : ThemeAppColor.kBGColor.withOpacity(0.5),
               ),
               labelPadding: EdgeInsets.symmetric(
                 horizontal: ThemeAppSize.kInterval24,
@@ -106,7 +103,7 @@ class _ItemsBuild extends StatelessWidget {
               ),
               selectedColor: context.theme.cardColor,
               backgroundColor: context.theme.cardColor,
-              checkmarkColor: context.theme.accentColor,
+              checkmarkColor: ThemeAppColor.kBGColor,
               selected: controller.mapCategory.values.toList()[index],
               onSelected: (bool value) => controller.onSelectChip(
                   value, controller.mapCategory.keys.toList()[index]),

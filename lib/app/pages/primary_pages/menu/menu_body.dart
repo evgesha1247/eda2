@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controller/menu_controller.dart';
@@ -43,9 +42,9 @@ class BodyMenu extends StatelessWidget {
     );
   }
 }
-class ContentContainer extends StatelessWidget {
+class _ContentContainer extends StatelessWidget {
   final Widget child;
-  const ContentContainer({required this.child});
+  const _ContentContainer({required this.child});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -84,7 +83,7 @@ class _ItemBuilderGrid extends StatelessWidget {
           0,
           0,
         ),
-        child: ContentContainer(
+        child: _ContentContainer(
             child: Stack(
               children: [
                 _ItemImg(product: item),
@@ -104,7 +103,7 @@ class _ItemBuilderList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = ThemeAppSize.kHeight100 * 1.2;
-    return ContentContainer(
+    return _ContentContainer(
         child: Row(
           children: [
             _ItemImg(product: item, w: size, h: size),
@@ -213,7 +212,7 @@ class _ItemPrice extends StatelessWidget {
       ),
       child: BigText(
         text: '\$${product.price}',
-        color: context.theme.accentColor,
+        color: ThemeAppColor.kBGColor,
       ),
     );
   }

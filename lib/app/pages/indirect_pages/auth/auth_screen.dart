@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../theme/theme_app.dart';
@@ -68,19 +66,19 @@ class _AuthBody extends StatelessWidget {
             ? const SizedBox.shrink()
             : Column(
                 children: [
-                  MyTextField(
+                  MyTextField2(
                     controller: controller.cName,
                     text: 'Ivan',
                     icon: Icons.person,
                   ),
                   SizedBox(height: ThemeAppSize.kInterval12),
-                  MyTextField(
+                  MyTextField2(
                     controller: controller.cPhone,
                     text: 'Phone',
                     icon: Icons.phone,
                   ),
                   SizedBox(height: ThemeAppSize.kInterval12),
-                  MyTextField(
+                  MyTextField2(
                     controller: controller.cPhotoURL,
                     text: 'img URL',
                     icon: Icons.image,
@@ -88,13 +86,13 @@ class _AuthBody extends StatelessWidget {
                   SizedBox(height: ThemeAppSize.kInterval12),
                 ],
               )),
-        MyTextField(
+        MyTextField2(
           controller: controller.cEmail,
           text: 'Ivan@gmail.com',
           icon: Icons.mail,
         ),
         SizedBox(height: ThemeAppSize.kInterval12),
-        MyTextField(
+        MyTextField2(
             controller: controller.cPassword,
             text: 'Password',
             icon: Icons.key),
@@ -152,8 +150,8 @@ class _ToggLog extends StatelessWidget {
   }
 }
 
-class MyTextField extends StatelessWidget {
-  const MyTextField({
+class MyTextField2 extends StatelessWidget {
+  const MyTextField2({
     super.key,
     this.icon,
     required this.controller,
@@ -178,12 +176,12 @@ class MyTextField extends StatelessWidget {
           controller: controller,
           obscureText: !status.value,
           textInputAction: TextInputAction.next,
-          cursorColor: context.theme.accentColor,
+          cursorColor: ThemeAppColor.kBGColor,
           keyboardType:
-              text == 'Phone' ? TextInputType.number : TextInputType.text,
+              text == 'phone'.tr ? TextInputType.number : TextInputType.text,
           decoration: InputDecoration(
-            hintStyle: TextStyle(color: context.theme.accentColor),
-            hintText: text,
+            hintStyle: const TextStyle(color: ThemeAppColor.kBGColor),
+            hintText: text.tr,
             suffixIcon: text == 'Password'
                 ? GestureDetector(
                     onTap: () => status.value = !status.value,
@@ -191,12 +189,15 @@ class MyTextField extends StatelessWidget {
                       status.value
                           ? Icons.visibility_rounded
                           : Icons.visibility_off_rounded,
-                      color: context.theme.accentColor,
+                      color: ThemeAppColor.kBGColor,
                     ),
                   )
                 : null,
             prefixIcon: icon != null
-                ? Icon(icon, color: context.theme.accentColor)
+                ? Icon(
+                    icon,
+                    color: ThemeAppColor.kBGColor,
+                  )
                 : null,
             border: InputBorder.none,
           ),

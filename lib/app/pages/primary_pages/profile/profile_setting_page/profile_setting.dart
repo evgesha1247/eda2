@@ -204,7 +204,9 @@ class _ItemTextFieldBuild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = OutlineInputBorder(
-        borderSide: BorderSide(color: context.theme.accentColor),
+        borderSide: const BorderSide(
+          color: ThemeAppColor.kBGColor,
+        ),
         borderRadius: BorderRadius.all(Radius.circular(
           ThemeAppSize.kRadius18,
         )));
@@ -216,8 +218,14 @@ class _ItemTextFieldBuild extends StatelessWidget {
       keyboardType: text == 'Phone' ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         isDense: true,
-        label: BigText(text: text, color: context.theme.accentColor),
-        prefixIcon: Icon(Icons.edit, color: context.theme.accentColor),
+        label: BigText(
+          text: text,
+          color: ThemeAppColor.kBGColor,
+        ),
+        prefixIcon: const Icon(
+          Icons.edit,
+          color: ThemeAppColor.kBGColor,
+        ),
         enabledBorder: style,
         border: style,
         focusedBorder: style,

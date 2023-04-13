@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text/utils/app_constants.dart';
 
 import '../model/restoran_model.dart';
@@ -40,7 +39,6 @@ class AboutController extends GetxController {
         ),
       );
     });
-    print(listInfoRestorans);
 
     update();
   }

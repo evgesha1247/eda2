@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -123,7 +121,7 @@ class _Item extends StatelessWidget {
               child: BigText(
                 text: item.product!.name!,
                 maxLines: 3,
-                color: Get.context!.theme.accentColor,
+                color: ThemeAppColor.kBGColor,
                 size: ThemeAppSize.kFontSize20,
               ),
             ),
