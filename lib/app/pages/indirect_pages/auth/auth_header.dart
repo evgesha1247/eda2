@@ -24,10 +24,9 @@ class HeaderAuth extends StatelessWidget {
             child: WrapperIcon(
               colorBorder: context.theme.hintColor,
               bg: context.theme.scaffoldBackgroundColor,
-              child: Icon(
+              icon:
                 Icons.settings,
-                color: context.theme.hintColor,
-              ),
+
             ),
           ),
         ),
@@ -53,13 +52,13 @@ class _SettingBody extends StatelessWidget {
                   size: ThemeAppSize.kFontSize20 * 1.3,
                 ),
               ),
-              // Align(
-              //   alignment: Alignment.topRight,
-              //   child: InkWell(
-              //     child: Icon(Icons.close, color: context.theme.hintColor),
-              //      onTap: () => Get.back(),
-              //   ),
-              // ),
+              Align(
+                alignment: Alignment.topRight,
+                child: InkWell(
+                  child: Icon(Icons.close, color: context.theme.hintColor),
+                  onTap: () => Get.back(),
+                ),
+              ),
             ],
           ),
           SizedBox(height: ThemeAppSize.kInterval24),

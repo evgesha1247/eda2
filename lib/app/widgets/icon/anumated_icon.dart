@@ -33,22 +33,23 @@ class CartAddIcon extends StatelessWidget {
             bg: bg != Colors.transparent
                 ? bg.withOpacity(0.75)
                 : Colors.transparent,
-            child: const Icon(
+            icon:
               Icons.done,
-              color: ThemeAppColor.kGreen,
-            ),
+            colorIcon: ThemeAppColor.kGreen,
+
           ),
           widget2: WrapperIcon(
             colorBorder: context.theme.hintColor,
             bg: bg != Colors.transparent
                 ? bg.withOpacity(0.5)
                 : Colors.transparent,
-            child: Icon(
+            icon:
               Icons.add,
-              color: iconColor == Colors.transparent
+            colorIcon:
+                iconColor == Colors.transparent
                   ? context.theme.hintColor
                   : iconColor,
-            ),
+
           ),
         );
       },
@@ -79,22 +80,23 @@ class FavoritIcon extends StatelessWidget {
             bg: bg != Colors.transparent
                 ? bg.withOpacity(0.75)
                 : Colors.transparent,
-            child: const Icon(
+            icon:
               Icons.favorite,
-              color: Colors.pink,
+            colorIcon: Colors.pink,
             ),
-          ),
+
           widget2: WrapperIcon(
             colorBorder: context.theme.hintColor,
             bg: bg != Colors.transparent
                 ? bg.withOpacity(0.5)
                 : Colors.transparent,
-            child: Icon(
+            icon:
               Icons.favorite_outline,
-              color: iconColor == Colors.transparent
+            colorIcon:
+                iconColor == Colors.transparent
                   ? context.theme.hintColor
                   : iconColor,
-            ),
+
           ),
         );
       },

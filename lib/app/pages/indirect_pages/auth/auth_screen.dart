@@ -13,17 +13,16 @@ class AuthPage extends StatelessWidget {
         padding: EdgeInsets.all(ThemeAppSize.kInterval12),
         child: Column(
           children: [
-            Expanded(
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  const HeaderAuth(),
-                  SizedBox(height: ThemeAppSize.kInterval12),
-                  const BodyAuth(),
-                  SizedBox(height: ThemeAppSize.kInterval12),
-                  const BottomAuth(),
-                ],
-              ),
+            ListView(
+              shrinkWrap: true,
+              children: [
+
+                const HeaderAuth(),
+                SizedBox(height: ThemeAppSize.kInterval12),
+                const BodyAuth(),
+                SizedBox(height: ThemeAppSize.kInterval12),
+                const BottomAuth(),
+              ],
             ),
           ],
         ),

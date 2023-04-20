@@ -46,10 +46,7 @@ class _HeaderIcons extends StatelessWidget {
             bg: context.theme.scaffoldBackgroundColor,
           ),
           const Spacer(),
-          ButtonIconCart(
-            iconColor: context.theme.hintColor,
-            bg: context.theme.scaffoldBackgroundColor,
-          ),
+          const ButtonIconCart(),
         ],
       ),
     );

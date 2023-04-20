@@ -100,13 +100,13 @@ class _ItemImg extends StatelessWidget {
         : ThemeAppSize.kHeight100 * 1.5;
     return InkWell(
       onTap: () => sortByMass(img: imgURL, index: index),
-      child: Container(
+      child: ClipRRect(
         clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(ThemeAppSize.kRadius12),
+        borderRadius: BorderRadius.all(
+            Radius.circular(ThemeAppSize.kRadius12)
           ),
-        ),
+
+
         child: Image(
           width: index != 3 ? sizeImg : double.maxFinite,
           height: sizeImg,

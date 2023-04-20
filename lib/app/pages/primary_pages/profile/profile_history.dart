@@ -125,6 +125,8 @@ class _HistoryCount extends StatelessWidget {
             size: ThemeAppSize.kFontSize20,
           ),
           SizedBox(height: ThemeAppSize.kInterval5),
+
+
           Container(
             decoration: BoxDecoration(
               border: Border.all(

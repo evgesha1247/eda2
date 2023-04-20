@@ -8,9 +8,8 @@ import '../../../../models/products_model.dart';
 import '../../../../theme/theme_app.dart';
 import '../../../../widgets/icon/anumated_icon.dart';
 import '../../../../widgets/load/circular.dart';
+import '../../../../widgets/text/my_button_text.dart';
 import '../../../../widgets/text/my_text.dart';
-import '../../profile/profile_page.dart';
-
 class PopularHome extends StatelessWidget {
   const PopularHome({Key? key}) : super(key: key);
   @override

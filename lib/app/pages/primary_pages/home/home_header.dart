@@ -79,10 +79,9 @@ class _UserIconHeaderHome extends StatelessWidget {
       onTap: () => controller.setCurrentIndexTab(3),
       child: WrapperIcon(
         colorBorder: context.theme.hintColor,
-        child: Icon(
+        icon:
           Icons.person_outline,
-          color: context.theme.hintColor,
-        ),
+
       ),
     );
   }

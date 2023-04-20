@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/auth_controller.dart';
-import '../../../widgets/icon/wrap_icon.dart';
+import '../../../widgets/text/my_button_text.dart';
 import '../../../widgets/text/my_text.dart';
 
 class BottomAuth extends StatelessWidget {
@@ -10,10 +10,9 @@ class BottomAuth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: const [
         _ToggLog(),
-        Spacer(),
         _AuthButtonSubmit(),
       ],
     );
@@ -28,14 +27,11 @@ class _AuthButtonSubmit extends StatelessWidget {
     return Obx(
       () => InkWell(
         onTap: () => controller.authUser(),
-        child: WrapperIcon(
-          colorBorder: context.theme.hintColor,
-          child: Center(
-            child: BigText(
-              text: controller.buttonText,
-            ),
-          ),
-        ),
+          child: MyButtonString(
+            text: controller.buttonText,
+          )
+
+
       ),
     );
   }

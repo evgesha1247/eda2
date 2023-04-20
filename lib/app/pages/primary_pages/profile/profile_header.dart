@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:text/app/pages/primary_pages/profile/favorite/controller/favorite_controller.dart';
 import 'package:text/app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import 'package:text/app/pages/primary_pages/profile/profile_history.dart';
-import 'package:text/app/pages/primary_pages/profile/profile_page.dart';
 import 'package:text/app/pages/primary_pages/profile/profile_setting_page/profile_setting.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../../controllers/cart_controller.dart';
@@ -11,6 +10,7 @@ import '../../../theme/theme_app.dart';
 import '../../../widgets/animation/anim_scale.dart';
 import '../../../widgets/icon/wrap_icon.dart';
 import '../../../widgets/show_dialog/custom_show_dialog.dart';
+import '../../../widgets/text/my_button_text.dart';
 import '../../../widgets/text/my_text.dart';
 import '../../../widgets/text_field/my_text_field.dart';
 
@@ -79,7 +79,9 @@ class _ImgUser extends StatelessWidget {
                         ////////  </Errro>  //////////
 
                         return Image.asset(
-                            fit: BoxFit.cover, 'assets/imgs/error_avatar.png');
+                          fit: BoxFit.cover,
+                          'assets/imgs/error_avatar.png',
+                        );
                       },
                     );
                   },
@@ -240,10 +242,9 @@ class _IconEditImg extends StatelessWidget {
       child: WrapperIcon(
         colorBorder: context.theme.hintColor,
         bg: context.theme.scaffoldBackgroundColor,
-        child: Icon(
+        icon:
           Icons.image_search_rounded,
-          color: context.theme.hintColor,
-        ),
+
       ),
     );
   }
@@ -261,10 +262,9 @@ class _IconSetting extends StatelessWidget {
       child: WrapperIcon(
         colorBorder: context.theme.hintColor,
         bg: context.theme.scaffoldBackgroundColor,
-        child: Icon(
+        icon:
           Icons.settings,
-          color: context.theme.hintColor,
-        ),
+
       ),
     );
   }

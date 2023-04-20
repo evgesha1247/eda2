@@ -77,8 +77,8 @@ class _ItemBuilder extends StatelessWidget {
               title: BigText(text: rest!.adres),
               leading: WrapperIcon(
                 colorBorder: color,
-                child: Icon(Icons.location_on, color: color),
-              ),
+                icon: Icons.location_on, colorIcon: color),
+
               subtitle: SmallText(text: rest.dataTime.values.toString()),
               trailing: SmallText(text: rest.status ? 'Открыт' : 'Закрыт', color: color),
             ),

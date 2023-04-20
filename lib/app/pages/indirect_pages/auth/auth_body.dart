@@ -6,9 +6,9 @@ import '../../../controllers/auth_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/icon/wrap_icon.dart';
 import '../../../widgets/show_dialog/custom_show_dialog.dart';
+import '../../../widgets/text/my_button_text.dart';
 import '../../../widgets/text/my_text.dart';
 import '../../../widgets/text_field/my_text_field.dart';
-
 class BodyAuth extends StatelessWidget {
   const BodyAuth({super.key});
   @override
@@ -91,11 +91,9 @@ class _AuthRegisterSection extends StatelessWidget {
 
 class _ImgUser extends StatelessWidget {
   const _ImgUser();
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
-
     Widget imgBloc() {
       return Stack(
         alignment: AlignmentDirectional.bottomEnd,
@@ -106,31 +104,40 @@ class _ImgUser extends StatelessWidget {
                 child: controller.imgUrlRegister.value == ''
                     ? WrapperIcon(
                         colorBorder: context.theme.hintColor,
-                        child: Icon(Icons.person, color: context.theme.hintColor),
+                        icon: Icons.person,
                       )
-                    : Image.network(
-                        width: ThemeAppSize.kHeight75 * 2,
-                        height: 150,
-                        fit: BoxFit.cover,
-                        controller.cPhotoURL.text,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Text('data');
-                        },
-                        loadingBuilder: (context, child, loadingProgress) {
-                          return loadingProgress == null
-                              ? child
-                              : CircularWidget(
-                                  value: loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
-                                );
-                        },
+                    : ClipRRect(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(ThemeAppSize.kRadius12),
+                        ),
+                        child: Image.network(
+                          width: ThemeAppSize.kHeight75 * 2,
+                          height: 150,
+                          fit: BoxFit.cover,
+                          controller.cPhotoURL.text,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              fit: BoxFit.cover,
+                              'assets/imgs/error_avatar.png',
+                            );
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            return loadingProgress == null
+                                ? child
+                                : CircularWidget(
+                                    value: loadingProgress.expectedTotalBytes != null
+                                        ? loadingProgress.cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  );
+                          },
+                        ),
                       ),
               )),
           WrapperIcon(
+            bg: context.theme.scaffoldBackgroundColor,
             colorBorder: context.theme.hintColor,
-            child: Icon(Icons.add, color: context.theme.hintColor),
+            icon: Icons.add,
           ),
         ],
       );
@@ -183,7 +190,9 @@ class _UpDataImg extends StatelessWidget {
           ),
           InkWell(
             onTap: () => controller.setUrlRegister(),
-            child: SmallText(text: 'save'),
+              child: const MyButtonString(
+                text: 'save',
+              )
           ),
           SizedBox(height: ThemeAppSize.kInterval24),
         ],

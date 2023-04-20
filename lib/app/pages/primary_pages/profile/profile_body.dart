@@ -7,6 +7,7 @@ import 'package:text/app/widgets/icon/wrap_icon.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../../theme/theme_app.dart';
 import '../../../widgets/animation/anim_scale.dart';
+import '../../../widgets/text/my_button_text.dart';
 import '../../../widgets/text/my_text.dart';
 import 'favorite/favorite_body.dart';
 
@@ -38,10 +39,8 @@ class _UserName extends StatelessWidget {
         )));
     return AnimationScaleWidget(
       select: Get.find<GuidingController>().startAnimationProfile,
-      widget: Obx(() => Container(
-            padding: EdgeInsets.symmetric(
-              vertical: ThemeAppSize.kInterval24,
-              horizontal: ThemeAppSize.kInterval24,
+      widget: Obx(() => Padding(
+            padding: EdgeInsets.all(ThemeAppSize.kInterval12
             ),
             child: (controller.userData['name'] != null &&
                     controller.userData['name'].toString().trim() != '' &&
@@ -59,7 +58,7 @@ class _UserName extends StatelessWidget {
                         onTap: () => pCon.togEditName(),
                         child: WrapperIcon(
                           colorBorder: context.theme.hintColor,
-                          child: Icon(Icons.edit, color: context.theme.hintColor),
+                          icon: Icons.edit,
                         ),
                       ),
                     ],
@@ -75,7 +74,7 @@ class _UserName extends StatelessWidget {
                         },
                         child: WrapperIcon(
                           colorBorder: context.theme.hintColor,
-                          child: Icon(Icons.edit, color: context.theme.hintColor),
+                          icon: Icons.edit,
                         ),
                       ),
                       isDense: true,
@@ -139,7 +138,7 @@ class _UserInfoOpen extends StatelessWidget {
                       const Spacer(),
                       WrapperIcon(
                         colorBorder: context.theme.hintColor,
-                        child: Icon(Icons.edit_note, color: context.theme.hintColor),
+                        icon: Icons.edit_note,
                       ),
                     ],
                   ),
@@ -156,20 +155,9 @@ class _UserInfoOpen extends StatelessWidget {
                       onTap: () => controller.togVisibility(),
                       child: WrapperIcon(
                         colorBorder: context.theme.hintColor,
-                        child: Wrap(
-                          children: [
-                            SmallText(
-                                text: 'скрыть инфу',
-                                size: 16,
-                                color: context.theme.hintColor),
-                            SizedBox(width: ThemeAppSize.kInterval12),
-                            Icon(
-                              Icons.no_encryption_gmailerrorred_outlined,
-                              size: 16,
-                              color: context.theme.hintColor,
-                            )
-                          ],
-                        ),
+                        icon: Icons.no_encryption_gmailerrorred_outlined,
+
+
                       )),
                 ],
               ),
@@ -193,7 +181,7 @@ class _UserInfoClose extends StatelessWidget {
                 opacity: controller.isVisibility.value ? 1 : 0,
                 child: WrapperIcon(
                   colorBorder: context.theme.hintColor,
-                  child: Icon(Icons.visibility_off, color: context.theme.hintColor),
+                  icon: Icons.visibility_off,
                 ),
               ),
             )),
@@ -283,20 +271,12 @@ class _UserLogout extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: ThemeAppSize.kInterval24),
-      child: Wrap(
-        children: [
-          InkWell(
+      padding: EdgeInsets.all(ThemeAppSize.kInterval12),
+      child: InkWell(
             onTap: () => showMaterialDialog(context),
-            child: WrapperIcon(
-              colorBorder: ThemeAppColor.kAccent,
-              child: BigText(
-                text: 'logout'.tr,
-                color: ThemeAppColor.kAccent,
-              ),
-            ),
-          ),
-        ],
+        child: MyButtonString(
+          text: 'logout'.tr,
+        ),
       ),
     );
   }

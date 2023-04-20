@@ -53,9 +53,9 @@ class MyTextField extends StatelessWidget {
         onTap: () => status.value = !status.value,
         child: WrapperIcon(
           colorBorder: context.theme.hintColor.withOpacity(0.5),
-          child: Icon(
+          icon:
               status.value ? Icons.visibility_rounded : Icons.visibility_off_rounded,
-              color: context.theme.hintColor),
+
         ),
       );
     }

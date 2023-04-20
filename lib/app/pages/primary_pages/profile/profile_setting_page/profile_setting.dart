@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 import '../../../../controllers/auth_controller.dart';
 import '../../../../theme/theme_app.dart';
 import '../../../../widgets/setting_preference_menu/setting_preference_menu.dart';
+import '../../../../widgets/text/my_button_text.dart';
 import '../../../../widgets/text/my_text.dart';
-import '../profile_page.dart';
-
 class ProfileSetting extends StatelessWidget {
   const ProfileSetting({super.key});
   @override
@@ -192,6 +191,7 @@ class _SaveSetting extends StatelessWidget {
     final controller = Get.find<AuthController>();
     return Row(
       children: [
+
         InkWell(
           child: MyButtonString(text: 'save'.tr),
           onTap: () => controller.saveUpData(),
