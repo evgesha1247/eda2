@@ -36,11 +36,10 @@ class MyTextField extends StatelessWidget {
   final TextEditingController textController;
   final String text;
   final dynamic icon;
-  final dynamic keyboardType;
   const MyTextField({
     super.key,
     this.icon = Icons.edit,
-    this.keyboardType = TextInputType.text,
+
     required this.textController,
     required this.text,
   });
@@ -68,7 +67,7 @@ class MyTextField extends StatelessWidget {
         textInputAction: TextInputAction.next,
         obscureText: !status.value,
         cursorColor: ThemeAppColor.kAccent,
-        keyboardType: keyboardType,
+        keyboardType: text == 'Phone' ? TextInputType.number : TextInputType.text,
         style: TextStyle(color: context.theme.hintColor),
         decoration: InputDecoration(
           hintText: textController.text.toString(),

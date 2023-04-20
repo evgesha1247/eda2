@@ -61,7 +61,8 @@ class _ItemBuilder extends StatelessWidget {
     return GetBuilder<AboutController>(
       builder: (_) {
         final rest = _.listInfoRestorans[index];
-        final color = rest.status ? ThemeAppColor.kGreen : ThemeAppColor.kAccent;
+        final color =
+            rest?.status ?? false ? ThemeAppColor.kGreen : ThemeAppColor.kAccent;
         return InkWell(
           onTap: () => _.togSelectPickup(index),
           child: Container(
@@ -73,7 +74,7 @@ class _ItemBuilder extends StatelessWidget {
                   : null,
             ),
             child: ListTile(
-              title: BigText(text: rest.adres),
+              title: BigText(text: rest!.adres),
               leading: WrapperIcon(
                 colorBorder: color,
                 child: Icon(Icons.location_on, color: color),

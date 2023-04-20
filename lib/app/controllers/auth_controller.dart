@@ -10,6 +10,14 @@ class AuthController extends GetxController {
   //// tog page
   final RxBool _isLogScreen = true.obs;
   get isLogScreen => _isLogScreen.value;
+
+
+  RxString imgUrlRegister = ''.obs;
+  void setUrlRegister() {
+    imgUrlRegister.value = cPhotoURL.text;
+  }
+
+
   final RxString _buttonText = ''.obs;
   get buttonText =>
       _buttonText.value = _isLogScreen.value ? 'login'.tr : 'register'.tr;

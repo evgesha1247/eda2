@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../controllers/auth_controller.dart';
 import '../../../../theme/theme_app.dart';
-import '../../../../theme/theme_controller.dart';
-import '../../../../widgets/icon/anumated_icon.dart';
+import '../../../../widgets/setting_preference_menu/setting_preference_menu.dart';
 import '../../../../widgets/text/my_text.dart';
 import '../profile_page.dart';
 
@@ -73,27 +72,7 @@ class _BodyPreference extends StatelessWidget {
     return Column(
       children: [
         _TitleHeaderSection(title: 'preference'.tr),
-        _ItemPreference(
-          title: 'Dark mode'.tr,
-          icon: Icons.dark_mode,
-          trailing: GetBuilder<ThemeAppController>(
-            builder: (_) => Switch(
-              activeColor: ThemeAppColor.kTextDark,
-              activeTrackColor: context.theme.primaryColor,
-              value: !Get.find<ThemeAppController>().isLightTheme,
-              onChanged: (bool value) => _.tooggTheme(),
-            ),
-          ),
-        ),
-        SizedBox(height: ThemeAppSize.kInterval12),
-        _ItemPreference(
-          title: 'Language'.tr,
-          icon: Icons.language,
-          trailing: const ToggLanguage(
-            w1: BigText(text: 'Руский', color: ThemeAppColor.kTextDark),
-            w2: BigText(text: 'English', color: ThemeAppColor.kTextDark),
-          ),
-        ),
+        const SettingPreferenceMenu(),
       ],
     );
   }
@@ -136,34 +115,6 @@ class _TitleHeaderSection extends StatelessWidget {
         ),
         SizedBox(height: ThemeAppSize.kInterval12),
       ],
-    );
-  }
-}
-
-class _ItemPreference extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final Widget trailing;
-  const _ItemPreference({
-    required this.title,
-    required this.icon,
-    required this.trailing,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: context.theme.cardColor,
-        borderRadius: ThemeAppFun.decoration(radius: ThemeAppSize.kRadius12),
-      ),
-      child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
-        dense: true,
-        horizontalTitleGap: 0,
-        leading: Icon(icon, color: ThemeAppColor.kTextDark),
-        title: BigText(text: title, color: ThemeAppColor.kTextDark),
-        trailing: trailing,
-      ),
     );
   }
 }

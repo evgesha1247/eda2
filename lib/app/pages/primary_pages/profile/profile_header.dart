@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/pages/indirect_pages/auth/auth_screen.dart';
 import 'package:text/app/pages/primary_pages/profile/favorite/controller/favorite_controller.dart';
 import 'package:text/app/pages/primary_pages/guiding/controller/guiding_controller.dart';
 import 'package:text/app/pages/primary_pages/profile/profile_history.dart';

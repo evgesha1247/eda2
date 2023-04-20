@@ -7,7 +7,7 @@ import '../model/restoran_model.dart';
 
 class AboutController extends GetxController {
   int selectedIndexPickupAdress = -1;
-  List<RestoranModel> listInfoRestorans = [];
+  List<RestoranModel?> listInfoRestorans = [];
   void togSelectPickup(index) {
     selectedIndexPickupAdress == index
         ? selectedIndexPickupAdress = -1
