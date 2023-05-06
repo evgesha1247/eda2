@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:text/app/controllers/cart_controller.dart';
 import 'package:text/app/models/products_model.dart';
 import '../data/repository/product_repo.dart';
-import '../theme/theme_app.dart';
 
 enum ProductStatusLoad {
   loading,
@@ -103,10 +102,19 @@ class ProductController extends GetxController {
   // проверка на возможность add/sub данного количества
   int _checkCount(int countProduct) {
     if ((_inCartItems + countProduct) < -1) {
-      ThemeAppFun.printSnackBar('You can\'t reduce more !');
+
+      Get.snackbar(
+        'Item count',
+        'You can\'t reduce more !',
+      );
+
       return 0;
     } else if ((_inCartItems + countProduct) > 20) {
-      ThemeAppFun.printSnackBar('You can\'t add more ! ( max count 20 ) ');
+      Get.snackbar(
+        'Item count',
+        'You can\'t add more ! ( max count 20 ) ',
+      );
+
       return 0;
     } else {
       return countProduct;

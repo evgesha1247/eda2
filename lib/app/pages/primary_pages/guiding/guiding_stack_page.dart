@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:text/app/pages/indirect_pages/auth/auth_screen.dart';
+import '../about/about_page.dart';
 import '../profile/profile_page.dart';
 import 'controller/guiding_controller.dart';
 import '../home/home_page.dart';
@@ -16,8 +16,7 @@ class StackPageGuiding extends StatelessWidget {
         children: const [
           HomePage(),
           MenuPage(),
-          // AboutPage(),
-          AuthPage(),
+          AboutPage(),
           ProfilePage(),
         ],
       ),

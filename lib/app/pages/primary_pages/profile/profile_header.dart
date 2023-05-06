@@ -13,6 +13,7 @@ import '../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../../widgets/text/my_button_text.dart';
 import '../../../widgets/text/my_text.dart';
 import '../../../widgets/text_field/my_text_field.dart';
+import 'favorite/favorite_page.dart';
 
 class HeaderProfile extends StatelessWidget {
   const HeaderProfile({super.key});
@@ -107,16 +108,17 @@ class _ProgresUser extends StatelessWidget {
             color: ThemeAppColor.kBGColor,
             height: 0,
           ),
-          SmallText(
-            height: 0,
-            text: text,
-            color: ThemeAppColor.kBGColor,
+          FittedBox(
+            child: SmallText(
+              height: 0,
+              text: text,
+              color: ThemeAppColor.kBGColor,
+            ),
           ),
         ],
       );
     }
 
-    final guidingC = Get.find<GuidingController>();
     final _ = Get.find<GuidingController>();
     return Padding(
       padding: EdgeInsets.all(ThemeAppSize.kInterval24),
@@ -133,7 +135,7 @@ class _ProgresUser extends StatelessWidget {
                   transform: Matrix4.translationValues(
                       0, _.startAnimationProfile.value ? 0 : 100, 0),
                   child: InkWell(
-                    onTap: () => guidingC.setCurrentIndexTab(2),
+                    onTap: () => customShowDialog(widget: const FavoritePage()),
                     child: GetBuilder<FavoriteController>(
                       builder: (_) =>
                           achievementItem('favorite'.tr, _.getFavoriteList.length),

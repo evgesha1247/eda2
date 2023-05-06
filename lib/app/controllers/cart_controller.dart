@@ -3,7 +3,6 @@ import 'package:text/app/controllers/product_controller.dart';
 import 'package:text/app/models/products_model.dart';
 import '../data/repository/cart_repo.dart';
 import '../models/cart_model.dart';
-import '../theme/theme_app.dart';
 import 'auth_controller.dart';
 
 class CartController extends GetxController {
@@ -31,9 +30,7 @@ void buy() {
 
   void _clearCart() {
     _items = {};
-
-    ThemeAppFun.printSnackBar('Thank you for your purchase',
-        title: 'Payment sucess');
+    Get.snackbar('Thank you for your purchase', 'Payment sucess');
     update();
   }
 
@@ -54,6 +51,32 @@ void buy() {
   List<CartModel> getHistoryList() {
     return cartRepo.getCartHistoryListFromLocal();
   }
+
+
+
+
+
+
+////// история
+
+  get history => getHistoryList().reversed.toList();
+
+  Map<String, int> getCartItemsPerOrder() {
+    Map<String, int> cartItemsPerOrder = {};
+    for (int i = 0; i < history.length; i++) {
+      if (cartItemsPerOrder.containsKey(history[i].time)) {
+        cartItemsPerOrder.update(history[i].time!, (countItems) => ++countItems);
+      } else {
+        cartItemsPerOrder.putIfAbsent(history[i].time!, () => 1);
+      }
+    }
+    return cartItemsPerOrder;
+  }
+
+  List<int> get cartOrderTimeList =>
+      getCartItemsPerOrder().entries.map((e) => e.value).toList();
+
+  ///
 
 ///////////////////////////////////////////////
 
@@ -115,7 +138,11 @@ void buy() {
         },
       );
     } else {
-      ThemeAppFun.printSnackBar('You can\'t add zero to carts !');
+
+      Get.snackbar(
+        'You can\'t add zero to carts !',
+        '',
+      );
     }
     cartRepo.addToLocalCartList(getItemsList);
     update();
@@ -159,7 +186,7 @@ void buy() {
 
 
 
-
+  /// удалить элемент с корзины
   void delite(ProductModel product) {
     _items.remove(product.id);
     Get.find<ProductController>()

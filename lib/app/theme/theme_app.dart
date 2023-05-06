@@ -106,14 +106,4 @@ abstract class ThemeAppFun {
     );
   }
 
-  static void printSnackBar(String message, {String title = 'Item count'}) {
-    Get.snackbar(
-      title,
-      message,
-      backgroundColor: Get.context?.theme.primaryColor.withOpacity(0.7),
-      colorText: Get.context?.theme.cardColor,
-      duration: const Duration(milliseconds: 1200),
-      margin: EdgeInsets.all(ThemeAppSize.kInterval12),
-    );
-  }
 }

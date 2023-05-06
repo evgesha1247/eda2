@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:text/app/widgets/animation/anim_scale.dart';
+import '../../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../guiding/controller/guiding_controller.dart';
 import 'controller/favorite_controller.dart';
 import '../../../../models/products_model.dart';
 import '../../../../routes/main_routes.dart';
 import '../../../../theme/theme_app.dart';
 import '../../../../widgets/text/my_text.dart';
+import 'favorite_page.dart';
 
 class FavoriteSection extends StatelessWidget {
   const FavoriteSection({super.key});
@@ -34,7 +36,6 @@ class _TitleFavorite extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<GuidingController>();
-
     return AnimationScaleWidget(
       durationMilliseconds: 1750,
       select: controller.startAnimationProfile,
@@ -44,7 +45,9 @@ class _TitleFavorite extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BigText(text: 'favorites'.tr),
-            SmallText(text: 'see all', color: context.theme.primaryColor),
+            InkWell(
+                onTap: () => customShowDialog(widget: const FavoritePage()),
+                child: SmallText(text: 'see all'.tr, color: context.theme.primaryColor)),
           ],
         ),
       ),
@@ -82,17 +85,13 @@ class _ItemBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<GuidingController>();
-
     return Obx(() => AnimatedContainer(
           curve: Curves.easeInOutBack,
           duration: Duration(milliseconds: 1350 + (index * 350)),
           transform: Matrix4.translationValues(
               controller.startAnimationProfile.value ? 0 : context.width, 0, 0),
           child: GestureDetector(
-              onTap: () => Get.toNamed(
-                    MainRoutes.getDetailed(item.id),
-                    arguments: item,
-                  ),
+              onTap: () => customShowDialog(widget: const FavoritePage()),
               child: Container(
                 width: ThemeAppSize.kHeight100,
                 height: ThemeAppSize.kHeight100,

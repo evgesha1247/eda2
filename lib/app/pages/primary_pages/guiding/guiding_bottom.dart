@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:text/app/theme/theme_app.dart';
 import 'controller/guiding_controller.dart';
 import 'model/guiding_menu_model.dart';
 
@@ -15,6 +16,7 @@ class BottomGuiding extends StatelessWidget {
         currentIndex: constroller.currentIndexTab,
         selectedItemColor: context.theme.hintColor,
         unselectedItemColor: context.theme.hintColor.withOpacity(0.5),
+        selectedFontSize: ThemeAppSize.kFontSize18,
         type: BottomNavigationBarType.fixed,
         backgroundColor: context.theme.scaffoldBackgroundColor,
         elevation: 5,

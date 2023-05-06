@@ -9,7 +9,7 @@ import '../../../theme/theme_app.dart';
 import '../../../widgets/animation/anim_scale.dart';
 import '../../../widgets/text/my_button_text.dart';
 import '../../../widgets/text/my_text.dart';
-import 'favorite/favorite_body.dart';
+import 'favorite/favorite_section.dart';
 
 class BodyProfile extends StatelessWidget {
   const BodyProfile({super.key});

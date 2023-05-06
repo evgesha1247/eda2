@@ -9,23 +9,8 @@ class HistoryPayProfile extends StatelessWidget {
   const HistoryPayProfile({super.key});
   @override
   Widget build(BuildContext context) {
-    var history = Get.find<CartController>().getHistoryList().reversed.toList();
+    final CartController controller = Get.find<CartController>();
 
-    Map<String, int> cartItemsPerOrder = {};
-
-    for (int i = 0; i < history.length; i++) {
-      if (cartItemsPerOrder.containsKey(history[i].time)) {
-        cartItemsPerOrder.update(
-            history[i].time!, (countItems) => ++countItems);
-      } else {
-        cartItemsPerOrder.putIfAbsent(history[i].time!, () => 1);
-      }
-    }
-
-    List<int> cartOrderTimeList() =>
-        cartItemsPerOrder.entries.map((e) => e.value).toList();
-
-    List<int> itemsPerOrder = cartOrderTimeList();
     var listCount = 0;
     return Container(
       constraints: BoxConstraints(maxHeight: context.height / 1.5),
@@ -34,14 +19,12 @@ class HistoryPayProfile extends StatelessWidget {
         child: ListView(
           children: [
             Wrap(
-              children: [
-
-                for (int i = 0; i < cartItemsPerOrder.length; i++)
-
-                  Column(
+                children: List.generate(
+                    controller.getCartItemsPerOrder().length,
+                    (i) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _HistoryData(data: history[listCount].time!),
+                            _HistoryData(data: controller.history[listCount].time!),
                       SizedBox(height: ThemeAppSize.kInterval5),
                       SizedBox(
                         height: 80,
@@ -50,9 +33,9 @@ class HistoryPayProfile extends StatelessWidget {
                             Wrap(
                               direction: Axis.horizontal,
                               children: List.generate(
-                                itemsPerOrder[i],
+                                      controller.cartOrderTimeList[i],
                                 (index) {
-                                  if (listCount < history.length) {
+                                        if (listCount < controller.history.length) {
                                     listCount++;
                                   }
                                   return index <= 2
@@ -68,7 +51,7 @@ class HistoryPayProfile extends StatelessWidget {
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: NetworkImage(
-                                                '${history[listCount - 1].product!.imgs!.first.imgURL}',
+                                                      '${controller.history[listCount - 1].product!.imgs!.first.imgURL}',
                                               ),
                                             ),
                                           ),
@@ -78,14 +61,15 @@ class HistoryPayProfile extends StatelessWidget {
                               ),
                             ),
                             const Spacer(),
-                            _HistoryCount(count: itemsPerOrder[i])
+                                  _HistoryCount(count: controller.cartOrderTimeList[i])
                           ],
                         ),
                       ),
                       SizedBox(height: ThemeAppSize.kInterval24),
                     ],
-                  )
-              ],
+                        ))
+
+
             ),
           ],
         ),
@@ -125,8 +109,6 @@ class _HistoryCount extends StatelessWidget {
             size: ThemeAppSize.kFontSize20,
           ),
           SizedBox(height: ThemeAppSize.kInterval5),
-
-
           Container(
             decoration: BoxDecoration(
               border: Border.all(

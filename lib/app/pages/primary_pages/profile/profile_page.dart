@@ -20,9 +20,6 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-
-
-
 class WebViewExample extends StatelessWidget {
   const WebViewExample({super.key});
   @override
