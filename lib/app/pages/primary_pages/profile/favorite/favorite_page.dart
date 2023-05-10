@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:text/app/models/products_model.dart';
-import 'package:text/app/widgets/icon/anumated_icon.dart';
 import 'package:text/app/widgets/icon/wrap_icon.dart';
 import 'package:text/app/widgets/text/my_text.dart';
 

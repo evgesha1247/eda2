@@ -5,7 +5,6 @@ import '../../../../widgets/show_dialog/custom_show_dialog.dart';
 import '../../guiding/controller/guiding_controller.dart';
 import 'controller/favorite_controller.dart';
 import '../../../../models/products_model.dart';
-import '../../../../routes/main_routes.dart';
 import '../../../../theme/theme_app.dart';
 import '../../../../widgets/text/my_text.dart';
 import 'favorite_page.dart';
