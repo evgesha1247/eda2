@@ -25,12 +25,12 @@ class AboutController extends GetxController {
         .map((doc) => doc.data() as Map<String, dynamic>)
         .toList()
         .forEach((element) {
-      bool isOpen = false;
+
       final nowTime = double.parse(DateFormat("HH.mm").format(DateTime.now()));
       final timePeriod = element['dataTime']['time'];
       final restTimeOpen = double.parse(timePeriod.substring(0, 5));
       final restTimeClose = double.parse(timePeriod.substring(8));
-      isOpen = nowTime > restTimeOpen && nowTime < restTimeClose;
+      bool isOpen = nowTime > restTimeOpen && nowTime < restTimeClose;
       listInfoRestorans.add(
         RestoranModel(
           adres: element['adres'],

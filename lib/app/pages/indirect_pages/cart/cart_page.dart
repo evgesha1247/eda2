@@ -7,9 +7,9 @@ class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Stack(
-        children: const [
+        children: [
           CartHeader(),
           CartBody(),
           BottomCart(),

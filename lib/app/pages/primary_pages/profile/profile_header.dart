@@ -22,8 +22,8 @@ class HeaderProfile extends StatelessWidget {
     return SizedBox(
       height: ThemeAppSize.height / 2.5,
       width: double.infinity,
-      child: Stack(
-        children: const [
+      child: const Stack(
+        children: [
           _ImgUser(),
           _ProgresUser(),
           _HeaderIcons(),
@@ -187,8 +187,8 @@ class _HeaderIcons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
-      child: Row(
-        children: const [
+      child: const Row(
+        children: [
           _IconEditImg(),
           Spacer(),
           _IconSetting(),

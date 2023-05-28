@@ -18,7 +18,7 @@ migration:
     - platform: android
       create_revision: 05759325bad1493757c02ad31ad7cc9e332e06ad
       base_revision: 05759325bad1493757c02ad31ad7cc9e332e06ad
-    - platform: ios, '1.12.0'
+    - platform: ios
       create_revision: 05759325bad1493757c02ad31ad7cc9e332e06ad
       base_revision: 05759325bad1493757c02ad31ad7cc9e332e06ad
     - platform: linux

@@ -44,9 +44,9 @@ class _ReceivedHeaderHome extends StatelessWidget {
           controller.startAnimation.value ? 0 : -context.height,
           0,
         ),
-        child: Row(
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
+          children: [
             _TitleHeaderHome(),
             ButtonIconCart(),
           ],

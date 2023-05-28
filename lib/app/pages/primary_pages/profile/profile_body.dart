@@ -15,8 +15,8 @@ class BodyProfile extends StatelessWidget {
   const BodyProfile({super.key});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
+    return const Column(
+      children: [
         _UserName(),
         FavoriteSection(),
         _UserInfoSection(),
@@ -40,8 +40,7 @@ class _UserName extends StatelessWidget {
     return AnimationScaleWidget(
       select: Get.find<GuidingController>().startAnimationProfile,
       widget: Obx(() => Padding(
-            padding: EdgeInsets.all(ThemeAppSize.kInterval12
-            ),
+            padding: EdgeInsets.all(ThemeAppSize.kInterval12),
             child: (controller.userData['name'] != null &&
                     controller.userData['name'].toString().trim() != '' &&
                     pCon.isEditName.value)
@@ -95,123 +94,82 @@ class _UserInfoSection extends StatelessWidget {
   const _UserInfoSection();
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ProfileController>();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval12),
       child: Stack(
-        children: const [
-          _UserInfoOpen(),
-          _UserInfoClose(),
+        children: [
+          const _UserInfo(),
+          Positioned(
+            top: 12,
+            right: 12,
+            child: InkWell(
+                onTap: () => controller.togVisibility(),
+                child: WrapperIcon(
+                  colorBorder: context.theme.hintColor,
+                  icon: Icons.no_encryption_gmailerrorred_outlined,
+                )),
+          ),
         ],
       ),
     );
   }
 }
 
-class _UserInfoOpen extends StatelessWidget {
-  const _UserInfoOpen();
+
+class _UserInfo extends StatelessWidget {
+  const _UserInfo();
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProfileController>();
-    return Obx(() => Container(
-          padding: EdgeInsets.all(ThemeAppSize.kInterval24),
-          decoration: BoxDecoration(
-            color: controller.isVisibility.value
-                ? context.theme.hintColor.withOpacity(0.2)
-                : Colors.transparent,
-            borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
-            border: Border.all(color: context.theme.hintColor, width: .5),
-          ),
-          child: ClipRRect(
-            child: ImageFiltered(
-              imageFilter: ImageFilter.blur(
-                  sigmaX: controller.isVisibility.value ? 4 : 0,
-                  sigmaY: controller.isVisibility.value ? 4 : 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      SmallText(
-                          text: 'Общая информация',
-                          size: ThemeAppSize.kFontSize16 * 1.5,
-                          color: context.theme.hintColor),
-                      const Spacer(),
-                      WrapperIcon(
-                        colorBorder: context.theme.hintColor,
-                        icon: Icons.edit_note,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: ThemeAppSize.kInterval12),
-                  Divider(
-                    color: context.theme.hintColor,
-                    height: ThemeAppSize.kInterval5,
-                    thickness: 0.5,
-                  ),
-                  SizedBox(height: ThemeAppSize.kInterval12),
-                  const _InfoItemBuilder(),
-                  SizedBox(height: ThemeAppSize.kInterval12),
-                  InkWell(
-                      onTap: () => controller.togVisibility(),
-                      child: WrapperIcon(
-                        colorBorder: context.theme.hintColor,
-                        icon: Icons.no_encryption_gmailerrorred_outlined,
-
-
-                      )),
-                ],
-              ),
-            ),
-          ),
-        ));
-  }
-}
-
-class _UserInfoClose extends StatelessWidget {
-  const _UserInfoClose();
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<ProfileController>();
-    return Positioned.fill(
-      child: Center(
-        child: Obx(() => GestureDetector(
-              onTap: () => controller.togVisibility(),
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 500),
-                opacity: controller.isVisibility.value ? 1 : 0,
-                child: WrapperIcon(
-                  colorBorder: context.theme.hintColor,
-                  icon: Icons.visibility_off,
-                ),
-              ),
-            )),
-      ),
-    );
-  }
-}
-
-class _InfoItemBuilder extends StatelessWidget {
-  const _InfoItemBuilder();
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<AuthController>();
+    final auth = Get.find<AuthController>();
     List dataKey = ['email'.tr, 'phone'.tr, 'address'.tr];
     List dataList = ['email', 'phone', 'address'];
-    return Obx(
-      () => Column(
-      children: List.generate(
+
+    List<Widget> infoData() {
+      return List.generate(
         dataKey.length,
         (index) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SmallText(text: dataKey[index]),
-                SmallText(
-                    text: controller.userData[dataList[index]] ?? 'нет данных',
-                ),
+              SmallText(
+                text: auth.userData[dataList[index]] ?? 'нет данных',
+              ),
             ],
           );
         },
+      );
+    }
+
+    return Obx(
+      () => Container(
+        padding: EdgeInsets.all(ThemeAppSize.kInterval24),
+        decoration: BoxDecoration(
+          color: controller.isVisibility.value
+              ? context.theme.hintColor.withOpacity(0.2)
+              : Colors.transparent,
+          borderRadius: BorderRadius.all(
+            Radius.circular(ThemeAppSize.kRadius12),
+          ),
+          border: Border.all(color: context.theme.hintColor, width: 1),
+        ),
+        child: ImageFiltered(
+          enabled: controller.isVisibility.value,
+          imageFilter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SmallText(
+                text: 'Общая информация',
+                size: ThemeAppSize.kFontSize16 * 1.5,
+              ),
+              SizedBox(height: ThemeAppSize.kInterval24),
+              ...infoData(),
+              SizedBox(height: ThemeAppSize.kInterval12),
+            ],
+          ),
         ),
       ),
     );
@@ -229,16 +187,18 @@ class _UserLogout extends StatelessWidget {
         builder: (context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(ThemeAppSize.kRadius12)),
               side: const BorderSide(color: ThemeAppColor.kAccent),
             ),
             backgroundColor: context.theme.scaffoldBackgroundColor,
             titlePadding: EdgeInsets.all(ThemeAppSize.kInterval24),
             actionsPadding: EdgeInsets.all(ThemeAppSize.kInterval24),
-            contentPadding: EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
-            title: Row(
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: ThemeAppSize.kInterval24),
+            title: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 BigText(text: 'Вы уверины ?'),
                 BigText(
                   text: '!',
@@ -249,7 +209,8 @@ class _UserLogout extends StatelessWidget {
               ],
             ),
             content: const SmallText(
-                text: 'при выходе из аккаунта вы не сможите осуществлять заказы'),
+                text:
+                    'при выходе из аккаунта вы не сможите осуществлять заказы'),
             actions: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -273,7 +234,7 @@ class _UserLogout extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(ThemeAppSize.kInterval12),
       child: InkWell(
-            onTap: () => showMaterialDialog(context),
+        onTap: () => showMaterialDialog(context),
         child: MyButtonString(
           text: 'logout'.tr,
         ),
