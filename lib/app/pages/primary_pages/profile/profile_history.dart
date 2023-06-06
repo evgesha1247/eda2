@@ -101,14 +101,11 @@ class _HistoryCount extends StatelessWidget {
     return SizedBox(
       width: 80,
       //color: Colors.red,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          BigText(
-            text: '$count Items',
-            size: ThemeAppSize.kFontSize20,
-          ),
-          SizedBox(height: ThemeAppSize.kInterval5),
+
           Container(
             decoration: BoxDecoration(
               border: Border.all(
@@ -118,18 +115,25 @@ class _HistoryCount extends StatelessWidget {
                 Radius.circular(ThemeAppSize.kRadius12 / 1.5),
               ),
             ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: ThemeAppSize.kInterval12,
-                vertical: ThemeAppSize.kInterval5,
-              ),
-              child: SmallText(
-                text: 'more',
-                color: context.theme.primaryColor,
-                size: ThemeAppSize.kFontSize18,
-              ),
-            ),
-          )
+
+            // child: Padding(
+            //   padding: EdgeInsets.symmetric(
+            //     horizontal: ThemeAppSize.kInterval12,
+            //     vertical: ThemeAppSize.kInterval5,
+            //   ),
+            //   child: SmallText(
+            //     text: 'more',
+            //     color: context.theme.primaryColor,
+            //     size: ThemeAppSize.kFontSize18,
+            //   ),
+            // ),
+          ),
+          SizedBox(width: ThemeAppSize.kInterval12),
+          BigText(
+            text: '$count Items',
+            size: ThemeAppSize.kFontSize20,
+          ),
+
         ],
       ),
     );
