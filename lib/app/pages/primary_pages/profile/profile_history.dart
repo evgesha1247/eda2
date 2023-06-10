@@ -20,59 +20,87 @@ class HistoryPayProfile extends StatelessWidget {
           children: [
             Wrap(
                 children: List.generate(
-                    controller.getCartItemsPerOrder().length,
-                    (i) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                            _HistoryData(data: controller.history[listCount].time!),
-                      SizedBox(height: ThemeAppSize.kInterval5),
-                      SizedBox(
-                        height: 80,
-                        child: Row(
-                          children: [
-                            Wrap(
-                              direction: Axis.horizontal,
-                              children: List.generate(
-                                      controller.cartOrderTimeList[i],
-                                (index) {
-                                        if (listCount < controller.history.length) {
-                                    listCount++;
-                                  }
-                                  return index <= 2
-                                      ? Container(
-                                          height: 80,
-                                          width: 80,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(
-                                                ThemeAppSize.kRadius12,
-                                              ),
-                                            ),
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                      '${controller.history[listCount - 1].product!.imgs!.first.imgURL}',
-                                              ),
-                                            ),
+              controller.getCartItemsPerOrder().length,
+              (i) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _HistoryData(data: controller.history[listCount].time!),
+                  SizedBox(height: ThemeAppSize.kInterval5),
+                  SizedBox(
+                    height: 80,
+                    child: Row(
+                      children: [
+                        Wrap(
+                          direction: Axis.horizontal,
+                          children: List.generate(
+                            controller.cartOrderTimeList[i],
+                            (index) {
+                              if (listCount < controller.history.length) {
+                                listCount++;
+                              }
+                              return index <= 2
+                                  ? Container(
+                                      height: 80,
+                                      width: 80,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                            ThemeAppSize.kRadius12,
                                           ),
-                                        )
-                                      : const SizedBox.shrink();
-                                },
-                              ),
-                            ),
-                            const Spacer(),
-                                  _HistoryCount(count: controller.cartOrderTimeList[i])
-                          ],
+                                        ),
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                            '${controller.history[listCount - 1].product!.imgs!.first.imgURL}',
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink();
+                            },
+                          ),
                         ),
-                      ),
-                      SizedBox(height: ThemeAppSize.kInterval24),
-                    ],
-                        ))
-
-
-            ),
+                        const Spacer(),
+                        _HistoryCount(count: controller.cartOrderTimeList[i])
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: ThemeAppSize.kInterval24),
+                ],
+              ),
+            )),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _HistoryCount extends StatelessWidget {
+  final int count;
+  const _HistoryCount({required this.count});
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 80,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: context.theme.primaryColor),
+              borderRadius: BorderRadius.all(
+                Radius.circular(ThemeAppSize.kRadius12 / 1.5),
+              ),
+            ),
+          ),
+          SizedBox(width: ThemeAppSize.kInterval12),
+          BigText(
+            text: '$count Items',
+            size: ThemeAppSize.kFontSize20,
+          ),
+        ],
       ),
     );
   }
@@ -90,52 +118,5 @@ class _HistoryData extends StatelessWidget {
       var outputData = outputFormat.format(inputData);
       return BigText(text: outputData);
     }());
-  }
-}
-
-class _HistoryCount extends StatelessWidget {
-  final int count;
-  const _HistoryCount({required this.count});
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 80,
-      //color: Colors.red,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: context.theme.primaryColor,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(ThemeAppSize.kRadius12 / 1.5),
-              ),
-            ),
-
-            // child: Padding(
-            //   padding: EdgeInsets.symmetric(
-            //     horizontal: ThemeAppSize.kInterval12,
-            //     vertical: ThemeAppSize.kInterval5,
-            //   ),
-            //   child: SmallText(
-            //     text: 'more',
-            //     color: context.theme.primaryColor,
-            //     size: ThemeAppSize.kFontSize18,
-            //   ),
-            // ),
-          ),
-          SizedBox(width: ThemeAppSize.kInterval12),
-          BigText(
-            text: '$count Items',
-            size: ThemeAppSize.kFontSize20,
-          ),
-
-        ],
-      ),
-    );
   }
 }
